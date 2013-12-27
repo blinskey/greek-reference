@@ -1,3 +1,11 @@
+# Default Android Studio .gitignore files
+.gradle
+/local.properties
+/.idea/workspace.xml
+.DS_Store
+
+## GitHub .gitignore files ##
+
 # built application files
 *.apk
 *.ap_
