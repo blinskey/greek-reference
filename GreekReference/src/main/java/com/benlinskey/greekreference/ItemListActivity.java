@@ -1,8 +1,13 @@
 package com.benlinskey.greekreference;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
 /**
@@ -22,7 +27,11 @@ import android.support.v4.app.FragmentActivity;
  * to listen for item selections.
  */
 public class ItemListActivity extends FragmentActivity
-        implements ItemListFragment.Callbacks {
+        implements ItemListFragment.Callbacks, NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private CharSequence mTitle; // Used to store the last screen title.
+    private static final String TAG = "ItemListActivity";
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -34,6 +43,15 @@ public class ItemListActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -77,5 +95,64 @@ public class ItemListActivity extends FragmentActivity
             detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        Log.w(TAG, "Nav drawer item selected: " + position);
+
+        /**
+         * We consider the user to have learned the drawer once he or she selects an item. This
+         * prevents the drawer from appearing repeatedly in the one-pane mode. This is just a quick
+         * workaround; we might want to implement a more sophisticated solution at some point in
+         * the future.
+         */
+        if (mNavigationDrawerFragment != null) {
+            mNavigationDrawerFragment.userLearnedDrawer();
+        }
+
+        // TODO: Replace fragments here.
+    }
+
+    public void onSectionAttached(int number) {
+        switch (number) {
+            case 1:
+                mTitle = getString(R.string.title_section1);
+                break;
+            case 2:
+                mTitle = getString(R.string.title_section2);
+                break;
+            case 3:
+                mTitle = getString(R.string.title_section3);
+                break;
+        }
+    }
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+            // Only show items in the action bar relevant to this screen if the drawer is not
+            // showing. Otherwise, let the drawer decide what to show in the action bar.
+            // TODO: Inflate menu here.
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will automatically handle clicks on
+        // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
+        // TODO: Handle selected items here.
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,9 +1,13 @@
 package com.benlinskey.greekreference;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
 /**
@@ -15,12 +19,26 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link ItemDetailFragment}.
  */
-public class ItemDetailActivity extends FragmentActivity {
+public class ItemDetailActivity extends FragmentActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private CharSequence mTitle; // Used to store the last screen title.
+    private static final String TAG = "ItemDetailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+
+        mTitle = getTitle();
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         // Show the Up button in the action bar.
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,5 +81,44 @@ public class ItemDetailActivity extends FragmentActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        // TODO: Replace fragments here.
+        Log.w(TAG, "Nav drawer item selected: " + position);
+    }
+
+    public void onSectionAttached(int number) {
+        switch (number) {
+            case 1:
+                mTitle = getString(R.string.title_section1);
+                break;
+            case 2:
+                mTitle = getString(R.string.title_section2);
+                break;
+            case 3:
+                mTitle = getString(R.string.title_section3);
+                break;
+        }
+    }
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+            // Only show items in the action bar relevant to this screen if the drawer is not
+            // showing. Otherwise, let the drawer decide what to show in the action bar.
+            // TODO: Inflate menu here.
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 }

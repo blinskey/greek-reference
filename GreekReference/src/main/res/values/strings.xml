@@ -3,5 +3,10 @@
 
     <string name="app_name">Greek Reference</string>
     <string name="title_item_detail">Item Detail</string>
+    <string name="title_section1">Drawer Item 1</string>
+    <string name="title_section2">Drawer Item 2</string>
+    <string name="title_section3">Drawer Item 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>
