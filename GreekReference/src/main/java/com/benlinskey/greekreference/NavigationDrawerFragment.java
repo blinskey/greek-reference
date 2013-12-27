@@ -280,7 +280,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     /**
-     * Sets mUserLearnedDrawer to true.
+     * Sets PREF_USER_LEARNED_DRAWER to true.
      */
     public void userLearnedDrawer() {
         mUserLearnedDrawer = true;
