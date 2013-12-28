@@ -37,7 +37,8 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
 
         if (null == convertView) {
             convertView = inflater.inflate(R.layout.navigation_drawer_row, parentView, false);
-            TextView textView = (TextView) convertView.findViewById(R.id.navigation_drawer_row_text);
+            TextView textView = (TextView)
+                    convertView.findViewById(R.id.navigation_drawer_row_text);
             ImageView imageView = (ImageView)
                     convertView.findViewById(R.id.navigation_drawer_row_icon);
 
@@ -105,7 +106,4 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
     private static class NavigationDrawerHeadingHolder {
         private TextView textView;
     }
-
-
-
 }

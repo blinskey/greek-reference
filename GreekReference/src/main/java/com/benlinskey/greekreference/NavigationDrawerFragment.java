@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Checkable;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -55,7 +57,7 @@ public class NavigationDrawerFragment extends Fragment {
     private ListView mDrawerListView;
     private View mFragmentContainerView;
 
-    private int mCurrentSelectedPosition = 0;
+    private int mCurrentSelectedPosition = 1; // Default position is Lexicon: Browse.
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -96,7 +98,7 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         NavigationDrawerItem[] items = new NavigationDrawerItem[] {
-                // TODO: Move these strings to a resource file and add icons.
+                // TODO: Add icons.
                 new NavigationDrawerHeading(100, getString(R.string.nav_drawer_heading_lexicon)),
                 new NavigationDrawerRow(101, getString(R.string.nav_drawer_row_browse_lexicon),
                         "ic_drawer", getActivity()),
@@ -113,18 +115,6 @@ public class NavigationDrawerFragment extends Fragment {
 
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity(),
                 android.R.layout.simple_list_item_activated_1, items));
-
-        /*
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
-        */
 
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
