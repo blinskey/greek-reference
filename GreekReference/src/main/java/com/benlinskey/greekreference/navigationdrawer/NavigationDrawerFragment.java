@@ -1,16 +1,15 @@
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.navigationdrawer;
 
-;
-import android.app.Activity;
 import android.app.ActionBar;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,9 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.benlinskey.greekreference.R;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -54,7 +53,7 @@ public class NavigationDrawerFragment extends Fragment {
     private ListView mDrawerListView;
     private View mFragmentContainerView;
 
-    private int mCurrentSelectedPosition = 0;
+    private int mCurrentSelectedPosition = 1; // Default position is Lexicon: Browse.
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -93,15 +92,26 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new ArrayAdapter<String>(
-                getActionBar().getThemedContext(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
-                }));
+
+        NavigationDrawerItem[] items = new NavigationDrawerItem[] {
+                // TODO: Add icons.
+                new NavigationDrawerHeading(100, getString(R.string.nav_drawer_heading_lexicon)),
+                new NavigationDrawerRow(101, getString(R.string.nav_drawer_row_browse_lexicon),
+                        "ic_drawer", getActivity()),
+                new NavigationDrawerRow(102, getString(R.string.nav_drawer_row_favorites),
+                        "ic_drawer", getActivity()),
+                new NavigationDrawerRow(103, getString(R.string.nav_drawer_row_history),
+                        "ic_drawer", getActivity()),
+                new NavigationDrawerHeading(200, getString(R.string.nav_drawer_heading_grammar)),
+                new NavigationDrawerRow(201, getString(R.string.nav_drawer_row_browse_grammar),
+                        "ic_drawer", getActivity()),
+                new NavigationDrawerRow(202, getString(R.string.nav_drawer_row_bookmarks),
+                        "ic_drawer", getActivity())
+        };
+
+        mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity(),
+                android.R.layout.simple_list_item_activated_1, items));
+
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }

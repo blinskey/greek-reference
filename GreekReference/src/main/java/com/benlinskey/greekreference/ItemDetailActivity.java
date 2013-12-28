@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
+
 /**
  * An activity representing a single Item detail screen. This
  * activity is only used on handset devices. On tablet-size devices,
