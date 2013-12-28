@@ -1,8 +1,6 @@
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.navigationdrawer;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Checkable;
 
 /**
  * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.

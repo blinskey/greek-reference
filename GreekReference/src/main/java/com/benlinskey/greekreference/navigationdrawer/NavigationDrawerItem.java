@@ -1,4 +1,4 @@
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.navigationdrawer;
 
 import android.widget.LinearLayout;
 

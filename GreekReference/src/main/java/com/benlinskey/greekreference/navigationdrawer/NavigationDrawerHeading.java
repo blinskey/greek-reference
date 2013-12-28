@@ -1,4 +1,4 @@
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.navigationdrawer;
 
 /**
  * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.

@@ -1,4 +1,4 @@
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.navigationdrawer;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.benlinskey.greekreference.R;
 
 /**
  * This is a custom LinearLayout that allows items to be selected and highlighted.

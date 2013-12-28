@@ -1,4 +1,4 @@
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.navigationdrawer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.benlinskey.greekreference.R;
 
 /**
  * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
