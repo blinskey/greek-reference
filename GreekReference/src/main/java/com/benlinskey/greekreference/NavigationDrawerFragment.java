@@ -288,4 +288,11 @@ public class NavigationDrawerFragment extends Fragment {
                 .getDefaultSharedPreferences(getActivity());
         sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
     }
+
+    /**
+     * Hides the navigation drawer icon.
+     */
+    public void disableDrawerIndicator() {
+        mDrawerToggle.setDrawerIndicatorEnabled(false);
+    }
 }
