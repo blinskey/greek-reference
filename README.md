@@ -24,4 +24,4 @@ This project is licensed under the [Apache License, version 2.0][Apache].
 
 [Greek Reference Database Creator]: https://github.com/blinskey/greek-reference-database-creator
 [Apache]: http://www.apache.org/licenses/LICENSE-2.0
-[Android SQLiteAssetHelper][]: https://g    ithub.com/jgilfelt/android-sqlite-asset-helper
+[Android SQLiteAssetHelper]: https://github.com/jgilfelt/android-sqlite-asset-helper
