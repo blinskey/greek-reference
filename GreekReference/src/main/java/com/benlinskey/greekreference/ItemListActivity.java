@@ -17,7 +17,10 @@
 package com.benlinskey.greekreference;
 
 import android.app.ActionBar;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -25,7 +28,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.benlinskey.greekreference.data.LexiconContract;
+import com.benlinskey.greekreference.data.LexiconHelper;
+import com.benlinskey.greekreference.data.SyntaxHelper;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
+
+import java.io.File;
 
 
 /**
@@ -57,6 +65,42 @@ public class ItemListActivity extends FragmentActivity
      */
     private boolean mTwoPane;
 
+    /**
+     * An <code>AsyncTask</code> that copies the lexicon and syntax databases while displaying
+     * a <code>ProgessDialog</code>.
+     */
+    private class LoadDatabasesTask extends AsyncTask<Context, Void, Void> {
+        Context mContext;
+        ProgressDialog mDialog;
+
+        LoadDatabasesTask(Context context) {
+            super();
+            mContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mDialog = new ProgressDialog(mContext);
+            mDialog.setMessage(mContext.getString(R.string.database_progress_dialog));
+            mDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Context... contexts) {
+            // Copy databases.
+            new LexiconHelper(contexts[0]).getReadableDatabase();
+            new SyntaxHelper(contexts[0]).getReadableDatabase();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            mDialog.dismiss();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +127,12 @@ public class ItemListActivity extends FragmentActivity
             ((ItemListFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.item_list))
                     .setActivateOnItemClick(true);
+        }
+
+        // Install databases if necessary.
+        File database = getDatabasePath(LexiconContract.DB_NAME);
+        if (!database.exists()) {
+            new LoadDatabasesTask(this).execute(this, null, null);
         }
 
         // TODO: If exposing deep links into your app, handle intents here.

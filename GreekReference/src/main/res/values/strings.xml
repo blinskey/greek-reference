@@ -15,5 +15,6 @@
     <string name="nav_drawer_heading_grammar">GRAMMAR</string>
     <string name="nav_drawer_row_browse_grammar">Browse</string>
     <string name="nav_drawer_row_bookmarks">Bookmarks</string>
+    <string name="database_progress_dialog">Installing databases...</string>
 
 </resources>
