@@ -96,11 +96,14 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         NavigationDrawerItem[] items = new NavigationDrawerItem[] {
-                new NavigationDrawerHeading(100, "Heading 1"),
-                new NavigationDrawerRow(101, "Item 1.1", "ic_drawer", getActivity()),
-                new NavigationDrawerRow(102, "Item 1.2", "ic_drawer", getActivity()),
-                new NavigationDrawerHeading(200, "Heading 2"),
-                new NavigationDrawerRow(201, "Item 2.1", "ic_drawer", getActivity())
+                // TODO: Move these strings to a resource file and add icons
+                new NavigationDrawerHeading(100, "LEXICON"),
+                new NavigationDrawerRow(101, "Browse", "ic_drawer", getActivity()),
+                new NavigationDrawerRow(102, "Favorites", "ic_drawer", getActivity()),
+                new NavigationDrawerRow(103, "History", "ic_drawer", getActivity()),
+                new NavigationDrawerHeading(200, "GRAMMAR"),
+                new NavigationDrawerRow(201, "Browse", "ic_drawer", getActivity()),
+                new NavigationDrawerRow(202, "Bookmarks", "ic_drawer", getActivity())
         };
 
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity(),
