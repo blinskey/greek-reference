@@ -96,14 +96,19 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         NavigationDrawerItem[] items = new NavigationDrawerItem[] {
-                // TODO: Move these strings to a resource file and add icons
-                new NavigationDrawerHeading(100, "LEXICON"),
-                new NavigationDrawerRow(101, "Browse", "ic_drawer", getActivity()),
-                new NavigationDrawerRow(102, "Favorites", "ic_drawer", getActivity()),
-                new NavigationDrawerRow(103, "History", "ic_drawer", getActivity()),
-                new NavigationDrawerHeading(200, "GRAMMAR"),
-                new NavigationDrawerRow(201, "Browse", "ic_drawer", getActivity()),
-                new NavigationDrawerRow(202, "Bookmarks", "ic_drawer", getActivity())
+                // TODO: Move these strings to a resource file and add icons.
+                new NavigationDrawerHeading(100, getString(R.string.nav_drawer_heading_lexicon)),
+                new NavigationDrawerRow(101, getString(R.string.nav_drawer_row_browse_lexicon),
+                        "ic_drawer", getActivity()),
+                new NavigationDrawerRow(102, getString(R.string.nav_drawer_row_favorites),
+                        "ic_drawer", getActivity()),
+                new NavigationDrawerRow(103, getString(R.string.nav_drawer_row_history),
+                        "ic_drawer", getActivity()),
+                new NavigationDrawerHeading(200, getString(R.string.nav_drawer_heading_grammar)),
+                new NavigationDrawerRow(201, getString(R.string.nav_drawer_row_browse_grammar),
+                        "ic_drawer", getActivity()),
+                new NavigationDrawerRow(202, getString(R.string.nav_drawer_row_bookmarks),
+                        "ic_drawer", getActivity())
         };
 
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity(),
