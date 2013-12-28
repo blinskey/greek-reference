@@ -28,9 +28,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.benlinskey.greekreference.data.LexiconContract;
-import com.benlinskey.greekreference.data.LexiconHelper;
-import com.benlinskey.greekreference.data.SyntaxHelper;
+import com.benlinskey.greekreference.data.lexicon.LexiconContract;
+import com.benlinskey.greekreference.data.lexicon.LexiconHelper;
+import com.benlinskey.greekreference.data.syntax.SyntaxHelper;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
 import java.io.File;
