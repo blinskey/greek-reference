@@ -18,18 +18,24 @@ package com.benlinskey.greekreference;
 
 import android.app.ActionBar;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconHelper;
+import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxHelper;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
@@ -135,7 +141,28 @@ public class ItemListActivity extends FragmentActivity
             new LoadDatabasesTask(this).execute(this, null, null);
         }
 
-        // TODO: If exposing deep links into your app, handle intents here.
+        handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    /**
+     * Processes an <code>Intent</code> if it can be handled by this <code>Activity</code> or throws
+     * an exception if this <code>Activity</code> cannot handle the specified <code>Intent</code>.
+     *
+     * @param intent    the <code>Intent</code> to be handled
+     */
+    void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra((SearchManager.QUERY));
+            search(query);
+        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri data = intent.getData();
+            getLexiconEntry(data);
+        }
     }
 
     /**
@@ -208,7 +235,18 @@ public class ItemListActivity extends FragmentActivity
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen if the drawer is not
             // showing. Otherwise, let the drawer decide what to show in the action bar.
-            // TODO: Inflate menu here.
+            // Inflate the options menu from XML.
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.options_menu, menu);
+
+            // Get the SearchView and set the searchable configuration.
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            MenuItem menuSearch = menu.findItem(R.id.menu_search);
+            assert menuSearch != null;
+            SearchView searchView = (SearchView) menuSearch.getActionView();
+            assert searchView != null;
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setIconifiedByDefault(false);
             restoreActionBar();
             return true;
         }
@@ -222,5 +260,67 @@ public class ItemListActivity extends FragmentActivity
         // TODO: Handle selected items here.
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Finds and displays the lexicon entry corresponding to the specified URI.
+     *
+     * @param data  the URI of the lexicon entry to display
+     */
+    private void getLexiconEntry(Uri data) {
+        // Get data.
+        Cursor cursor = getContentResolver().query(data, null, null, null, null);
+        assert cursor != null;
+        cursor.moveToFirst();
+        String entry = "";
+        String id = "";
+        String word = "";
+
+        try {
+            int idIndex = cursor.getColumnIndexOrThrow(LexiconProvider.ID);
+            int entryIndex = cursor.getColumnIndexOrThrow(LexiconContract.COLUMN_ENTRY);
+            int wordIndex = cursor.getColumnIndexOrThrow(LexiconContract.COLUMN_GREEK_NO_SYMBOLS);
+            id = cursor.getString(idIndex);
+            entry = cursor.getString(entryIndex);
+            word = cursor.getString(wordIndex);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Failed to retrieve result from database.");
+            finish();
+        }
+
+        //displayLexiconEntry(id, word, entry);
+        Log.w("SearchEntryFound", entry);
+    }
+
+    /**
+     * Searches the lexicon for a word and displays the result.
+     *
+     * @param query     a string containing the word for which to search. This string is case
+     *                  insensitive and may be written in either Greek characters or Beta Code.
+     */
+    // TODO: Handle words with multiple entries.
+    void search(String query) {
+        String[] columns = new String[] {"_ID, entry, greekNoSymbols"};
+        String selection = "betaSymbols = ? OR betaNoSymbols = ? OR greekLowercase = ?";
+        String[] selectionArgs = new String[] {query.toLowerCase(), query.toLowerCase(),
+                query.toLowerCase()};
+        String sortOrder = "_ID ASC";
+
+        Cursor cursor = getContentResolver().query(LexiconProvider.CONTENT_URI, columns, selection,
+                selectionArgs, sortOrder);
+        assert cursor != null;
+
+        if (cursor.moveToFirst()) {
+            String id = cursor.getString(0);
+            String entry = cursor.getString(1);
+            String word = cursor.getString(2);
+            //displayLexiconEntry(id, word, entry);
+            Log.w("SearchEntryFound", entry);
+        } else {
+            // TODO: Should I display a dialog here?
+            Log.w(TAG, "No results.");
+        }
+
+        cursor.close();
     }
 }
