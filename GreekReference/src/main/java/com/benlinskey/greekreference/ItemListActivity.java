@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 import android.widget.SearchView;
 
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
@@ -40,6 +41,7 @@ import com.benlinskey.greekreference.data.syntax.SyntaxHelper;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 
 /**
@@ -235,18 +237,14 @@ public class ItemListActivity extends FragmentActivity
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             // Only show items in the action bar relevant to this screen if the drawer is not
             // showing. Otherwise, let the drawer decide what to show in the action bar.
-            // Inflate the options menu from XML.
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.options_menu, menu);
+            // Inflate the optiotns menu from XML.
+            getMenuInflater().inflate(R.menu.options_menu, menu);
 
             // Get the SearchView and set the searchable configuration.
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            MenuItem menuSearch = menu.findItem(R.id.menu_search);
-            assert menuSearch != null;
-            SearchView searchView = (SearchView) menuSearch.getActionView();
-            assert searchView != null;
+            SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setIconifiedByDefault(false);
+            //searchView.setIconifiedByDefault(false); // We're iconifying for now.
             restoreActionBar();
             return true;
         }

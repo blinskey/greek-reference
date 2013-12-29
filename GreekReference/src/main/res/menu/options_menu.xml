@@ -20,15 +20,15 @@
     <item android:id="@+id/menu_search"
           android:icon="@android:drawable/ic_menu_search"
           android:title="@string/search"
-          android:showAsAction="ifRoom|withText"
+          android:showAsAction="ifRoom|collapseActionView"
           android:actionViewClass="android.widget.SearchView" />
     <item android:id="@+id/action_clear_history"
           android:title="@string/action_clear_history"
           android:showAsAction="never"/>
     <item android:id="@+id/action_feedback"
           android:title="@string/action_feedback"
-          android:showAsAction="never" />
+          android:showAsAction="never"/>
     <item android:id="@+id/action_about"
           android:title="@string/action_about"
-          android:showAsAction="never" />
+          android:showAsAction="never"/>
 </menu>
