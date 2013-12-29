@@ -29,9 +29,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.ViewConfiguration;
 import android.widget.SearchView;
 
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
@@ -41,7 +39,6 @@ import com.benlinskey.greekreference.data.syntax.SyntaxHelper;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
 import java.io.File;
-import java.lang.reflect.Field;
 
 
 /**
@@ -238,7 +235,7 @@ public class ItemListActivity extends FragmentActivity
             // Only show items in the action bar relevant to this screen if the drawer is not
             // showing. Otherwise, let the drawer decide what to show in the action bar.
             // Inflate the optiotns menu from XML.
-            getMenuInflater().inflate(R.menu.options_menu, menu);
+            getMenuInflater().inflate(R.menu.lexicon_menu, menu); // TODO: Display appropriate menu for current mode.
 
             // Get the SearchView and set the searchable configuration.
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
