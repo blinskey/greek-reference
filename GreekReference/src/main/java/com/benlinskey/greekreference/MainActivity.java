@@ -19,33 +19,36 @@ package com.benlinskey.greekreference;
 import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
-import com.benlinskey.greekreference.SyntaxFragments.SyntaxBookmarksListFragment;
-import com.benlinskey.greekreference.SyntaxFragments.SyntaxBrowseListFragment;
-import com.benlinskey.greekreference.SyntaxFragments.SyntaxDetailFragment;
+import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
+import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
+import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
+import com.benlinskey.greekreference.data.appdata.AppDataContract;
+import com.benlinskey.greekreference.data.appdata.HistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconHelper;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxHelper;
-import com.benlinskey.greekreference.lexiconfragments.LexiconBrowseListFragment;
-import com.benlinskey.greekreference.lexiconfragments.LexiconDetailFragment;
-import com.benlinskey.greekreference.lexiconfragments.LexiconFavoritesListFragment;
-import com.benlinskey.greekreference.lexiconfragments.LexiconHistoryListFragment;
+import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
+import com.benlinskey.greekreference.lexicon.LexiconDetailFragment;
+import com.benlinskey.greekreference.lexicon.LexiconFavoritesListFragment;
+import com.benlinskey.greekreference.lexicon.LexiconHistoryListFragment;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
 import java.io.File;
@@ -243,30 +246,21 @@ public class MainActivity extends FragmentActivity
     }
 
     private void lexiconBrowseItemSelected(int id) {
-        // TODO
-        if (mTwoPane) {
+        String[] columns = new String[] {LexiconContract.COLUMN_ENTRY};
+        String selection = "_ID = ?";
+        String selectionArgs[] = new String[] {Integer.toString(id)};
+        Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI,
+                columns, selection, selectionArgs, null);
+        assert cursor != null;
 
-            /*
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(LexiconDetailFragment.ARG_ITEM_ID, id);
-            LexiconDetailFragment fragment = new LexiconDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.item_detail_container, fragment)
-                    .commit();
-            */
+        String entry = null;
+        if (cursor.moveToFirst()) {
+            entry = cursor.getString(0);
         } else {
-            /*
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-            detailIntent.putExtra(LexiconDetailFragment.ARG_ITEM_ID, id);
-            startActivity(detailIntent);
-            */
+            Log.e(TAG, "Entry not found.");
         }
+
+        displayLexiconEntry(id, null, entry);
     }
 
     private void lexiconFavoritesItemSelected(int id) {
@@ -283,6 +277,59 @@ public class MainActivity extends FragmentActivity
 
     private void syntaxBookmarksItemSelected(int id) {
         // TODO
+    }
+
+    void displayLexiconEntry(int id, String word, String entry) {
+        displayLexiconEntry(Integer.toString(id), word, entry);
+    }
+
+    void displayLexiconEntry(final String id, String word, String entry) {
+        // TODO: If user searches from Quick Search Box, we may need to change the mode.
+        // TODO: Track current mode with variable?
+
+        Log.w(TAG, entry);
+
+        // Add entry to history, unless word was selected from history list.
+        if (word != null) {
+            addHistory(id, word);
+        }
+
+        // Display entry.
+        if (mTwoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putString(LexiconDetailFragment.ARG_ENTRY, entry);
+            LexiconDetailFragment fragment = new LexiconDetailFragment();
+            fragment.setArguments(arguments);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.item_detail_container, fragment);
+            transaction.addToBackStack(null);
+            transaction.commitAllowingStateLoss();
+        } else {
+            Intent intent = new Intent(this, ItemDetailActivity.class);
+            intent.putExtra(LexiconDetailFragment.ARG_ENTRY, entry);
+            startActivity(intent);
+        }
+    }
+
+    void addHistory(String id, String word) {
+        // Check whether this word is already contained in the list.
+        String[] projection = {BaseColumns._ID};
+        String selection = AppDataContract.History.COLUMN_NAME_LEXICON_ID + " = ?";
+        String[] selectionArgs = {id};
+        Cursor cursor = getContentResolver().query(HistoryProvider.CONTENT_URI, projection,
+                selection, selectionArgs, null);
+        assert cursor != null;
+
+        // If word is already in list, delete it.
+        if (cursor.getCount() > 0) {
+            getContentResolver().delete(HistoryProvider.CONTENT_URI, selection, selectionArgs);
+        }
+
+        // Add word to top of list.
+        ContentValues values = new ContentValues();
+        values.put(AppDataContract.History.COLUMN_NAME_LEXICON_ID, id);
+        values.put(AppDataContract.History.COLUMN_NAME_WORD, word);
+        getContentResolver().insert(HistoryProvider.CONTENT_URI, values);
     }
 
     @Override

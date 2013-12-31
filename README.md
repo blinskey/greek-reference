@@ -14,9 +14,15 @@ The project also includes the text of *Overview of Greek Syntax*, by Jeffrey A. 
 
 The above texts are licensed under a Creative Commons Attribution-ShareAlike 3.0 United States License. See http://creativecommons.org/licenses/by-sa/3.0/us/ for details.
 
-## Third-Party Libraries
+## Third-Party Resources
 
-This program uses the [Android SQLiteAssetHelper][] library. Thanks to its authors for making their work available.
+This program uses the following open-source resources. Thanks to their creators for making their work available.
+
+- [Android SQLiteAssetHelper][]
+- [EpiDoc TransCoder][] (used in the [Greek Reference Database Creator][])
+- [NotoSerif font][]
+- [Perseus][] texts (see above)
+- [TypefaceTextView][]
 
 ## License
 
@@ -25,3 +31,7 @@ This project is licensed under the [Apache License, version 2.0][Apache].
 [Greek Reference Database Creator]: https://github.com/blinskey/greek-reference-database-creator
 [Apache]: http://www.apache.org/licenses/LICENSE-2.0
 [Android SQLiteAssetHelper]: https://github.com/jgilfelt/android-sqlite-asset-helper
+[EpiDoc TransCoder]: http://sourceforge.net/projects/epidoc/files/Transcoder/
+[NotoSerif font]: https://code.google.com/p/noto/
+[Perseus]: http://www.perseus.tufts.edu
+[TypefaceTextView]: http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/

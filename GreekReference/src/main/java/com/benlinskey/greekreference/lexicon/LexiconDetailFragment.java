@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexiconfragments;
+package com.benlinskey.greekreference.lexicon;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.dummy.DummyContent;
+import com.benlinskey.greekreference.data.lexicon.LexiconEntry;
+import com.benlinskey.greekreference.data.lexicon.LexiconXmlParser;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -33,16 +38,12 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * on handsets.
  */
 public class LexiconDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
+    public static final String TAG = "LexiconDetailFragment";
 
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private DummyContent.DummyItem mItem;
+    // Fragment arguments representing strings containing entry information
+    public static final String ARG_ENTRY = "entry";
+    private LexiconEntry mLexiconEntry = null;
+    private boolean mBlank = true; // True if no entry displayed.
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -55,22 +56,36 @@ public class LexiconDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null && getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+        if (getArguments() != null && getArguments().containsKey(ARG_ENTRY)) {
+            mBlank = false;
+
+            // Load entry represented by fragment argument.
+            String entry = getArguments().getString(ARG_ENTRY);
+            assert entry != null;
+
+            // Parse XML.
+            LexiconXmlParser parser = new LexiconXmlParser();
+            InputStream in = new ByteArrayInputStream(entry.getBytes());
+
+            try {
+                mLexiconEntry = parser.parse(in);
+            } catch (Exception e) {
+                Log.e(TAG, "Error parsing entry: " + e);
+                Log.e(TAG, Log.getStackTraceString(e));
+            }
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
+        assert rootView != null;
 
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.content);
+        if (!mBlank) {
+            // Display lexicon entry.
+            GreekTextView textView = (GreekTextView) rootView.findViewById(R.id.item_detail);
+            textView.setText(mLexiconEntry.toSpanned(textView.getTextSize()));
         }
 
         return rootView;

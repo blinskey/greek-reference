@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexiconfragments;
+package com.benlinskey.greekreference.syntax;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -31,14 +29,14 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * A list fragment representing a list of Items. This fragment
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link LexiconDetailFragment}.
+ * currently being viewed in a {@link com.benlinskey.greekreference.lexicon.LexiconDetailFragment}.
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class LexiconFavoritesListFragment extends BaseListFragment {
+public class SyntaxBrowseListFragment extends BaseListFragment {
 
-    public static final String NAME = "lexicon_favorites";
+    public static final String NAME = "syntax_browse";
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -71,7 +69,7 @@ public class LexiconFavoritesListFragment extends BaseListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public LexiconFavoritesListFragment() {
+    public SyntaxBrowseListFragment() {
     }
 
     @Override
@@ -140,7 +138,6 @@ public class LexiconFavoritesListFragment extends BaseListFragment {
      * given the 'activated' state when touched.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
-        Log.w("setActivate", "Favorites SetActivateOnItemClick()");
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
         getListView().setChoiceMode(activateOnItemClick

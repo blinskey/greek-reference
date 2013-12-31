@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.SyntaxFragments;
+package com.benlinskey.greekreference.syntax;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -30,14 +29,14 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * A list fragment representing a list of Items. This fragment
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link com.benlinskey.greekreference.lexiconfragments.LexiconDetailFragment}.
+ * currently being viewed in a {@link com.benlinskey.greekreference.lexicon.LexiconDetailFragment}.
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class SyntaxBrowseListFragment extends BaseListFragment {
+public class SyntaxBookmarksListFragment extends BaseListFragment {
 
-    public static final String NAME = "syntax_browse";
+    public static final String NAME = "syntax_bookmarks";
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -70,7 +69,7 @@ public class SyntaxBrowseListFragment extends BaseListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SyntaxBrowseListFragment() {
+    public SyntaxBookmarksListFragment() {
     }
 
     @Override

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexiconfragments;
+package com.benlinskey.greekreference.lexicon;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -35,9 +35,9 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class LexiconHistoryListFragment extends BaseListFragment {
+public class LexiconFavoritesListFragment extends BaseListFragment {
 
-    public static final String NAME = "lexicon_history";
+    public static final String NAME = "lexicon_favorites";
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -70,7 +70,7 @@ public class LexiconHistoryListFragment extends BaseListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public LexiconHistoryListFragment() {
+    public LexiconFavoritesListFragment() {
     }
 
     @Override
@@ -139,6 +139,7 @@ public class LexiconHistoryListFragment extends BaseListFragment {
      * given the 'activated' state when touched.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
+        Log.w("setActivate", "Favorites SetActivateOnItemClick()");
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
         getListView().setChoiceMode(activateOnItemClick

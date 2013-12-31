@@ -1,4 +1,4 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.benlinskey.greekreference.GreekTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_detail"
     style="?android:attr/textAppearanceLarge"

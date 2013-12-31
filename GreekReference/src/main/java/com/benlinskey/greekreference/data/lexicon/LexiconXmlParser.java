@@ -55,6 +55,7 @@ public class LexiconXmlParser {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_DOCDECL, true);
             parser.setInput(in, null);
             return readXml(parser);
         } finally {

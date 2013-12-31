@@ -14,30 +14,40 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.SyntaxFragments;
+package com.benlinskey.greekreference.lexicon;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import com.benlinskey.greekreference.BaseListFragment;
-import com.benlinskey.greekreference.dummy.DummyContent;
+import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
  * A list fragment representing a list of Items. This fragment
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link com.benlinskey.greekreference.lexiconfragments.LexiconDetailFragment}.
+ * currently being viewed in a {@link LexiconDetailFragment}.
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class SyntaxBookmarksListFragment extends BaseListFragment {
+public class LexiconBrowseListFragment extends BaseListFragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final String NAME = "syntax_bookmarks";
+    public final static String NAME = "lexicon_browse";
+    SimpleCursorAdapter mAdapter;
+    static final String[] PROJECTION = new String[] {LexiconContract._ID,
+            LexiconContract.COLUMN_GREEK_FULL_WORD};
+    static final String SELECTION = "";
+    static final String[] SELECTION_ARGS = {};
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -70,19 +80,38 @@ public class SyntaxBookmarksListFragment extends BaseListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SyntaxBookmarksListFragment() {
+    public LexiconBrowseListFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
+        // TODO: Add progress indicator.
+
+        // Create and set list adapter.
+        // TODO: Replace this with a more efficient adapter.
+        // TODO: Override getView to use custom typeface.
+        String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
+        int[] toViews = {android.R.id.text1};
+        mAdapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1,
+                null, fromColumns, toViews, 0);
+        setListAdapter(mAdapter);
+
+        getLoaderManager().initLoader(0, null, this);
+    }
+
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getActivity(), LexiconContract.CONTENT_URI, PROJECTION, SELECTION,
+                SELECTION_ARGS, null);
+    }
+
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
+
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
     }
 
     @Override
@@ -119,9 +148,6 @@ public class SyntaxBookmarksListFragment extends BaseListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
         mCallbacks.onItemSelected(NAME, position);
     }
 
@@ -139,6 +165,7 @@ public class SyntaxBookmarksListFragment extends BaseListFragment {
      * given the 'activated' state when touched.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
+        Log.w("setActivate", "Browse SetActivateOnItemClick()");
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
         getListView().setChoiceMode(activateOnItemClick

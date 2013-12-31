@@ -1,11 +1,10 @@
-/*
- * Copyright 2013 Benjamin Linskey
+/* Copyright 2013 Benjamin Linskey
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,23 +13,20 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.lexicon;
 
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
-import com.benlinskey.greekreference.lexicon.LexiconDetailFragment;
-import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
+import com.benlinskey.greekreference.MainActivity;
+import com.benlinskey.greekreference.R;
 
 /**
- * An activity representing a single Item detail screen. This
+ * An activity representing a single Word detail screen. This
  * activity is only used on handset devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  * in a {@link MainActivity}.
@@ -38,30 +34,17 @@ import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link LexiconDetailFragment}.
  */
-public class ItemDetailActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-    private CharSequence mTitle; // Used to store the last screen title.
-    private static final String TAG = "ItemDetailActivity";
+public class LexiconDetailActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-        mTitle = getTitle();
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-
         // Show the Up button in the action bar.
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        mNavigationDrawerFragment.disableDrawerIndicator();
+        ActionBar actionBar = getActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -73,16 +56,14 @@ public class ItemDetailActivity extends FragmentActivity
         // http://developer.android.com/guide/components/fragments.html
         //
         if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
             Bundle arguments = new Bundle();
             arguments.putString(LexiconDetailFragment.ARG_ENTRY,
                     getIntent().getStringExtra(LexiconDetailFragment.ARG_ENTRY));
             LexiconDetailFragment fragment = new LexiconDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.item_detail_container, fragment)
-                    .commit();
+                    .replace(R.id.item_detail_container, fragment)
+                    .commitAllowingStateLoss();
         }
     }
 
@@ -103,42 +84,5 @@ public class ItemDetailActivity extends FragmentActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // TODO: Replace fragments here.
-        Log.w(TAG, "Nav drawer item selected: " + position);
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
-    }
-
-    public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen if the drawer is not
-            // showing. Otherwise, let the drawer decide what to show in the action bar.
-            // TODO: Inflate menu here.
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
 }
+
