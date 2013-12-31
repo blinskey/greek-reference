@@ -23,5 +23,7 @@
     <string name="action_clear_history">Clear history</string>
     <string name="action_about">About</string>
     <string name="action_feedback">Feedback</string>
+    <string name="title_lexicon_browse">Browse</string>
+    <string name="title_lexicon_favorites">Favorites</string>
 
 </resources>

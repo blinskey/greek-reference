@@ -25,7 +25,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -50,25 +52,56 @@ import java.io.File;
  * item details side-by-side using two vertical panes.
  * <p>
  * The activity makes heavy use of fragments. The list of items is a
- * {@link ItemListFragment} and the item details
- * (if present) is a {@link ItemDetailFragment}.
+ * {@link LexiconBrowseListFragment} and the item details
+ * (if present) is a {@link LexiconDetailFragment}.
  * <p>
  * This activity also implements the required
- * {@link ItemListFragment.Callbacks} interface
+ * {@link LexiconBrowseListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class ItemListActivity extends FragmentActivity
-        implements ItemListFragment.Callbacks, NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends FragmentActivity
+        implements LexiconBrowseListFragment.Callbacks,
+        NavigationDrawerFragment.NavigationDrawerCallbacks, LexiconFavoritesListFragment.Callbacks{
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle; // Used to store the last screen title.
-    private static final String TAG = "ItemListActivity";
+    private static final String TAG = "MainActivity";
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
     private boolean mTwoPane;
+
+    private enum Mode {
+        LEXICON_BROWSE(1, "lexicon_browse"),
+        LEXICON_FAVORITES(2, "lexicon_favorites"),
+        LEXICON_HISTORY(3, "lexicon_history"),
+        SYNTAX_BROWSE(5, "syntax_browse"),
+        SYNTAX_BOOKMARKS(6, "syntax_bookmarks");
+
+        private final int mPosition;
+        private final String mName;
+
+        private Mode(int position, String name) {
+            mPosition = position;
+            mName = name;
+        }
+
+        @Override
+        public String toString() {
+            return mName;
+        }
+
+        private static Mode getModeFromPosition(int position) {
+            for (Mode m : Mode.values()) {
+                if (m.mPosition == position) {
+                    return m;
+                }
+            }
+            throw new IllegalArgumentException("Invalid nav drawer position");
+        }
+    }
 
     /**
      * An <code>AsyncTask</code> that copies the lexicon and syntax databases while displaying
@@ -114,7 +147,7 @@ public class ItemListActivity extends FragmentActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-        mTitle = getTitle();
+        mTitle = getTitle(); // TODO: Display mode title on application launch.
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
@@ -129,8 +162,8 @@ public class ItemListActivity extends FragmentActivity
 
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
-            ((ItemListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.item_list))
+            ((LexiconBrowseListFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.item_list_container))
                     .setActivateOnItemClick(true);
         }
 
@@ -165,7 +198,7 @@ public class ItemListActivity extends FragmentActivity
     }
 
     /**
-     * Callback method from {@link ItemListFragment.Callbacks}
+     * Callback method from {@link LexiconBrowseListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
      */
     @Override
@@ -175,8 +208,8 @@ public class ItemListActivity extends FragmentActivity
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID, id);
-            ItemDetailFragment fragment = new ItemDetailFragment();
+            arguments.putString(LexiconDetailFragment.ARG_ITEM_ID, id);
+            LexiconDetailFragment fragment = new LexiconDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
@@ -186,7 +219,7 @@ public class ItemListActivity extends FragmentActivity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
-            detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(LexiconDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
     }
@@ -195,7 +228,7 @@ public class ItemListActivity extends FragmentActivity
     public void onNavigationDrawerItemSelected(int position) {
         Log.w(TAG, "Nav drawer item selected: " + position);
 
-        /**
+        /*
          * We consider the user to have learned the drawer once he or she selects an item. This
          * prevents the drawer from appearing repeatedly in the one-pane mode. This is just a quick
          * workaround; we might want to implement a more sophisticated solution at some point in
@@ -205,20 +238,25 @@ public class ItemListActivity extends FragmentActivity
             mNavigationDrawerFragment.userLearnedDrawer();
         }
 
-        // TODO: Replace fragments here.
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
+        // Switch to the selected mode.
+        switch (Mode.getModeFromPosition(position)) {
+            case LEXICON_BROWSE:
+                switchToLexiconBrowse();
                 break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
+            case LEXICON_FAVORITES:
+                switchToLexiconFavorites();
                 break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
+            case LEXICON_HISTORY:
+                switchToLexiconHistory();
                 break;
+            case SYNTAX_BROWSE:
+                switchToSyntaxBrowse();
+                break;
+            case SYNTAX_BOOKMARKS:
+                switchToSyntaxBookmarks();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid mode");
         }
     }
 
@@ -317,5 +355,47 @@ public class ItemListActivity extends FragmentActivity
         }
 
         cursor.close();
+    }
+
+    private void switchToLexiconBrowse() {
+        // Display mode title.
+        mTitle = getString(R.string.title_lexicon_browse);
+        restoreActionBar();
+
+        swapInFragments(new LexiconBrowseListFragment(), new LexiconDetailFragment());
+    }
+
+    private void switchToLexiconFavorites() {
+        mTitle = getString(R.string.title_lexicon_favorites);
+        restoreActionBar();
+
+        swapInFragments(new LexiconFavoritesListFragment(), new LexiconDetailFragment());
+    }
+
+    private void switchToLexiconHistory() {
+        // TODO
+    }
+
+    private void switchToSyntaxBrowse() {
+        // TODO
+    }
+
+    private void switchToSyntaxBookmarks() {
+        // TODO
+    }
+
+    private void swapInFragments(Fragment listFragment, Fragment detailFragment) {
+        if (mTwoPane) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.item_list_container, listFragment);
+            transaction.replace(R.id.item_detail_container, detailFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        } else {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.item_list_container, listFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 }
