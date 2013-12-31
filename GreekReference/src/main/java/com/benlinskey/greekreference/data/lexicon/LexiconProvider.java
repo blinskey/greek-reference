@@ -126,10 +126,10 @@ public class LexiconProvider extends ContentProvider {
     private Cursor getSuggestions(String query) {
         // TODO: Change "_ID" to "_id" in database schema.
 
-        String[] projection = new String[] {"_ID as " + LexiconContract._ID,
+        String[] projection = new String[] {"_id as " + LexiconContract._ID,
                                             LexiconContract.COLUMN_GREEK_NO_SYMBOLS + " AS "
                                             + SearchManager.SUGGEST_COLUMN_TEXT_1,
-                                            "_ID AS "
+                                            "_id AS "
                                             + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID};
         String selection = LexiconContract.COLUMN_BETA_SYMBOLS + " LIKE ? OR "
                 + LexiconContract.COLUMN_BETA_NO_SYMBOLS + " LIKE ? OR "
@@ -154,7 +154,7 @@ public class LexiconProvider extends ContentProvider {
         String id = uri.getLastPathSegment();
         String[] projection = new String[] {ID, LexiconContract.COLUMN_ENTRY,
                 LexiconContract.COLUMN_GREEK_NO_SYMBOLS};
-        String selection = "_ID = ?";
+        String selection = "_id = ?";
         String[] selectionArgs = new String[] {id};
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(LexiconContract.TABLE_NAME);

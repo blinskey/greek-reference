@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.data.lexicon;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -25,12 +26,13 @@ public final class LexiconContract implements BaseColumns {
 
     private LexiconContract() {} // Empty constructor to prevent instantiation
 
-    public final static String DB_NAME = "lexicon";
-    public final static String TABLE_NAME = "lexicon";
-    public final static String COLUMN_ENTRY = "entry";
-    public final static String COLUMN_GREEK_NO_SYMBOLS = "greekNoSymbols";
-    public final static String COLUMN_GREEK_LOWERCASE = "greekLowercase";
-    public final static String COLUMN_BETA_SYMBOLS = "betaSymbols";
-    public final static String COLUMN_BETA_NO_SYMBOLS = "betaNoSymbols";
-    public final static String COLUMN_GREEK_FULL_WORD = "greekFullWord";
+    public static final String DB_NAME = "lexicon";
+    public static final String TABLE_NAME = "lexicon";
+    public static final String COLUMN_ENTRY = "entry";
+    public static final String COLUMN_GREEK_NO_SYMBOLS = "greekNoSymbols";
+    public static final String COLUMN_GREEK_LOWERCASE = "greekLowercase";
+    public static final String COLUMN_BETA_SYMBOLS = "betaSymbols";
+    public static final String COLUMN_BETA_NO_SYMBOLS = "betaNoSymbols";
+    public static final String COLUMN_GREEK_FULL_WORD = "greekFullWord";
+    public static final Uri CONTENT_URI = LexiconProvider.CONTENT_URI;
 }

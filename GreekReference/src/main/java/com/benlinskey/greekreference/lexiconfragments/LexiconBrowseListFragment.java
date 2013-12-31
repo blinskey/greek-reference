@@ -17,14 +17,23 @@
 package com.benlinskey.greekreference.lexiconfragments;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.SimpleCursorAdapter;
 
 import com.benlinskey.greekreference.BaseListFragment;
+import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.dummy.DummyContent;
 
 /**
@@ -36,7 +45,14 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class LexiconBrowseListFragment extends BaseListFragment {
+public class LexiconBrowseListFragment extends BaseListFragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    SimpleCursorAdapter mAdapter;
+    static final String[] PROJECTION = new String[] {LexiconContract._ID,
+            LexiconContract.COLUMN_GREEK_FULL_WORD};
+    static final String SELECTION = "";
+    static final String[] SELECTION_ARGS = {};
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -88,12 +104,30 @@ public class LexiconBrowseListFragment extends BaseListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
+        // TODO: Add progress indicator.
+
+        // Create and set list adapter.
+        // TODO: Override getView to use custom typeface.
+        String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
+        int[] toViews = {android.R.id.text1};
+        mAdapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1,
+                null, fromColumns, toViews, 0);
+        setListAdapter(mAdapter);
+
+        getLoaderManager().initLoader(0, null, this);
+    }
+
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getActivity(), LexiconContract.CONTENT_URI, PROJECTION, SELECTION,
+                SELECTION_ARGS, null);
+    }
+
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
+
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
     }
 
     @Override
