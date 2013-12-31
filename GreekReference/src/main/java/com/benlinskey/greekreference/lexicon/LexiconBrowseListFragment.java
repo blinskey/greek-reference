@@ -94,7 +94,7 @@ public class LexiconBrowseListFragment extends BaseListFragment
         // TODO: Override getView to use custom typeface.
         String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
         int[] toViews = {android.R.id.text1};
-        mAdapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1,
+        mAdapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_activated_1,
                 null, fromColumns, toViews, 0);
         setListAdapter(mAdapter);
 
@@ -163,9 +163,9 @@ public class LexiconBrowseListFragment extends BaseListFragment
     /**
      * Turns on activate-on-click mode. When this mode is on, list items will be
      * given the 'activated' state when touched.
+     * // TODO: Make activated item text white.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
-        Log.w("setActivate", "Browse SetActivateOnItemClick()");
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
         getListView().setChoiceMode(activateOnItemClick
