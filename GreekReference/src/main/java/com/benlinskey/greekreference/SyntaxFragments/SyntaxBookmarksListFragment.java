@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.benlinskey.greekreference.BaseListFragment;
 import com.benlinskey.greekreference.dummy.DummyContent;
 
 /**
@@ -34,7 +35,7 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class SyntaxBookmarksListFragment extends ListFragment {
+public class SyntaxBookmarksListFragment extends BaseListFragment {
 
     /**
      * The serialization (saved instance state) Bundle key representing the

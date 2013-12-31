@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -67,8 +68,12 @@ import java.io.File;
  * to listen for item selections.
  */
 public class MainActivity extends FragmentActivity
-        implements LexiconBrowseListFragment.Callbacks,
-        NavigationDrawerFragment.NavigationDrawerCallbacks, LexiconFavoritesListFragment.Callbacks{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        LexiconBrowseListFragment.Callbacks,
+        LexiconFavoritesListFragment.Callbacks,
+        LexiconHistoryListFragment.Callbacks,
+        SyntaxBrowseListFragment.Callbacks,
+        SyntaxBookmarksListFragment.Callbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle; // Used to store the last screen title.
@@ -166,13 +171,9 @@ public class MainActivity extends FragmentActivity
             // res/values-sw600dp). If this view is present, then the
             // activity should be in two-pane mode.
             mTwoPane = true;
-
-            // In two-pane mode, list items should be given the
-            // 'activated' state when touched.
-            ((LexiconBrowseListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.item_list_container))
-                    .setActivateOnItemClick(true);
         }
+
+        // TODO: Swap in fragments for current mode.
 
         // Install databases if necessary.
         File database = getDatabasePath(LexiconContract.DB_NAME);
@@ -400,6 +401,9 @@ public class MainActivity extends FragmentActivity
         swapInFragments(new SyntaxBookmarksListFragment(), new SyntaxDetailFragment());
     }
 
+    /**
+     * Replaces the currently displayed fragment(s) with the specified fragment(s).
+     */
     private void swapInFragments(Fragment listFragment, Fragment detailFragment) {
         if (mTwoPane) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -413,5 +417,9 @@ public class MainActivity extends FragmentActivity
             transaction.addToBackStack(null);
             transaction.commit();
         }
+    }
+
+    public boolean isTwoPane() {
+        return mTwoPane;
     }
 }

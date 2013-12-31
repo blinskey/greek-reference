@@ -19,10 +19,12 @@ package com.benlinskey.greekreference.lexiconfragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.benlinskey.greekreference.BaseListFragment;
 import com.benlinskey.greekreference.dummy.DummyContent;
 
 /**
@@ -34,7 +36,7 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class LexiconBrowseListFragment extends ListFragment {
+public class LexiconBrowseListFragment extends BaseListFragment {
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -148,6 +150,7 @@ public class LexiconBrowseListFragment extends ListFragment {
      * given the 'activated' state when touched.
      */
     public void setActivateOnItemClick(boolean activateOnItemClick) {
+        Log.w("setActivate", "Browse SetActivateOnItemClick()");
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
         getListView().setChoiceMode(activateOnItemClick
