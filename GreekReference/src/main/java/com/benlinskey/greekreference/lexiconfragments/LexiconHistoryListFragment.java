@@ -37,6 +37,8 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  */
 public class LexiconHistoryListFragment extends BaseListFragment {
 
+    public static final String NAME = "lexicon_history";
+
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -55,24 +57,12 @@ public class LexiconHistoryListFragment extends BaseListFragment {
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     /**
-     * A callback interface that all activities containing this fragment must
-     * implement. This mechanism allows activities to be notified of item
-     * selections.
-     */
-    public interface Callbacks {
-        /**
-         * Callback for when an item has been selected.
-         */
-        public void onItemSelected(String id);
-    }
-
-    /**
      * A dummy implementation of the {@link Callbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(String fragmentName, int id) {
         }
     };
 
@@ -132,7 +122,7 @@ public class LexiconHistoryListFragment extends BaseListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(NAME, position);
     }
 
     @Override

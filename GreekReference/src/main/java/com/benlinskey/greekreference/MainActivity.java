@@ -69,11 +69,7 @@ import java.io.File;
  */
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        LexiconBrowseListFragment.Callbacks,
-        LexiconFavoritesListFragment.Callbacks,
-        LexiconHistoryListFragment.Callbacks,
-        SyntaxBrowseListFragment.Callbacks,
-        SyntaxBookmarksListFragment.Callbacks {
+        BaseListFragment.Callbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle; // Used to store the last screen title.
@@ -224,8 +220,33 @@ public class MainActivity extends FragmentActivity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(String fragmentName, int id) {
+        switch (fragmentName) {
+            case LexiconBrowseListFragment.NAME:
+                lexiconBrowseItemSelected(id);
+                break;
+            case LexiconFavoritesListFragment.NAME:
+                lexiconFavoritesItemSelected(id);
+                break;
+            case LexiconHistoryListFragment.NAME:
+                lexiconHistoryItemSelected(id);
+                break;
+            case SyntaxBrowseListFragment.NAME:
+                syntaxBrowseItemSelected(id);
+                break;
+            case SyntaxBookmarksListFragment.NAME:
+                syntaxBookmarksItemSelected(id);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid fragment name");
+        }
+    }
+
+    private void lexiconBrowseItemSelected(int id) {
+        // TODO
         if (mTwoPane) {
+
+            /*
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
@@ -236,14 +257,32 @@ public class MainActivity extends FragmentActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
                     .commit();
-
+            */
         } else {
+            /*
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, ItemDetailActivity.class);
             detailIntent.putExtra(LexiconDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
+            */
         }
+    }
+
+    private void lexiconFavoritesItemSelected(int id) {
+        // TODO
+    }
+
+    private void lexiconHistoryItemSelected(int id) {
+        // TODO
+    }
+
+    private void syntaxBrowseItemSelected(int id) {
+        // TODO
+    }
+
+    private void syntaxBookmarksItemSelected(int id) {
+        // TODO
     }
 
     @Override

@@ -23,13 +23,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 
 import com.benlinskey.greekreference.BaseListFragment;
@@ -48,6 +43,7 @@ import com.benlinskey.greekreference.dummy.DummyContent;
 public class LexiconBrowseListFragment extends BaseListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    public final static String NAME = "lexicon_browse";
     SimpleCursorAdapter mAdapter;
     static final String[] PROJECTION = new String[] {LexiconContract._ID,
             LexiconContract.COLUMN_GREEK_FULL_WORD};
@@ -72,24 +68,12 @@ public class LexiconBrowseListFragment extends BaseListFragment
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     /**
-     * A callback interface that all activities containing this fragment must
-     * implement. This mechanism allows activities to be notified of item
-     * selections.
-     */
-    public interface Callbacks {
-        /**
-         * Callback for when an item has been selected.
-         */
-        public void onItemSelected(String id);
-    }
-
-    /**
      * A dummy implementation of the {@link Callbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(String fragmentName, int id) {
         }
     };
 
@@ -107,6 +91,7 @@ public class LexiconBrowseListFragment extends BaseListFragment
         // TODO: Add progress indicator.
 
         // Create and set list adapter.
+        // TODO: Replace this with a more efficiennt adapter.
         // TODO: Override getView to use custom typeface.
         String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
         int[] toViews = {android.R.id.text1};
@@ -164,10 +149,7 @@ public class LexiconBrowseListFragment extends BaseListFragment
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(NAME, position);
     }
 
     @Override
