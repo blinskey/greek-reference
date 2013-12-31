@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.lexiconfragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,12 +23,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.dummy.DummyContent;
 
 /**
  * A fragment representing a single Item detail screen.
- * This fragment is either contained in a {@link MainActivity}
- * in two-pane mode (on tablets) or a {@link ItemDetailActivity}
+ * This fragment is either contained in a {@link com.benlinskey.greekreference.MainActivity}
+ * in two-pane mode (on tablets) or a {@link com.benlinskey.greekreference.ItemDetailActivity}
  * on handsets.
  */
 public class LexiconDetailFragment extends Fragment {

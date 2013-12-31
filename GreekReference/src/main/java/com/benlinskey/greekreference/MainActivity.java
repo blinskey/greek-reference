@@ -34,10 +34,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
+import com.benlinskey.greekreference.SyntaxFragments.SyntaxBookmarksListFragment;
+import com.benlinskey.greekreference.SyntaxFragments.SyntaxBrowseListFragment;
+import com.benlinskey.greekreference.SyntaxFragments.SyntaxDetailFragment;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconHelper;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxHelper;
+import com.benlinskey.greekreference.lexiconfragments.LexiconBrowseListFragment;
+import com.benlinskey.greekreference.lexiconfragments.LexiconDetailFragment;
+import com.benlinskey.greekreference.lexiconfragments.LexiconFavoritesListFragment;
+import com.benlinskey.greekreference.lexiconfragments.LexiconHistoryListFragment;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
 import java.io.File;
@@ -373,15 +380,24 @@ public class MainActivity extends FragmentActivity
     }
 
     private void switchToLexiconHistory() {
-        // TODO
+        mTitle = getString(R.string.title_lexicon_history);
+        restoreActionBar();
+
+        swapInFragments(new LexiconHistoryListFragment(), new LexiconDetailFragment());
     }
 
     private void switchToSyntaxBrowse() {
-        // TODO
+        mTitle = getString(R.string.title_syntax_browse);
+        restoreActionBar();
+
+        swapInFragments(new SyntaxBrowseListFragment(), new SyntaxDetailFragment());
     }
 
     private void switchToSyntaxBookmarks() {
-        // TODO
+        mTitle = getString(R.string.title_syntax_bookmarks);
+        restoreActionBar();
+
+        swapInFragments(new SyntaxBookmarksListFragment(), new SyntaxDetailFragment());
     }
 
     private void swapInFragments(Fragment listFragment, Fragment detailFragment) {

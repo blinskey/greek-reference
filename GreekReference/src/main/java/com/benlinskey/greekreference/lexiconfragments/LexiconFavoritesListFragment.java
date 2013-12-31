@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.lexiconfragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -34,7 +34,7 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class LexiconBrowseListFragment extends ListFragment {
+public class LexiconFavoritesListFragment extends ListFragment {
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -79,7 +79,7 @@ public class LexiconBrowseListFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public LexiconBrowseListFragment() {
+    public LexiconFavoritesListFragment() {
     }
 
     @Override

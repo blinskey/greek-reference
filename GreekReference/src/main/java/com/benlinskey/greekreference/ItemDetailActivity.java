@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.benlinskey.greekreference.lexiconfragments.LexiconDetailFragment;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
 /**

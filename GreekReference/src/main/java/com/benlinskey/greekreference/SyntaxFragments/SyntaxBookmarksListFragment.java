@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.SyntaxFragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -29,12 +29,12 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * A list fragment representing a list of Items. This fragment
  * also supports tablet devices by allowing list items to be given an
  * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link com.benlinskey.greekreference.LexiconDetailFragment}.
+ * currently being viewed in a {@link com.benlinskey.greekreference.lexiconfragments.LexiconDetailFragment}.
  * <p>
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class LexiconFavoritesListFragment extends ListFragment {
+public class SyntaxBookmarksListFragment extends ListFragment {
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -79,7 +79,7 @@ public class LexiconFavoritesListFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public LexiconFavoritesListFragment() {
+    public SyntaxBookmarksListFragment() {
     }
 
     @Override
