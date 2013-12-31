@@ -76,6 +76,12 @@ public class LexiconXmlParser {
 
         //parser.require(XmlPullParser.START_TAG, NAMESPACE, "entry");
         while (parser.next() != XmlPullParser.END_TAG) {
+            if(XmlPullParser.TEXT == parser.getEventType()) {
+                // This fixes a bug that caused the app to crash due to extra whitespace between
+                // tags in the entry for "a)a/w."
+                continue;
+            }
+
             String name = parser.getName();
             if (name.equals("entry")) {
                 entry = readEntry(parser);
@@ -227,7 +233,6 @@ public class LexiconXmlParser {
                 text = new SpannableString(temp);
             } else if (XmlPullParser.START_TAG == parser.getEventType()) {
                 String name = parser.getName();
-                //noinspection StatementWithEmptyBody
                 if (name.equals("trans")) {
                     // Check child tags.
                 } else if (name.equals("tr")) {
