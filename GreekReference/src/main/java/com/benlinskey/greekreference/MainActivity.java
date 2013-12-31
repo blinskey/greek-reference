@@ -78,6 +78,7 @@ public class MainActivity extends FragmentActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle; // Used to store the last screen title.
     private static final String TAG = "MainActivity";
+    private static final String KEY_TITLE = "action_bar_title"; // Application state bundle key
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -182,6 +183,19 @@ public class MainActivity extends FragmentActivity
         }
 
         handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_TITLE, (String) mTitle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mTitle = savedInstanceState.getString(KEY_TITLE);
+        restoreActionBar();
     }
 
     @Override
