@@ -44,7 +44,7 @@
             android:exported="true" />
         <provider
             android:name="com.benlinskey.greekreference.data.appdata.HistoryProvider"
-            android:authorities="com.benlinskey.greekreference.data.HistoryProvider" />
+            android:authorities="com.benlinskey.greekreference.data.appdata.HistoryProvider" />
         <provider
             android:name="com.benlinskey.greekreference.data.syntax.SyntaxProvider"
             android:authorities="com.benlinskey.greekreference.data.syntax.SyntaxProvider" />

@@ -318,7 +318,6 @@ public class MainActivity extends FragmentActivity
         String[] selectionArgs = {id};
         Cursor cursor = getContentResolver().query(HistoryProvider.CONTENT_URI, projection,
                 selection, selectionArgs, null);
-        assert cursor != null;
 
         // If word is already in list, delete it.
         if (cursor.getCount() > 0) {
@@ -455,7 +454,7 @@ public class MainActivity extends FragmentActivity
             String id = cursor.getString(0);
             String entry = cursor.getString(1);
             String word = cursor.getString(2);
-            //displayLexiconEntry(id, word, entry);
+            displayLexiconEntry(id, word, entry);
             Log.w("SearchEntryFound", entry);
         } else {
             // TODO: Should I display a dialog here?
