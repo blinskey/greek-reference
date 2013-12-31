@@ -26,12 +26,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 /**
  * A ContentProvider for basic data stored by the app.
  */
 public class LexiconHistoryProvider extends ContentProvider {
 
+    private static final String TAG = "LexiconHistoryProvider";
     public static String AUTHORITY = "com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/appData");
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
@@ -69,6 +71,7 @@ public class LexiconHistoryProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
+        Log.w(TAG, "URI: " + uri.toString());
         switch (sMatcher.match(uri)) {
             case WORDS:
                 return getAllWords();
@@ -80,17 +83,17 @@ public class LexiconHistoryProvider extends ContentProvider {
     }
 
     private Cursor getAllWords() {
-        String[] projection = new String[] {BaseColumns._ID, AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID,
+        String[] projection = new String[] {AppDataContract.LexiconHistory._ID,
+                AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID,
                 AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
         String selection = null;
         String[] selectionArgs = null;
-        String sortOrder = BaseColumns._ID + " DESC";
+        String sortOrder = AppDataContract.LexiconHistory._ID + " DESC";
         SQLiteQueryBuilder queryBuilder= new SQLiteQueryBuilder();
         queryBuilder.setTables(AppDataContract.LexiconHistory.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
                 null, sortOrder, LIMIT);
-        assert cursor != null;
-        //noinspection ConstantConditions
+        Log.w(TAG, "Number of results: " + cursor.getCount());
         cursor.setNotificationUri(getContext().getContentResolver(), CONTENT_URI);
         return cursor;
     }
@@ -102,6 +105,7 @@ public class LexiconHistoryProvider extends ContentProvider {
      * @return a <code>Cursor</code> containing the results of the query
      */
     private Cursor getWord(Uri uri) {
+        Log.w(TAG, "URI: " + uri);
         String id = uri.getLastPathSegment();
         String[] projection = new String[] {BaseColumns._ID, AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID,
                 AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
@@ -128,6 +132,7 @@ public class LexiconHistoryProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+        Log.w(TAG, "Inserting: " + values.toString());
         long rowID = mDatabase.insert(AppDataContract.LexiconHistory.TABLE_NAME,
                 AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID, values);
         Uri resultUri = ContentUris.withAppendedId(CONTENT_URI, rowID);

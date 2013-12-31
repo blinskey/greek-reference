@@ -48,7 +48,8 @@ public class LexiconFavoritesListFragment extends BaseListFragment
 
     public static final String NAME = "lexicon_favorites";
     SimpleCursorAdapter mAdapter;
-    static final String[] PROJECTION = new String[] {AppDataContract.LexiconFavorites._ID};
+    static final String[] PROJECTION = new String[] {AppDataContract.LexiconFavorites._ID,
+            AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
     static final String SELECTION = "";
     static final String[] SELECTION_ARGS = {};
 

@@ -246,7 +246,8 @@ public class MainActivity extends FragmentActivity
     }
 
     private void lexiconBrowseItemSelected(int id) {
-        String[] columns = new String[] {LexiconContract.COLUMN_ENTRY};
+        String[] columns = new String[] {LexiconContract.COLUMN_ENTRY,
+                LexiconContract.COLUMN_GREEK_FULL_WORD};
         String selection = "_ID = ?";
         String selectionArgs[] = new String[] {Integer.toString(id + 1)}; // List IDs start at 0.
         Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI,
@@ -254,13 +255,15 @@ public class MainActivity extends FragmentActivity
         assert cursor != null;
 
         String entry = null;
+        String word = null;
         if (cursor.moveToFirst()) {
             entry = cursor.getString(0);
+            word = cursor.getString(1);
         } else {
             Log.e(TAG, "Entry not found.");
         }
 
-        displayLexiconEntry(id, null, entry);
+        displayLexiconEntry(id, word, entry);
     }
 
     private void lexiconFavoritesItemSelected(int id) {
@@ -279,6 +282,10 @@ public class MainActivity extends FragmentActivity
         // TODO
     }
 
+    /**
+     * Displays a lexicon entry. <code>word</code> must be <code>null</code> if the item was
+     * selected from the Lexicon History list.
+     */
     void displayLexiconEntry(int id, String word, String entry) {
         displayLexiconEntry(Integer.toString(id), word, entry);
     }
@@ -287,9 +294,8 @@ public class MainActivity extends FragmentActivity
         // TODO: If user searches from Quick Search Box, we may need to change the mode.
         // TODO: Track current mode with variable?
 
-        Log.w(TAG, entry);
-
         // Add entry to history, unless word was selected from history list.
+        // TODO: Determine mode using a variable and get rid of word parameter.
         if (word != null) {
             addHistory(id, word);
         }
@@ -313,7 +319,7 @@ public class MainActivity extends FragmentActivity
 
     void addHistory(String id, String word) {
         // Check whether this word is already contained in the list.
-        String[] projection = {BaseColumns._ID};
+        String[] projection = {AppDataContract.LexiconHistory._ID};
         String selection = AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = {id};
         Cursor cursor = getContentResolver().query(LexiconHistoryProvider.CONTENT_URI, projection,
@@ -321,7 +327,9 @@ public class MainActivity extends FragmentActivity
 
         // If word is already in list, delete it.
         if (cursor.getCount() > 0) {
-            getContentResolver().delete(LexiconHistoryProvider.CONTENT_URI, selection, selectionArgs);
+            Log.w(TAG, "Deleting duplicate word from history.");
+            getContentResolver()
+                    .delete(LexiconHistoryProvider.CONTENT_URI, selection, selectionArgs);
         }
 
         // Add word to top of list.

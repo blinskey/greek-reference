@@ -29,7 +29,6 @@ import android.widget.SimpleCursorAdapter;
 import com.benlinskey.greekreference.BaseListFragment;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
-import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
  * // TODO: Display a message when the History list is empty.
@@ -48,7 +47,8 @@ public class LexiconHistoryListFragment extends BaseListFragment
 
     public static final String NAME = "lexicon_History";
     SimpleCursorAdapter mAdapter;
-    static final String[] PROJECTION = new String[] {AppDataContract.LexiconHistory._ID};
+    static final String[] PROJECTION = new String[] {AppDataContract.LexiconHistory._ID,
+            AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
     static final String SELECTION = "";
     static final String[] SELECTION_ARGS = {};
 
