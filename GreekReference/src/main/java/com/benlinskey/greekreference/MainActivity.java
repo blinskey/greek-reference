@@ -408,6 +408,8 @@ public class MainActivity extends FragmentActivity
      * @param data  the URI of the lexicon entry to display
      */
     private void getLexiconEntry(Uri data) {
+        Log.w("Search", data.toString());
+
         // Get data.
         Cursor cursor = getContentResolver().query(data, null, null, null, null);
         assert cursor != null;
@@ -417,7 +419,7 @@ public class MainActivity extends FragmentActivity
         String word = "";
 
         try {
-            int idIndex = cursor.getColumnIndexOrThrow(LexiconProvider.ID);
+            int idIndex = cursor.getColumnIndexOrThrow(LexiconContract._ID);
             int entryIndex = cursor.getColumnIndexOrThrow(LexiconContract.COLUMN_ENTRY);
             int wordIndex = cursor.getColumnIndexOrThrow(LexiconContract.COLUMN_GREEK_NO_SYMBOLS);
             id = cursor.getString(idIndex);
@@ -425,10 +427,10 @@ public class MainActivity extends FragmentActivity
             word = cursor.getString(wordIndex);
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Failed to retrieve result from database.");
-            finish();
+            throw e;
         }
 
-        //displayLexiconEntry(id, word, entry);
+        displayLexiconEntry(id, word, entry);
         Log.w("SearchEntryFound", entry);
     }
 

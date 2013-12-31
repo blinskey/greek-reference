@@ -31,7 +31,6 @@ import android.net.Uri;
  */
 public class LexiconProvider extends ContentProvider {
     private final static String LIMIT = "20"; // Maximum number of search suggestions to return
-    public final static String ID = "_ID"; // TODO: Replace this with BaseColumns field?
 
     public static String AUTHORITY = "com.benlinskey.greekreference.data.lexicon.LexiconProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/lexicon");
@@ -152,7 +151,7 @@ public class LexiconProvider extends ContentProvider {
      */
     private Cursor getWord(Uri uri) {
         String id = uri.getLastPathSegment();
-        String[] projection = new String[] {ID, LexiconContract.COLUMN_ENTRY,
+        String[] projection = new String[] {LexiconContract._ID, LexiconContract.COLUMN_ENTRY,
                 LexiconContract.COLUMN_GREEK_NO_SYMBOLS};
         String selection = "_id = ?";
         String[] selectionArgs = new String[] {id};
