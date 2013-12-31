@@ -12,17 +12,6 @@
         android:layout_width="0dp"
         android:layout_weight="1"/>
 
-    <!--
-        android:id="@+id/item_list"
-        android:name="com.benlinskey.greekreference.lexiconfragments.LexiconBrowseListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        tools:context=".ItemListActivity"
-        tools:layout="@android:layout/list_content" />
-    -->
-
     <fragment android:id="@+id/navigation_drawer"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"

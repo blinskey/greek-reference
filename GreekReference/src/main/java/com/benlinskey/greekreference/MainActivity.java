@@ -248,7 +248,7 @@ public class MainActivity extends FragmentActivity
     private void lexiconBrowseItemSelected(int id) {
         String[] columns = new String[] {LexiconContract.COLUMN_ENTRY};
         String selection = "_ID = ?";
-        String selectionArgs[] = new String[] {Integer.toString(id)};
+        String selectionArgs[] = new String[] {Integer.toString(id + 1)}; // List IDs start at 0.
         Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI,
                 columns, selection, selectionArgs, null);
         assert cursor != null;
