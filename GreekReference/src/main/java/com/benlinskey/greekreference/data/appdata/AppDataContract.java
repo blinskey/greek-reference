@@ -20,16 +20,27 @@ import android.provider.BaseColumns;
 
 /**
  * A contract class for the AppData database.
+ *
+ * // TODO: Move content URIs to this class.
  */
 public final class AppDataContract {
 
     private AppDataContract() {} // Empty constructor to prevent instantiations
 
     /**
-     * A contract class for the history table.
+     * A contract class for the lexicon history table.
      */
-    public static abstract class History implements BaseColumns {
-        public static final String TABLE_NAME = "history";
+    public static abstract class LexiconHistory implements BaseColumns {
+        public static final String TABLE_NAME = "lexicon_history";
+        public static final String COLUMN_NAME_LEXICON_ID = "lexiconID";
+        public static final String COLUMN_NAME_WORD = "word";
+    }
+
+    /**
+     * A contract class for the lexicon favorites table.
+     */
+    public static abstract class LexiconFavorites implements BaseColumns {
+        public static final String TABLE_NAME = "lexicon_favorites";
         public static final String COLUMN_NAME_LEXICON_ID = "lexiconID";
         public static final String COLUMN_NAME_WORD = "word";
     }

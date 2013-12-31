@@ -36,11 +36,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
+import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
-import com.benlinskey.greekreference.data.appdata.HistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconHelper;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
@@ -314,21 +314,21 @@ public class MainActivity extends FragmentActivity
     void addHistory(String id, String word) {
         // Check whether this word is already contained in the list.
         String[] projection = {BaseColumns._ID};
-        String selection = AppDataContract.History.COLUMN_NAME_LEXICON_ID + " = ?";
+        String selection = AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = {id};
-        Cursor cursor = getContentResolver().query(HistoryProvider.CONTENT_URI, projection,
+        Cursor cursor = getContentResolver().query(LexiconHistoryProvider.CONTENT_URI, projection,
                 selection, selectionArgs, null);
 
         // If word is already in list, delete it.
         if (cursor.getCount() > 0) {
-            getContentResolver().delete(HistoryProvider.CONTENT_URI, selection, selectionArgs);
+            getContentResolver().delete(LexiconHistoryProvider.CONTENT_URI, selection, selectionArgs);
         }
 
         // Add word to top of list.
         ContentValues values = new ContentValues();
-        values.put(AppDataContract.History.COLUMN_NAME_LEXICON_ID, id);
-        values.put(AppDataContract.History.COLUMN_NAME_WORD, word);
-        getContentResolver().insert(HistoryProvider.CONTENT_URI, values);
+        values.put(AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID, id);
+        values.put(AppDataContract.LexiconHistory.COLUMN_NAME_WORD, word);
+        getContentResolver().insert(LexiconHistoryProvider.CONTENT_URI, values);
     }
 
     @Override

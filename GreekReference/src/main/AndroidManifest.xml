@@ -43,8 +43,11 @@
             android:authorities="com.benlinskey.greekreference.data.lexicon.LexiconProvider"
             android:exported="true" />
         <provider
-            android:name="com.benlinskey.greekreference.data.appdata.HistoryProvider"
-            android:authorities="com.benlinskey.greekreference.data.appdata.HistoryProvider" />
+            android:name="com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider"
+            android:authorities="com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider" />
+        <provider
+            android:name=".data.appdata.LexiconHistoryProvider"
+            android:authorities="com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider" />
         <provider
             android:name="com.benlinskey.greekreference.data.syntax.SyntaxProvider"
             android:authorities="com.benlinskey.greekreference.data.syntax.SyntaxProvider" />

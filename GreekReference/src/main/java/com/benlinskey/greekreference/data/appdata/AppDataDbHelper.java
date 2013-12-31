@@ -27,12 +27,18 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "AppData.db";
-    private static final String SQL_CREATE_ENTRIES = "CREATE TABLE "
-            + AppDataContract.History.TABLE_NAME + " (" + AppDataContract.History._ID
-            + " INTEGER PRIMARY KEY, " + AppDataContract.History.COLUMN_NAME_LEXICON_ID
-            + " INTEGER, " + AppDataContract.History.COLUMN_NAME_WORD + " STRING " + ")";
-    private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS "
-            + AppDataContract.History.TABLE_NAME;
+    private static final String SQL_CREATE_LEXICON_HISTORY_TABLE = "CREATE TABLE "
+            + AppDataContract.LexiconHistory.TABLE_NAME + " (" + AppDataContract.LexiconHistory._ID
+            + " INTEGER PRIMARY KEY, " + AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID
+            + " INTEGER, " + AppDataContract.LexiconHistory.COLUMN_NAME_WORD + " STRING " + ")";
+    private static final String SQL_CREATE_LEXICON_FAVORITES_TABLE = "CREATE TABLE "
+            + AppDataContract.LexiconFavorites.TABLE_NAME + " (" + AppDataContract.LexiconFavorites._ID
+            + " INTEGER PRIMARY KEY, " + AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID
+            + " INTEGER, " + AppDataContract.LexiconFavorites.COLUMN_NAME_WORD + " STRING " + ")";
+    private static final String SQL_DELETE_LEXICON_HISTORY_TABLE = "DROP TABLE IF EXISTS "
+            + AppDataContract.LexiconHistory.TABLE_NAME;
+    private static final String SQL_DELETE_LEXICON_FAVORITES_TABLE = "DROP TABLE IF EXISTS "
+            + AppDataContract.LexiconFavorites.TABLE_NAME;
 
     /**
      * Class constructor.
@@ -44,12 +50,14 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(SQL_CREATE_LEXICON_FAVORITES_TABLE);
+        db.execSQL(SQL_CREATE_LEXICON_HISTORY_TABLE);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Delete everything on upgrade.
-        db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(SQL_DELETE_LEXICON_FAVORITES_TABLE);
+        db.execSQL(SQL_DELETE_LEXICON_HISTORY_TABLE);
         onCreate(db);
     }
 

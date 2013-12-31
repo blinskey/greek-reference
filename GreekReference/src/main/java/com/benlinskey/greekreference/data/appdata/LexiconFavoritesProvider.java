@@ -27,15 +27,12 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
-import com.benlinskey.greekreference.data.appdata.AppDataDbHelper;
-
 /**
  * A ContentProvider for basic data stored by the app.
  */
-public class HistoryProvider extends ContentProvider {
+public class LexiconFavoritesProvider extends ContentProvider {
 
-    public static String AUTHORITY = "com.benlinskey.greekreference.data.appdata.HistoryProvider";
+    public static String AUTHORITY = "com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/appData");
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/vnd.benlinskey.greekreference";
@@ -83,17 +80,16 @@ public class HistoryProvider extends ContentProvider {
     }
 
     private Cursor getAllWords() {
-        String[] projection = new String[] {BaseColumns._ID, AppDataContract.History.COLUMN_NAME_LEXICON_ID,
-                AppDataContract.History.COLUMN_NAME_WORD};
+        String[] projection = new String[] {BaseColumns._ID,
+                AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID,
+                AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
         String selection = null;
         String[] selectionArgs = null;
         String sortOrder = BaseColumns._ID + " DESC";
         SQLiteQueryBuilder queryBuilder= new SQLiteQueryBuilder();
-        queryBuilder.setTables(AppDataContract.History.TABLE_NAME);
+        queryBuilder.setTables(AppDataContract.LexiconFavorites.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
                 null, sortOrder, LIMIT);
-        assert cursor != null;
-        //noinspection ConstantConditions
         cursor.setNotificationUri(getContext().getContentResolver(), CONTENT_URI);
         return cursor;
     }
@@ -106,12 +102,13 @@ public class HistoryProvider extends ContentProvider {
      */
     private Cursor getWord(Uri uri) {
         String id = uri.getLastPathSegment();
-        String[] projection = new String[] {BaseColumns._ID, AppDataContract.History.COLUMN_NAME_LEXICON_ID,
-                AppDataContract.History.COLUMN_NAME_WORD};
-        String selection = AppDataContract.History.COLUMN_NAME_LEXICON_ID + " = ?";
+        String[] projection = new String[] {BaseColumns._ID,
+                AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID,
+                AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
+        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = new String[] {id};
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(AppDataContract.History.TABLE_NAME);
+        queryBuilder.setTables(AppDataContract.LexiconFavorites.TABLE_NAME);
 
         return queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
                 null, null);
@@ -131,10 +128,9 @@ public class HistoryProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        long rowID = mDatabase.insert(AppDataContract.History.TABLE_NAME,
-                AppDataContract.History.COLUMN_NAME_LEXICON_ID, values);
+        long rowID = mDatabase.insert(AppDataContract.LexiconFavorites.TABLE_NAME,
+                AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, values);
         Uri resultUri = ContentUris.withAppendedId(CONTENT_URI, rowID);
-        //noinspection ConstantConditions
         getContext().getContentResolver().notifyChange(resultUri, null);
         return resultUri;
     }
@@ -151,12 +147,12 @@ public class HistoryProvider extends ContentProvider {
 
         switch (match) {
             case WORDS:
-                affected = mDatabase.delete(AppDataContract.History.TABLE_NAME,
+                affected = mDatabase.delete(AppDataContract.LexiconFavorites.TABLE_NAME,
                         selection, selectionArgs);
                 break;
             case WORD_ID:
                 long id = ContentUris.parseId(uri);
-                affected = mDatabase.delete(AppDataContract.History.TABLE_NAME,
+                affected = mDatabase.delete(AppDataContract.LexiconFavorites.TABLE_NAME,
                         BaseColumns._ID + "=" + id + " AND (" + selection + ")",
                         selectionArgs);
                 break;
@@ -164,7 +160,6 @@ public class HistoryProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI: " +  uri);
         }
 
-        //noinspection ConstantConditions
         getContext().getContentResolver().notifyChange(uri, null);
 
         return affected;
