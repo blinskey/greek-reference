@@ -51,6 +51,7 @@ public class LexiconHistoryListFragment extends BaseListFragment
             AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
     static final String SELECTION = "";
     static final String[] SELECTION_ARGS = {};
+    static final String ORDER_BY = AppDataContract.LexiconHistory._ID + " DESC";
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -106,7 +107,7 @@ public class LexiconHistoryListFragment extends BaseListFragment
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), LexiconHistoryProvider.CONTENT_URI, PROJECTION, SELECTION,
-                SELECTION_ARGS, null);
+                SELECTION_ARGS, ORDER_BY);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -152,9 +153,12 @@ public class LexiconHistoryListFragment extends BaseListFragment
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
 
+        Cursor cursor = (Cursor) mAdapter.getItem(position);
+        int lexiconHistoryId = cursor.getInt(0);
+
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(NAME, position);
+        mCallbacks.onItemSelected(NAME, lexiconHistoryId); // Database IDs start at 1.
     }
 
     @Override

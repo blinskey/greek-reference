@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.data.appdata;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -34,6 +35,7 @@ public final class AppDataContract {
         public static final String TABLE_NAME = "lexicon_history";
         public static final String COLUMN_NAME_LEXICON_ID = "lexiconID";
         public static final String COLUMN_NAME_WORD = "word";
+        public static final Uri CONTENT_URI = LexiconHistoryProvider.CONTENT_URI;
     }
 
     /**
@@ -43,5 +45,6 @@ public final class AppDataContract {
         public static final String TABLE_NAME = "lexicon_favorites";
         public static final String COLUMN_NAME_LEXICON_ID = "lexiconID";
         public static final String COLUMN_NAME_WORD = "word";
+        public static final Uri CONTENT_URI = LexiconFavoritesProvider.CONTENT_URI;
     }
 }

@@ -26,7 +26,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -35,12 +34,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
-import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
-import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
-import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
-import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
+import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconHelper;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
@@ -50,6 +47,9 @@ import com.benlinskey.greekreference.lexicon.LexiconDetailFragment;
 import com.benlinskey.greekreference.lexicon.LexiconFavoritesListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconHistoryListFragment;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
+import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
+import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
+import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
 
 import java.io.File;
 
@@ -76,6 +76,7 @@ public class MainActivity extends FragmentActivity
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle; // Used to store the last screen title.
+    private Mode mMode;
     private static final String TAG = "MainActivity";
     private static final String KEY_TITLE = "action_bar_title"; // Application state bundle key
 
@@ -245,14 +246,13 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    private void lexiconBrowseItemSelected(int id) {
+    private void lexiconItemSelected(int id) {
         String[] columns = new String[] {LexiconContract.COLUMN_ENTRY,
                 LexiconContract.COLUMN_GREEK_FULL_WORD};
         String selection = "_ID = ?";
-        String selectionArgs[] = new String[] {Integer.toString(id + 1)}; // List IDs start at 0.
+        String[] selectionArgs = new String[] {Integer.toString(id)};
         Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI,
                 columns, selection, selectionArgs, null);
-        assert cursor != null;
 
         String entry = null;
         String word = null;
@@ -266,12 +266,30 @@ public class MainActivity extends FragmentActivity
         displayLexiconEntry(id, word, entry);
     }
 
+    private void lexiconBrowseItemSelected(int id) {
+        lexiconItemSelected(id);
+    }
+
     private void lexiconFavoritesItemSelected(int id) {
         // TODO
+        // TODO: Do this in the fragment instead?
     }
 
     private void lexiconHistoryItemSelected(int id) {
-        // TODO
+        String[] columns = new String[] {AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID};
+        String selection = AppDataContract.LexiconHistory._ID + " = ?";
+        String[] selectionArgs = new String[] {Integer.toString(id)};
+        Cursor cursor = getContentResolver().query(AppDataContract.LexiconHistory.CONTENT_URI,
+                columns, selection, selectionArgs, null);
+
+        int lexiconId = -1;
+        if (cursor.moveToFirst()) {
+            lexiconId = cursor.getInt(0);
+        } else {
+            throw new IllegalArgumentException("Invalid ID: " + id);
+        }
+
+        lexiconItemSelected(lexiconId);
     }
 
     private void syntaxBrowseItemSelected(int id) {
@@ -282,21 +300,19 @@ public class MainActivity extends FragmentActivity
         // TODO
     }
 
-    /**
-     * Displays a lexicon entry. <code>word</code> must be <code>null</code> if the item was
-     * selected from the Lexicon History list.
-     */
     void displayLexiconEntry(int id, String word, String entry) {
         displayLexiconEntry(Integer.toString(id), word, entry);
     }
 
     void displayLexiconEntry(final String id, String word, String entry) {
-        // TODO: If user searches from Quick Search Box, we may need to change the mode.
-        // TODO: Track current mode with variable?
+        // If user searches from Quick Search Box, we may need to change the mode.
+        if (!mMode.equals(Mode.LEXICON_BROWSE) && !mMode.equals(Mode.LEXICON_FAVORITES)
+                && !mMode.equals(Mode.LEXICON_HISTORY)) {
+            switchToLexiconBrowse();
+        }
 
         // Add entry to history, unless word was selected from history list.
-        // TODO: Determine mode using a variable and get rid of word parameter.
-        if (word != null) {
+        if (!mMode.equals(Mode.LEXICON_HISTORY)) {
             addHistory(id, word);
         }
 
@@ -406,8 +422,28 @@ public class MainActivity extends FragmentActivity
         // Handle action bar item clicks here. The action bar will automatically handle clicks on
         // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
         // TODO: Handle selected items here.
+        switch (item.getItemId()) {
+            case R.id.action_clear_history:
+                clearHistory();
+                break;
+            default:
+                Log.w(TAG, "onOptionsItemSelected not yet fully implemented");
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void clearHistory() {
+        getContentResolver().delete(LexiconHistoryProvider.CONTENT_URI, null, null);
+        Toast toast = Toast.makeText(getApplicationContext(),
+                getString(R.string.clear_history_toast), Toast.LENGTH_SHORT);
+        toast.show();
+
+        if (mMode.equals(Mode.LEXICON_HISTORY)) {
+            LexiconHistoryListFragment fragment
+                    = (LexiconHistoryListFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.item_list_container);
+        }
     }
 
     /**
@@ -475,7 +511,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void switchToLexiconBrowse() {
-        // Display mode title.
+        mMode = Mode.LEXICON_BROWSE;
         mTitle = getString(R.string.title_lexicon_browse);
         restoreActionBar();
 
@@ -483,6 +519,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void switchToLexiconFavorites() {
+        mMode = Mode.LEXICON_FAVORITES;
         mTitle = getString(R.string.title_lexicon_favorites);
         restoreActionBar();
 
@@ -490,6 +527,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void switchToLexiconHistory() {
+        mMode = Mode.LEXICON_HISTORY;
         mTitle = getString(R.string.title_lexicon_history);
         restoreActionBar();
 
@@ -497,6 +535,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void switchToSyntaxBrowse() {
+        mMode = Mode.SYNTAX_BROWSE;
         mTitle = getString(R.string.title_syntax_browse);
         restoreActionBar();
 
@@ -504,6 +543,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void switchToSyntaxBookmarks() {
+        mMode = Mode.SYNTAX_BOOKMARKS;
         mTitle = getString(R.string.title_syntax_bookmarks);
         restoreActionBar();
 

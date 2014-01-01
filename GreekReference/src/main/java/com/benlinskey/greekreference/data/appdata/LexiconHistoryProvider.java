@@ -28,6 +28,8 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import com.benlinskey.greekreference.data.lexicon.LexiconContract;
+
 /**
  * A ContentProvider for basic data stored by the app.
  */
@@ -74,7 +76,7 @@ public class LexiconHistoryProvider extends ContentProvider {
         Log.w(TAG, "URI: " + uri.toString());
         switch (sMatcher.match(uri)) {
             case WORDS:
-                return getAllWords();
+                return searchWords(uri, projection, selection, selectionArgs, sortOrder);
             case WORD_ID:
                 return getWord(uri);
             default:
@@ -82,19 +84,13 @@ public class LexiconHistoryProvider extends ContentProvider {
         }
     }
 
-    private Cursor getAllWords() {
-        String[] projection = new String[] {AppDataContract.LexiconHistory._ID,
-                AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID,
-                AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
-        String selection = null;
-        String[] selectionArgs = null;
-        String sortOrder = AppDataContract.LexiconHistory._ID + " DESC";
-        SQLiteQueryBuilder queryBuilder= new SQLiteQueryBuilder();
+    private Cursor searchWords(Uri uri, String[] projection, String selection, String[] selectionArgs,
+                    String sortOrder) {
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(AppDataContract.LexiconHistory.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
-                null, sortOrder, LIMIT);
-        Log.w(TAG, "Number of results: " + cursor.getCount());
-        cursor.setNotificationUri(getContext().getContentResolver(), CONTENT_URI);
+                null, sortOrder);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
@@ -105,7 +101,6 @@ public class LexiconHistoryProvider extends ContentProvider {
      * @return a <code>Cursor</code> containing the results of the query
      */
     private Cursor getWord(Uri uri) {
-        Log.w(TAG, "URI: " + uri);
         String id = uri.getLastPathSegment();
         String[] projection = new String[] {BaseColumns._ID, AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID,
                 AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
@@ -113,9 +108,10 @@ public class LexiconHistoryProvider extends ContentProvider {
         String[] selectionArgs = new String[] {id};
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(AppDataContract.LexiconHistory.TABLE_NAME);
-
-        return queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
+        Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
                 null, null);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
     }
 
     @Override

@@ -147,7 +147,7 @@ public class LexiconBrowseListFragment extends BaseListFragment
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        mCallbacks.onItemSelected(NAME, position);
+        mCallbacks.onItemSelected(NAME, position + 1); // Positions are off by one from database ID.
     }
 
     @Override

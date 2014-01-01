@@ -110,8 +110,6 @@ public class LexiconProvider extends ContentProvider {
         queryBuilder.setTables(LexiconContract.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
                                            null, sortOrder);
-        assert cursor != null;
-        //noinspection ConstantConditions
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }

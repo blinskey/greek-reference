@@ -28,5 +28,6 @@
     <string name="title_lexicon_history">History</string>
     <string name="title_syntax_browse">Browse</string>
     <string name="title_syntax_bookmarks">Bookmarks</string>
+    <string name="clear_history_toast">History cleared.</string>
 
 </resources>
