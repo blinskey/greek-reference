@@ -75,15 +75,10 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
      * state of this row.
      */
     private void updateColor() {
-        // TODO: Switch icon color once icons are implemented.
         if (mIsChecked) {
             setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-            ((TextView) findViewById(R.id.navigation_drawer_row_text))
-                    .setTextColor(getResources().getColor(android.R.color.white));
         } else {
             setBackgroundColor(getResources().getColor(android.R.color.transparent));
-            ((TextView) findViewById(R.id.navigation_drawer_row_text))
-                    .setTextColor(getResources().getColor(android.R.color.black));
         }
     }
 }

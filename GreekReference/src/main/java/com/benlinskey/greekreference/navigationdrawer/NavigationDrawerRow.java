@@ -24,11 +24,18 @@ import android.content.Context;
 public class NavigationDrawerRow extends NavigationDrawerItem {
 
     private static final int TYPE = 1;
-    private int mIcon;
+    private int mIconUnhighlighted;
+    private int mIconHighlighted;
+    private int mCurrentIcon;
 
-    public NavigationDrawerRow(int id, String label, String icon, Context context) {
+    public NavigationDrawerRow(int id, String label, String iconUnhighlighted,
+            String iconHighlighted, Context context) {
         super(id, label);
-        mIcon = context.getResources().getIdentifier(icon, "drawable", context.getPackageName());
+        mIconUnhighlighted = context.getResources().getIdentifier(iconUnhighlighted, "drawable",
+                context.getPackageName());
+        mIconHighlighted = context.getResources().getIdentifier(iconHighlighted, "drawable",
+                context.getPackageName());
+        mCurrentIcon = mIconUnhighlighted;
     }
 
     @Override
@@ -47,11 +54,15 @@ public class NavigationDrawerRow extends NavigationDrawerItem {
     }
 
     public int getIcon() {
-        return mIcon;
+        return mCurrentIcon;
     }
 
-    public void setIcon(int icon) {
-        mIcon = icon;
+    public void setIconHighlighted(boolean highlighted) {
+        if (highlighted) {
+            mCurrentIcon = mIconHighlighted;
+        } else {
+            mCurrentIcon = mIconUnhighlighted;
+        }
     }
 
     @Override

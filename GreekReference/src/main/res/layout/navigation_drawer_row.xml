@@ -12,10 +12,13 @@
         android:paddingBottom="10dp">
         <ImageView android:id="@+id/navigation_drawer_row_icon"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="10dp"/>
         <TextView android:id="@+id/navigation_drawer_row_text"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
             android:paddingLeft="15dp"
             style="@android:style/TextAppearance.Medium"/>
     </LinearLayout>

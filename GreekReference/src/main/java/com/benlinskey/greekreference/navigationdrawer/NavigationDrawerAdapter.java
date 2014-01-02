@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.benlinskey.greekreference.R;
@@ -30,11 +31,13 @@ import com.benlinskey.greekreference.R;
  * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
  */
 public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> {
-    private LayoutInflater inflater;
+    private LayoutInflater mInflater;
+    Context mContext;
 
     public NavigationDrawerAdapter(Context context, int id, NavigationDrawerItem[] objects) {
         super(context, id, objects);
-        this.inflater = LayoutInflater.from(context);
+        this.mInflater = LayoutInflater.from(context);
+        mContext = context;
     }
 
     @Override
@@ -42,19 +45,20 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         View view = null;
         NavigationDrawerItem item = this.getItem(position);
         if (item.isRow()) {
-            view = getRowView(convertView, parent, item);
+            view = getRowView(convertView, parent, item, position);
         } else {
             view = getHeadingView(convertView, parent, item);
         }
         return view;
     }
 
-    public View getRowView(View convertView, ViewGroup parentView, NavigationDrawerItem item) {
+    public View getRowView(View convertView, ViewGroup parentView, NavigationDrawerItem item,
+            int position) {
         NavigationDrawerRow row = (NavigationDrawerRow) item;
         NavigationDrawerRowHolder navigationDrawerRowHolder = null;
 
         if (null == convertView) {
-            convertView = inflater.inflate(R.layout.navigation_drawer_row, parentView, false);
+            convertView = mInflater.inflate(R.layout.navigation_drawer_row, parentView, false);
             TextView textView = (TextView)
                     convertView.findViewById(R.id.navigation_drawer_row_text);
             ImageView imageView = (ImageView)
@@ -72,6 +76,20 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         }
 
         navigationDrawerRowHolder.textView.setText(item.getLabel());
+
+        // Text and icon color are determined by whether the item is checked.
+        if (((ListView) parentView).isItemChecked(position)) {
+            // Item is highlighted.
+            ((NavigationDrawerRow) item).setIconHighlighted(true);
+            navigationDrawerRowHolder.textView
+                    .setTextColor(mContext.getResources().getColor(android.R.color.white));
+        } else {
+            // Item is not highlighted.
+            ((NavigationDrawerRow) item).setIconHighlighted(false);
+            navigationDrawerRowHolder.textView
+                    .setTextColor(mContext.getResources().getColor(android.R.color.black));
+        }
+
         navigationDrawerRowHolder.imageView
                 .setImageResource(((NavigationDrawerRow) item).getIcon());
 
@@ -83,7 +101,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         NavigationDrawerHeadingHolder holder = null;
 
         if (null == convertView) {
-            convertView = inflater.inflate(R.layout.navigation_drawer_heading, parentView, false);
+            convertView = mInflater.inflate(R.layout.navigation_drawer_heading, parentView, false);
             TextView textView = (TextView)
                     convertView.findViewById(R.id.navigation_drawer_heading_text);
 
