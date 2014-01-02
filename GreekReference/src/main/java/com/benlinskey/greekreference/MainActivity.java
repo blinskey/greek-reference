@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -46,6 +47,7 @@ import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconDetailFragment;
 import com.benlinskey.greekreference.lexicon.LexiconFavoritesListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconHistoryListFragment;
+import com.benlinskey.greekreference.lexicon.LexiconListFragment;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
@@ -93,6 +95,8 @@ public class MainActivity extends FragmentActivity
         SYNTAX_BROWSE(5, "syntax_browse"),
         SYNTAX_BOOKMARKS(6, "syntax_bookmarks");
 
+        // TODO: Add a "type" variable to track Lexicon/Syntax mode type?
+
         private final int mPosition;
         private final String mName;
 
@@ -113,6 +117,15 @@ public class MainActivity extends FragmentActivity
                 }
             }
             throw new IllegalArgumentException("Invalid nav drawer position");
+        }
+
+        private static boolean isLexiconMode(Mode mode) {
+            return mode.equals(LEXICON_BROWSE) || mode.equals(LEXICON_FAVORITES)
+                    || mode.equals(LEXICON_HISTORY);
+        }
+
+        private static boolean isSyntaxMode(Mode mode) {
+            return mode.equals(SYNTAX_BROWSE) || mode.equals(SYNTAX_BOOKMARKS);
         }
     }
 
@@ -227,13 +240,9 @@ public class MainActivity extends FragmentActivity
     public void onItemSelected(String fragmentName, int id) {
         switch (fragmentName) {
             case LexiconBrowseListFragment.NAME:
-                lexiconBrowseItemSelected(id);
-                break;
             case LexiconFavoritesListFragment.NAME:
-                lexiconFavoritesItemSelected(id);
-                break;
             case LexiconHistoryListFragment.NAME:
-                lexiconHistoryItemSelected(id);
+                lexiconItemSelected();
                 break;
             case SyntaxBrowseListFragment.NAME:
                 syntaxBrowseItemSelected(id);
@@ -244,9 +253,14 @@ public class MainActivity extends FragmentActivity
             default:
                 throw new IllegalArgumentException("Invalid fragment name");
         }
+        invalidateOptionsMenu();
     }
 
-    private void lexiconItemSelected(int id) {
+    private void lexiconItemSelected() {
+        LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        int id = fragment.getSelectedLexiconId();
+
         String[] columns = new String[] {LexiconContract.COLUMN_ENTRY,
                 LexiconContract.COLUMN_GREEK_FULL_WORD};
         String selection = "_ID = ?";
@@ -264,32 +278,6 @@ public class MainActivity extends FragmentActivity
         }
 
         displayLexiconEntry(id, word, entry);
-    }
-
-    private void lexiconBrowseItemSelected(int id) {
-        lexiconItemSelected(id);
-    }
-
-    private void lexiconFavoritesItemSelected(int id) {
-        // TODO
-        // TODO: Do this in the fragment instead?
-    }
-
-    private void lexiconHistoryItemSelected(int id) {
-        String[] columns = new String[] {AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID};
-        String selection = AppDataContract.LexiconHistory._ID + " = ?";
-        String[] selectionArgs = new String[] {Integer.toString(id)};
-        Cursor cursor = getContentResolver().query(AppDataContract.LexiconHistory.CONTENT_URI,
-                columns, selection, selectionArgs, null);
-
-        int lexiconId = -1;
-        if (cursor.moveToFirst()) {
-            lexiconId = cursor.getInt(0);
-        } else {
-            throw new IllegalArgumentException("Invalid ID: " + id);
-        }
-
-        lexiconItemSelected(lexiconId);
     }
 
     private void syntaxBrowseItemSelected(int id) {
@@ -343,7 +331,6 @@ public class MainActivity extends FragmentActivity
 
         // If word is already in list, delete it.
         if (cursor.getCount() > 0) {
-            Log.w(TAG, "Deleting duplicate word from history.");
             getContentResolver()
                     .delete(LexiconHistoryProvider.CONTENT_URI, selection, selectionArgs);
         }
@@ -357,8 +344,6 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        Log.w(TAG, "Nav drawer item selected: " + position);
-
         /*
          * We consider the user to have learned the drawer once he or she selects an item. This
          * prevents the drawer from appearing repeatedly in the one-pane mode. This is just a quick
@@ -400,21 +385,50 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen if the drawer is not
-            // showing. Otherwise, let the drawer decide what to show in the action bar.
-            // Inflate the optiotns menu from XML.
-            getMenuInflater().inflate(R.menu.lexicon_menu, menu); // TODO: Display appropriate menu for current mode.
+        // Only show items in the action bar relevant to this screen if the drawer is not
+        // showing. Otherwise, let the drawer decide what to show in the action bar.
+        if (mNavigationDrawerFragment.isDrawerOpen()) {
+            return super.onCreateOptionsMenu(menu);
+        }
+
+        // Inflate the options menu from XML. We have to handle the menu here rather than in the
+        // fragment so that we can hide them when the navigation drawer is open.
+        if (Mode.isLexiconMode(mMode)) {
+            getMenuInflater().inflate(R.menu.lexicon_menu, menu);
+            setLexiconFavoriteIcon(menu);
 
             // Get the SearchView and set the searchable configuration.
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
             SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            //searchView.setIconifiedByDefault(false); // We're iconifying for now.
+
             restoreActionBar();
             return true;
+        } else if (Mode.isSyntaxMode(mMode)) {
+            getMenuInflater().inflate(R.menu.syntax_menu, menu);
+            restoreActionBar();
+            return true;
+        } else {
+            throw new IllegalStateException("Invalid mode");
         }
-        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Only show items in the action bar relevant to this screen if the drawer is not
+        // showing. Otherwise, let the drawer decide what to show in the action bar.
+        if (mNavigationDrawerFragment.isDrawerOpen()) {
+            return super.onCreateOptionsMenu(menu);
+        }
+
+        if (Mode.isLexiconMode(mMode)) {
+            setLexiconFavoriteIcon(menu);
+        } else if (Mode.isSyntaxMode(mMode)) {
+            // TODO
+        } else {
+            throw new IllegalStateException("Invalid mode");
+        }
+        return true;
     }
 
     @Override
@@ -426,8 +440,14 @@ public class MainActivity extends FragmentActivity
             case R.id.action_clear_history:
                 clearHistory();
                 break;
+            case R.id.action_add_favorite:
+                addLexiconFavorite();
+                break;
+            case R.id.action_remove_favorite:
+                removeLexiconFavorite();
+                break;
             default:
-                Log.w(TAG, "onOptionsItemSelected not yet fully implemented");
+                throw new IllegalArgumentException("Invalid item: " + item.getTitle());
         }
 
         return super.onOptionsItemSelected(item);
@@ -452,11 +472,8 @@ public class MainActivity extends FragmentActivity
      * @param data  the URI of the lexicon entry to display
      */
     private void getLexiconEntry(Uri data) {
-        Log.w("Search", data.toString());
-
         // Get data.
         Cursor cursor = getContentResolver().query(data, null, null, null, null);
-        assert cursor != null;
         cursor.moveToFirst();
         String entry = "";
         String id = "";
@@ -475,7 +492,6 @@ public class MainActivity extends FragmentActivity
         }
 
         displayLexiconEntry(id, word, entry);
-        Log.w("SearchEntryFound", entry);
     }
 
     /**
@@ -494,16 +510,14 @@ public class MainActivity extends FragmentActivity
 
         Cursor cursor = getContentResolver().query(LexiconProvider.CONTENT_URI, columns, selection,
                 selectionArgs, sortOrder);
-        assert cursor != null;
 
         if (cursor.moveToFirst()) {
             String id = cursor.getString(0);
             String entry = cursor.getString(1);
             String word = cursor.getString(2);
             displayLexiconEntry(id, word, entry);
-            Log.w("SearchEntryFound", entry);
         } else {
-            // TODO: Should I display a dialog here?
+            // TODO: Display a toast here.
             Log.w(TAG, "No results.");
         }
 
@@ -570,5 +584,63 @@ public class MainActivity extends FragmentActivity
 
     public boolean isTwoPane() {
         return mTwoPane;
+    }
+
+    private void setLexiconFavoriteIcon(Menu menu) {
+        LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+
+        MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
+        MenuItem removeFavorite = menu.findItem(R.id.action_remove_favorite);
+
+        // Hide both icons when no word is selected.
+        if (fragment.nothingIsSelected()) {
+            addFavorite.setVisible(false);
+            removeFavorite.setVisible(false);
+        } else if (fragment.selectedWordIsFavorite()) {
+            addFavorite.setVisible(false);
+            removeFavorite.setVisible(true);
+        } else {
+            addFavorite.setVisible(true);
+            removeFavorite.setVisible(false);
+        }
+    }
+
+    private void addLexiconFavorite() {
+        LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        int lexiconId = fragment.getSelectedLexiconId();
+        String word = getWordFromLexiconId(lexiconId);
+        ContentValues values = new ContentValues();
+        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, lexiconId);
+        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, word);
+        getContentResolver().insert(AppDataContract.LexiconFavorites.CONTENT_URI, values);
+        invalidateOptionsMenu();
+    }
+
+    private void removeLexiconFavorite() {
+        LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        int lexiconId = fragment.getSelectedLexiconId();
+        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
+        String[] selectionArgs = {Integer.toString(lexiconId)};
+        getContentResolver()
+                .delete(AppDataContract.LexiconFavorites.CONTENT_URI, selection, selectionArgs);
+        invalidateOptionsMenu();
+    }
+
+    private String getWordFromLexiconId(int id) {
+        String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD};
+        String selection = LexiconContract._ID + " = ?";
+        String[] selectionArgs = {Integer.toString(id)};
+        Cursor cursor = getContentResolver()
+                .query(LexiconContract.CONTENT_URI, projection, selection, selectionArgs, null);
+        String word = null;
+        if (cursor.moveToFirst()) {
+            word = cursor.getString(0);
+        } else {
+            throw new IllegalArgumentException("Invalid lexicon ID: " + id);
+        }
+        return word;
     }
 }

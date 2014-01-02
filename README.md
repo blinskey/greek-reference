@@ -6,6 +6,10 @@ This is an ancient Greek lexicon and grammar for Android. It is currently in dev
 
 This version of Greek Reference is designed to work with a new version of the [Greek Reference Database Creator][]. It replaces the old version of Greek Reference hosted on Bitbucket.
 
+## Icons
+
+This project includes icons from <androidicons.com>. Since they're not licensed for redistribution, they're excluded from the repository. If you'd like to build the app yourself, you'll need to provide your own replacement icons.
+
 ## Texts
 
 This project includes the text of *An Intermediate Greek-English Lexicon*, by Henry George Liddell and Robert Scott. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at http://www.perseus.tufts.edu/hopper/.

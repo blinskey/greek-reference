@@ -22,11 +22,14 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.benlinskey.greekreference.BaseListFragment;
+import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
@@ -38,7 +41,7 @@ import com.benlinskey.greekreference.data.lexicon.LexiconContract;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class LexiconBrowseListFragment extends BaseListFragment
+public class LexiconBrowseListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public final static String NAME = "lexicon_browse";
@@ -147,6 +150,7 @@ public class LexiconBrowseListFragment extends BaseListFragment
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
+        setSelectedLexiconItemId(position);
         mCallbacks.onItemSelected(NAME, position + 1); // Positions are off by one from database ID.
     }
 
@@ -180,5 +184,9 @@ public class LexiconBrowseListFragment extends BaseListFragment
         }
 
         mActivatedPosition = position;
+    }
+
+    private void setSelectedLexiconItemId(int id) {
+        mSelectedLexiconId = id + 1;
     }
 }

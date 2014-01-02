@@ -29,5 +29,7 @@
     <string name="title_syntax_browse">Browse</string>
     <string name="title_syntax_bookmarks">Bookmarks</string>
     <string name="clear_history_toast">History cleared.</string>
+    <string name="action_add_favorite">Add to favorites</string>
+    <string name="action_remove_favorite">Remove from favorites</string>
 
 </resources>

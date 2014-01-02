@@ -73,7 +73,6 @@ public class LexiconHistoryProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
-        Log.w(TAG, "URI: " + uri.toString());
         switch (sMatcher.match(uri)) {
             case WORDS:
                 return searchWords(uri, projection, selection, selectionArgs, sortOrder);
@@ -128,7 +127,6 @@ public class LexiconHistoryProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        Log.w(TAG, "Inserting: " + values.toString());
         long rowID = mDatabase.insert(AppDataContract.LexiconHistory.TABLE_NAME,
                 AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID, values);
         Uri resultUri = ContentUris.withAppendedId(CONTENT_URI, rowID);

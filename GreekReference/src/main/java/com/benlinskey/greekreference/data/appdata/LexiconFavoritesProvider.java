@@ -71,7 +71,7 @@ public class LexiconFavoritesProvider extends ContentProvider {
             String sortOrder) {
         switch (sMatcher.match(uri)) {
             case WORDS:
-                return getAllWords();
+                return searchWords(uri, projection, selection, selectionArgs, sortOrder);
             case WORD_ID:
                 return getWord(uri);
             default:
@@ -79,18 +79,13 @@ public class LexiconFavoritesProvider extends ContentProvider {
         }
     }
 
-    private Cursor getAllWords() {
-        String[] projection = new String[] {BaseColumns._ID,
-                AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID,
-                AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
-        String selection = null;
-        String[] selectionArgs = null;
-        String sortOrder = BaseColumns._ID + " DESC";
-        SQLiteQueryBuilder queryBuilder= new SQLiteQueryBuilder();
+    private Cursor searchWords(Uri uri, String[] projection, String selection, String[] selectionArgs,
+                               String sortOrder) {
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(AppDataContract.LexiconFavorites.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
-                null, sortOrder, LIMIT);
-        cursor.setNotificationUri(getContext().getContentResolver(), CONTENT_URI);
+                null, sortOrder);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 

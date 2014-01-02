@@ -17,11 +17,20 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- Favorite/unfavorite icons are placeholders. -->
+    <item android:id="@+id/action_add_favorite"
+          android:icon="@drawable/ic_action_star_0"
+          android:title="@string/action_add_favorite"
+          android:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_remove_favorite"
+          android:icon="@drawable/ic_action_star_10"
+          android:title="@string/action_remove_favorite"
+          android:showAsAction="ifRoom"/>
     <item android:id="@+id/menu_search"
           android:icon="@android:drawable/ic_menu_search"
           android:title="@string/search"
           android:showAsAction="ifRoom|collapseActionView"
-          android:actionViewClass="android.widget.SearchView" />
+          android:actionViewClass="android.widget.SearchView" />"
     <item android:id="@+id/action_clear_history"
           android:title="@string/action_clear_history"
           android:showAsAction="never"/>

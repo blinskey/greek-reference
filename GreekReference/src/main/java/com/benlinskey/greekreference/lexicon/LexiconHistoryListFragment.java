@@ -42,7 +42,7 @@ import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class LexiconHistoryListFragment extends BaseListFragment
+public class LexiconHistoryListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>{
 
     public static final String NAME = "lexicon_History";
@@ -156,6 +156,8 @@ public class LexiconHistoryListFragment extends BaseListFragment
         Cursor cursor = (Cursor) mAdapter.getItem(position);
         int lexiconHistoryId = cursor.getInt(0);
 
+        setSelectedLexiconItemId(lexiconHistoryId);
+
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
         mCallbacks.onItemSelected(NAME, lexiconHistoryId); // Database IDs start at 1.
@@ -190,5 +192,19 @@ public class LexiconHistoryListFragment extends BaseListFragment
         }
 
         mActivatedPosition = position;
+    }
+
+    private void setSelectedLexiconItemId(int id) {
+        String[] columns = new String[] {AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID};
+        String selection = AppDataContract.LexiconHistory._ID + " = ?";
+        String[] selectionArgs = new String[] {Integer.toString(id)};
+        Cursor cursor = getActivity().getContentResolver().query(AppDataContract.LexiconHistory.CONTENT_URI,
+                columns, selection, selectionArgs, null);
+
+        if (cursor.moveToFirst()) {
+            mSelectedLexiconId = cursor.getInt(0);
+        } else {
+            throw new IllegalArgumentException("Invalid ID: " + id);
+        }
     }
 }

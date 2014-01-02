@@ -43,7 +43,7 @@ import com.benlinskey.greekreference.data.lexicon.LexiconContract;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class LexiconFavoritesListFragment extends BaseListFragment
+public class LexiconFavoritesListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>{
 
     public static final String NAME = "lexicon_favorites";
@@ -96,6 +96,7 @@ public class LexiconFavoritesListFragment extends BaseListFragment
         // Create and set list adapter.
         // TODO: Replace this with a more efficient adapter.
         // TODO: Override getView to use custom typeface.
+        // TODO: Display a message when this list is empty.
         String[] fromColumns = {AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
         int[] toViews = {android.R.id.text1};
         mAdapter = new android.widget.SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_activated_1,
@@ -153,9 +154,14 @@ public class LexiconFavoritesListFragment extends BaseListFragment
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
 
+        Cursor cursor = (Cursor) mAdapter.getItem(position);
+        int lexiconFavoritesId = cursor.getInt(0);
+
+        setSelectedLexiconItemId(lexiconFavoritesId);
+
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(NAME, position);
+        mCallbacks.onItemSelected(NAME, lexiconFavoritesId);
     }
 
     @Override
@@ -187,5 +193,20 @@ public class LexiconFavoritesListFragment extends BaseListFragment
         }
 
         mActivatedPosition = position;
+    }
+
+    private void setSelectedLexiconItemId(int id) {
+        String[] columns = new String[] {AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID};
+        String selection = AppDataContract.LexiconFavorites._ID + " = ?";
+        String[] selectionArgs = new String[] {Integer.toString(id)};
+        Cursor cursor = getActivity().getContentResolver()
+                .query(AppDataContract.LexiconFavorites.CONTENT_URI, columns, selection,
+                        selectionArgs, null);
+
+        if (cursor.moveToFirst()) {
+            mSelectedLexiconId = cursor.getInt(0);
+        } else {
+            throw new IllegalArgumentException("Invalid ID: " + id);
+        }
     }
 }
