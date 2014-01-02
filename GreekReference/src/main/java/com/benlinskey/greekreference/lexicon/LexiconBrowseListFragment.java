@@ -189,4 +189,13 @@ public class LexiconBrowseListFragment extends LexiconListFragment
     private void setSelectedLexiconItemId(int id) {
         mSelectedLexiconId = id + 1;
     }
+
+    public void selectItem(int id) {
+        mSelectedLexiconId = id;
+        int position = id - 1;
+        setActivatedPosition(position);
+        getListView().setSelection(position); // TODO: Jump to selected item in list. This doesn't seem to do it.
+        mCallbacks.onItemSelected(NAME, position);
+
+    }
 }

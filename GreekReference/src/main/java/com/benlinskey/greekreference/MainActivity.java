@@ -33,6 +33,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -259,6 +260,26 @@ public class MainActivity extends FragmentActivity
                 .findFragmentById(R.id.item_list_container);
         int id = fragment.getSelectedLexiconId();
 
+        String[] columns = new String[] {LexiconContract.COLUMN_ENTRY,
+                LexiconContract.COLUMN_GREEK_FULL_WORD};
+        String selection = "_ID = ?";
+        String[] selectionArgs = new String[] {Integer.toString(id)};
+        Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI,
+                columns, selection, selectionArgs, null);
+
+        String entry = null;
+        String word = null;
+        if (cursor.moveToFirst()) {
+            entry = cursor.getString(0);
+            word = cursor.getString(1);
+        } else {
+            Log.e(TAG, "Entry not found.");
+        }
+
+        displayLexiconEntry(id, word, entry);
+    }
+
+    private void lexiconItemSelected(int id) {
         String[] columns = new String[] {LexiconContract.COLUMN_ENTRY,
                 LexiconContract.COLUMN_GREEK_FULL_WORD};
         String selection = "_ID = ?";
@@ -517,7 +538,9 @@ public class MainActivity extends FragmentActivity
             String id = cursor.getString(0);
             String entry = cursor.getString(1);
             String word = cursor.getString(2);
-            displayLexiconEntry(id, word, entry);
+
+            LexiconBrowseListFragment fragment = (LexiconBrowseListFragment) getSupportFragmentManager().findFragmentById(R.id.item_list_container);
+            fragment.selectItem(Integer.parseInt(id));
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     getString(R.string.toast_search_no_results), Toast.LENGTH_LONG);
@@ -525,6 +548,12 @@ public class MainActivity extends FragmentActivity
         }
 
         cursor.close();
+    }
+
+    private void selectLexiconEntry(int id) {
+        ListView view = (ListView) getSupportFragmentManager().findFragmentById(R.id.item_list_container).getView();
+        view.setItemChecked(id, true);
+        view.invalidate();
     }
 
     private void switchToLexiconBrowse() {
