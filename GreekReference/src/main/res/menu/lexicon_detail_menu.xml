@@ -18,11 +18,11 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_add_favorite"
-          android:icon="@drawable/ic_star_0_light"
+          android:icon="@drawable/ic_star_light"
           android:title="@string/action_add_favorite"
           android:showAsAction="ifRoom"/>
     <item android:id="@+id/action_remove_favorite"
-          android:icon="@drawable/ic_star_10_light"
+          android:icon="@drawable/ic_star_light_blue"
           android:title="@string/action_remove_favorite"
           android:showAsAction="always"/>
     <!-- TODO: Include overflow menu options here? -->
