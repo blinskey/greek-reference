@@ -70,7 +70,7 @@ public class SyntaxProvider extends ContentProvider {
         Log.w(TAG, "In SyntaxProvider.query()");
         switch (sMatcher.match(uri)) {
             case SECTIONS:
-                return getAllSections();
+                return searchSections(uri, projection, selection, selectionArgs, sortOrder);
             case SECTION_ID:
                 return getSection(uri);
             default:
@@ -78,36 +78,27 @@ public class SyntaxProvider extends ContentProvider {
         }
     }
 
-    private Cursor getAllSections() {
-        Log.w(TAG, "In getAllSections()");
-        String[] projection = new String[] {SyntaxContract.Syntax._ID,
-                SyntaxContract.Syntax.COLUMN_NAME_CHAPTER,
-                SyntaxContract.Syntax.COLUMN_NAME_SECTION,
-                SyntaxContract.Syntax.COLUMN_NAME_XML};
-        String selection = null;
-        String[] selectionArgs = null;
-        String sortOrder = SyntaxContract.Syntax._ID + " ASC";
+    private Cursor searchSections(Uri uri, String[] projection, String selection, String[] selectionArgs,
+            String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(SyntaxContract.Syntax.TABLE_NAME);
+        queryBuilder.setTables(SyntaxContract.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
-                null, sortOrder);
-        assert cursor != null;
-        //noinspection ConstantConditions
-        cursor.setNotificationUri(getContext().getContentResolver(), CONTENT_URI);
+                null, null);
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
     private Cursor getSection(Uri uri) {
         Log.w(TAG, "In getSection(" + uri + ")");
         String id = uri.getLastPathSegment();
-        String[] projection = new String[] {SyntaxContract.Syntax._ID,
-                SyntaxContract.Syntax.COLUMN_NAME_CHAPTER,
-                SyntaxContract.Syntax.COLUMN_NAME_SECTION,
-                SyntaxContract.Syntax.COLUMN_NAME_XML};
-        String selection = SyntaxContract.Syntax._ID + " = ?";
+        String[] projection = new String[] {SyntaxContract._ID,
+                SyntaxContract.COLUMN_NAME_CHAPTER,
+                SyntaxContract.COLUMN_NAME_SECTION,
+                SyntaxContract.COLUMN_NAME_XML};
+        String selection = SyntaxContract._ID + " = ?";
         String[] selectionArgs = new String[] {id};
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(SyntaxContract.Syntax.TABLE_NAME);
+        queryBuilder.setTables(SyntaxContract.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
                 null, null);
         assert cursor != null;

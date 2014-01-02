@@ -17,12 +17,19 @@
 package com.benlinskey.greekreference.syntax;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import com.benlinskey.greekreference.BaseListFragment;
+import com.benlinskey.greekreference.data.syntax.SyntaxContract;
 import com.benlinskey.greekreference.dummy.DummyContent;
 
 /**
@@ -34,9 +41,15 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class SyntaxBrowseListFragment extends BaseListFragment {
+public class SyntaxBrowseListFragment extends SyntaxListFragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String NAME = "syntax_browse";
+    private SimpleCursorAdapter mAdapter;
+    private static final String[] PROJECTION = new String[] {SyntaxContract._ID,
+            SyntaxContract.COLUMN_NAME_SECTION};
+    private static final String SELECTION = "";
+    private static final String[] SELECTION_ARGS = {};
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -76,12 +89,30 @@ public class SyntaxBrowseListFragment extends BaseListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
+        // TODO: Create a custom adapter with support for chapter headings.
+        // TODO: Display a title page with author name, &c. when nothing is selected.
+        String[] fromColumns = {SyntaxContract.COLUMN_NAME_SECTION};
+        int[] toViews = {android.R.id.text1};
+        mAdapter = new SimpleCursorAdapter(getActivity(),
+                android.R.layout.simple_list_item_activated_1, null, fromColumns, toViews, 0);
+        setListAdapter(mAdapter);
+        getLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getActivity(), SyntaxContract.CONTENT_URI, PROJECTION, SELECTION,
+                SELECTION_ARGS, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
     }
 
     @Override
@@ -118,9 +149,7 @@ public class SyntaxBrowseListFragment extends BaseListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
+        setSelectedSyntaxItemId(position);
         mCallbacks.onItemSelected(NAME, position);
     }
 
@@ -153,5 +182,9 @@ public class SyntaxBrowseListFragment extends BaseListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    private void setSelectedSyntaxItemId(int id) {
+        mSelectedSyntaxId = id + 1;
     }
 }

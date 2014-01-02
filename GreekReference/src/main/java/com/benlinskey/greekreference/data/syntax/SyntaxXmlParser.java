@@ -37,12 +37,20 @@ public class SyntaxXmlParser {
     private String mIntro = "";
 
     /**
+     * Class constructor.
+     */
+    public SyntaxXmlParser() {
+        mSection = new SyntaxSection();
+    }
+
+    /**
      * Parses a section of the text.
      */
     public SyntaxSection parse(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_DOCDECL, true);
             parser.setInput(in, null);
             readXml(parser);
         } finally {
@@ -58,6 +66,7 @@ public class SyntaxXmlParser {
     private void readXml(XmlPullParser parser) throws XmlPullParserException, IOException {
         while(parser.next() != XmlPullParser.END_TAG) {
             String name = parser.getName();
+            Log.w(TAG +": tagname", name);
 
             //noinspection StatementWithEmptyBody
             if (name.equals("section")) {

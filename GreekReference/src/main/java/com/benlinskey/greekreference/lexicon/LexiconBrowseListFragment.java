@@ -22,14 +22,10 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import com.benlinskey.greekreference.BaseListFragment;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
@@ -96,22 +92,24 @@ public class LexiconBrowseListFragment extends LexiconListFragment
         // TODO: Override getView to use custom typeface.
         String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
         int[] toViews = {android.R.id.text1};
-        mAdapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_activated_1,
-                null, fromColumns, toViews, 0);
+        mAdapter = new SimpleCursorAdapter(getActivity(),
+                android.R.layout.simple_list_item_activated_1, null, fromColumns, toViews, 0);
         setListAdapter(mAdapter);
-
         getLoaderManager().initLoader(0, null, this);
     }
 
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), LexiconContract.CONTENT_URI, PROJECTION, SELECTION,
                 SELECTION_ARGS, null);
     }
 
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
     }
 
+    @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }

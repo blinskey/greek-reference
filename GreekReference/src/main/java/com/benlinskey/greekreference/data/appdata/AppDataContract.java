@@ -47,4 +47,13 @@ public final class AppDataContract {
         public static final String COLUMN_NAME_WORD = "word";
         public static final Uri CONTENT_URI = LexiconFavoritesProvider.CONTENT_URI;
     }
+
+    public static abstract class SyntaxBookmarks implements BaseColumns {
+        public static final String TABLE_NAME = "syntax_bookmarks";
+        public static final String COLUMN_NAME_SYNTAX_ID = "syntax_id";
+        public static final String COLUMN_NAME_SYNTAX_SECTION = "syntax_section";
+        public static final Uri CONTENT_URI = SyntaxBookmarksProvider.CONTENT_URI;
+    }
+
+
 }

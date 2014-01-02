@@ -80,7 +80,6 @@ public class LexiconDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
-        assert rootView != null;
 
         if (!mBlank) {
             // Display lexicon entry.

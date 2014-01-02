@@ -42,6 +42,7 @@ import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconHelper;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
+import com.benlinskey.greekreference.data.syntax.SyntaxContract;
 import com.benlinskey.greekreference.data.syntax.SyntaxHelper;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconDetailActivity;
@@ -52,7 +53,9 @@ import com.benlinskey.greekreference.lexicon.LexiconListFragment;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
+import com.benlinskey.greekreference.syntax.SyntaxDetailActivity;
 import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
+import com.benlinskey.greekreference.syntax.SyntaxListFragment;
 
 import java.io.File;
 
@@ -73,9 +76,9 @@ import java.io.File;
  * {@link LexiconBrowseListFragment.Callbacks} interface
  * to listen for item selections.
  */
+// TODO: Log errors here and throughout app.
 public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        BaseListFragment.Callbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle; // Used to store the last screen title.
@@ -244,10 +247,8 @@ public class MainActivity extends FragmentActivity
                 lexiconItemSelected();
                 break;
             case SyntaxBrowseListFragment.NAME:
-                syntaxBrowseItemSelected(id);
-                break;
             case SyntaxBookmarksListFragment.NAME:
-                syntaxBookmarksItemSelected(id);
+                syntaxItemSelected();
                 break;
             default:
                 throw new IllegalArgumentException("Invalid fragment name");
@@ -258,12 +259,12 @@ public class MainActivity extends FragmentActivity
     private void lexiconItemSelected() {
         LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.item_list_container);
-        int id = fragment.getSelectedLexiconId();
+        String id = Integer.toString(fragment.getSelectedLexiconId());
 
         String[] columns = new String[] {LexiconContract.COLUMN_ENTRY,
                 LexiconContract.COLUMN_GREEK_FULL_WORD};
-        String selection = "_ID = ?";
-        String[] selectionArgs = new String[] {Integer.toString(id)};
+        String selection = LexiconContract._ID + " = ?";
+        String[] selectionArgs = new String[] {id};
         Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI,
                 columns, selection, selectionArgs, null);
 
@@ -273,42 +274,35 @@ public class MainActivity extends FragmentActivity
             entry = cursor.getString(0);
             word = cursor.getString(1);
         } else {
-            Log.e(TAG, "Entry not found.");
+            throw new IllegalStateException("Failed to retrieve lexicon entry");
         }
 
         displayLexiconEntry(id, word, entry);
     }
 
-    private void lexiconItemSelected(int id) {
-        String[] columns = new String[] {LexiconContract.COLUMN_ENTRY,
-                LexiconContract.COLUMN_GREEK_FULL_WORD};
-        String selection = "_ID = ?";
-        String[] selectionArgs = new String[] {Integer.toString(id)};
-        Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI,
-                columns, selection, selectionArgs, null);
+    private void syntaxItemSelected() {
+        SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        String id = Integer.toString(fragment.getSelectedSyntaxId());
 
-        String entry = null;
-        String word = null;
+        String[] columns = new String[] {SyntaxContract.COLUMN_NAME_XML,
+                SyntaxContract.COLUMN_NAME_SECTION};
+        String selection = SyntaxContract._ID + " = ?";
+        String[] selectionArgs = new String[] {id};
+        Cursor cursor = getContentResolver().query(SyntaxContract.CONTENT_URI, columns, selection,
+                selectionArgs, null);
+
+        String xml = null;
+        String section = null;
         if (cursor.moveToFirst()) {
-            entry = cursor.getString(0);
-            word = cursor.getString(1);
+            xml = cursor.getString(0);
+            section = cursor.getString(1);
+            Log.w("Syntax item selected", section + ": " + xml);
         } else {
-            Log.e(TAG, "Entry not found.");
+            throw new IllegalStateException("Failed to retrieve syntax section");
         }
 
-        displayLexiconEntry(id, word, entry);
-    }
-
-    private void syntaxBrowseItemSelected(int id) {
-        // TODO
-    }
-
-    private void syntaxBookmarksItemSelected(int id) {
-        // TODO
-    }
-
-    void displayLexiconEntry(int id, String word, String entry) {
-        displayLexiconEntry(Integer.toString(id), word, entry);
+        displaySyntaxSection(id, section, xml);
     }
 
     void displayLexiconEntry(final String id, String word, String entry) {
@@ -342,6 +336,29 @@ public class MainActivity extends FragmentActivity
             intent.putExtra(LexiconDetailFragment.ARG_ENTRY, entry);
             intent.putExtra(LexiconDetailActivity.ARG_LEXICON_ID, lexiconId);
             intent.putExtra(LexiconDetailActivity.ARG_WORD, word);
+            startActivity(intent);
+        }
+    }
+
+    void displaySyntaxSection(final String id, String section, String xml) {
+        if (mTwoPane) {
+            Bundle arguments = new Bundle();
+            arguments.putString(SyntaxDetailFragment.ARG_XML, xml);
+            SyntaxDetailFragment fragment = new SyntaxDetailFragment();
+            fragment.setArguments(arguments);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.item_detail_container, fragment);
+            transaction.addToBackStack(null);
+            transaction.commitAllowingStateLoss();
+        } else {
+            SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.item_list_container);
+            int syntaxId = fragment.getSelectedSyntaxId();
+
+            Intent intent = new Intent(this, SyntaxDetailActivity.class);
+            intent.putExtra(SyntaxDetailFragment.ARG_XML, xml);
+            intent.putExtra(SyntaxDetailActivity.ARG_SYNTAX_ID, syntaxId);
+            intent.putExtra(SyntaxDetailActivity.ARG_SECTION, section);
             startActivity(intent);
         }
     }
@@ -431,8 +448,9 @@ public class MainActivity extends FragmentActivity
             return super.onCreateOptionsMenu(menu);
         } else if (Mode.isSyntaxMode(mMode)) {
             getMenuInflater().inflate(R.menu.syntax_menu, menu);
+            setSyntaxBookmarkIcon(menu);
             restoreActionBar();
-            return true;
+            return super.onCreateOptionsMenu(menu);
         } else {
             throw new IllegalStateException("Invalid mode");
         }
@@ -449,7 +467,7 @@ public class MainActivity extends FragmentActivity
         if (Mode.isLexiconMode(mMode)) {
             setLexiconFavoriteIcon(menu);
         } else if (Mode.isSyntaxMode(mMode)) {
-            // TODO
+            setSyntaxBookmarkIcon(menu);
         } else {
             throw new IllegalStateException("Invalid mode");
         }
@@ -550,12 +568,6 @@ public class MainActivity extends FragmentActivity
         cursor.close();
     }
 
-    private void selectLexiconEntry(int id) {
-        ListView view = (ListView) getSupportFragmentManager().findFragmentById(R.id.item_list_container).getView();
-        view.setItemChecked(id, true);
-        view.invalidate();
-    }
-
     private void switchToLexiconBrowse() {
         mMode = Mode.LEXICON_BROWSE;
         mTitle = getString(R.string.title_lexicon_browse);
@@ -625,7 +637,6 @@ public class MainActivity extends FragmentActivity
         MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
         MenuItem removeFavorite = menu.findItem(R.id.action_remove_favorite);
 
-        // Hide both icons when no word is selected or the app is in one-pane mode.
         if (fragment.nothingIsSelected() || !mTwoPane) {
             addFavorite.setVisible(false);
             removeFavorite.setVisible(false);
@@ -635,6 +646,25 @@ public class MainActivity extends FragmentActivity
         } else {
             addFavorite.setVisible(true);
             removeFavorite.setVisible(false);
+        }
+    }
+
+    private void setSyntaxBookmarkIcon(Menu menu) {
+        SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+
+        MenuItem addBookmark = menu.findItem(R.id.action_add_bookmark);
+        MenuItem removeBookmark = menu.findItem(R.id.action_remove_bookmark);
+
+        if (fragment.nothingIsSelected() || !mTwoPane) {
+            addBookmark.setVisible(false);
+            removeBookmark.setVisible(false);
+        } else if (fragment.selectedSectionIsBookmarked()) {
+            addBookmark.setVisible(false);
+            removeBookmark.setVisible(true);
+        } else {
+            addBookmark.setVisible(true);
+            removeBookmark.setVisible(false);
         }
     }
 

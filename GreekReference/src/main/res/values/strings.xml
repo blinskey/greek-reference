@@ -32,5 +32,7 @@
     <string name="action_add_favorite">Add to favorites</string>
     <string name="action_remove_favorite">Remove from favorites</string>
     <string name="toast_search_no_results">No results.</string>
+    <string name="action_add_bookmark">Add bookmark</string>
+    <string name="action_remove_bookmark">Remove bookmark</string>
 
 </resources>

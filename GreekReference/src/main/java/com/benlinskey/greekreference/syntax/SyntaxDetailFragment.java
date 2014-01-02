@@ -18,13 +18,24 @@ package com.benlinskey.greekreference.syntax;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
+import com.benlinskey.greekreference.data.syntax.SyntaxSection;
+import com.benlinskey.greekreference.data.syntax.SyntaxXmlParser;
 import com.benlinskey.greekreference.dummy.DummyContent;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -33,11 +44,11 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * on handsets.
  */
 public class SyntaxDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
+    public static final String TAG = "SyntaxDetailFragment";
     public static final String ARG_ITEM_ID = "item_id";
+    public static final String ARG_XML = "xml";
+    private SyntaxSection mSection;
+    private boolean mBlank = false;
 
     /**
      * The dummy content this fragment is presenting.
@@ -55,11 +66,21 @@ public class SyntaxDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null && getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+        if (getArguments() != null && getArguments().containsKey(ARG_XML)) {
+            String xml = getArguments().getString(ARG_XML);
+            Log.w(TAG + ": xml", xml);
+
+            SyntaxXmlParser parser = new SyntaxXmlParser();
+            InputStream in = new ByteArrayInputStream(xml.getBytes());
+            try {
+                mSection = parser.parse(in);
+            } catch (XmlPullParserException e) {
+                Log.e(TAG, Log.getStackTraceString(e));
+            } catch (IOException e) {
+                Log.e(TAG, Log.getStackTraceString(e));
+            }
+        } else {
+            mBlank = true;
         }
     }
 
@@ -68,9 +89,9 @@ public class SyntaxDetailFragment extends Fragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
 
-        // Show the dummy content as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.content);
+        if (!mBlank) {
+            GreekTextView textView = (GreekTextView) rootView.findViewById(R.id.item_detail);
+            textView.setText(Html.fromHtml(mSection.toString())); // Replace with parsed data.
         }
 
         return rootView;

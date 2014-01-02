@@ -36,6 +36,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".syntax.SyntaxDetailActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
         <provider
             android:name="com.benlinskey.greekreference.data.lexicon.LexiconProvider"
@@ -50,6 +57,10 @@
         <provider
             android:name="com.benlinskey.greekreference.data.syntax.SyntaxProvider"
             android:authorities="com.benlinskey.greekreference.data.syntax.SyntaxProvider" />
+        <provider
+            android:name=".data.appdata.SyntaxBookmarksProvider"
+            android:authorities="com.benlinskey.greekreference.data.appdata.SyntaxBookmarksProvider" />
+
     </application>
 
 </manifest>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexicon;
+package com.benlinskey.greekreference.syntax;
 
 import android.database.Cursor;
 
@@ -22,27 +22,27 @@ import com.benlinskey.greekreference.BaseListFragment;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
- * The basic class from which every lexicon list fragment inherits.
+ * The basic class from which every syntax list fragment inherits.
  */
 // TODO: Simplify callback interface of this class's children now that we're getting the
 // selected item's ID from the getSelectedLexiconId() method here.
-public abstract class LexiconListFragment extends BaseListFragment {
+public abstract class SyntaxListFragment extends BaseListFragment {
 
-    private static final String TAG = "LexiconListFragment";
+    private static final String TAG = "SyntaxListFragment";
 
     private static final int NO_SELECTION = -1;
-    protected int mSelectedLexiconId = NO_SELECTION;
+    protected int mSelectedSyntaxId = NO_SELECTION;
 
     public boolean nothingIsSelected() {
-        return NO_SELECTION == mSelectedLexiconId;
+        return NO_SELECTION == mSelectedSyntaxId;
     }
 
-    public boolean selectedWordIsFavorite() {
-        String[] columns = new String[] {AppDataContract.LexiconFavorites._ID};
-        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
-        String[] selectionArgs = new String[] {Integer.toString(mSelectedLexiconId)};
+    public boolean selectedSectionIsBookmarked() {
+        String[] columns = new String[] {AppDataContract.SyntaxBookmarks._ID};
+        String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
+        String[] selectionArgs = new String[] {Integer.toString(mSelectedSyntaxId)};
         Cursor cursor = getActivity().getContentResolver()
-                .query(AppDataContract.LexiconFavorites.CONTENT_URI, columns, selection,
+                .query(AppDataContract.SyntaxBookmarks.CONTENT_URI, columns, selection,
                         selectionArgs, null);
         boolean result = false;
         if (cursor.getCount() > 0) {
@@ -52,7 +52,5 @@ public abstract class LexiconListFragment extends BaseListFragment {
         return result;
     }
 
-    public int getSelectedLexiconId() {
-        return mSelectedLexiconId;
-    }
+    public int getSelectedSyntaxId() { return mSelectedSyntaxId; }
 }
