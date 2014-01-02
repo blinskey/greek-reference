@@ -28,8 +28,9 @@
     <string name="title_lexicon_history">History</string>
     <string name="title_syntax_browse">Browse</string>
     <string name="title_syntax_bookmarks">Bookmarks</string>
-    <string name="clear_history_toast">History cleared.</string>
+    <string name="toast_clear_history">History cleared.</string>
     <string name="action_add_favorite">Add to favorites</string>
     <string name="action_remove_favorite">Remove from favorites</string>
+    <string name="toast_search_no_results">No results.</string>
 
 </resources>

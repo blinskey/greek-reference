@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -187,8 +186,6 @@ public class MainActivity extends FragmentActivity
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
-
-        // TODO: Swap in fragments for current mode.
 
         // Install databases if necessary.
         File database = getDatabasePath(LexiconContract.DB_NAME);
@@ -461,7 +458,7 @@ public class MainActivity extends FragmentActivity
     private void clearHistory() {
         getContentResolver().delete(LexiconHistoryProvider.CONTENT_URI, null, null);
         Toast toast = Toast.makeText(getApplicationContext(),
-                getString(R.string.clear_history_toast), Toast.LENGTH_SHORT);
+                getString(R.string.toast_clear_history), Toast.LENGTH_SHORT);
         toast.show();
 
         if (mMode.equals(Mode.LEXICON_HISTORY)) {
@@ -522,8 +519,9 @@ public class MainActivity extends FragmentActivity
             String word = cursor.getString(2);
             displayLexiconEntry(id, word, entry);
         } else {
-            // TODO: Display a toast here.
-            Log.w(TAG, "No results.");
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    getString(R.string.toast_search_no_results), Toast.LENGTH_LONG);
+            toast.show();
         }
 
         cursor.close();
