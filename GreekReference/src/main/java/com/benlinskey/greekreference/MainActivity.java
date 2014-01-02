@@ -44,6 +44,7 @@ import com.benlinskey.greekreference.data.lexicon.LexiconHelper;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxHelper;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
+import com.benlinskey.greekreference.lexicon.LexiconDetailActivity;
 import com.benlinskey.greekreference.lexicon.LexiconDetailFragment;
 import com.benlinskey.greekreference.lexicon.LexiconFavoritesListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconHistoryListFragment;
@@ -88,7 +89,7 @@ public class MainActivity extends FragmentActivity
      */
     private boolean mTwoPane;
 
-    private enum Mode {
+    public enum Mode {
         LEXICON_BROWSE(1, "lexicon_browse"),
         LEXICON_FAVORITES(2, "lexicon_favorites"),
         LEXICON_HISTORY(3, "lexicon_history"),
@@ -110,7 +111,7 @@ public class MainActivity extends FragmentActivity
             return mName;
         }
 
-        private static Mode getModeFromPosition(int position) {
+        public static Mode getModeFromPosition(int position) {
             for (Mode m : Mode.values()) {
                 if (m.mPosition == position) {
                     return m;
@@ -119,12 +120,12 @@ public class MainActivity extends FragmentActivity
             throw new IllegalArgumentException("Invalid nav drawer position");
         }
 
-        private static boolean isLexiconMode(Mode mode) {
+        public static boolean isLexiconMode(Mode mode) {
             return mode.equals(LEXICON_BROWSE) || mode.equals(LEXICON_FAVORITES)
                     || mode.equals(LEXICON_HISTORY);
         }
 
-        private static boolean isSyntaxMode(Mode mode) {
+        public static boolean isSyntaxMode(Mode mode) {
             return mode.equals(SYNTAX_BROWSE) || mode.equals(SYNTAX_BOOKMARKS);
         }
     }
@@ -315,8 +316,14 @@ public class MainActivity extends FragmentActivity
             transaction.addToBackStack(null);
             transaction.commitAllowingStateLoss();
         } else {
-            Intent intent = new Intent(this, ItemDetailActivity.class);
+            LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.item_list_container);
+            int lexiconId = fragment.getSelectedLexiconId();
+
+            Intent intent = new Intent(this, LexiconDetailActivity.class);
             intent.putExtra(LexiconDetailFragment.ARG_ENTRY, entry);
+            intent.putExtra(LexiconDetailActivity.ARG_LEXICON_ID, lexiconId);
+            intent.putExtra(LexiconDetailActivity.ARG_WORD, word);
             startActivity(intent);
         }
     }
@@ -403,7 +410,7 @@ public class MainActivity extends FragmentActivity
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
             restoreActionBar();
-            return true;
+            return super.onCreateOptionsMenu(menu);
         } else if (Mode.isSyntaxMode(mMode)) {
             getMenuInflater().inflate(R.menu.syntax_menu, menu);
             restoreActionBar();
@@ -439,15 +446,13 @@ public class MainActivity extends FragmentActivity
         switch (item.getItemId()) {
             case R.id.action_clear_history:
                 clearHistory();
-                break;
+                return true;
             case R.id.action_add_favorite:
                 addLexiconFavorite();
-                break;
+                return true;
             case R.id.action_remove_favorite:
                 removeLexiconFavorite();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid item: " + item.getTitle());
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -593,8 +598,8 @@ public class MainActivity extends FragmentActivity
         MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
         MenuItem removeFavorite = menu.findItem(R.id.action_remove_favorite);
 
-        // Hide both icons when no word is selected.
-        if (fragment.nothingIsSelected()) {
+        // Hide both icons when no word is selected or the app is in one-pane mode.
+        if (fragment.nothingIsSelected() || !mTwoPane) {
             addFavorite.setVisible(false);
             removeFavorite.setVisible(false);
         } else if (fragment.selectedWordIsFavorite()) {

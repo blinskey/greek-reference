@@ -8,7 +8,7 @@ This version of Greek Reference is designed to work with a new version of the [G
 
 ## Icons
 
-This project includes icons from <androidicons.com>. Since they're not licensed for redistribution, they're excluded from the repository. If you'd like to build the app yourself, you'll need to provide your own replacement icons.
+This project includes icons from <http://androidicons.com>. Since the're not licensed for redistribution, the icons are excluded from the repository. If you'd like to build the app yourself, you'll need to provide your own replacement icons.
 
 ## Texts
 

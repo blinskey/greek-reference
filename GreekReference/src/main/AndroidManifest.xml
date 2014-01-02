@@ -30,12 +30,11 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="com.benlinskey.greekreference.ItemDetailActivity"
-            android:label="@string/title_item_detail"
-            android:parentActivityName=".ItemListActivity" >
+            android:name="com.benlinskey.greekreference.lexicon.LexiconDetailActivity"
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ItemListActivity" />
+                android:value=".MainActivity" />
         </activity>
 
         <provider
