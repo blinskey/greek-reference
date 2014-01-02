@@ -17,13 +17,16 @@
 package com.benlinskey.greekreference.syntax;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
-import com.benlinskey.greekreference.BaseListFragment;
-import com.benlinskey.greekreference.dummy.DummyContent;
+import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
  * A list fragment representing a list of Items. This fragment
@@ -34,9 +37,14 @@ import com.benlinskey.greekreference.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class SyntaxBookmarksListFragment extends BaseListFragment {
+public class SyntaxBookmarksListFragment extends SyntaxListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String NAME = "syntax_bookmarks";
+    private SimpleCursorAdapter mAdapter;
+    private static final String[] PROJECTION = new String[] {AppDataContract.SyntaxBookmarks._ID,
+            AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION};
+    private static final String SELECTION = "";
+    private static final String[] SELECTION_ARGS = {};
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -76,12 +84,29 @@ public class SyntaxBookmarksListFragment extends BaseListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
+        // TODO: Display a message when nothing is selected.
+        String[] fromColumns = {AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION};
+        int[] toViews = {android.R.id.text1};
+        mAdapter = new SimpleCursorAdapter(getActivity(),
+                android.R.layout.simple_list_item_activated_1, null, fromColumns, toViews, 0);
+        setListAdapter(mAdapter);
+        getLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getActivity(), AppDataContract.SyntaxBookmarks.CONTENT_URI,
+                PROJECTION, SELECTION, SELECTION_ARGS, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
     }
 
     @Override
@@ -118,10 +143,10 @@ public class SyntaxBookmarksListFragment extends BaseListFragment {
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(NAME, position);
+        Cursor cursor = (Cursor) mAdapter.getItem(position);
+        int syntaxBookmarksId = cursor.getInt(0);
+        setSelectedSyntaxItemId(syntaxBookmarksId);
+        mCallbacks.onItemSelected(NAME, syntaxBookmarksId);
     }
 
     @Override
@@ -153,5 +178,20 @@ public class SyntaxBookmarksListFragment extends BaseListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    private void setSelectedSyntaxItemId(int id) {
+        String[] columns = new String[] {AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID};
+        String selection = AppDataContract.SyntaxBookmarks._ID + " = ?";
+        String[] selectionArgs = new String[] {Integer.toString(id)};
+        Cursor cursor = getActivity().getContentResolver()
+                .query(AppDataContract.SyntaxBookmarks.CONTENT_URI, columns, selection,
+                        selectionArgs, null);
+
+        if (cursor.moveToFirst()) {
+            mSelectedSyntaxId = cursor.getInt(0);
+        } else {
+            throw new IllegalArgumentException("Invalid ID: " + id);
+        }
     }
 }

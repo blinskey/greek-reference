@@ -22,15 +22,11 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import com.benlinskey.greekreference.BaseListFragment;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
-import com.benlinskey.greekreference.dummy.DummyContent;
 
 /**
  * A list fragment representing a list of Items. This fragment

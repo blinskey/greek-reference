@@ -153,14 +153,9 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-
         Cursor cursor = (Cursor) mAdapter.getItem(position);
         int lexiconFavoritesId = cursor.getInt(0);
-
         setSelectedLexiconItemId(lexiconFavoritesId);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
         mCallbacks.onItemSelected(NAME, lexiconFavoritesId);
     }
 
