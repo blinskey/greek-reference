@@ -8,7 +8,9 @@ This version of Greek Reference is designed to work with a new version of the [G
 
 ## Icons
 
-This project includes icons from <http://androidicons.com>. Since they're not licensed for redistribution, the icons are excluded from the repository. If you'd like to build the app yourself, you'll need to provide your own replacement icons.
+This project includes icons from <http://www.androidicons.com>. Since they're not licensed for redistribution, the icons are excluded from the repository. If you'd like to build the app yourself, you'll need to provide your own replacement icons. Sorry for the inconvenience.
+
+The app icon, which is also excluded from the repository, was constructed in part from an icon obtained from the "Boilerplate" icon set available at <http://www.android-icons.com>. The icon set is licensed under the Creative Commons Attribution 3.0 Unported License. See <http://creativecommons.org/licenses/by/3.0/> for details.
 
 ## Texts
 
@@ -16,7 +18,7 @@ This project includes the text of *An Intermediate Greek-English Lexicon*, by He
 
 The project also includes the text of *Overview of Greek Syntax*, by Jeffrey A. Rydberg-Cox. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at http://www.perseus.tufts.edu/hopper/.
 
-The above texts are licensed under a Creative Commons Attribution-ShareAlike 3.0 United States License. See http://creativecommons.org/licenses/by-sa/3.0/us/ for details.
+The above texts are licensed under a Creative Commons Attribution-ShareAlike 3.0 United States License. See <http://creativecommons.org/licenses/by-sa/3.0/us/> for details.
 
 ## Third-Party Resources
 
