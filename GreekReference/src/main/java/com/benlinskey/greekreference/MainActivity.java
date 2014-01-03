@@ -485,7 +485,7 @@ public class MainActivity extends FragmentActivity
                 clearLexiconFavorites();
                 return true;
             case R.id.action_clear_bookmarks:
-                // TODO
+                clearSyntaxBookmarks();
                 return true;
             case R.id.action_settings:
                 // TODO
@@ -538,7 +538,32 @@ public class MainActivity extends FragmentActivity
     }
 
     private void clearSyntaxBookmarks() {
+        DialogFragment dialog = new ClearSyntaxBookmarksDialogFragment();
+        dialog.show(getSupportFragmentManager(), "clearBookmarks");
+    }
 
+    private class ClearSyntaxBookmarksDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.clear_syntax_bookmarks_dialog_message);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    getContentResolver().delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, null, null);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            getString(R.string.toast_clear_syntax_bookmarks), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Do nothing.
+                }
+            });
+            return builder.create();
+        }
     }
 
     /**
