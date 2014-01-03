@@ -58,6 +58,8 @@ public class LexiconDetailActivity extends BaseDetailActivity
         mLexiconId = intent.getIntExtra(ARG_LEXICON_ID, -1);
         mWord = intent.getStringExtra(ARG_WORD);
 
+        mTitle = getString(R.string.title_lexicon);
+
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
         // (e.g. when rotating the screen from portrait to landscape).
@@ -170,6 +172,13 @@ public class LexiconDetailActivity extends BaseDetailActivity
         }
         cursor.close();
         return result;
+    }
+
+    protected void restoreActionBar() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
     }
 }
 

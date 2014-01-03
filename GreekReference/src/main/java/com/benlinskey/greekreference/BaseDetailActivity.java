@@ -17,7 +17,6 @@
 package com.benlinskey.greekreference;
 
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -32,7 +31,7 @@ public abstract class BaseDetailActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     protected NavigationDrawerFragment mNavigationDrawerFragment;
-    private CharSequence mTitle; // Used to store the last screen title.
+    protected CharSequence mTitle; // Used to store the last screen title.
 
     /* When the navigation drawer is created, its first item is selected. We need to make sure that
      * we don't switch modes on this initial selection and kick the user back out to MainActivity.
@@ -46,15 +45,12 @@ public abstract class BaseDetailActivity extends FragmentActivity
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
-        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.userLearnedDrawer();
         mNavDrawerInitialSelectionMade = true;
-
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
@@ -70,14 +66,9 @@ public abstract class BaseDetailActivity extends FragmentActivity
         MainActivity.Mode mode = MainActivity.Mode.getModeFromPosition(position);
         Intent intent = new Intent(this, MainActivity.class);
         intent.setAction(MainActivity.ACTION_SET_MODE);
-        intent.putExtra(MainActivity.ARG_MODE, mode.getName());
+        intent.putExtra(MainActivity.KEY_MODE, mode.getName());
         startActivity(intent);
     }
 
-    protected void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
+    protected abstract void restoreActionBar();
 }

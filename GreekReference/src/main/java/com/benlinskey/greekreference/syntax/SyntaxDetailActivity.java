@@ -59,9 +59,13 @@ public class SyntaxDetailActivity extends BaseDetailActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getActionBar().setTitle(R.string.title_syntax);
+
         Intent intent = getIntent();
         mSyntaxId = intent.getIntExtra(ARG_SYNTAX_ID, -1);
         mSection = intent.getStringExtra(ARG_SECTION);
+
+        mTitle = getString(R.string.title_syntax);
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -180,6 +184,13 @@ public class SyntaxDetailActivity extends BaseDetailActivity {
         }
         cursor.close();
         return result;
+    }
+
+    protected void restoreActionBar() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
     }
 }
 

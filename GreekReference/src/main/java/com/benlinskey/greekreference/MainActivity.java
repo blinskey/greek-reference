@@ -71,11 +71,13 @@ public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private CharSequence mTitle; // Used to store the last screen title.
+    private CharSequence mTitle;
+    private CharSequence mSubtitle;
     private Mode mMode;
     private static final String TAG = "MainActivity";
     private static final String KEY_TITLE = "action_bar_title"; // Application state bundle key
-    public static final String ARG_MODE = "mode";
+    private static final String KEY_SUBTITLE = "action_bar_subtitle"; // Application state bundle key
+    public static final String KEY_MODE = "mode"; // Intent bundle key
     public static final String ACTION_SET_MODE = "com.benlinskey.greekreference.SET_MODE";
 
     /**
@@ -185,9 +187,11 @@ public class MainActivity extends FragmentActivity
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         if (null == savedInstanceState) {
-            mTitle = getString(R.string.title_lexicon_browse);
+            mTitle = getString(R.string.title_lexicon);
+            mSubtitle = getString(R.string.title_lexicon_browse);
         } else {
             mTitle = savedInstanceState.getString(KEY_TITLE);
+            mSubtitle = savedInstanceState.getString(KEY_SUBTITLE);
         }
 
         // Set up the drawer.
@@ -215,12 +219,14 @@ public class MainActivity extends FragmentActivity
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_TITLE, (String) mTitle);
+        outState.putString(KEY_SUBTITLE, (String) mSubtitle);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mTitle = savedInstanceState.getString(KEY_TITLE);
+        mSubtitle = savedInstanceState.getString(KEY_SUBTITLE);
         restoreActionBar();
     }
 
@@ -243,7 +249,7 @@ public class MainActivity extends FragmentActivity
             Uri data = intent.getData();
             getLexiconEntry(data);
         } else if (ACTION_SET_MODE.equals(intent.getAction())) {
-            String modeName = intent.getStringExtra(ARG_MODE);
+            String modeName = intent.getStringExtra(KEY_MODE);
             Mode mode = Mode.getModeFromName(modeName);
             switchToMode(mode);
         }
@@ -419,6 +425,7 @@ public class MainActivity extends FragmentActivity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
+        actionBar.setSubtitle(mSubtitle);
     }
 
     @Override
@@ -664,7 +671,8 @@ public class MainActivity extends FragmentActivity
 
     private void switchToLexiconBrowse() {
         mMode = Mode.LEXICON_BROWSE;
-        mTitle = getString(R.string.title_lexicon_browse);
+        mTitle = getString(R.string.title_lexicon);
+        mSubtitle = getString(R.string.title_lexicon_browse);
         restoreActionBar();
 
         swapInFragments(new LexiconBrowseListFragment(), new LexiconDetailFragment());
@@ -672,7 +680,8 @@ public class MainActivity extends FragmentActivity
 
     private void switchToLexiconFavorites() {
         mMode = Mode.LEXICON_FAVORITES;
-        mTitle = getString(R.string.title_lexicon_favorites);
+        mTitle = getString(R.string.title_lexicon);
+        mSubtitle = getString(R.string.title_lexicon_favorites);
         restoreActionBar();
 
         swapInFragments(new LexiconFavoritesListFragment(), new LexiconDetailFragment());
@@ -680,7 +689,8 @@ public class MainActivity extends FragmentActivity
 
     private void switchToLexiconHistory() {
         mMode = Mode.LEXICON_HISTORY;
-        mTitle = getString(R.string.title_lexicon_history);
+        mTitle = getString(R.string.title_lexicon);
+        mSubtitle = getString(R.string.title_lexicon_history);
         restoreActionBar();
 
         swapInFragments(new LexiconHistoryListFragment(), new LexiconDetailFragment());
@@ -688,7 +698,8 @@ public class MainActivity extends FragmentActivity
 
     private void switchToSyntaxBrowse() {
         mMode = Mode.SYNTAX_BROWSE;
-        mTitle = getString(R.string.title_syntax_browse);
+        mTitle = getString(R.string.title_syntax);
+        mSubtitle = getString(R.string.title_syntax_browse);
         restoreActionBar();
 
         swapInFragments(new SyntaxBrowseListFragment(), new SyntaxDetailFragment());
@@ -696,7 +707,8 @@ public class MainActivity extends FragmentActivity
 
     private void switchToSyntaxBookmarks() {
         mMode = Mode.SYNTAX_BOOKMARKS;
-        mTitle = getString(R.string.title_syntax_bookmarks);
+        mTitle = getString(R.string.title_syntax);
+        mSubtitle = getString(R.string.title_syntax_bookmarks);
         restoreActionBar();
 
         swapInFragments(new SyntaxBookmarksListFragment(), new SyntaxDetailFragment());

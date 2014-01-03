@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.lexicon;
 
+import android.app.ActionBar;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,7 +61,6 @@ public class LexiconDetailFragment extends Fragment {
 
             // Load entry represented by fragment argument.
             String entry = getArguments().getString(ARG_ENTRY);
-            assert entry != null;
 
             // Parse XML.
             LexiconXmlParser parser = new LexiconXmlParser();
