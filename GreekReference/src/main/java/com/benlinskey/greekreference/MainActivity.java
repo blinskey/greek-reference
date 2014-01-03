@@ -469,6 +469,7 @@ public class MainActivity extends FragmentActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will automatically handle clicks on
         // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
+        // TODO: Move favorite and bookmark code to fragments?
         switch (item.getItemId()) {
             case R.id.action_add_favorite:
                 addLexiconFavorite();
@@ -477,10 +478,10 @@ public class MainActivity extends FragmentActivity
                 removeLexiconFavorite();
                 return true;
             case R.id.action_add_bookmark:
-                // TODO
+                addSyntaxBookmark();
                 return true;
             case R.id.action_remove_bookmark:
-                // TODO
+                removeSyntaxBookmark();
                 return true;
             case R.id.action_clear_history:
                 clearHistory();
@@ -492,13 +493,13 @@ public class MainActivity extends FragmentActivity
                 clearSyntaxBookmarks();
                 return true;
             case R.id.action_settings:
-                // TODO
+                displaySettings();
                 return true;
             case R.id.action_feedback:
                 sendFeedback();
                 return true;
             case R.id.action_help:
-                // TODO
+                displayHelp();
                 return true;
         }
 
@@ -754,6 +755,37 @@ public class MainActivity extends FragmentActivity
         invalidateOptionsMenu();
     }
 
+    private void addSyntaxBookmark() {
+        SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        int syntaxId = fragment.getSelectedSyntaxId();
+        String section = getSectionFromSyntaxId(syntaxId);
+        ContentValues values = new ContentValues();
+        values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID, syntaxId);
+        values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION, section);
+        getContentResolver().insert(AppDataContract.SyntaxBookmarks.CONTENT_URI, values);
+        invalidateOptionsMenu();
+    }
+
+    private void removeSyntaxBookmark() {
+        SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        int syntaxId = fragment.getSelectedSyntaxId();
+        String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
+        String[] selectionArgs = {Integer.toString(syntaxId)};
+        getContentResolver()
+                .delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, selection, selectionArgs);
+        invalidateOptionsMenu();
+    }
+
+    private void displaySettings() {
+        // TODO
+    }
+
+    private void displayHelp() {
+        // TODO
+    }
+
     private String getWordFromLexiconId(int id) {
         String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD};
         String selection = LexiconContract._ID + " = ?";
@@ -767,6 +799,20 @@ public class MainActivity extends FragmentActivity
             throw new IllegalArgumentException("Invalid lexicon ID: " + id);
         }
         return word;
+    }
+
+    private String getSectionFromSyntaxId(int id) {
+        String[] projection = {SyntaxContract.COLUMN_NAME_SECTION};
+        String selection = SyntaxContract._ID + " = ?";
+        String[] selectionArgs = {Integer.toString(id)};
+        Cursor cursor = getContentResolver().query(SyntaxContract.CONTENT_URI, projection, selection, selectionArgs, null);
+        String section = null;
+        if (cursor.moveToFirst()) {
+            section = cursor.getString(0);
+        } else {
+            throw new IllegalArgumentException("Invalid syntax ID: " + id);
+        }
+        return section;
     }
 
     private void sendFeedback() {
