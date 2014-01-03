@@ -33,7 +33,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -77,6 +76,8 @@ import java.io.File;
  * to listen for item selections.
  */
 // TODO: Log errors here and throughout app.
+// TODO: Display short toasts when user adds or removes a favorite or bookmark.
+// TODO: Move as much code from here to other classes as possible.
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {
 

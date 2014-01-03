@@ -23,13 +23,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.syntax.SyntaxSection;
 import com.benlinskey.greekreference.data.syntax.SyntaxXmlParser;
-import com.benlinskey.greekreference.dummy.DummyContent;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -49,11 +47,6 @@ public class SyntaxDetailFragment extends Fragment {
     public static final String ARG_XML = "xml";
     private SyntaxSection mSection;
     private boolean mBlank = false;
-
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private DummyContent.DummyItem mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
