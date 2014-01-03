@@ -164,7 +164,11 @@ public class MainActivity extends FragmentActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-        mTitle = getTitle(); // TODO: Display mode title on application launch.
+        if (null == savedInstanceState) {
+            mTitle = getString(R.string.title_lexicon_browse);
+        } else {
+            mTitle = savedInstanceState.getString(KEY_TITLE);
+        }
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
