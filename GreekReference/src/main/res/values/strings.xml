@@ -40,5 +40,11 @@
     <string name="feedback_email">greekreference@benlinskey.com</string>
     <string name="feedback_subject">Greek Reference feedback</string>
     <string name="feedback_intent_chooser">Send feedback via</string>
+    <string name="toast_clear_lexicon_favorites">Favorites cleared.</string>
+    <string name="clear_lexicon_favorites_dialog_message">
+        Are you sure you want to permanently clear your favorites list?
+    </string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

@@ -17,15 +17,19 @@
 package com.benlinskey.greekreference;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -61,6 +65,7 @@ import java.io.File;
 // TODO: Log errors here and throughout app.
 // TODO: Display short toasts when user adds or removes a favorite or bookmark.
 // TODO: Move as much code from here to other classes as possible.
+// TODO: Change minimum SDK level or stop using support library.
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {
 
@@ -477,7 +482,7 @@ public class MainActivity extends FragmentActivity
                 clearHistory();
                 return true;
             case R.id.action_clear_favorites:
-                // TODO
+                clearLexiconFavorites();
                 return true;
             case R.id.action_clear_bookmarks:
                 // TODO
@@ -497,16 +502,43 @@ public class MainActivity extends FragmentActivity
     }
 
     private void clearHistory() {
-        getContentResolver().delete(LexiconHistoryProvider.CONTENT_URI, null, null);
+        getContentResolver().delete(AppDataContract.LexiconHistory.CONTENT_URI, null, null);
         Toast toast = Toast.makeText(getApplicationContext(),
                 getString(R.string.toast_clear_history), Toast.LENGTH_SHORT);
         toast.show();
+    }
 
-        if (mMode.equals(Mode.LEXICON_HISTORY)) {
-            LexiconHistoryListFragment fragment
-                    = (LexiconHistoryListFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.item_list_container);
+    private void clearLexiconFavorites() {
+        DialogFragment dialog = new ClearLexiconFavoritesDialogFragment();
+        dialog.show(getSupportFragmentManager(), "clearFavorites");
+    }
+
+    private class ClearLexiconFavoritesDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.clear_lexicon_favorites_dialog_message);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    getContentResolver().delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            getString(R.string.toast_clear_lexicon_favorites), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Do nothing.
+                }
+            });
+            return builder.create();
         }
+    }
+
+    private void clearSyntaxBookmarks() {
+
     }
 
     /**
