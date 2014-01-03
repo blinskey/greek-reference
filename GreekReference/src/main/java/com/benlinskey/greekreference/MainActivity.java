@@ -611,21 +611,23 @@ public class MainActivity extends FragmentActivity
      */
     // TODO: Handle words with multiple entries.
     void search(String query) {
-        String[] columns = new String[] {"_ID, entry, greekNoSymbols"};
-        String selection = "betaSymbols = ? OR betaNoSymbols = ? OR greekLowercase = ?";
+        String[] columns = new String[] {LexiconContract._ID};
+        String selection = LexiconContract.COLUMN_BETA_SYMBOLS + " = ? OR "
+                + LexiconContract.COLUMN_BETA_NO_SYMBOLS + " = ? OR "
+                + LexiconContract.COLUMN_GREEK_LOWERCASE + " = ?";
         String[] selectionArgs = new String[] {query.toLowerCase(), query.toLowerCase(),
                 query.toLowerCase()};
-        String sortOrder = "_ID ASC";
+        String sortOrder = LexiconContract._ID + " ASC";
 
         Cursor cursor = getContentResolver().query(LexiconProvider.CONTENT_URI, columns, selection,
                 selectionArgs, sortOrder);
 
         if (cursor.moveToFirst()) {
             String id = cursor.getString(0);
-            String entry = cursor.getString(1);
-            String word = cursor.getString(2);
 
-            LexiconBrowseListFragment fragment = (LexiconBrowseListFragment) getSupportFragmentManager().findFragmentById(R.id.item_list_container);
+            LexiconBrowseListFragment fragment
+                    = (LexiconBrowseListFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.item_list_container);
             fragment.selectItem(Integer.parseInt(id));
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -703,6 +705,7 @@ public class MainActivity extends FragmentActivity
      * Replaces the currently displayed fragment(s) with the specified fragment(s).
      */
     private void swapInFragments(Fragment listFragment, Fragment detailFragment) {
+        // TODO: Track title changes so we can display proper title when user navigates through the backstack.
         if (mTwoPane) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.item_list_container, listFragment);
