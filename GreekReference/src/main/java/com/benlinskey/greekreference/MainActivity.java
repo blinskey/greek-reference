@@ -66,6 +66,7 @@ import java.io.File;
 // TODO: Display short toasts when user adds or removes a favorite or bookmark.
 // TODO: Move as much code from here to other classes as possible.
 // TODO: Change minimum SDK level or stop using support library.
+// TODO: Add Share option?
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {
 

@@ -118,6 +118,9 @@ public class LexiconBrowseListFragment extends LexiconListFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getListView().setFastScrollEnabled(true);
+        getListView().setFastScrollAlwaysVisible(true);
+
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
