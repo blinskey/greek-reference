@@ -25,5 +25,19 @@
           android:icon="@drawable/ic_star_light_blue"
           android:title="@string/action_remove_favorite"
           android:showAsAction="always"/>
-    <!-- TODO: Include overflow menu options here? -->
+    <item android:id="@+id/action_clear_history"
+        android:title="@string/action_clear_history"
+        android:showAsAction="never"/>
+    <item android:id="@+id/action_clear_favorites"
+        android:title="@string/action_clear_favorites"
+        android:showAsAction="never"/>
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:showAsAction="never"/>
+    <item android:id="@+id/action_feedback"
+        android:title="@string/action_feedback"
+        android:showAsAction="never"/>
+    <item android:id="@+id/action_help"
+        android:title="@string/action_help"
+        android:showAsAction="never"/>
 </menu>

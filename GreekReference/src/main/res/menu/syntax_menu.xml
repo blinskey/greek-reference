@@ -25,10 +25,16 @@
           android:title="@string/action_remove_bookmark"
           android:icon="@drawable/ic_bookmark_light_blue"
           android:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_clear_bookmarks"
+        android:title="@string/action_clear_bookmarks"
+        android:showAsAction="never"/>
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:showAsAction="never"/>
     <item android:id="@+id/action_feedback"
         android:title="@string/action_feedback"
         android:showAsAction="never"/>
-    <item android:id="@+id/action_about"
-        android:title="@string/action_about"
+    <item android:id="@+id/action_help"
+        android:title="@string/action_help"
         android:showAsAction="never"/>
 </menu>
