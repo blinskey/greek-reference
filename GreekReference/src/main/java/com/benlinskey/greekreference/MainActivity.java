@@ -74,6 +74,8 @@ public class MainActivity extends FragmentActivity
     private Mode mMode;
     private static final String TAG = "MainActivity";
     private static final String KEY_TITLE = "action_bar_title"; // Application state bundle key
+    public static final String ARG_MODE = "mode";
+    public static final String ACTION_SET_MODE = "com.benlinskey.greekreference.SET_MODE";
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -101,6 +103,14 @@ public class MainActivity extends FragmentActivity
             return mName;
         }
 
+        /**
+         * This is just a duplicate of toString() for now, but it's included here in case we ever
+         * want to make toString() return something other than mName.
+         */
+        public String getName() {
+            return mName;
+        }
+
         public static Mode getModeFromPosition(int position) {
             for (Mode m : Mode.values()) {
                 if (m.mPosition == position) {
@@ -108,6 +118,15 @@ public class MainActivity extends FragmentActivity
                 }
             }
             throw new IllegalArgumentException("Invalid nav drawer position");
+        }
+
+        private static Mode getModeFromName(String name) {
+            for (Mode m : Mode.values()) {
+                if (m.mName.equals(name)) {
+                    return m;
+                }
+            }
+            throw new IllegalArgumentException("Invalid name");
         }
 
         public static boolean isLexiconMode(Mode mode) {
@@ -222,6 +241,10 @@ public class MainActivity extends FragmentActivity
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
             getLexiconEntry(data);
+        } else if (ACTION_SET_MODE.equals(intent.getAction())) {
+            String modeName = intent.getStringExtra(ARG_MODE);
+            Mode mode = Mode.getModeFromName(modeName);
+            switchToMode(mode);
         }
     }
 
@@ -387,26 +410,7 @@ public class MainActivity extends FragmentActivity
             mNavigationDrawerFragment.userLearnedDrawer();
         }
 
-        // Switch to the selected mode.
-        switch (Mode.getModeFromPosition(position)) {
-            case LEXICON_BROWSE:
-                switchToLexiconBrowse();
-                break;
-            case LEXICON_FAVORITES:
-                switchToLexiconFavorites();
-                break;
-            case LEXICON_HISTORY:
-                switchToLexiconHistory();
-                break;
-            case SYNTAX_BROWSE:
-                switchToSyntaxBrowse();
-                break;
-            case SYNTAX_BOOKMARKS:
-                switchToSyntaxBookmarks();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid mode");
-        }
+        switchToMode(Mode.getModeFromPosition(position));
     }
 
     public void restoreActionBar() {
@@ -630,6 +634,29 @@ public class MainActivity extends FragmentActivity
         }
 
         cursor.close();
+    }
+
+    // TODO: Condense this code by storing title and fragments as fields of each Mode.
+    private void switchToMode(Mode mode) {
+        switch (mode) {
+            case LEXICON_BROWSE:
+                switchToLexiconBrowse();
+                break;
+            case LEXICON_FAVORITES:
+                switchToLexiconFavorites();
+                break;
+            case LEXICON_HISTORY:
+                switchToLexiconHistory();
+                break;
+            case SYNTAX_BROWSE:
+                switchToSyntaxBrowse();
+                break;
+            case SYNTAX_BOOKMARKS:
+                switchToSyntaxBookmarks();
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid mode");
+        }
     }
 
     private void switchToLexiconBrowse() {

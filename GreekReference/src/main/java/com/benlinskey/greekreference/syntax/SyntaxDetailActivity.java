@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.benlinskey.greekreference.BaseDetailActivity;
 import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -42,8 +43,7 @@ import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link com.benlinskey.greekreference.lexicon.LexiconDetailFragment}.
  */
-public class SyntaxDetailActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class SyntaxDetailActivity extends BaseDetailActivity {
 
     private static final String TAG = "SyntaxDetailActivity";
 
@@ -58,26 +58,10 @@ public class SyntaxDetailActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_detail);
 
         Intent intent = getIntent();
         mSyntaxId = intent.getIntExtra(ARG_SYNTAX_ID, -1);
         mSection = intent.getStringExtra(ARG_SECTION);
-
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.userLearnedDrawer();
-
-        mTitle = getTitle(); // TODO: Display mode title on application launch.
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -144,13 +128,6 @@ public class SyntaxDetailActivity extends FragmentActivity
         }
     }
 
-    public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -172,31 +149,6 @@ public class SyntaxDetailActivity extends FragmentActivity
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // TODO: Send an intent to start MainActivity in the selected mode.
-        // Switch to the selected mode.
-        switch (MainActivity.Mode.getModeFromPosition(position)) {
-            case LEXICON_BROWSE:
-                // TODO
-                break;
-            case LEXICON_FAVORITES:
-                // TODO
-                break;
-            case LEXICON_HISTORY:
-                // TODO
-                break;
-            case SYNTAX_BROWSE:
-                // TODO
-                break;
-            case SYNTAX_BOOKMARKS:
-                // TODO
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid mode");
-        }
     }
 
     private void addLexiconBookmark() {

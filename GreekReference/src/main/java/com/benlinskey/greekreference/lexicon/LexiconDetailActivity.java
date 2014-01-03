@@ -26,6 +26,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.benlinskey.greekreference.BaseDetailActivity;
 import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -41,10 +42,8 @@ import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link LexiconDetailFragment}.
  */
-public class LexiconDetailActivity extends FragmentActivity
+public class LexiconDetailActivity extends BaseDetailActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-    private CharSequence mTitle; // Used to store the last screen title.
 
     public static final String ARG_LEXICON_ID = "lexicon_id";
     public static final String ARG_WORD = "word";
@@ -54,26 +53,10 @@ public class LexiconDetailActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_detail);
 
         Intent intent = getIntent();
         mLexiconId = intent.getIntExtra(ARG_LEXICON_ID, -1);
         mWord = intent.getStringExtra(ARG_WORD);
-
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.userLearnedDrawer();
-
-        mTitle = getTitle(); // TODO: Display mode title on application launch.
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -140,13 +123,6 @@ public class LexiconDetailActivity extends FragmentActivity
         }
     }
 
-    public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -180,31 +156,6 @@ public class LexiconDetailActivity extends FragmentActivity
         LexiconDetailFragment fragment = (LexiconDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.item_detail_container);
         fragment.removeLexiconFavorite(mLexiconId, mWord);
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // TODO: Send an intent to start MainActivity in the selected mode.
-        // Switch to the selected mode.
-        switch (MainActivity.Mode.getModeFromPosition(position)) {
-            case LEXICON_BROWSE:
-                // TODO
-                break;
-            case LEXICON_FAVORITES:
-                // TODO
-                break;
-            case LEXICON_HISTORY:
-                // TODO
-                break;
-            case SYNTAX_BROWSE:
-                // TODO
-                break;
-            case SYNTAX_BOOKMARKS:
-                // TODO
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid mode");
-        }
     }
 
     private boolean isFavorite(int lexiconId) {
