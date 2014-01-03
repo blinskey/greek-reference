@@ -170,6 +170,18 @@ public class LexiconDetailActivity extends FragmentActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void addLexiconFavorite() {
+        LexiconDetailFragment fragment = (LexiconDetailFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_detail_container);
+        fragment.addLexiconFavorite(mLexiconId, mWord);
+    }
+
+    private void removeLexiconFavorite() {
+        LexiconDetailFragment fragment = (LexiconDetailFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.item_detail_container);
+        fragment.removeLexiconFavorite(mLexiconId, mWord);
+    }
+
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // TODO: Send an intent to start MainActivity in the selected mode.
@@ -193,22 +205,6 @@ public class LexiconDetailActivity extends FragmentActivity
             default:
                 throw new IllegalArgumentException("Invalid mode");
         }
-    }
-
-    private void addLexiconFavorite() {
-        ContentValues values = new ContentValues();
-        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, mLexiconId);
-        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, mWord);
-        getContentResolver().insert(AppDataContract.LexiconFavorites.CONTENT_URI, values);
-        invalidateOptionsMenu();
-    }
-
-    private void removeLexiconFavorite() {
-        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
-        String[] selectionArgs = {Integer.toString(mLexiconId)};
-        getContentResolver()
-                .delete(AppDataContract.LexiconFavorites.CONTENT_URI, selection, selectionArgs);
-        invalidateOptionsMenu();
     }
 
     private boolean isFavorite(int lexiconId) {

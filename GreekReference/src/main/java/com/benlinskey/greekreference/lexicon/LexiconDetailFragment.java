@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.lexicon;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
+import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconEntry;
 import com.benlinskey.greekreference.data.lexicon.LexiconXmlParser;
 
@@ -32,10 +34,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * A fragment representing a single Item detail screen.
- * This fragment is either contained in a {@link com.benlinskey.greekreference.MainActivity}
- * in two-pane mode (on tablets) or a {@link com.benlinskey.greekreference.ItemDetailActivity}
- * on handsets.
+ * A fragment representing a single Lexicon detail screen.
  */
 public class LexiconDetailFragment extends Fragment {
     public static final String TAG = "LexiconDetailFragment";
@@ -88,5 +87,21 @@ public class LexiconDetailFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    public void addLexiconFavorite(int lexiconId, String word) {
+        ContentValues values = new ContentValues();
+        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, lexiconId);
+        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, word);
+        getActivity().getContentResolver().insert(AppDataContract.LexiconFavorites.CONTENT_URI, values);
+        getActivity().invalidateOptionsMenu();
+    }
+
+    public void removeLexiconFavorite(int lexiconId, String word) {
+        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
+        String[] selectionArgs = {Integer.toString(lexiconId)};
+        getActivity().getContentResolver()
+                .delete(AppDataContract.LexiconFavorites.CONTENT_URI, selection, selectionArgs);
+        getActivity().invalidateOptionsMenu();
     }
 }

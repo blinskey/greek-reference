@@ -58,23 +58,6 @@ import com.benlinskey.greekreference.syntax.SyntaxListFragment;
 
 import java.io.File;
 
-
-/**
- * An activity representing a list of Items. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link ItemDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- * <p>
- * The activity makes heavy use of fragments. The list of items is a
- * {@link LexiconBrowseListFragment} and the item details
- * (if present) is a {@link LexiconDetailFragment}.
- * <p>
- * This activity also implements the required
- * {@link LexiconBrowseListFragment.Callbacks} interface
- * to listen for item selections.
- */
 // TODO: Log errors here and throughout app.
 // TODO: Display short toasts when user adds or removes a favorite or bookmark.
 // TODO: Move as much code from here to other classes as possible.
@@ -99,8 +82,6 @@ public class MainActivity extends FragmentActivity
         LEXICON_HISTORY(3, "lexicon_history"),
         SYNTAX_BROWSE(5, "syntax_browse"),
         SYNTAX_BOOKMARKS(6, "syntax_bookmarks");
-
-        // TODO: Add a "type" variable to track Lexicon/Syntax mode type?
 
         private final int mPosition;
         private final String mName;
@@ -479,16 +460,36 @@ public class MainActivity extends FragmentActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will automatically handle clicks on
         // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
-        // TODO: Handle selected items here.
         switch (item.getItemId()) {
-            case R.id.action_clear_history:
-                clearHistory();
-                return true;
             case R.id.action_add_favorite:
                 addLexiconFavorite();
                 return true;
             case R.id.action_remove_favorite:
                 removeLexiconFavorite();
+                return true;
+            case R.id.action_add_bookmark:
+                // TODO
+                return true;
+            case R.id.action_remove_bookmark:
+                // TODO
+                return true;
+            case R.id.action_clear_history:
+                clearHistory();
+                return true;
+            case R.id.action_clear_favorites:
+                // TODO
+                return true;
+            case R.id.action_clear_bookmarks:
+                // TODO
+                return true;
+            case R.id.action_settings:
+                // TODO
+                return true;
+            case R.id.action_feedback:
+                sendFeedback();
+                return true;
+            case R.id.action_help:
+                // TODO
                 return true;
         }
 
@@ -705,5 +706,12 @@ public class MainActivity extends FragmentActivity
             throw new IllegalArgumentException("Invalid lexicon ID: " + id);
         }
         return word;
+    }
+
+    private void sendFeedback() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO,
+                Uri.fromParts("mailto", getString(R.string.feedback_email), null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
+        startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
     }
 }
