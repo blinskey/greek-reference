@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
@@ -93,7 +94,7 @@ public class LexiconBrowseListFragment extends LexiconListFragment
         String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
         int[] toViews = {android.R.id.text1};
         mAdapter = new SimpleCursorAdapter(getActivity(),
-                android.R.layout.simple_list_item_activated_1, null, fromColumns, toViews, 0);
+                R.layout.greek_simple_list_item_activated_1, null, fromColumns, toViews, 0);
         setListAdapter(mAdapter);
         getLoaderManager().initLoader(0, null, this);
     }

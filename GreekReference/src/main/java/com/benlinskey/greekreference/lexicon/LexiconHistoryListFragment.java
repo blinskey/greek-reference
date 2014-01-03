@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.benlinskey.greekreference.BaseListFragment;
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 
@@ -98,8 +99,8 @@ public class LexiconHistoryListFragment extends LexiconListFragment
         // TODO: Override getView to use custom typeface.
         String[] fromColumns = {AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
         int[] toViews = {android.R.id.text1};
-        mAdapter = new android.widget.SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_activated_1,
-                null, fromColumns, toViews, 0);
+        mAdapter = new android.widget.SimpleCursorAdapter(getActivity(),
+                R.layout.greek_simple_list_item_activated_1, null, fromColumns, toViews, 0);
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(0, null, this);

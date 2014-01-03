@@ -11,13 +11,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * ---
- *
- * This is a modified version of the file TypefaceTextView.java, obtained from
- * http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/
- *
- * Copyright 2012 Simple Finance Corporation (https://www.simple.com)
+ */
+
+/* Copyright 2012 Simple Finance Corporation (https://www.simple.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,6 +41,9 @@ import android.widget.TextView;
 /**
  * A custom <code>TextView</code> that uses a font capable of displaying polytonic Greek
  * characters.
+ * <p>
+ * This is a modified version of the file TypefaceTextView.java, obtained from
+ * http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/
  * <p>
  * Whereas the original TypefaceTextView class on which this is based allowed the typeface
  * to be specified in XML layout file, this class uses a fixed typeface, the filename of which

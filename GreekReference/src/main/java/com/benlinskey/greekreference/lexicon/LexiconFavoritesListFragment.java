@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.benlinskey.greekreference.BaseListFragment;
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
@@ -99,8 +100,8 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
         // TODO: Display a message when this list is empty.
         String[] fromColumns = {AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
         int[] toViews = {android.R.id.text1};
-        mAdapter = new android.widget.SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_activated_1,
-                null, fromColumns, toViews, 0);
+        mAdapter = new android.widget.SimpleCursorAdapter(getActivity(),
+                R.layout.greek_simple_list_item_activated_1, null, fromColumns, toViews, 0);
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(0, null, this);
