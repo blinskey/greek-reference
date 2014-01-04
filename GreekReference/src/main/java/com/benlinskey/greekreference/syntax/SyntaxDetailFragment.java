@@ -16,6 +16,8 @@
 
 package com.benlinskey.greekreference.syntax;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -26,6 +28,8 @@ import android.view.ViewGroup;
 
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
+import com.benlinskey.greekreference.data.appdata.AppDataContract;
+import com.benlinskey.greekreference.data.syntax.SyntaxContract;
 import com.benlinskey.greekreference.data.syntax.SyntaxSection;
 import com.benlinskey.greekreference.data.syntax.SyntaxXmlParser;
 
@@ -37,9 +41,6 @@ import java.io.InputStream;
 
 /**
  * A fragment representing a single Item detail screen.
- * This fragment is either contained in a {@link com.benlinskey.greekreference.MainActivity}
- * in two-pane mode (on tablets) or a {@link com.benlinskey.greekreference.ItemDetailActivity}
- * on handsets.
  */
 public class SyntaxDetailFragment extends Fragment {
     public static final String TAG = "SyntaxDetailFragment";
@@ -88,5 +89,53 @@ public class SyntaxDetailFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    private String getSectionFromSyntaxId(int id) {
+        String[] projection = {SyntaxContract.COLUMN_NAME_SECTION};
+        String selection = SyntaxContract._ID + " = ?";
+        String[] selectionArgs = {Integer.toString(id)};
+        Cursor cursor = getActivity().getContentResolver()
+                .query(SyntaxContract.CONTENT_URI, projection, selection, selectionArgs, null);
+        String section = null;
+        if (cursor.moveToFirst()) {
+            section = cursor.getString(0);
+        } else {
+            throw new IllegalArgumentException("Invalid syntax ID: " + id);
+        }
+        return section;
+    }
+
+    protected void addSyntaxBookmark(int syntaxId, String section) {
+        ContentValues values = new ContentValues();
+        values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID, syntaxId);
+        values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION, section);
+        getActivity().getContentResolver().insert(AppDataContract.SyntaxBookmarks.CONTENT_URI, values);
+        getActivity().invalidateOptionsMenu();
+    }
+
+    protected void removeSyntaxBookmark(int syntaxId) {
+        String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
+        String[] selectionArgs = {Integer.toString(syntaxId)};
+        getActivity().getContentResolver()
+                .delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, selection, selectionArgs);
+        getActivity().invalidateOptionsMenu();
+    }
+
+    // The following two methods should only be used in two-pane mode.
+    // TODO: Throw exception if these methods are called in one-pane mode.
+    public void addSyntaxBookmark() {
+        SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        int syntaxId = fragment.getSelectedSyntaxId();
+        String section = getSectionFromSyntaxId(syntaxId);
+        addSyntaxBookmark(syntaxId, section);
+    }
+
+    public void removeSyntaxBookmark() {
+        SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        int syntaxId = fragment.getSelectedSyntaxId();
+        removeSyntaxBookmark(syntaxId);
     }
 }

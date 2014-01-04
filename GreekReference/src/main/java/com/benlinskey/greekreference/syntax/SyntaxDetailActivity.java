@@ -17,13 +17,10 @@
 package com.benlinskey.greekreference.syntax;
 
 import android.app.ActionBar;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +29,6 @@ import com.benlinskey.greekreference.BaseDetailActivity;
 import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
-import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
 /**
  * An activity representing a single Word detail screen. This
@@ -133,39 +129,20 @@ public class SyntaxDetailActivity extends BaseDetailActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                // This ID represents the Home or Up button. In the case of this
-                // activity, the Up button is shown. Use NavUtils to allow users
-                // to navigate up one level in the application structure. For
-                // more details, see the Navigation pattern on Android Design:
-                //
-                // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-                //
                 NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_add_bookmark:
-                addLexiconBookmark();
+                SyntaxDetailFragment addBookmarkFragment = (SyntaxDetailFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.item_detail_container);
+                addBookmarkFragment.addSyntaxBookmark(mSyntaxId, mSection);
                 return true;
             case R.id.action_remove_bookmark:
-                removeLexiconBookmark();
+                SyntaxDetailFragment removeBookmarkFragment = (SyntaxDetailFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.item_detail_container);
+                removeBookmarkFragment.removeSyntaxBookmark(mSyntaxId);
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void addLexiconBookmark() {
-        ContentValues values = new ContentValues();
-        values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID, mSyntaxId);
-        values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION, mSection);
-        getContentResolver().insert(AppDataContract.SyntaxBookmarks.CONTENT_URI, values);
-        invalidateOptionsMenu();
-    }
-
-    private void removeLexiconBookmark() {
-        String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
-        String[] selectionArgs = {Integer.toString(mSyntaxId)};
-        getContentResolver()
-                .delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, selection, selectionArgs);
-        invalidateOptionsMenu();
     }
 
     private boolean isBookmark(int syntaxId) {

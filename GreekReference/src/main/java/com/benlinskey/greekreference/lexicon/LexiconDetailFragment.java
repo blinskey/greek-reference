@@ -16,7 +16,6 @@
 
 package com.benlinskey.greekreference.lexicon;
 
-import android.app.ActionBar;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -91,7 +90,7 @@ public class LexiconDetailFragment extends Fragment {
         return rootView;
     }
 
-    public void addLexiconFavorite(int lexiconId, String word) {
+    protected void addLexiconFavorite(int lexiconId, String word) {
         ContentValues values = new ContentValues();
         values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, lexiconId);
         values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, word);
@@ -99,7 +98,7 @@ public class LexiconDetailFragment extends Fragment {
         getActivity().invalidateOptionsMenu();
     }
 
-    public void removeLexiconFavorite(int lexiconId) {
+    protected void removeLexiconFavorite(int lexiconId) {
         String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = {Integer.toString(lexiconId)};
         getActivity().getContentResolver()
@@ -108,6 +107,7 @@ public class LexiconDetailFragment extends Fragment {
     }
 
     // The following two methods should only be used in two-pane mode.
+    // TODO: Throw exception if these methods are called in one-pane mode.
     public void addLexiconFavorite() {
         LexiconListFragment fragment = (LexiconListFragment) getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.item_list_container);

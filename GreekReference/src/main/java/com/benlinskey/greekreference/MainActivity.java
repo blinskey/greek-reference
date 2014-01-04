@@ -441,10 +441,14 @@ public class MainActivity extends FragmentActivity
                 removeFavoriteFragment.removeLexiconFavorite();
                 return true;
             case R.id.action_add_bookmark:
-                addSyntaxBookmark();
+                SyntaxDetailFragment addBookmarkFragment = (SyntaxDetailFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.item_detail_container);
+                addBookmarkFragment.addSyntaxBookmark();
                 return true;
             case R.id.action_remove_bookmark:
-                removeSyntaxBookmark();
+                SyntaxDetailFragment removeBookmarkFragment = (SyntaxDetailFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.item_detail_container);
+                removeBookmarkFragment.removeSyntaxBookmark();
                 return true;
             case R.id.action_clear_history:
                 clearHistory();
@@ -726,45 +730,8 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    private void addSyntaxBookmark() {
-        SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-        int syntaxId = fragment.getSelectedSyntaxId();
-        String section = getSectionFromSyntaxId(syntaxId);
-        ContentValues values = new ContentValues();
-        values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID, syntaxId);
-        values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION, section);
-        getContentResolver().insert(AppDataContract.SyntaxBookmarks.CONTENT_URI, values);
-        invalidateOptionsMenu();
-    }
-
-    private void removeSyntaxBookmark() {
-        SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-        int syntaxId = fragment.getSelectedSyntaxId();
-        String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
-        String[] selectionArgs = {Integer.toString(syntaxId)};
-        getContentResolver()
-                .delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, selection, selectionArgs);
-        invalidateOptionsMenu();
-    }
-
     private void displayHelp() {
         // TODO
-    }
-
-    private String getSectionFromSyntaxId(int id) {
-        String[] projection = {SyntaxContract.COLUMN_NAME_SECTION};
-        String selection = SyntaxContract._ID + " = ?";
-        String[] selectionArgs = {Integer.toString(id)};
-        Cursor cursor = getContentResolver().query(SyntaxContract.CONTENT_URI, projection, selection, selectionArgs, null);
-        String section = null;
-        if (cursor.moveToFirst()) {
-            section = cursor.getString(0);
-        } else {
-            throw new IllegalArgumentException("Invalid syntax ID: " + id);
-        }
-        return section;
     }
 
     private void sendFeedback() {
