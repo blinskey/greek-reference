@@ -138,25 +138,17 @@ public class LexiconDetailActivity extends BaseDetailActivity {
                 NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_add_favorite:
-                addLexiconFavorite();
+                LexiconDetailFragment addFavoriteFragment = (LexiconDetailFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.item_detail_container);
+                addFavoriteFragment.addLexiconFavorite(mLexiconId, mWord);
                 return true;
             case R.id.action_remove_favorite:
-                removeLexiconFavorite();
+                LexiconDetailFragment removeFavoriteFragment = (LexiconDetailFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.item_detail_container);
+                removeFavoriteFragment.removeLexiconFavorite(mLexiconId);
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void addLexiconFavorite() {
-        LexiconDetailFragment fragment = (LexiconDetailFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.item_detail_container);
-        fragment.addLexiconFavorite(mLexiconId, mWord);
-    }
-
-    private void removeLexiconFavorite() {
-        LexiconDetailFragment fragment = (LexiconDetailFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.item_detail_container);
-        fragment.removeLexiconFavorite(mLexiconId, mWord);
     }
 
     private boolean isFavorite(int lexiconId) {

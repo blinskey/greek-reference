@@ -426,12 +426,19 @@ public class MainActivity extends FragmentActivity
         // Handle action bar item clicks here. The action bar will automatically handle clicks on
         // the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.
         // TODO: Move favorite and bookmark code to fragments?
+        // TODO: Move favorite and boomkark options to fragments?
         switch (item.getItemId()) {
             case R.id.action_add_favorite:
-                addLexiconFavorite();
+                LexiconDetailFragment addFavoriteFragment =
+                        (LexiconDetailFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.item_detail_container);
+                addFavoriteFragment.addLexiconFavorite();
                 return true;
             case R.id.action_remove_favorite:
-                removeLexiconFavorite();
+                LexiconDetailFragment removeFavoriteFragment =
+                        (LexiconDetailFragment) getSupportFragmentManager()
+                                .findFragmentById(R.id.item_detail_container);
+                removeFavoriteFragment.removeLexiconFavorite();
                 return true;
             case R.id.action_add_bookmark:
                 addSyntaxBookmark();
@@ -587,7 +594,10 @@ public class MainActivity extends FragmentActivity
         cursor.close();
     }
 
-    // TODO: Condense this code by storing title and fragments as fields of each Mode.
+    // TODO: Condense this code by storing title and fragments as fields of each Mode? The only
+    // problem with this idea is that we'd need static access to string resources. (I.e., we can't
+    // get a context from the enum class itself, so we'd need to use some sort of kludgy
+    // workaround.)
     private void switchToMode(Mode mode) {
         switch (mode) {
             case LEXICON_BROWSE:
@@ -716,29 +726,6 @@ public class MainActivity extends FragmentActivity
         }
     }
 
-    private void addLexiconFavorite() {
-        LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-        int lexiconId = fragment.getSelectedLexiconId();
-        String word = getWordFromLexiconId(lexiconId);
-        ContentValues values = new ContentValues();
-        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, lexiconId);
-        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, word);
-        getContentResolver().insert(AppDataContract.LexiconFavorites.CONTENT_URI, values);
-        invalidateOptionsMenu();
-    }
-
-    private void removeLexiconFavorite() {
-        LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-        int lexiconId = fragment.getSelectedLexiconId();
-        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
-        String[] selectionArgs = {Integer.toString(lexiconId)};
-        getContentResolver()
-                .delete(AppDataContract.LexiconFavorites.CONTENT_URI, selection, selectionArgs);
-        invalidateOptionsMenu();
-    }
-
     private void addSyntaxBookmark() {
         SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.item_list_container);
@@ -764,21 +751,6 @@ public class MainActivity extends FragmentActivity
 
     private void displayHelp() {
         // TODO
-    }
-
-    private String getWordFromLexiconId(int id) {
-        String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD};
-        String selection = LexiconContract._ID + " = ?";
-        String[] selectionArgs = {Integer.toString(id)};
-        Cursor cursor = getContentResolver()
-                .query(LexiconContract.CONTENT_URI, projection, selection, selectionArgs, null);
-        String word = null;
-        if (cursor.moveToFirst()) {
-            word = cursor.getString(0);
-        } else {
-            throw new IllegalArgumentException("Invalid lexicon ID: " + id);
-        }
-        return word;
     }
 
     private String getSectionFromSyntaxId(int id) {

@@ -18,6 +18,7 @@ package com.benlinskey.greekreference.lexicon;
 
 import android.app.ActionBar;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -28,6 +29,7 @@ import android.view.ViewGroup;
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
+import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconEntry;
 import com.benlinskey.greekreference.data.lexicon.LexiconXmlParser;
 
@@ -97,11 +99,42 @@ public class LexiconDetailFragment extends Fragment {
         getActivity().invalidateOptionsMenu();
     }
 
-    public void removeLexiconFavorite(int lexiconId, String word) {
+    public void removeLexiconFavorite(int lexiconId) {
         String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = {Integer.toString(lexiconId)};
         getActivity().getContentResolver()
                 .delete(AppDataContract.LexiconFavorites.CONTENT_URI, selection, selectionArgs);
         getActivity().invalidateOptionsMenu();
+    }
+
+    // The following two methods should only be used in two-pane mode.
+    public void addLexiconFavorite() {
+        LexiconListFragment fragment = (LexiconListFragment) getActivity().getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        int lexiconId = fragment.getSelectedLexiconId();
+        String word = getWordFromLexiconId(lexiconId);
+        addLexiconFavorite(lexiconId, word);
+    }
+
+    public void removeLexiconFavorite() {
+        LexiconListFragment fragment = (LexiconListFragment) getActivity().getSupportFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        int lexiconId = fragment.getSelectedLexiconId();
+        removeLexiconFavorite(lexiconId);
+    }
+
+    private String getWordFromLexiconId(int id) {
+        String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD};
+        String selection = LexiconContract._ID + " = ?";
+        String[] selectionArgs = {Integer.toString(id)};
+        Cursor cursor = getActivity().getContentResolver()
+                .query(LexiconContract.CONTENT_URI, projection, selection, selectionArgs, null);
+        String word = null;
+        if (cursor.moveToFirst()) {
+            word = cursor.getString(0);
+        } else {
+            throw new IllegalArgumentException("Invalid lexicon ID: " + id);
+        }
+        return word;
     }
 }

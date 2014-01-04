@@ -16,9 +16,11 @@
 
 package com.benlinskey.greekreference.lexicon;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.benlinskey.greekreference.BaseListFragment;
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
