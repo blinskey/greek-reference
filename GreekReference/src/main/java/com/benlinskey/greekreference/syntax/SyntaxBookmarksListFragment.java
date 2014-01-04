@@ -42,9 +42,12 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment implements L
     public static final String NAME = "syntax_bookmarks";
     private SimpleCursorAdapter mAdapter;
     private static final String[] PROJECTION = new String[] {AppDataContract.SyntaxBookmarks._ID,
-            AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION};
+            AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION,
+            AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID};
     private static final String SELECTION = "";
     private static final String[] SELECTION_ARGS = {};
+    private static final String SORT_ORDER
+            = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " ASC";
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -85,6 +88,7 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment implements L
         super.onCreate(savedInstanceState);
 
         // TODO: Display a message when nothing is selected.
+        // TODO: Add chapter name before section name in this list?
         String[] fromColumns = {AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION};
         int[] toViews = {android.R.id.text1};
         mAdapter = new SimpleCursorAdapter(getActivity(),
@@ -96,7 +100,7 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment implements L
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), AppDataContract.SyntaxBookmarks.CONTENT_URI,
-                PROJECTION, SELECTION, SELECTION_ARGS, null);
+                PROJECTION, SELECTION, SELECTION_ARGS, SORT_ORDER);
     }
 
     @Override
