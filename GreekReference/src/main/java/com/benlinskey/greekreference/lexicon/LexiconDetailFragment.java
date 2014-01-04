@@ -19,12 +19,13 @@ package com.benlinskey.greekreference.lexicon;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.benlinskey.greekreference.DetailFragment;
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -38,7 +39,7 @@ import java.io.InputStream;
 /**
  * A fragment representing a single Lexicon detail screen.
  */
-public class LexiconDetailFragment extends Fragment {
+public class LexiconDetailFragment extends DetailFragment {
     public static final String TAG = "LexiconDetailFragment";
 
     // Fragment arguments representing strings containing entry information
@@ -96,6 +97,7 @@ public class LexiconDetailFragment extends Fragment {
         values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, word);
         getActivity().getContentResolver().insert(AppDataContract.LexiconFavorites.CONTENT_URI, values);
         getActivity().invalidateOptionsMenu();
+        displayToast(getString(R.string.toast_favorite_added));
     }
 
     protected void removeLexiconFavorite(int lexiconId) {
@@ -104,6 +106,7 @@ public class LexiconDetailFragment extends Fragment {
         getActivity().getContentResolver()
                 .delete(AppDataContract.LexiconFavorites.CONTENT_URI, selection, selectionArgs);
         getActivity().invalidateOptionsMenu();
+        displayToast(getString(R.string.toast_favorite_removed));
     }
 
     // The following two methods should only be used in two-pane mode.

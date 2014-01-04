@@ -19,13 +19,13 @@ package com.benlinskey.greekreference.syntax;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.benlinskey.greekreference.DetailFragment;
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -42,9 +42,8 @@ import java.io.InputStream;
 /**
  * A fragment representing a single Item detail screen.
  */
-public class SyntaxDetailFragment extends Fragment {
+public class SyntaxDetailFragment extends DetailFragment {
     public static final String TAG = "SyntaxDetailFragment";
-    public static final String ARG_ITEM_ID = "item_id";
     public static final String ARG_XML = "xml";
     private SyntaxSection mSection;
     private boolean mBlank = false;
@@ -112,6 +111,7 @@ public class SyntaxDetailFragment extends Fragment {
         values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION, section);
         getActivity().getContentResolver().insert(AppDataContract.SyntaxBookmarks.CONTENT_URI, values);
         getActivity().invalidateOptionsMenu();
+        displayToast(getString(R.string.toast_bookmark_added));
     }
 
     protected void removeSyntaxBookmark(int syntaxId) {
@@ -120,6 +120,7 @@ public class SyntaxDetailFragment extends Fragment {
         getActivity().getContentResolver()
                 .delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, selection, selectionArgs);
         getActivity().invalidateOptionsMenu();
+        displayToast(getString(R.string.toast_bookmark_removed));
     }
 
     // The following two methods should only be used in two-pane mode.
@@ -138,4 +139,6 @@ public class SyntaxDetailFragment extends Fragment {
         int syntaxId = fragment.getSelectedSyntaxId();
         removeSyntaxBookmark(syntaxId);
     }
+
+
 }
