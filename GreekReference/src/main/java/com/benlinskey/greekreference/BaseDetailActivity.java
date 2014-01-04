@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
@@ -30,6 +31,7 @@ import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 public abstract class BaseDetailActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+    private static final String TAG = "BaseDetailActivity";
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected CharSequence mTitle; // Used to store the last screen title.
 

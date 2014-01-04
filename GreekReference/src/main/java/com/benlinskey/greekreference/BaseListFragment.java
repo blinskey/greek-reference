@@ -28,7 +28,7 @@ public abstract class BaseListFragment extends ListFragment {
     public abstract void setActivateOnItemClick(boolean activateOnItemClick);
 
     /**
-     * Once the view is created, call set the list items to be highlighted on click if the app is
+     * Once the view is created, set the list items to be highlighted on click if the app is
      * in two-pane mode.
      */
     @Override

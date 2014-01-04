@@ -47,7 +47,6 @@ public class SyntaxDetailActivity extends BaseDetailActivity {
 
     private static final String TAG = "SyntaxDetailActivity";
 
-    private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle; // Used to store the last screen title.
 
     public static final String ARG_SYNTAX_ID = "syntax_id";
@@ -58,8 +57,6 @@ public class SyntaxDetailActivity extends BaseDetailActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getActionBar().setTitle(R.string.title_syntax);
 
         Intent intent = getIntent();
         mSyntaxId = intent.getIntExtra(ARG_SYNTAX_ID, -1);

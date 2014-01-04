@@ -42,8 +42,7 @@ import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link LexiconDetailFragment}.
  */
-public class LexiconDetailActivity extends BaseDetailActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class LexiconDetailActivity extends BaseDetailActivity {
 
     public static final String ARG_LEXICON_ID = "lexicon_id";
     public static final String ARG_WORD = "word";
