@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
@@ -65,7 +64,7 @@ public abstract class BaseDetailActivity extends FragmentActivity
             return;
         }
 
-        MainActivity.Mode mode = MainActivity.Mode.getModeFromPosition(position);
+        Mode mode = Mode.getModeFromPosition(position);
         Intent intent = new Intent(this, MainActivity.class);
         intent.setAction(MainActivity.ACTION_SET_MODE);
         intent.putExtra(MainActivity.KEY_MODE, mode.getName());
