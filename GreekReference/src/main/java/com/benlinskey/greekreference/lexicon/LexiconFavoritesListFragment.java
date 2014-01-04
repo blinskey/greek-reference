@@ -49,10 +49,16 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
 
     public static final String NAME = "lexicon_favorites";
     SimpleCursorAdapter mAdapter;
-    static final String[] PROJECTION = new String[] {AppDataContract.LexiconFavorites._ID,
-            AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
-    static final String SELECTION = "";
-    static final String[] SELECTION_ARGS = {};
+
+    // Note that we have to select the lexicon ID in order to alphabetize; alphabetizing by word
+    // doesn't work due to accented characters.
+    private static final String[] PROJECTION = new String[] {AppDataContract.LexiconFavorites._ID,
+            AppDataContract.LexiconFavorites.COLUMN_NAME_WORD,
+            AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID};
+    private static final String SELECTION = "";
+    private static final String[] SELECTION_ARGS = {};
+    private static final String SORT_ORDER
+            = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " ASC";
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -92,11 +98,7 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: Add progress indicator.
-
         // Create and set list adapter.
-        // TODO: Replace this with a more efficient adapter.
-        // TODO: Override getView to use custom typeface.
         // TODO: Display a message when this list is empty.
         String[] fromColumns = {AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
         int[] toViews = {android.R.id.text1};
@@ -109,7 +111,7 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), LexiconFavoritesProvider.CONTENT_URI, PROJECTION, SELECTION,
-                SELECTION_ARGS, null);
+                SELECTION_ARGS, SORT_ORDER);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
