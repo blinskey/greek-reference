@@ -18,7 +18,7 @@ package com.benlinskey.greekreference.syntax;
 
 import android.database.Cursor;
 
-import com.benlinskey.greekreference.BaseListFragment;
+import com.benlinskey.greekreference.ListFragment;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
@@ -26,7 +26,7 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
  */
 // TODO: Simplify callback interface of this class's children now that we're getting the
 // selected item's ID from the getSelectedLexiconId() method here.
-public abstract class SyntaxListFragment extends BaseListFragment {
+public abstract class SyntaxListFragment extends ListFragment {
 
     private static final String TAG = "SyntaxListFragment";
 

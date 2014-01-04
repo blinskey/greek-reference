@@ -27,10 +27,10 @@ import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 /**
  * The basic class from which all detail activities inherit.
  */
-public abstract class BaseDetailActivity extends FragmentActivity
+public abstract class DetailActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private static final String TAG = "BaseDetailActivity";
+    private static final String TAG = "DetailActivity";
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected CharSequence mTitle; // Used to store the last screen title.
 

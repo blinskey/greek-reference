@@ -25,7 +25,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.benlinskey.greekreference.BaseDetailActivity;
+import com.benlinskey.greekreference.DetailActivity;
 import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -39,7 +39,7 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link com.benlinskey.greekreference.lexicon.LexiconDetailFragment}.
  */
-public class SyntaxDetailActivity extends BaseDetailActivity {
+public class SyntaxDetailActivity extends DetailActivity {
 
     private static final String TAG = "SyntaxDetailActivity";
 

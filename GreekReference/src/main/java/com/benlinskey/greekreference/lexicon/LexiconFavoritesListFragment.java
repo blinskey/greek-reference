@@ -26,11 +26,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import com.benlinskey.greekreference.BaseListFragment;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider;
-import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
  * // TODO: Display a message when the favorites list is empty.

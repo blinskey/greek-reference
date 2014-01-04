@@ -23,7 +23,7 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.benlinskey.greekreference.BaseDetailActivity;
+import com.benlinskey.greekreference.DetailActivity;
 import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -37,7 +37,7 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
  * This activity is mostly just a 'shell' activity containing nothing
  * more than a {@link LexiconDetailFragment}.
  */
-public class LexiconDetailActivity extends BaseDetailActivity {
+public class LexiconDetailActivity extends DetailActivity {
 
     public static final String ARG_LEXICON_ID = "lexicon_id";
     public static final String ARG_WORD = "word";

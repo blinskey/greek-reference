@@ -16,11 +16,9 @@
 
 package com.benlinskey.greekreference.lexicon;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.benlinskey.greekreference.BaseListFragment;
-import com.benlinskey.greekreference.R;
+import com.benlinskey.greekreference.ListFragment;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
@@ -28,7 +26,7 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
  */
 // TODO: Simplify callback interface of this class's children now that we're getting the
 // selected item's ID from the getSelectedLexiconId() method here.
-public abstract class LexiconListFragment extends BaseListFragment {
+public abstract class LexiconListFragment extends ListFragment {
 
     private static final String TAG = "LexiconListFragment";
 
