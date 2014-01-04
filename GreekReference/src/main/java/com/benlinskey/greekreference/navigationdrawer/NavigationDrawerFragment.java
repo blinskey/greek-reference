@@ -110,7 +110,6 @@ public class NavigationDrawerFragment extends Fragment {
         });
 
         NavigationDrawerItem[] items = new NavigationDrawerItem[] {
-                // TODO: Add icons.
                 new NavigationDrawerHeading(100, getString(R.string.nav_drawer_heading_lexicon)),
                 new NavigationDrawerRow(101, getString(R.string.nav_drawer_row_browse_lexicon),
                         "ic_list_dark", "ic_list_light", getActivity()),

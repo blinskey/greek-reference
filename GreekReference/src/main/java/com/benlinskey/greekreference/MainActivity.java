@@ -504,9 +504,6 @@ public class MainActivity extends FragmentActivity
             case R.id.action_clear_bookmarks:
                 clearSyntaxBookmarks();
                 return true;
-            case R.id.action_settings:
-                displaySettings();
-                return true;
             case R.id.action_feedback:
                 sendFeedback();
                 return true;
@@ -819,10 +816,6 @@ public class MainActivity extends FragmentActivity
         getContentResolver()
                 .delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, selection, selectionArgs);
         invalidateOptionsMenu();
-    }
-
-    private void displaySettings() {
-        // TODO
     }
 
     private void displayHelp() {
