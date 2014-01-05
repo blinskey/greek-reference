@@ -68,7 +68,7 @@ import java.io.File;
 // TODO: Change minimum SDK level or stop using support library.
 // TODO: Add Share option?
 public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, ListFragment.Callbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;

@@ -114,7 +114,7 @@ public class NavigationDrawerFragment extends Fragment {
                 new NavigationDrawerRow(101, getString(R.string.nav_drawer_row_browse_lexicon),
                         "ic_list_dark", "ic_list_light", getActivity()),
                 new NavigationDrawerRow(102, getString(R.string.nav_drawer_row_favorites),
-                        "ic_star_10_dark", "ic_star_light", getActivity()),
+                        "ic_star_dark", "ic_star_light", getActivity()),
                 new NavigationDrawerRow(103, getString(R.string.nav_drawer_row_history),
                         "ic_clock_dark", "ic_clock_light", getActivity()),
                 new NavigationDrawerHeading(200, getString(R.string.nav_drawer_heading_grammar)),
