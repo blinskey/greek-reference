@@ -24,7 +24,7 @@ import android.view.View;
 /**
  * The basic class from which every list fragment inherits.
  */
-public abstract class ListFragment extends android.support.v4.app.ListFragment {
+public abstract class BaseListFragment extends android.support.v4.app.ListFragment {
     public abstract void setActivateOnItemClick(boolean activateOnItemClick);
 
     /**
