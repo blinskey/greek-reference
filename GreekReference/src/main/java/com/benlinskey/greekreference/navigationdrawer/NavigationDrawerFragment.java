@@ -217,6 +217,13 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
+
+        // We don't want to swap out the fragments if we're just returning from a configuration change.
+        if (mFromSavedInstanceState) {
+            mFromSavedInstanceState = false;
+            return;
+        }
+
         if (mCallbacks != null) {
             mCallbacks.onNavigationDrawerItemSelected(position);
         }
@@ -267,15 +274,6 @@ public class NavigationDrawerFragment extends Fragment {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
-        switch (item.getItemId()) {
-            /*
-            case R.id.action_example:
-                Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-                return true;
-            */
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -313,12 +311,5 @@ public class NavigationDrawerFragment extends Fragment {
         SharedPreferences sp = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
-    }
-
-    /**
-     * Hides the navigation drawer icon.
-     */
-    public void disableDrawerIndicator() {
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
     }
 }

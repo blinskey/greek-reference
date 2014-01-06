@@ -43,16 +43,10 @@ public class LexiconBrowseListFragment extends LexiconListFragment
 
     public final static String NAME = "lexicon_browse";
     SimpleCursorAdapter mAdapter;
-    static final String[] PROJECTION = new String[] {LexiconContract._ID,
-            LexiconContract.COLUMN_GREEK_FULL_WORD};
+    static final String[] PROJECTION
+            = new String[] {LexiconContract._ID, LexiconContract.COLUMN_GREEK_FULL_WORD};
     static final String SELECTION = "";
     static final String[] SELECTION_ARGS = {};
-
-    /**
-     * The serialization (saved instance state) Bundle key representing the
-     * activated item position. Only used on tablets.
-     */
-    private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
     /**
      * The fragment's current callback object, which is notified of list item
@@ -121,12 +115,6 @@ public class LexiconBrowseListFragment extends LexiconListFragment
 
         getListView().setFastScrollEnabled(true);
         getListView().setFastScrollAlwaysVisible(true);
-
-        // Restore the previously serialized activated item position.
-        if (savedInstanceState != null
-                && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
-        }
     }
 
     @Override
@@ -154,38 +142,6 @@ public class LexiconBrowseListFragment extends LexiconListFragment
         super.onListItemClick(listView, view, position, id);
         setSelectedLexiconItemId(position);
         mCallbacks.onItemSelected(NAME, position + 1); // Positions are off by one from database ID.
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mActivatedPosition != ListView.INVALID_POSITION) {
-            // Serialize and persist the activated item position.
-            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
-        }
-    }
-
-    /**
-     * Turns on activate-on-click mode. When this mode is on, list items will be
-     * given the 'activated' state when touched.
-     * // TODO: Make activated item text white.
-     */
-    public void setActivateOnItemClick(boolean activateOnItemClick) {
-        // When setting CHOICE_MODE_SINGLE, ListView will automatically
-        // give items the 'activated' state when touched.
-        getListView().setChoiceMode(activateOnItemClick
-                ? ListView.CHOICE_MODE_SINGLE
-                : ListView.CHOICE_MODE_NONE);
-    }
-
-    private void setActivatedPosition(int position) {
-        if (position == ListView.INVALID_POSITION) {
-            getListView().setItemChecked(mActivatedPosition, false);
-        } else {
-            getListView().setItemChecked(position, true);
-        }
-
-        mActivatedPosition = position;
     }
 
     private void setSelectedLexiconItemId(int id) {

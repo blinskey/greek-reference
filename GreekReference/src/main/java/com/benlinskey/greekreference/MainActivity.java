@@ -79,6 +79,7 @@ public class MainActivity extends Activity
     private CharSequence mTitle;
     private CharSequence mSubtitle;
     private Mode mMode;
+
     private static final String TAG = "MainActivity";
     private static final String KEY_TITLE = "action_bar_title"; // Application state bundle key
     private static final String KEY_SUBTITLE = "action_bar_subtitle"; // Application state bundle key
@@ -129,19 +130,23 @@ public class MainActivity extends Activity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.w(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
-
         if (null == savedInstanceState) {
+            Log.w(TAG, "savedInstanceState is null.");
             mTitle = getString(R.string.title_lexicon);
             mSubtitle = getString(R.string.title_lexicon_browse);
         } else {
+            Log.w(TAG, "savedInstanceState is NOT null.");
             mTitle = savedInstanceState.getString(KEY_TITLE);
             mSubtitle = savedInstanceState.getString(KEY_SUBTITLE);
+            mMode = Mode.getModeFromName(savedInstanceState.getString(KEY_MODE));
         }
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment)
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
@@ -169,6 +174,7 @@ public class MainActivity extends Activity
         super.onSaveInstanceState(outState);
         outState.putString(KEY_TITLE, (String) mTitle);
         outState.putString(KEY_SUBTITLE, (String) mSubtitle);
+        outState.putString(KEY_MODE, mMode.getName());
     }
 
     @Override
@@ -176,6 +182,7 @@ public class MainActivity extends Activity
         super.onRestoreInstanceState(savedInstanceState);
         mTitle = savedInstanceState.getString(KEY_TITLE);
         mSubtitle = savedInstanceState.getString(KEY_SUBTITLE);
+        mMode = Mode.getModeFromName(savedInstanceState.getString(KEY_MODE));
         restoreActionBar();
     }
 
@@ -611,6 +618,7 @@ public class MainActivity extends Activity
     // get a context from the enum class itself, so we'd need to use some sort of kludgy
     // workaround.)
     private void switchToMode(Mode mode) {
+        Log.w(TAG, "Switching to " + mode.getName());
         switch (mode) {
             case LEXICON_BROWSE:
                 switchToLexiconBrowse();

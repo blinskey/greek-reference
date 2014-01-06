@@ -18,9 +18,11 @@ package com.benlinskey.greekreference;
 
 import android.app.ListFragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -28,8 +30,24 @@ import android.widget.TextView;
  */
 public abstract class BaseListFragment extends ListFragment {
     protected TextView mEmptyView;
+    private static final String TAG = "BaseListFragment";
 
-    public abstract void setActivateOnItemClick(boolean activateOnItemClick);
+    /**
+     * The serialization (saved instance state) Bundle key representing the
+     * activated item position. Only used on tablets.
+     */
+    private static final String STATE_ACTIVATED_POSITION = "activated_position";
+
+    /**
+     * The current activated item position. Only used on tablets.
+     */
+    private int mActivatedPosition = ListView.INVALID_POSITION;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     /**
      * Once the view is created, set the list items to be highlighted on click if the app is
@@ -39,16 +57,54 @@ public abstract class BaseListFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (((MainActivity) getActivity()).isTwoPane()) {
+            setActivateOnItemClick(true);
+        }
+
+        // Restore the previously serialized activated item position.
+        if (savedInstanceState != null
+                && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
+            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
+        }
+
         // Set a custom empty view.
         mEmptyView = new TextView(getActivity());
         mEmptyView.setGravity(Gravity.CENTER);
         mEmptyView.setTextSize(25f);
         ((ViewGroup) view).addView(mEmptyView);
         getListView().setEmptyView(mEmptyView);
+    }
 
-        if (((MainActivity) getActivity()).isTwoPane()) {
-            setActivateOnItemClick(true);
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mActivatedPosition != ListView.INVALID_POSITION) {
+            // Serialize and persist the activated item position.
+            outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
+    }
+
+    /**
+     * Turns on activate-on-click mode. When this mode is on, list items will be
+     * given the 'activated' state when touched.
+     */
+    protected void setActivateOnItemClick(boolean activateOnItemClick) {
+        // When setting CHOICE_MODE_SINGLE, ListView will automatically
+        // give items the 'activated' state when touched.
+        getListView().setChoiceMode(activateOnItemClick
+                ? ListView.CHOICE_MODE_SINGLE
+                : ListView.CHOICE_MODE_NONE);
+    }
+
+    protected void setActivatedPosition(int position) {
+        Log.w(TAG, "setActivatedPosition(" + position + ")");
+        if (position == ListView.INVALID_POSITION) {
+            getListView().setItemChecked(mActivatedPosition, false);
+        } else {
+            getListView().setItemChecked(position, true);
+        }
+
+        mActivatedPosition = position;
     }
 
     /**
