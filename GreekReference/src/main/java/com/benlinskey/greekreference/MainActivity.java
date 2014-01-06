@@ -302,7 +302,6 @@ public class MainActivity extends Activity
             fragment.setArguments(arguments);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.item_detail_container, fragment);
-            transaction.addToBackStack(null);
             transaction.commitAllowingStateLoss();
         } else {
             LexiconListFragment fragment = (LexiconListFragment) getFragmentManager()
@@ -325,7 +324,6 @@ public class MainActivity extends Activity
             fragment.setArguments(arguments);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.item_detail_container, fragment);
-            transaction.addToBackStack(null);
             transaction.commitAllowingStateLoss();
         } else {
             SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()
@@ -721,12 +719,10 @@ public class MainActivity extends Activity
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.item_list_container, listFragment);
             transaction.replace(R.id.item_detail_container, detailFragment);
-            transaction.addToBackStack(null);
             transaction.commit();
         } else {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.item_list_container, listFragment);
-            transaction.addToBackStack(null);
             transaction.commit();
         }
     }
