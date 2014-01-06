@@ -122,6 +122,8 @@ public class LexiconHistoryListFragment extends LexiconListFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mEmptyView.setText(R.string.lexicon_history_empty_view);
+
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
