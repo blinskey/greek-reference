@@ -497,7 +497,7 @@ public class MainActivity extends Activity
         dialog.show(getFragmentManager(), "clearFavorites");
     }
 
-    private class ClearLexiconFavoritesDialogFragment extends DialogFragment {
+    public static class ClearLexiconFavoritesDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -505,8 +505,8 @@ public class MainActivity extends Activity
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    getContentResolver().delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
-                    Toast toast = Toast.makeText(getApplicationContext(),
+                    getActivity().getContentResolver().delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
+                    Toast toast = Toast.makeText(getActivity(),
                             getString(R.string.toast_clear_lexicon_favorites), Toast.LENGTH_SHORT);
                     toast.show();
                 }
@@ -746,7 +746,7 @@ public class MainActivity extends Activity
         }
     }
 
-    private class AboutDialogFragment extends DialogFragment {
+    public static class AboutDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -784,7 +784,7 @@ public class MainActivity extends Activity
         startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
     }
 
-    private class HelpDialogFragment extends DialogFragment {
+    public static class HelpDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

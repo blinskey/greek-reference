@@ -97,7 +97,7 @@ public abstract class DetailActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-    private class AboutDialogFragment extends DialogFragment {
+    public static class AboutDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -135,7 +135,7 @@ public abstract class DetailActivity extends Activity
         startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
     }
 
-    private class HelpDialogFragment extends DialogFragment {
+    public static class HelpDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
