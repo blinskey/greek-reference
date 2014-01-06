@@ -22,6 +22,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -41,6 +42,7 @@ import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 public class LexiconBrowseListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final String TAG = "LexiconBrowseListFragment";
     public final static String NAME = "lexicon_browse";
     SimpleCursorAdapter mAdapter;
     static final String[] PROJECTION
@@ -84,7 +86,6 @@ public class LexiconBrowseListFragment extends LexiconListFragment
 
         // Create and set list adapter.
         // TODO: Replace this with a more efficient adapter.
-        // TODO: Override getView to use custom typeface.
         String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
         int[] toViews = {android.R.id.text1};
         mAdapter = new SimpleCursorAdapter(getActivity(),
@@ -149,10 +150,11 @@ public class LexiconBrowseListFragment extends LexiconListFragment
     }
 
     public void selectItem(int id) {
+        Log.w(TAG, "Item selected: " + id);
         mSelectedLexiconId = id;
         int position = id - 1;
         setActivatedPosition(position);
-        getListView().setSelection(position); // TODO: Jump to selected item in list. This doesn't seem to do it.
+        getListView().setSelection(position);
         mCallbacks.onItemSelected(NAME, position);
 
     }

@@ -556,26 +556,30 @@ public class MainActivity extends Activity
      * @param data  the URI of the lexicon entry to display
      */
     private void getLexiconEntry(Uri data) {
+        if (!mMode.equals(Mode.LEXICON_BROWSE)) {
+            switchToLexiconBrowse();
+
+            // Make sure the fragments are swapped before we try to get the
+            // LexiconBrowseListFragment.
+            getFragmentManager().executePendingTransactions();
+        }
+
         // Get data.
         Cursor cursor = getContentResolver().query(data, null, null, null, null);
         cursor.moveToFirst();
-        String entry = "";
         String id = "";
-        String word = "";
-
         try {
             int idIndex = cursor.getColumnIndexOrThrow(LexiconContract._ID);
-            int entryIndex = cursor.getColumnIndexOrThrow(LexiconContract.COLUMN_ENTRY);
-            int wordIndex = cursor.getColumnIndexOrThrow(LexiconContract.COLUMN_GREEK_NO_SYMBOLS);
             id = cursor.getString(idIndex);
-            entry = cursor.getString(entryIndex);
-            word = cursor.getString(wordIndex);
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Failed to retrieve result from database.");
             throw e;
         }
 
-        displayLexiconEntry(id, word, entry);
+        // Set this item's state to activated on tablets and scroll the list to the item.
+        LexiconBrowseListFragment fragment = (LexiconBrowseListFragment) getFragmentManager()
+                .findFragmentById(R.id.item_list_container);
+        fragment.selectItem(Integer.parseInt(id));
     }
 
     /**
@@ -689,7 +693,7 @@ public class MainActivity extends Activity
      * Replaces the currently displayed fragment(s) with the specified fragment(s).
      */
     private void swapInFragments(Fragment listFragment, Fragment detailFragment) {
-        // TODO: Track title changes so we can display proper title when user navigates through the back    stack.
+        // TODO: Track title changes so we can display proper title when user navigates through the back stack.
         if (mTwoPane) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.item_list_container, listFragment);
@@ -813,5 +817,9 @@ public class MainActivity extends Activity
     private void displayHelp() {
         HelpDialogFragment dialogFragment = new HelpDialogFragment();
         dialogFragment.show(getFragmentManager(), "help");
+    }
+
+    public Mode getMode() {
+        return mMode;
     }
 }
