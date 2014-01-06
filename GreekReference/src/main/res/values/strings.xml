@@ -62,13 +62,20 @@
     <string name="title_help">Help</string>
     <string name="message_help">
         <![CDATA[
-        To search the lexicon, tap the magnifying glass icon. You can use either Greek characters or
-        <a href="http://en.wikipedia.org/wiki/Beta_code#Encoding">Beta code</a> to search.
-        Diacritics are optional in both cases. For example, you can search for λόγος by typing
-        \"logos.\" Search queries are not case sensitive.
-        <br><br>
-        To switch between modes, open the navigation drawer by swiping in from the left edge of
-        the screen or tapping the application icon in the upper-left corner.
+        <p>
+            To search the lexicon, tap the magnifying glass icon. You can use either Greek characters or
+            <a href="http://en.wikipedia.org/wiki/Beta_code#Encoding">Beta code</a> to search.
+            Diacritics are optional in both cases. For example, you can search for λόγος by typing
+            \"logos.\" Search queries are not case sensitive.
+        </p>
+        <p>
+            To switch between modes, open the navigation drawer by swiping in from the left edge of
+            the screen or tapping the application icon in the upper-left corner.
+        </p>
+        <p>
+            To submit a bug report, feature request, or suggestion, select the Send Feedback
+            option from the menu.
+        </p>
         ]]>
     </string>
 
