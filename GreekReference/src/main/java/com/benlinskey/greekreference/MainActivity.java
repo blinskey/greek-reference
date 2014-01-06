@@ -584,8 +584,6 @@ public class MainActivity extends Activity
      */
     // TODO: Handle words with multiple entries.
     void search(String query) {
-        ensureModeIsLexiconBrowse();
-
         String[] columns = new String[] {LexiconContract._ID};
         String selection = LexiconContract.COLUMN_BETA_SYMBOLS + " = ? OR "
                 + LexiconContract.COLUMN_BETA_NO_SYMBOLS + " = ? OR "
@@ -600,6 +598,7 @@ public class MainActivity extends Activity
         if (cursor.moveToFirst()) {
             String id = cursor.getString(0);
 
+            ensureModeIsLexiconBrowse();
             LexiconBrowseListFragment fragment
                     = (LexiconBrowseListFragment) getFragmentManager()
                         .findFragmentById(R.id.item_list_container);
