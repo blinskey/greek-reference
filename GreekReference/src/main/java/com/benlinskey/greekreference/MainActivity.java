@@ -17,8 +17,12 @@
 package com.benlinskey.greekreference;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ContentValues;
@@ -29,19 +33,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -75,7 +72,7 @@ import java.io.File;
 // TODO: Change minimum SDK level or stop using support library.
 // TODO: Add Share option?
 // TODO: Create a base activity class that handles all common option items.
-public class MainActivity extends FragmentActivity
+public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -136,7 +133,7 @@ public class MainActivity extends FragmentActivity
         setContentView(R.layout.activity_item_list);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
 
         if (null == savedInstanceState) {
             mTitle = getString(R.string.title_lexicon);
@@ -230,7 +227,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void lexiconItemSelected() {
-        LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
+        LexiconListFragment fragment = (LexiconListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedLexiconId());
 
@@ -254,7 +251,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void syntaxItemSelected() {
-        SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
+        SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedSyntaxId());
 
@@ -296,12 +293,12 @@ public class MainActivity extends FragmentActivity
             arguments.putString(LexiconDetailFragment.ARG_ENTRY, entry);
             LexiconDetailFragment fragment = new LexiconDetailFragment();
             fragment.setArguments(arguments);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.item_detail_container, fragment);
             transaction.addToBackStack(null);
             transaction.commitAllowingStateLoss();
         } else {
-            LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
+            LexiconListFragment fragment = (LexiconListFragment) getFragmentManager()
                     .findFragmentById(R.id.item_list_container);
             int lexiconId = fragment.getSelectedLexiconId();
 
@@ -319,12 +316,12 @@ public class MainActivity extends FragmentActivity
             arguments.putString(SyntaxDetailFragment.ARG_XML, xml);
             SyntaxDetailFragment fragment = new SyntaxDetailFragment();
             fragment.setArguments(arguments);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.item_detail_container, fragment);
             transaction.addToBackStack(null);
             transaction.commitAllowingStateLoss();
         } else {
-            SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
+            SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()
                     .findFragmentById(R.id.item_list_container);
             int syntaxId = fragment.getSelectedSyntaxId();
 
@@ -438,23 +435,23 @@ public class MainActivity extends FragmentActivity
         switch (item.getItemId()) {
             case R.id.action_add_favorite:
                 LexiconDetailFragment addFavoriteFragment =
-                        (LexiconDetailFragment) getSupportFragmentManager()
+                        (LexiconDetailFragment) getFragmentManager()
                                 .findFragmentById(R.id.item_detail_container);
                 addFavoriteFragment.addLexiconFavorite();
                 return true;
             case R.id.action_remove_favorite:
                 LexiconDetailFragment removeFavoriteFragment =
-                        (LexiconDetailFragment) getSupportFragmentManager()
+                        (LexiconDetailFragment) getFragmentManager()
                                 .findFragmentById(R.id.item_detail_container);
                 removeFavoriteFragment.removeLexiconFavorite();
                 return true;
             case R.id.action_add_bookmark:
-                SyntaxDetailFragment addBookmarkFragment = (SyntaxDetailFragment) getSupportFragmentManager()
+                SyntaxDetailFragment addBookmarkFragment = (SyntaxDetailFragment) getFragmentManager()
                         .findFragmentById(R.id.item_detail_container);
                 addBookmarkFragment.addSyntaxBookmark();
                 return true;
             case R.id.action_remove_bookmark:
-                SyntaxDetailFragment removeBookmarkFragment = (SyntaxDetailFragment) getSupportFragmentManager()
+                SyntaxDetailFragment removeBookmarkFragment = (SyntaxDetailFragment) getFragmentManager()
                         .findFragmentById(R.id.item_detail_container);
                 removeBookmarkFragment.removeSyntaxBookmark();
                 return true;
@@ -490,7 +487,7 @@ public class MainActivity extends FragmentActivity
 
     private void clearLexiconFavorites() {
         DialogFragment dialog = new ClearLexiconFavoritesDialogFragment();
-        dialog.show(getSupportFragmentManager(), "clearFavorites");
+        dialog.show(getFragmentManager(), "clearFavorites");
     }
 
     private class ClearLexiconFavoritesDialogFragment extends DialogFragment {
@@ -519,7 +516,7 @@ public class MainActivity extends FragmentActivity
 
     private void clearSyntaxBookmarks() {
         DialogFragment dialog = new ClearSyntaxBookmarksDialogFragment();
-        dialog.show(getSupportFragmentManager(), "clearBookmarks");
+        dialog.show(getFragmentManager(), "clearBookmarks");
     }
 
     private class ClearSyntaxBookmarksDialogFragment extends DialogFragment {
@@ -597,7 +594,7 @@ public class MainActivity extends FragmentActivity
             String id = cursor.getString(0);
 
             LexiconBrowseListFragment fragment
-                    = (LexiconBrowseListFragment) getSupportFragmentManager()
+                    = (LexiconBrowseListFragment) getFragmentManager()
                         .findFragmentById(R.id.item_list_container);
             fragment.selectItem(Integer.parseInt(id));
         } else {
@@ -686,13 +683,13 @@ public class MainActivity extends FragmentActivity
     private void swapInFragments(Fragment listFragment, Fragment detailFragment) {
         // TODO: Track title changes so we can display proper title when user navigates through the back    stack.
         if (mTwoPane) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.item_list_container, listFragment);
             transaction.replace(R.id.item_detail_container, detailFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         } else {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.item_list_container, listFragment);
             transaction.addToBackStack(null);
             transaction.commit();
@@ -704,7 +701,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void setLexiconFavoriteIcon(Menu menu) {
-        LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
+        LexiconListFragment fragment = (LexiconListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
 
         MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
@@ -723,7 +720,7 @@ public class MainActivity extends FragmentActivity
     }
 
     private void setSyntaxBookmarkIcon(Menu menu) {
-        SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
+        SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
 
         MenuItem addBookmark = menu.findItem(R.id.action_add_bookmark);
@@ -769,7 +766,7 @@ public class MainActivity extends FragmentActivity
 
     private void displayAbout() {
         AboutDialogFragment dialogFragment = new AboutDialogFragment();
-        dialogFragment.show(getSupportFragmentManager(), "about");
+        dialogFragment.show(getFragmentManager(), "about");
     }
 
     private void sendFeedback() {
@@ -807,6 +804,6 @@ public class MainActivity extends FragmentActivity
 
     private void displayHelp() {
         HelpDialogFragment dialogFragment = new HelpDialogFragment();
-        dialogFragment.show(getSupportFragmentManager(), "help");
+        dialogFragment.show(getFragmentManager(), "help");
     }
 }

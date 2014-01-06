@@ -26,9 +26,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
-
-import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
  * A ContentProvider for basic data stored by the app.

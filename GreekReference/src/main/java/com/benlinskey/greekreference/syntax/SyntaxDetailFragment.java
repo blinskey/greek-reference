@@ -126,7 +126,7 @@ public class SyntaxDetailFragment extends DetailFragment {
     // The following two methods should only be used in two-pane mode.
     // TODO: Throw exception if these methods are called in one-pane mode.
     public void addSyntaxBookmark() {
-        SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getSupportFragmentManager()
+        SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         int syntaxId = fragment.getSelectedSyntaxId();
         String section = getSectionFromSyntaxId(syntaxId);
@@ -134,7 +134,7 @@ public class SyntaxDetailFragment extends DetailFragment {
     }
 
     public void removeSyntaxBookmark() {
-        SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getSupportFragmentManager()
+        SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         int syntaxId = fragment.getSelectedSyntaxId();
         removeSyntaxBookmark(syntaxId);

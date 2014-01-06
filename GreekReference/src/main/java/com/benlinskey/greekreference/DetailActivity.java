@@ -17,19 +17,18 @@
 package com.benlinskey.greekreference;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
-import android.webkit.WebView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -38,7 +37,7 @@ import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 /**
  * The basic class from which all detail activities inherit.
  */
-public abstract class DetailActivity extends FragmentActivity
+public abstract class DetailActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private static final String TAG = "DetailActivity";
@@ -60,7 +59,7 @@ public abstract class DetailActivity extends FragmentActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+                getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.userLearnedDrawer();
         mNavDrawerInitialSelectionMade = true;
 
@@ -113,7 +112,7 @@ public abstract class DetailActivity extends FragmentActivity
             ScrollView scrollView = new ScrollView(getActivity());
             scrollView.addView(textView);
             builder.setView(scrollView);
-            
+                
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -126,7 +125,7 @@ public abstract class DetailActivity extends FragmentActivity
 
     private void displayAbout() {
         AboutDialogFragment dialogFragment = new AboutDialogFragment();
-        dialogFragment.show(getSupportFragmentManager(), "about");
+        dialogFragment.show(getFragmentManager(), "about");
     }
 
     private void sendFeedback() {
@@ -164,7 +163,7 @@ public abstract class DetailActivity extends FragmentActivity
 
     private void displayHelp() {
         HelpDialogFragment dialogFragment = new HelpDialogFragment();
-        dialogFragment.show(getSupportFragmentManager(), "help");
+        dialogFragment.show(getFragmentManager(), "help");
     }
 
     protected abstract void restoreActionBar();

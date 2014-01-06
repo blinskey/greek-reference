@@ -23,7 +23,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.benlinskey.greekreference.DetailFragment;
 import com.benlinskey.greekreference.GreekTextView;
@@ -112,7 +111,7 @@ public class LexiconDetailFragment extends DetailFragment {
     // The following two methods should only be used in two-pane mode.
     // TODO: Throw exception if these methods are called in one-pane mode.
     public void addLexiconFavorite() {
-        LexiconListFragment fragment = (LexiconListFragment) getActivity().getSupportFragmentManager()
+        LexiconListFragment fragment = (LexiconListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         int lexiconId = fragment.getSelectedLexiconId();
         String word = getWordFromLexiconId(lexiconId);
@@ -120,7 +119,7 @@ public class LexiconDetailFragment extends DetailFragment {
     }
 
     public void removeLexiconFavorite() {
-        LexiconListFragment fragment = (LexiconListFragment) getActivity().getSupportFragmentManager()
+        LexiconListFragment fragment = (LexiconListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         int lexiconId = fragment.getSelectedLexiconId();
         removeLexiconFavorite(lexiconId);

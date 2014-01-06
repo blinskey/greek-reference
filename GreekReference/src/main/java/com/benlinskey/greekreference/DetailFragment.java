@@ -20,8 +20,8 @@ package com.benlinskey.greekreference;
  * Created by blinskey on 1/4/14.
  */
 
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 public abstract class DetailFragment extends Fragment {

@@ -69,7 +69,7 @@ public class LexiconDetailActivity extends DetailActivity {
                     getIntent().getStringExtra(LexiconDetailFragment.ARG_ENTRY));
             LexiconDetailFragment fragment = new LexiconDetailFragment();
             fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
                     .commitAllowingStateLoss();
         }
@@ -103,7 +103,7 @@ public class LexiconDetailActivity extends DetailActivity {
     }
 
     private void setLexiconFavoriteIcon(Menu menu) {
-        LexiconListFragment fragment = (LexiconListFragment) getSupportFragmentManager()
+        LexiconListFragment fragment = (LexiconListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
 
         MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
@@ -126,12 +126,12 @@ public class LexiconDetailActivity extends DetailActivity {
                 NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_add_favorite:
-                LexiconDetailFragment addFavoriteFragment = (LexiconDetailFragment) getSupportFragmentManager()
+                LexiconDetailFragment addFavoriteFragment = (LexiconDetailFragment) getFragmentManager()
                         .findFragmentById(R.id.item_detail_container);
                 addFavoriteFragment.addLexiconFavorite(mLexiconId, mWord);
                 return true;
             case R.id.action_remove_favorite:
-                LexiconDetailFragment removeFavoriteFragment = (LexiconDetailFragment) getSupportFragmentManager()
+                LexiconDetailFragment removeFavoriteFragment = (LexiconDetailFragment) getFragmentManager()
                         .findFragmentById(R.id.item_detail_container);
                 removeFavoriteFragment.removeLexiconFavorite(mLexiconId);
                 return true;

@@ -75,7 +75,7 @@ public class SyntaxDetailActivity extends DetailActivity {
                     getIntent().getStringExtra(SyntaxDetailFragment.ARG_XML));
             SyntaxDetailFragment fragment = new SyntaxDetailFragment();
             fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
                     .commitAllowingStateLoss();
         }
@@ -109,7 +109,7 @@ public class SyntaxDetailActivity extends DetailActivity {
     }
 
     private void setSyntaxBookmarkIcon(Menu menu) {
-        SyntaxListFragment fragment = (SyntaxListFragment) getSupportFragmentManager()
+        SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
 
         MenuItem addBookmark = menu.findItem(R.id.action_add_bookmark);
@@ -132,12 +132,12 @@ public class SyntaxDetailActivity extends DetailActivity {
                 NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_add_bookmark:
-                SyntaxDetailFragment addBookmarkFragment = (SyntaxDetailFragment) getSupportFragmentManager()
+                SyntaxDetailFragment addBookmarkFragment = (SyntaxDetailFragment) getFragmentManager()
                         .findFragmentById(R.id.item_detail_container);
                 addBookmarkFragment.addSyntaxBookmark(mSyntaxId, mSection);
                 return true;
             case R.id.action_remove_bookmark:
-                SyntaxDetailFragment removeBookmarkFragment = (SyntaxDetailFragment) getSupportFragmentManager()
+                SyntaxDetailFragment removeBookmarkFragment = (SyntaxDetailFragment) getFragmentManager()
                         .findFragmentById(R.id.item_detail_container);
                 removeBookmarkFragment.removeSyntaxBookmark(mSyntaxId);
                 return true;

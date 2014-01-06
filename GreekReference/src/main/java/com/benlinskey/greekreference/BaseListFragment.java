@@ -16,9 +16,8 @@
 
 package com.benlinskey.greekreference;
 
-import android.app.Activity;
+import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import android.widget.TextView;
 /**
  * The basic class from which every list fragment inherits.
  */
-public abstract class BaseListFragment extends android.support.v4.app.ListFragment {
+public abstract class BaseListFragment extends ListFragment {
     protected TextView mEmptyView;
 
     public abstract void setActivateOnItemClick(boolean activateOnItemClick);
