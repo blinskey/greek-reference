@@ -19,12 +19,17 @@ package com.benlinskey.greekreference;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * The basic class from which every list fragment inherits.
  */
 public abstract class BaseListFragment extends android.support.v4.app.ListFragment {
+    protected TextView mEmptyView;
+
     public abstract void setActivateOnItemClick(boolean activateOnItemClick);
 
     /**
@@ -34,6 +39,14 @@ public abstract class BaseListFragment extends android.support.v4.app.ListFragme
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Set a custom empty view.
+        mEmptyView = new TextView(getActivity());
+        mEmptyView.setGravity(Gravity.CENTER);
+        mEmptyView.setTextSize(25f);
+        ((ViewGroup) view).addView(mEmptyView);
+        getListView().setEmptyView(mEmptyView);
+
         if (((MainActivity) getActivity()).isTwoPane()) {
             setActivateOnItemClick(true);
         }

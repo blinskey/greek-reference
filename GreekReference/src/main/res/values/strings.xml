@@ -48,10 +48,16 @@
         Are you sure you want to permanently clear your bookmarks list?
     </string>
     <string name="toast_clear_syntax_bookmarks">Bookmarks cleared.</string>
-    <string name="empty"></string>
     <string name="toast_favorite_added">Favorite added.</string>
     <string name="toast_favorite_removed">Favorite removed.</string>
     <string name="toast_bookmark_added">Bookmark added.</string>
     <string name="toast_bookmark_removed">Bookmark removed.</string>
+    <string name="lexicon_favorites_empty_view">
+        Tap the star icon to save your favorite words.
+    </string>
+    <string name="lexicon_history_empty_view">Your history is empty.</string>
+    <string name="syntax_bookamrks_empty_view">
+        Tap the bookmark icon to save your favorite sections.
+    </string>
 
 </resources>
