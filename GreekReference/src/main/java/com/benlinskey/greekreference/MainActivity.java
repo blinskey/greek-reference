@@ -556,13 +556,7 @@ public class MainActivity extends Activity
      * @param data  the URI of the lexicon entry to display
      */
     private void getLexiconEntry(Uri data) {
-        if (!mMode.equals(Mode.LEXICON_BROWSE)) {
-            switchToLexiconBrowse();
-
-            // Make sure the fragments are swapped before we try to get the
-            // LexiconBrowseListFragment.
-            getFragmentManager().executePendingTransactions();
-        }
+        ensureModeIsLexiconBrowse();
 
         // Get data.
         Cursor cursor = getContentResolver().query(data, null, null, null, null);
@@ -590,6 +584,8 @@ public class MainActivity extends Activity
      */
     // TODO: Handle words with multiple entries.
     void search(String query) {
+        ensureModeIsLexiconBrowse();
+
         String[] columns = new String[] {LexiconContract._ID};
         String selection = LexiconContract.COLUMN_BETA_SYMBOLS + " = ? OR "
                 + LexiconContract.COLUMN_BETA_NO_SYMBOLS + " = ? OR "
@@ -615,6 +611,16 @@ public class MainActivity extends Activity
         }
 
         cursor.close();
+    }
+
+    private void ensureModeIsLexiconBrowse() {
+        if (!mMode.equals(Mode.LEXICON_BROWSE)) {
+            switchToLexiconBrowse();
+
+            // Make sure the fragments are swapped before we try to get the
+            // LexiconBrowseListFragment.
+            getFragmentManager().executePendingTransactions();
+        }
     }
 
     // TODO: Condense this code by storing title and fragments as fields of each Mode? The only
@@ -651,6 +657,7 @@ public class MainActivity extends Activity
         restoreActionBar();
 
         swapInFragments(new LexiconBrowseListFragment(), new LexiconDetailFragment());
+        ensureNavDrawerSelection(Mode.LEXICON_BROWSE);
     }
 
     private void switchToLexiconFavorites() {
@@ -660,6 +667,7 @@ public class MainActivity extends Activity
         restoreActionBar();
 
         swapInFragments(new LexiconFavoritesListFragment(), new LexiconDetailFragment());
+        ensureNavDrawerSelection(Mode.LEXICON_FAVORITES);
     }
 
     private void switchToLexiconHistory() {
@@ -669,6 +677,7 @@ public class MainActivity extends Activity
         restoreActionBar();
 
         swapInFragments(new LexiconHistoryListFragment(), new LexiconDetailFragment());
+        ensureNavDrawerSelection(Mode.LEXICON_HISTORY);
     }
 
     private void switchToSyntaxBrowse() {
@@ -678,6 +687,7 @@ public class MainActivity extends Activity
         restoreActionBar();
 
         swapInFragments(new SyntaxBrowseListFragment(), new SyntaxDetailFragment());
+        ensureNavDrawerSelection(Mode.SYNTAX_BROWSE);
     }
 
     private void switchToSyntaxBookmarks() {
@@ -687,6 +697,20 @@ public class MainActivity extends Activity
         restoreActionBar();
 
         swapInFragments(new SyntaxBookmarksListFragment(), new SyntaxDetailFragment());
+        ensureNavDrawerSelection(Mode.SYNTAX_BOOKMARKS);
+    }
+
+    private void ensureNavDrawerSelection(Mode mode) {
+        // If the nav drawer hasn't been created yet, we don't need to worry about this.
+        if (null == mNavigationDrawerFragment) {
+            return;
+        }
+
+        int position = mNavigationDrawerFragment.getCurrentSelectedPosition();
+        Mode navDrawerMode = Mode.getModeFromPosition(position);
+        if (!navDrawerMode.equals(mode)) {
+            mNavigationDrawerFragment.setCurrentSelectedPosition(mode.getPosition());
+        }
     }
 
     /**

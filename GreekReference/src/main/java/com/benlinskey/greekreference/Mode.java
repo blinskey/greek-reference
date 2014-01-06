@@ -47,6 +47,10 @@ public enum Mode {
         return mName;
     }
 
+    public int getPosition() {
+        return mPosition;
+    }
+
     public static Mode getModeFromPosition(int position) {
         for (Mode m : Mode.values()) {
             if (m.mPosition == position) {
