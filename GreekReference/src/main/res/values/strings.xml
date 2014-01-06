@@ -78,5 +78,59 @@
         </p>
         ]]>
     </string>
+    <string name="title_about">About</string>
+    <!-- NOTE: I'm currently displaying the following string in a TextView, not a WebView, so some
+         of these tags are ignored, and I've added a few extra <br> tags in the list at the end. -->
+    <string name="message_about">
+        <![CDATA[
+        <p>
+            Greek Reference is open source! You can find the project on GitHub at
+            <a href="https://github.com/blinskey/greek-reference">https://github.com/blinskey/greek-reference</a>.
+        </p>
+        <hr>
+        <p>
+            Thanks to the <a href="http://www.perseus.tufts.edu">Perseus Digital Library</a> for
+            making available the texts used in this app.
+        </p>
+        <p>
+            This app includes the text of <i>An Intermediate Greek-English Lexicon</i>, by Henry
+            George Liddell and Robert Scott. Text provided by Perseus Digital Library, with funding
+            from The Annenberg CPB/Project. Original version available for viewing and download at
+            http://www.perseus.tufts.edu/hopper/.
+        </p>
+        <p>
+            The app also includes the text of <i>Overview of Greek Syntax</i>, by Jeffrey A.
+            Rydberg-Cox. Text provided by Perseus Digital Library, with funding from The Annenberg
+            CPB/Project. Original version available for viewing and download at
+            http://www.perseus.tufts.edu/hopper/.
+        </p>
+        <p>
+            The above texts are licensed under a Creative Commons Attribution-ShareAlike 3.0 United
+            States License. See http://creativecommons.org/licenses/by-sa/3.0/us/ for details.
+        </p>
+        <hr>
+        <p>
+            The following open source resources were used in the development of this app. Thanks to
+            their creators for making their work available.
+            <ul>
+                <li><a href="https://github.com/jgilfelt/android-sqlite-asset-helper">SQLiteAssetHelper</a></li>
+                <br>
+                <li><a href="http://sourceforge.net/projects/epidoc/files/Transcoder/">EpiDoc TransCoder</a></li>
+                <br>
+                <li><a href="https://code.google.com/p/noto/">NotoSerif font</a></li>
+                <br>
+                <li><a href="http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/">TypefaceTextView</a></li>
+            </ul>
+        </p>
+        <hr>
+        <p>
+            This app\'s icon was constructed in part from an icon obtained from the "Boilerplate"
+            icon set available at <a href="http://www.android-icons.com">www.androidicons.com</a>.
+            The icon set is licensed under the Creative Commons Attribution 3.0 Unported License.
+            See <a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a>
+            for details.
+        </p>
+        ]]>
+    </string>
 
 </resources>

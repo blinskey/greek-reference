@@ -40,6 +40,9 @@ import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,6 +74,7 @@ import java.io.File;
 // TODO: Move as much code from here to other classes as possible.
 // TODO: Change minimum SDK level or stop using support library.
 // TODO: Add Share option?
+// TODO: Create a base activity class that handles all common option items.
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {
 
@@ -463,6 +467,9 @@ public class MainActivity extends FragmentActivity
             case R.id.action_clear_bookmarks:
                 clearSyntaxBookmarks();
                 return true;
+            case R.id.action_about:
+                displayAbout();
+                return true;
             case R.id.action_feedback:
                 sendFeedback();
                 return true;
@@ -503,7 +510,7 @@ public class MainActivity extends FragmentActivity
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    // Do nothing.
+                    dialogInterface.dismiss();
                 }
             });
             return builder.create();
@@ -734,21 +741,65 @@ public class MainActivity extends FragmentActivity
         }
     }
 
+    private class AboutDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.title_about);
+
+            TextView textView = new TextView(getActivity());
+            textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
+            textView.setTextColor(getResources().getColor(android.R.color.black));
+            textView.setPadding(25, 25, 25, 25);
+            textView.setText(Html.fromHtml(getString(R.string.message_about)));
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            ScrollView scrollView = new ScrollView(getActivity());
+            scrollView.addView(textView);
+            builder.setView(scrollView);
+
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            return builder.create();
+        }
+    }
+
+    private void displayAbout() {
+        AboutDialogFragment dialogFragment = new AboutDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "about");
+    }
+
+    private void sendFeedback() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO,
+                Uri.fromParts("mailto", getString(R.string.feedback_email), null));
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
+        startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
+    }
+
     private class HelpDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.title_help);
+
             TextView textView = new TextView(getActivity());
             textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
             textView.setTextColor(getResources().getColor(android.R.color.black));
             textView.setPadding(25, 25, 25, 25);
             textView.setText(Html.fromHtml(getString(R.string.message_help)));
             textView.setMovementMethod(LinkMovementMethod.getInstance());
-            builder.setView(textView);
+            ScrollView scrollView = new ScrollView(getActivity());
+            scrollView.addView(textView);
+            builder.setView(scrollView);
+
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {}
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
             });
             return builder.create();
         }
@@ -757,12 +808,5 @@ public class MainActivity extends FragmentActivity
     private void displayHelp() {
         HelpDialogFragment dialogFragment = new HelpDialogFragment();
         dialogFragment.show(getSupportFragmentManager(), "help");
-    }
-
-    private void sendFeedback() {
-        Intent intent = new Intent(Intent.ACTION_SENDTO,
-                Uri.fromParts("mailto", getString(R.string.feedback_email), null));
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
-        startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
     }
 }
