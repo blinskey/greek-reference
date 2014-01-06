@@ -22,9 +22,13 @@ package com.benlinskey.greekreference;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 public abstract class DetailFragment extends Fragment {
+
+    private static final String KEY_SCROLL_Y = "scroll_y";
+
     // We use a single Toast object to prevent overlapping toasts when the user repeatedly taps an
     // icon that displays a toast.
     protected Toast mToast;
@@ -34,6 +38,25 @@ public abstract class DetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mToast = Toast.makeText(getActivity(), null, Toast.LENGTH_SHORT);
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(KEY_SCROLL_Y)) {
+            int scrollY = savedInstanceState.getInt(KEY_SCROLL_Y);
+            View scrollView = getActivity().findViewById(R.id.detail_scroll_view);
+            scrollView.setScrollY(scrollY);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        View scrollView = getActivity().findViewById(R.id.detail_scroll_view);
+        if (scrollView != null) {
+            int scrollY = scrollView.getScrollY();
+            outState.putInt(KEY_SCROLL_Y, scrollY);
+        }
+    }
+
 
     protected void displayToast(String message) {
         mToast.setText(message);
