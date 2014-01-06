@@ -34,10 +34,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -673,7 +677,7 @@ public class MainActivity extends FragmentActivity
      * Replaces the currently displayed fragment(s) with the specified fragment(s).
      */
     private void swapInFragments(Fragment listFragment, Fragment detailFragment) {
-        // TODO: Track title changes so we can display proper title when user navigates through the backstack.
+        // TODO: Track title changes so we can display proper title when user navigates through the back    stack.
         if (mTwoPane) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.item_list_container, listFragment);
@@ -730,8 +734,29 @@ public class MainActivity extends FragmentActivity
         }
     }
 
+    private class HelpDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.title_help);
+            TextView textView = new TextView(getActivity());
+            textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
+            textView.setTextColor(getResources().getColor(android.R.color.black));
+            textView.setPadding(25, 25, 25, 25);
+            textView.setText(Html.fromHtml(getString(R.string.message_help)));
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            builder.setView(textView);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {}
+            });
+            return builder.create();
+        }
+    }
+
     private void displayHelp() {
-        // TODO
+        HelpDialogFragment dialogFragment = new HelpDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(), "help");
     }
 
     private void sendFeedback() {
