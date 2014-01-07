@@ -4,7 +4,7 @@ This is an ancient Greek lexicon and grammar for Android.
 
 ## Status
 
-The latest release is version 0.1. The corresponding version of the [Greek Reference Database Creator][] is 1.0.2.
+The latest release is version 0.1.1. The corresponding version of the [Greek Reference Database Creator][] is 1.0.2.
 
 More details on building the project and contributing will be posted soon along with the release of version 1.0.
 
