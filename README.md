@@ -1,10 +1,12 @@
 # Greek Reference
 
-This is an ancient Greek lexicon and grammar for Android. It is currently in development.
+This is an ancient Greek lexicon and grammar for Android.
 
-## Important Note
+## Status
 
-This version of Greek Reference is designed to work with a new version of the [Greek Reference Database Creator][]. It replaces the old version of Greek Reference hosted on Bitbucket.
+The latest release is version 0.1.
+
+More details on building the project and contributing will be posted soon along with the release of version 1.0.
 
 ## Icons
 
