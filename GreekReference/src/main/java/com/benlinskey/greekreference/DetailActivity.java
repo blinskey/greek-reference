@@ -55,10 +55,6 @@ public abstract class DetailActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
-        // Show the Up button in the action bar.
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.userLearnedDrawer();
@@ -67,6 +63,11 @@ public abstract class DetailActivity extends Activity
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        // Show the Up button in the action bar.
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        mNavigationDrawerFragment.disableDrawerIndicator();
     }
 
     @Override
