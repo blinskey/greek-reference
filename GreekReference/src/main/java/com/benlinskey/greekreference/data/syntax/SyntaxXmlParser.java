@@ -30,11 +30,12 @@ import java.io.InputStream;
  */
 public class SyntaxXmlParser {
     // TODO: Simplify this parser where possible.
-    // TODO: Use string buffers instead of string concatenation?
+    // TODO: Use string buffers instead of string concatenation.
+    // TODO: Modify this for display in a WebView.
 
     private static final String TAG = "SyntaxXmlParser";
     private SyntaxSection mSection;
-    private String mIntro = "";
+    private String mText = "";
 
     /**
      * Class constructor.
@@ -74,13 +75,15 @@ public class SyntaxXmlParser {
             } else if (name.equals("head")) {
                 readHead(parser);
             } else if (name.equals("p")) {
+                mText += "<p>";
                 readBody(parser);
+                mText += "</p>";
             } else {
                 skip(parser);
             }
         }
 
-        mSection.setIntro(mIntro);
+        mSection.setIntro(mText);
     }
 
     private void readHead(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -90,10 +93,10 @@ public class SyntaxXmlParser {
     private void readBody(XmlPullParser parser) throws XmlPullParserException, IOException {
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.TEXT) {
-                mIntro += parser.getText();
+                mText += parser.getText();
             } else if (parser.getName().equals("emph")) {
                 String emphText = readText(parser);
-                mIntro += "<b>" + emphText + "</b>";
+                mText += "<b>" + emphText + "</b>";
             } else if (parser.getName().equals("list")) {
                 readList(parser);
             }
@@ -151,6 +154,9 @@ public class SyntaxXmlParser {
 
     private String readItemParagraph(XmlPullParser parser)
             throws XmlPullParserException, IOException {
+        // Note that we can't use <p> tags here, since we have to manually add bullets before list
+        // items enclosed in those tags in the XML. This will be fixed when we switch to using a
+        // WebView.
         String paraString = "";
 
         while (parser.next() != XmlPullParser.END_TAG) {

@@ -54,13 +54,12 @@ public class SyntaxSection {
         buffer.append(mHeading);
         buffer.append("</em><br><br>");
         buffer.append(mIntro);
-        buffer.append("<br><br>");
 
         /* TODO: Improve list. Subsequent paragraphs don't align at the moment.
          * May need to use spans to do this.
          */
         for (String item : mList) {
-            buffer.append("&#8226 ");
+            buffer.append("&#8226 "); // Add a bullet
             buffer.append(item);
         }
 
