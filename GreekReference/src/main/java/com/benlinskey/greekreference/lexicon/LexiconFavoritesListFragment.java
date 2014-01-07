@@ -22,9 +22,12 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -97,13 +100,11 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
         super.onCreate(savedInstanceState);
 
         // Create and set list adapter.
-        // TODO: Display a message when this list is empty.
         String[] fromColumns = {AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
         int[] toViews = {android.R.id.text1};
         mAdapter = new android.widget.SimpleCursorAdapter(getActivity(),
                 R.layout.greek_simple_list_item_activated_1, null, fromColumns, toViews, 0);
         setListAdapter(mAdapter);
-
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -114,6 +115,7 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
+        setNoItemsView(R.string.lexicon_favorites_empty_view);
     }
 
     public void onLoaderReset(Loader<Cursor> loader) {
@@ -123,8 +125,6 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mEmptyView.setText(R.string.lexicon_favorites_empty_view);
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null

@@ -22,7 +22,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
@@ -56,6 +58,7 @@ public abstract class BaseListFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.w("emptydebug", "onViewCreated");
 
         if (((MainActivity) getActivity()).isTwoPane()) {
             setActivateOnItemClick(true);
@@ -67,12 +70,21 @@ public abstract class BaseListFragment extends ListFragment {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
 
-        // Set a custom empty view.
+        // Create a progress bar to display while the list loads
+        ProgressBar progressBar = new ProgressBar(getActivity());
+        FrameLayout.LayoutParams params
+                = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+        progressBar.setLayoutParams(params);
+        progressBar.setIndeterminate(true);
+        getListView().setEmptyView(progressBar);
+        ((ViewGroup) view).addView(progressBar);
+
+        // Create a custom empty view to display after loading the list.
         mEmptyView = new TextView(getActivity());
         mEmptyView.setGravity(Gravity.CENTER);
         mEmptyView.setTextSize(25f);
         ((ViewGroup) view).addView(mEmptyView);
-        getListView().setEmptyView(mEmptyView);
     }
 
     @Override
@@ -105,6 +117,12 @@ public abstract class BaseListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    protected void setNoItemsView(int stringId) {
+        getListView().getEmptyView().setVisibility(View.INVISIBLE);
+        getListView().setEmptyView(mEmptyView);
+        mEmptyView.setText(stringId);
     }
 
     /**

@@ -22,9 +22,12 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -39,7 +42,7 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
  * interface.
  */
 public class SyntaxBookmarksListFragment extends SyntaxListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
-
+    private static final String TAG = "SyntaxBookmarksListFragment";
     public static final String NAME = "syntax_bookmarks";
     private SimpleCursorAdapter mAdapter;
     private static final String[] PROJECTION = new String[] {AppDataContract.SyntaxBookmarks._ID,
@@ -88,7 +91,6 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment implements L
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: Display a message when nothing is selected.
         // TODO: Add chapter name before section name in this list?
         String[] fromColumns = {AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION};
         int[] toViews = {android.R.id.text1};
@@ -107,6 +109,7 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment implements L
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
+        setNoItemsView(R.string.syntax_bookamrks_empty_view);
     }
 
     @Override
@@ -117,8 +120,6 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment implements L
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mEmptyView.setText(R.string.syntax_bookamrks_empty_view);
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null

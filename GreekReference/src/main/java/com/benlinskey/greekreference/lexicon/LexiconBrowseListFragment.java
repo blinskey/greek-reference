@@ -87,7 +87,14 @@ public class LexiconBrowseListFragment extends LexiconListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        // Create and set list adapter.
+        // TODO: Replace this with a more efficient adapter.
+        String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
+        int[] toViews = {android.R.id.text1};
+        mAdapter = new SimpleCursorAdapter(getActivity(),
+                R.layout.greek_simple_list_item_activated_1, null, fromColumns, toViews, 0);
+        setListAdapter(mAdapter);
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -109,25 +116,6 @@ public class LexiconBrowseListFragment extends LexiconListFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Create a progress bar to display while the list loads
-        ProgressBar progressBar = new ProgressBar(getActivity());
-        FrameLayout.LayoutParams params
-                = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
-        progressBar.setLayoutParams(params);
-        progressBar.setIndeterminate(true);
-        getListView().setEmptyView(progressBar);
-        ((ViewGroup) view).addView(progressBar);
-
-        // Create and set list adapter.
-        // TODO: Replace this with a more efficient adapter.
-        String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
-        int[] toViews = {android.R.id.text1};
-        mAdapter = new SimpleCursorAdapter(getActivity(),
-                R.layout.greek_simple_list_item_activated_1, null, fromColumns, toViews, 0);
-        setListAdapter(mAdapter);
-        getLoaderManager().initLoader(0, null, this);
 
         getListView().setFastScrollEnabled(true);
         getListView().setFastScrollAlwaysVisible(true);

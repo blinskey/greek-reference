@@ -99,6 +99,7 @@ public class LexiconHistoryListFragment extends LexiconListFragment
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
+        setNoItemsView(R.string.lexicon_history_empty_view);
     }
 
     public void onLoaderReset(Loader<Cursor> loader) {
@@ -108,7 +109,6 @@ public class LexiconHistoryListFragment extends LexiconListFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mEmptyView.setText(R.string.lexicon_history_empty_view);
     }
 
     @Override
@@ -150,8 +150,6 @@ public class LexiconHistoryListFragment extends LexiconListFragment
         super.onSaveInstanceState(outState);
 
     }
-
-
 
     private void setSelectedLexiconItemId(int id) {
         String[] columns = new String[] {AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID};
