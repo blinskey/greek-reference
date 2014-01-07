@@ -77,4 +77,8 @@ public class SyntaxSection {
     public void addListItem(String item) {
         mList.add(item);
     }
+
+    public String getHeading() {
+        return mHeading;
+    }
 }

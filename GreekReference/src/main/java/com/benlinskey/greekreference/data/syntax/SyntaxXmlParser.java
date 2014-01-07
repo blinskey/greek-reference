@@ -37,6 +37,11 @@ public class SyntaxXmlParser {
     private SyntaxSection mSection;
     private String mText = "";
 
+    // This is a kludgy solution to a parsing bug in the Participles section. I'm not implementing
+    // a proper solution because this entire parser will be rewritten when I replace the TextViews
+    // with WebViews.
+    private int mParticipleListNumber = 0;
+
     /**
      * Class constructor.
      */
@@ -78,6 +83,8 @@ public class SyntaxXmlParser {
                 mText += "<p>";
                 readBody(parser);
                 mText += "</p>";
+            } else if (name.equals("listBibl")) {
+                readListBibl(parser);
             } else {
                 skip(parser);
             }
@@ -103,16 +110,44 @@ public class SyntaxXmlParser {
         }
     }
 
+    private void readListBibl(XmlPullParser parser) throws  XmlPullParserException, IOException {
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getName().equals("bibl")) {
+                String text = "";
+                while (parser.next() != XmlPullParser.END_TAG) {
+                    if (parser.getEventType() == XmlPullParser.TEXT) {
+                        text += parser.getText();
+                    } else if (parser.getName().equals("title")) {
+                        String titleString = readText(parser);
+                        text += "<u>" + titleString + "</u>";
+                    } else {
+                        throw new XmlPullParserException("Unrecognized element: " + parser.getName());
+                    }
+                }
+                text += "<br><br>";
+                mSection.addListItem(text);
+            } else {
+                throw new XmlPullParserException("Invalid <listBibl> child");
+            }
+        }
+    }
+
     private void readList(XmlPullParser parser) throws XmlPullParserException, IOException {
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getName().equals("item")) {
-                // Process item, consuming </item> tag.
-                readItem(parser);
+                if (mSection.getHeading().equals("Participle") && mParticipleListNumber < 3) {
+                    readParticipleList(parser);
+                } else {
+                    // Process item, consuming </item> tag.
+                    readItem(parser);
+                }
             } else {
                 throw new IllegalStateException("<list> element must contain only <item> " +
                         "elements.");
             }
         }
+
+        mParticipleListNumber++;
     }
 
     private String readQuote(XmlPullParser parser) throws XmlPullParserException, IOException {
@@ -150,6 +185,22 @@ public class SyntaxXmlParser {
         }
 
         mSection.addListItem(text);
+    }
+
+    private void readParticipleList(XmlPullParser parser)
+            throws XmlPullParserException, IOException {
+        while (parser.next() != XmlPullParser.END_TAG) {
+            mText += "<p>";
+            if (parser.getEventType() == XmlPullParser.TEXT) {
+                mText += parser.getText();
+            } else if (parser.getName().equals("p")) {
+                mText += readItemParagraph(parser);
+            } else {
+                throw new IllegalStateException("<item> must contain only <p> elements or plain " +
+                        "text.");
+            }
+            mText += "</p>";
+        }
     }
 
     private String readItemParagraph(XmlPullParser parser)
