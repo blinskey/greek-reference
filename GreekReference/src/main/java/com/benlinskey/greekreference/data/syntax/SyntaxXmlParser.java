@@ -83,6 +83,8 @@ public class SyntaxXmlParser {
                 mText += "<p>";
                 readBody(parser);
                 mText += "</p>";
+            } else if (name.equals("listBibl")) {
+                readListBibl(parser);
             } else {
                 skip(parser);
             }
@@ -104,6 +106,28 @@ public class SyntaxXmlParser {
                 mText += "<b>" + emphText + "</b>";
             } else if (parser.getName().equals("list")) {
                 readList(parser);
+            }
+        }
+    }
+
+    private void readListBibl(XmlPullParser parser) throws  XmlPullParserException, IOException {
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getName().equals("bibl")) {
+                String text = "";
+                while (parser.next() != XmlPullParser.END_TAG) {
+                    if (parser.getEventType() == XmlPullParser.TEXT) {
+                        text += parser.getText();
+                    } else if (parser.getName().equals("title")) {
+                        String titleString = readText(parser);
+                        text += "<u>" + titleString + "</u>";
+                    } else {
+                        throw new XmlPullParserException("Unrecognized element: " + parser.getName());
+                    }
+                }
+                text += "<br><br>";
+                mSection.addListItem(text);
+            } else {
+                throw new XmlPullParserException("Invalid <listBibl> child");
             }
         }
     }
