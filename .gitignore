@@ -1,3 +1,5 @@
+*.keystore
+
 # Default Android Studio .gitignore files ##
 .gradle
 /local.properties
