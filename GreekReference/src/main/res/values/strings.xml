@@ -89,8 +89,9 @@
         </p>
         <hr>
         <p>
-            Thanks to the <a href="http://www.perseus.tufts.edu">Perseus Digital Library</a> for
-            making available the texts used in this app.
+            Thanks to the <a href="http://www.perseus.tufts.edu">Perseus Digital Library</a> and
+            Jeffrey A. Rydberg-Cox for making available the texts used in this app. Visit
+            Dr. Rydberg-Cox\'s web site at <a href="http://daedalus.umkc.edu">http://daedalus.umkc.edu</a>.
         </p>
         <p>
             This app includes the text of <i>An Intermediate Greek-English Lexicon</i>, by Henry
@@ -129,6 +130,15 @@
             The icon set is licensed under the Creative Commons Attribution 3.0 Unported License.
             See <a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a>
             for details.
+        </p>
+        ]]>
+    </string>
+    <string name="syntax_footer">
+        <![CDATA[
+        <p>
+            <i>Text from</i> <a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.04.0052">Overview of Greek Syntax</a>
+            <i>by <a href="http://daedalus.umkc.edu">Jeffrey A. Rydberg-Cox</a>. Select the About
+            option for more information.</i>
         </p>
         ]]>
     </string>

@@ -20,6 +20,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,8 +85,12 @@ public class SyntaxDetailFragment extends DetailFragment {
         View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
 
         if (!mBlank) {
+            // We add the header here since we can't access resources from a static context in
+            // the SyntaxSection class.
+            Spanned html = Html.fromHtml(mSection.toString() + getString(R.string.syntax_footer));
             GreekTextView textView = (GreekTextView) rootView.findViewById(R.id.item_detail);
-            textView.setText(Html.fromHtml(mSection.toString())); // Replace with parsed data.
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
+            textView.setText(html); // Replace with parsed data.
         }
 
         return rootView;
