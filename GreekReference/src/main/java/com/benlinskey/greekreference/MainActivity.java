@@ -67,12 +67,6 @@ import com.benlinskey.greekreference.syntax.SyntaxListFragment;
 
 import java.io.File;
 
-// TODO: Log errors here and throughout app.
-// TODO: Display short toasts when user adds or removes a favorite or bookmark.
-// TODO: Move as much code from here to other classes as possible.
-// TODO: Change minimum SDK level or stop using support library.
-// TODO: Add Share option?
-// TODO: Create a base activity class that handles all common option items.
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {
 
@@ -92,42 +86,6 @@ public class MainActivity extends Activity
      * device.
      */
     private boolean mTwoPane;
-
-    /**
-     * An <code>AsyncTask</code> that copies the lexicon and syntax databases while displaying
-     * a <code>ProgessDialog</code>.
-     */
-    private class LoadDatabasesTask extends AsyncTask<Context, Void, Void> {
-        Context mContext;
-        ProgressDialog mDialog;
-
-        LoadDatabasesTask(Context context) {
-            super();
-            mContext = context;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mDialog = new ProgressDialog(mContext);
-            mDialog.setMessage(mContext.getString(R.string.database_progress_dialog));
-            mDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Context... contexts) {
-            // Copy databases.
-            new LexiconHelper(contexts[0]).getReadableDatabase();
-            new SyntaxHelper(contexts[0]).getReadableDatabase();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            mDialog.dismiss();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,12 +117,6 @@ public class MainActivity extends Activity
             // res/values-sw600dp). If this view is present, then the
             // activity should be in two-pane mode.
             mTwoPane = true;
-        }
-
-        // Install databases if necessary.
-        File database = getDatabasePath(LexiconContract.DB_NAME);
-        if (!database.exists()) {
-            new LoadDatabasesTask(this).execute(this, null, null);
         }
 
         handleIntent(getIntent());
