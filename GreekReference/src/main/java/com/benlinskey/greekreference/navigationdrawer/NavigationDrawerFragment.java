@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Benjamin Linskey
+ * Copyright 2014 Benjamin Linskey
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.R;
 
 /**

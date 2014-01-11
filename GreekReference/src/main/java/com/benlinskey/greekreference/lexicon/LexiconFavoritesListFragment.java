@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Benjamin Linskey
+ * Copyright 2014 Benjamin Linskey
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,20 +22,15 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider;
 
 /**
- * // TODO: Display a message when the favorites list is empty.
- * <p>
  * Boilerplate description:
  * A list fragment representing a list of Items. This fragment
  * also supports tablet devices by allowing list items to be given an
