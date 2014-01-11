@@ -22,9 +22,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,7 +30,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
@@ -48,10 +45,8 @@ import android.widget.Toast;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
-import com.benlinskey.greekreference.data.lexicon.LexiconHelper;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
-import com.benlinskey.greekreference.data.syntax.SyntaxHelper;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconDetailActivity;
 import com.benlinskey.greekreference.lexicon.LexiconDetailFragment;
@@ -64,8 +59,6 @@ import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxDetailActivity;
 import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
 import com.benlinskey.greekreference.syntax.SyntaxListFragment;
-
-import java.io.File;
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, BaseListFragment.Callbacks {

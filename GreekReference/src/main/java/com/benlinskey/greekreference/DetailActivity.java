@@ -25,14 +25,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 
 /**
  * The basic class from which all detail activities inherit.

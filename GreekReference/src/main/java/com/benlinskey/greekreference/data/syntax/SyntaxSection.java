@@ -16,10 +16,6 @@
 
 package com.benlinskey.greekreference.data.syntax;
 
-import android.content.res.Resources;
-
-import com.benlinskey.greekreference.R;
-
 import java.util.LinkedList;
 
 /**

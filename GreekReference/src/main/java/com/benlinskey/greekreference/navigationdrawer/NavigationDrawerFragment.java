@@ -35,7 +35,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.R;
 
 /**

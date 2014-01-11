@@ -17,7 +17,6 @@
 package com.benlinskey.greekreference.lexicon;
 
 import android.database.Cursor;
-import android.os.Bundle;
 
 import com.benlinskey.greekreference.BaseListFragment;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
