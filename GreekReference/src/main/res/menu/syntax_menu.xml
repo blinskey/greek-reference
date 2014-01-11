@@ -23,7 +23,7 @@
         android:showAsAction="ifRoom"/>
     <item android:id="@+id/action_remove_bookmark"
           android:title="@string/action_remove_bookmark"
-          android:icon="@drawable/ic_bookmark_light_blue"
+          android:icon="@drawable/ic_bookmark_color"
           android:showAsAction="ifRoom"/>
     <item android:id="@+id/action_clear_bookmarks"
         android:title="@string/action_clear_bookmarks"

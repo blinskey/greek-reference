@@ -22,7 +22,7 @@
           android:title="@string/action_add_favorite"
           android:showAsAction="ifRoom"/>
     <item android:id="@+id/action_remove_favorite"
-          android:icon="@drawable/ic_star_light_blue"
+          android:icon="@drawable/ic_star_color"
           android:title="@string/action_remove_favorite"
           android:showAsAction="ifRoom"/>
     <item android:id="@+id/menu_search"
