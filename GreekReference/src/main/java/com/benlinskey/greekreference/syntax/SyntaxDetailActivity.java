@@ -83,12 +83,6 @@ public class SyntaxDetailActivity extends DetailActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Only show items in the action bar relevant to this screen if the drawer is not
-        // showing. Otherwise, let the drawer decide what to show in the action bar.
-        if (mNavigationDrawerFragment.isDrawerOpen()) {
-            return super.onCreateOptionsMenu(menu);
-        }
-
         getMenuInflater().inflate(R.menu.syntax_detail_menu, menu);
         setSyntaxBookmarkIcon(menu);
         restoreActionBar();
@@ -97,12 +91,6 @@ public class SyntaxDetailActivity extends DetailActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // Only show items in the action bar relevant to this screen if the drawer is not
-        // showing. Otherwise, let the drawer decide what to show in the action bar.
-        if (mNavigationDrawerFragment.isDrawerOpen()) {
-            return super.onCreateOptionsMenu(menu);
-        }
-
         setSyntaxBookmarkIcon(menu);
         restoreActionBar();
         return super.onPrepareOptionsMenu(menu);

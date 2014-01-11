@@ -29,7 +29,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -38,49 +37,19 @@ import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 /**
  * The basic class from which all detail activities inherit.
  */
-public abstract class DetailActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public abstract class DetailActivity extends Activity {
 
     private static final String TAG = "DetailActivity";
-    protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected CharSequence mTitle; // Used to store the last screen title.
-
-    /* When the navigation drawer is created, its first item is selected. We need to make sure that
-     * we don't switch modes on this initial selection and kick the user back out to MainActivity.
-     */
-    private boolean mNavDrawerInitialSelectionMade = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mNavigationDrawerFragment.userLearnedDrawer();
-        mNavDrawerInitialSelectionMade = true;
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
-
         // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        mNavigationDrawerFragment.disableDrawerIndicator();
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        if (!mNavDrawerInitialSelectionMade) {
-            return;
-        }
-
-        Mode mode = Mode.getModeFromPosition(position);
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setAction(MainActivity.ACTION_SET_MODE);
-        intent.putExtra(MainActivity.KEY_MODE, mode.getName());
-        startActivity(intent);
     }
 
     @Override
