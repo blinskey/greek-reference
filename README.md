@@ -4,7 +4,7 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
 
 ## Status
 
-The latest release is version 1.0.2. The corresponding version of the [Greek Reference Database Creator][] is 1.1.0.
+The latest release is version 1.0.2. The corresponding version of the [Greek Reference Database Creator][] is 1.1.0. You can view a changelog for each release starting with 1.0.0 on the [Releases page][].
 
 ## Building the App
 
@@ -57,3 +57,4 @@ This project is licensed under the [Apache License, version 2.0][Apache], with t
 [Perseus]: http://www.perseus.tufts.edu
 [TypefaceTextView]: http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/
 [Google Play]: https://play.google.com/store/apps/details?id=com.benlinskey.greekreference
+[Releases page]: https://github.com/blinskey/greek-reference/releases
