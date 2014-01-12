@@ -27,7 +27,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -71,16 +74,26 @@ public abstract class DetailActivity extends Activity {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.title_about);
 
+            LinearLayout layout = new LinearLayout(getActivity());
+            layout.setOrientation(LinearLayout.VERTICAL);
+
             TextView textView = new TextView(getActivity());
             textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
             textView.setTextColor(getResources().getColor(android.R.color.black));
             textView.setPadding(25, 25, 25, 25);
             textView.setText(Html.fromHtml(getString(R.string.message_about)));
             textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+            WebView webView = new WebView(getActivity());
+            webView.loadDataWithBaseURL(null, getString(R.string.apache_license), "text/html", null, null);
+
+            layout.addView(textView);
+            layout.addView(webView);
+
             ScrollView scrollView = new ScrollView(getActivity());
-            scrollView.addView(textView);
+            scrollView.addView(layout);
             builder.setView(scrollView);
-                
+
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
