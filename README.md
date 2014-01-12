@@ -12,7 +12,7 @@ The texts used in this app are contained in a pair of databases called `lexicon.
 
 Greek Reference was created using Android Studio and the new Gradle-based Android build system. The Gradle build file is set up to prompt the user for developer key information when building the project. If you'd just like to build a debug APK using Android Studio, make sure to comment out the `release` sections of the `GreekReference/build.gradle` file. Otherwise, Android Studio won't be able to build the project. You'll also need to copy your `debug.keystore` file from your `.android` directory to the `GreekReference` directory.
 
-Unfortunately, I'm unable to distribute all of the icons used in this app. [See below](#Icons) for details. For now, you'll need to provide your own properly named icons in order to build the project. I'd like to cobble together a set of placeholder icons at some point in the future to remedy this problem. (See issue #39.)
+Unfortunately, I'm unable to distribute all of the icons used in this app. [See below](https://github.com/blinskey/greek-reference#icons) for details. For now, you'll need to provide your own properly named icons in order to build the project. I'd like to cobble together a set of placeholder icons at some point in the future to remedy this problem. (See issue #39.)
 
 ## Contributing
 
@@ -47,7 +47,7 @@ I am particularly grateful to Jeffrey A. Rydberg-Cox for making his *Overview of
 
 ## License
 
-This project is licensed under the [Apache License, version 2.0][Apache], with the exception of the texts of *An Intermediate Greek-English Lexicon* and *Overview of Greek Syntax*, which are distributed under Creative Commons licenses as [described above](#Texts).
+This project is licensed under the [Apache License, version 2.0][Apache], with the exception of the texts of *An Intermediate Greek-English Lexicon* and *Overview of Greek Syntax*, which are distributed under Creative Commons licenses as [described above](https://github.com/blinskey/greek-reference#texts).
 
 [Greek Reference Database Creator]: https://github.com/blinskey/greek-reference-database-creator
 [Apache]: http://www.apache.org/licenses/LICENSE-2.0
