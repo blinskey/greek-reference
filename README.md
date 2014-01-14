@@ -1,6 +1,11 @@
 # Greek Reference
 
-This is an ancient Greek lexicon and grammar for Android incorporating open source texts from the [Perseus Digital Library][Perseus]. The app is [available on the Google Play store][Google Play].
+This is an ancient Greek lexicon and grammar for Android incorporating open source texts from the [Perseus Digital Library][Perseus].
+
+<a href="https://play.google.com/store/apps/details?id=com.benlinskey.greekreference">
+  <img alt="Get it on Google Play"
+       src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+</a>
 
 ## Status
 
