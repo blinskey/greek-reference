@@ -23,9 +23,8 @@ import android.provider.BaseColumns;
  * A contract class for the lexicon database.
  */
 public final class LexiconContract implements BaseColumns {
-
-    private LexiconContract() {} // Empty constructor to prevent instantiation
-
+    // TODO: Move content URI to this class.
+    
     public static final String DB_NAME = "lexicon";
     public static final String TABLE_NAME = "lexicon";
     public static final String COLUMN_ENTRY = "entry";
@@ -35,4 +34,10 @@ public final class LexiconContract implements BaseColumns {
     public static final String COLUMN_BETA_NO_SYMBOLS = "betaNoSymbols";
     public static final String COLUMN_GREEK_FULL_WORD = "greekFullWord";
     public static final Uri CONTENT_URI = LexiconProvider.CONTENT_URI;
+
+    /**
+     * Empty private constructor to prevent instantiation.
+     * @return [description]
+     */
+    private LexiconContract() {}
 }

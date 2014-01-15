@@ -16,21 +16,19 @@
 
 package com.benlinskey.greekreference;
 
-/**
- * Created by blinskey on 1/4/14.
- */
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+/**
+ * The basic class from which every detail fragment inherits.
+ */
 public abstract class DetailFragment extends Fragment {
-
     private static final String KEY_SCROLL_Y = "scroll_y";
 
-    // We use a single Toast object to prevent overlapping toasts when the user repeatedly taps an
-    // icon that displays a toast.
+    // We use a single Toast object to prevent overlapping toasts when the user 
+    // repeatedly taps an icon that displays a toast.
     protected Toast mToast;
 
     @Override
@@ -57,7 +55,13 @@ public abstract class DetailFragment extends Fragment {
         }
     }
 
-
+    /**
+     * Displays a toast containing the specified text.
+     * <p>
+     * All children of this class should display toasts only by calling this
+     * method in order to prevent creating overlapping toasts.
+     * @param message the text to display in the toast
+     */
     protected void displayToast(String message) {
         mToast.setText(message);
         mToast.show();

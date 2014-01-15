@@ -28,10 +28,9 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
- * A ContentProvider for basic data stored by the app.
+ * A {@link ContentProvider} for the lexicon favorites table.
  */
 public class LexiconFavoritesProvider extends ContentProvider {
-
     public static String AUTHORITY = "com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/appData");
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
@@ -79,8 +78,12 @@ public class LexiconFavoritesProvider extends ContentProvider {
         }
     }
 
-    private Cursor searchWords(Uri uri, String[] projection, String selection, String[] selectionArgs,
-                               String sortOrder) {
+    /**
+     * Queries the database for words matching the specified criteria.
+     * @return a <code>Cursor</code> containing the results of the query
+     */
+    private Cursor searchWords(Uri uri, String[] projection, String selection, 
+            String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(AppDataContract.LexiconFavorites.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
@@ -91,7 +94,6 @@ public class LexiconFavoritesProvider extends ContentProvider {
 
     /**
      * Searches the database for the word specified by the given URI.
-     *
      * @param uri   the <code>Uri</code> specifying the word for which to search
      * @return a <code>Cursor</code> containing the results of the query
      */

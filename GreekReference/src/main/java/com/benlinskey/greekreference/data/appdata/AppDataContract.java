@@ -20,13 +20,15 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
- * A contract class for the AppData database.
- *
- * // TODO: Move content URIs to this class.
+ * A contract class for the AppData database. 
  */
 public final class AppDataContract {
+    // TODO: Move content URI declarations to this class.
 
-    private AppDataContract() {} // Empty constructor to prevent instantiations
+    /**
+     * Empty private constructor to prevent instantiation.
+     */
+    private AppDataContract() {}
 
     /**
      * A contract class for the lexicon history table.
@@ -48,12 +50,13 @@ public final class AppDataContract {
         public static final Uri CONTENT_URI = LexiconFavoritesProvider.CONTENT_URI;
     }
 
+    /**
+     * A contract class for the syntax bookmarks table.
+     */
     public static abstract class SyntaxBookmarks implements BaseColumns {
         public static final String TABLE_NAME = "syntax_bookmarks";
         public static final String COLUMN_NAME_SYNTAX_ID = "syntax_id";
         public static final String COLUMN_NAME_SYNTAX_SECTION = "syntax_section";
         public static final Uri CONTENT_URI = SyntaxBookmarksProvider.CONTENT_URI;
     }
-
-
 }

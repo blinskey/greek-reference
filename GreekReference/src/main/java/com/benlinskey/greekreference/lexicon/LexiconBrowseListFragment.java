@@ -31,17 +31,11 @@ import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
- * A list fragment representing a list of Items. This fragment
- * also supports tablet devices by allowing list items to be given an
- * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link LexiconDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
+ * A {@link LexiconListFragment} used to display a list of all words in the
+ * lexicon.
  */
 public class LexiconBrowseListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
-
     private static final String TAG = "LexiconBrowseListFragment";
     public final static String NAME = "lexicon_browse";
     SimpleCursorAdapter mAdapter;
@@ -143,17 +137,23 @@ public class LexiconBrowseListFragment extends LexiconListFragment
         mCallbacks.onItemSelected(NAME, position + 1); // Positions are off by one from database ID.
     }
 
+    /**
+     * Sets the selected item ID.
+     * @param id the <code>ListView</code> position of the item to select
+     */
     private void setSelectedLexiconItemId(int id) {
         mSelectedLexiconId = id + 1;
     }
 
+    /**
+     * Selects the specified item.
+     * @param id the lexicon database ID of the item to select
+     */
     public void selectItem(int id) {
-        Log.w(TAG, "Item selected: " + id);
         mSelectedLexiconId = id;
         int position = id - 1;
         setActivatedPosition(position);
         getListView().setSelection(position);
         mCallbacks.onItemSelected(NAME, position);
-
     }
 }

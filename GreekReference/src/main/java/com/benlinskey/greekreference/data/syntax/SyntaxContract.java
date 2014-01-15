@@ -20,18 +20,20 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
- * A contract class for the Syntax database.
- *
- * Created by Ben on 8/19/13.
+ * A contract class for the syntax database.
  */
 public final class SyntaxContract implements BaseColumns {
-
-    private SyntaxContract() {} // Empty constructor to prevent instantiation
-
+    // TODO: Move content URI to this class.
+    
     public static final Uri CONTENT_URI = SyntaxProvider.CONTENT_URI;
     public static final String DB_NAME = "syntax";
     public static final String TABLE_NAME = "syntax";
     public static final String COLUMN_NAME_CHAPTER = "chapter";
     public static final String COLUMN_NAME_SECTION = "section";
     public static final String COLUMN_NAME_XML = "xml";
+
+    /**
+     * Empty private construtor to prevent instantiation.
+     */
+    private SyntaxContract() {}
 }

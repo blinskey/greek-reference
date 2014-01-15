@@ -34,18 +34,13 @@ import java.io.InputStream;
  * Parses XML files obtained from the lexicon database.
  * <p>
  * Based on the tutorial at http://developer.android.com/training/basics/network-ops/xml.html#read
- * </p>
  */
 public class LexiconXmlParser {
     private static final String TAG = "LexiconXmlParser";
     private static final String NAMESPACE = null;
 
-    // TODO: Add "throws" tags to comments where needed.
-    // TODO: Remove debugging log messages here and in LexiconEntry.java.
-
     /**
      * Parses a lexicon entry encoded in XML.
-     *
      * @param in    an input stream containing an entry encoded in XML
      * @return a <code>LexiconEntry</code> containing the data encoded in the parsed XML document
      * @throws org.xmlpull.v1.XmlPullParserException
@@ -133,29 +128,13 @@ public class LexiconXmlParser {
 
     /**
      * Processes a <code>note</code> element and adds the extracted data to the specified
-     * <code>LexiconEntry</code>. Note that a <code>note</code> element may have
-     * <code>foreign</code> children mixed with plain English text, or it may have beta code
-     * along with an attribute indicating that the text is Greek, in which case some of the text
-     * may actually be in English. See below.
-     *
+     * <code>LexiconEntry</code>.
      * @param parser    the <code>XmlPullParser</code> with which to parse the data
      * @param entry     the <code>LexiconEntry</code> to which to add the extracted data
      */
     private void readNote(XmlPullParser parser, LexiconEntry entry) throws XmlPullParserException,
             IOException {
-        /* NOTE: The format in which notes are encoded is very problematic. Beta code is sometimes
-         * contained in "foreign" elements and sometimes contained directly in the "note" element,
-         * which will then have the "lang='greek'" attribute. Sometimes the Greek text is mixed
-         * with English text. There is no way to programatically handle mixed Greek and English
-         * text. I need to either find a better version of the original text (Perseus seems to have
-         * several versions floating around, and their website XML documents for individual entries
-         * use actual Greek text rather than beta code) or correct the original document myself.
-         */
-
         String text = ""; // String to hold the entire list of notes.
-
-        // TODO: This is greatly simplified from the old version. I think I can combine the if/else
-        // blocks, but I'm leaving this alone for the moment.
         while (parser.next() !=XmlPullParser.END_TAG) {
             String name = parser.getName();
             if (name != null && name.equals("foreign")) {
@@ -164,7 +143,6 @@ public class LexiconXmlParser {
                 text += parser.getText();
             }
         }
-
         entry.addNote(text);
     }
 
@@ -282,7 +260,6 @@ public class LexiconXmlParser {
 
     /**
      * Skips an element.
-     *
      * @param parser    the <code>XmlPullParser</code> with which to parse the data
      * @throws org.xmlpull.v1.XmlPullParserException
      * @throws java.io.IOException
@@ -307,7 +284,6 @@ public class LexiconXmlParser {
 
     /**
      * Returns text from within an XML element.
-     *
      * @param parser    the <code>XmlPullParser</code> with which to parse the text
      * @return the text extracted from the element
      * @throws org.xmlpull.v1.XmlPullParserException

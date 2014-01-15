@@ -27,15 +27,12 @@ import android.net.Uri;
 import android.util.Log;
 
 /**
- * A <code>ContentProvider</code> for the syntax database.
+ * A {@link ContentProvider} for the syntax database.
  */
 public class SyntaxProvider extends ContentProvider {
-
     private final static String TAG = "SyntaxProvider";
-
     public static String AUTHORITY = "com.benlinskey.greekreference.data.syntax.SyntaxProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/syntax");
-
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/vnd.benlinskey.greekreference";
     public static final String CONTENT_SECTION_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
@@ -78,6 +75,15 @@ public class SyntaxProvider extends ContentProvider {
         }
     }
 
+    /**
+     * Searches the database.
+     * @param uri               the <code>uri</code> used to conduct the query
+     * @param projection        the columns to select
+     * @param selection         the parameterized search criteria
+     * @param selectionArgs     the search criteria arguments
+     * @param sortOrder         the order in which to sort the results
+     * @return a <code>Cursor</code> containing the results of the query
+     */
     private Cursor searchSections(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
@@ -88,6 +94,11 @@ public class SyntaxProvider extends ContentProvider {
         return cursor;
     }
 
+    /**
+     * Queries the database for the section specified by the given URI.
+     * @param uri   a <code>Uri</code> specifying the section for which to search
+     * @return a <code>Cursor</code> containing the results of the query
+     */
     private Cursor getSection(Uri uri) {
         Log.w(TAG, "In getSection(" + uri + ")");
         String id = uri.getLastPathSegment();

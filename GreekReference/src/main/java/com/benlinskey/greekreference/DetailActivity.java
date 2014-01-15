@@ -35,9 +35,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 /**
- * The basic class from which all detail activities inherit.
+ * The basic activity from which all detail activities inherit. This class 
+ * contains a single {@link DetailFragment} and is only used on phones.
  */
 public abstract class DetailActivity extends Activity {
+    // TODO: Some code is repeated from MainActivity here. It would be good to
+    // move this to a superclass or otherwise consolidate it somehow.
 
     private static final String TAG = "DetailActivity";
     protected CharSequence mTitle; // Used to store the last screen title.
@@ -68,6 +71,9 @@ public abstract class DetailActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * A {@link DialogFragment} containing information about this app.
+     */
     public static class AboutDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -104,11 +110,17 @@ public abstract class DetailActivity extends Activity {
         }
     }
 
+    /**
+     * Displays a dialog fragment containing information about this app.
+     */
     private void displayAbout() {
         AboutDialogFragment dialogFragment = new AboutDialogFragment();
         dialogFragment.show(getFragmentManager(), "about");
     }
 
+    /**
+     * Launches an email app that the user can use to send feedback about this app.
+     */
     private void sendFeedback() {
         Intent intent = new Intent(Intent.ACTION_SENDTO,
                 Uri.fromParts("mailto", getString(R.string.feedback_email), null));
@@ -116,6 +128,9 @@ public abstract class DetailActivity extends Activity {
         startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
     }
 
+    /**
+     * A {@link DialogFragment} containing help text.
+     */
     public static class HelpDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -142,10 +157,16 @@ public abstract class DetailActivity extends Activity {
         }
     }
 
+    /**
+     * Displays a dialog fragment containing help text.
+     */
     private void displayHelp() {
         HelpDialogFragment dialogFragment = new HelpDialogFragment();
         dialogFragment.show(getFragmentManager(), "help");
     }
 
+    /**
+     * Sets the navigation bar navigation mode and title to the appropriate values.
+     */
     protected abstract void restoreActionBar();
 }

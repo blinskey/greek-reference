@@ -44,17 +44,16 @@ import android.widget.TextView;
  * characters.
  * <p>
  * This is a modified version of the file TypefaceTextView.java, obtained from
- * http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/
+ * <a href="http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/">
+ * http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/</a>
  * <p>
  * Whereas the original TypefaceTextView class on which this is based allowed the typeface
  * to be specified in XML layout file, this class uses a fixed typeface, the filename of which
  * is assigned to the variable TYPEFACE_NAME. The typeface file should be located in the
  * GreekReference/src/main/assets/fonts directory.
- * </p>
  * <p>
  * The principal functionality retained from the original TypfaceTextView class is the typeface
  * caching, which ensures that the custom typeface is only created once.
- * </p>
  */
 public class GreekTextView extends TextView {
     private static final String TYPEFACE_NAME = "NotoSerif-Regular.ttf";

@@ -22,14 +22,13 @@ import android.database.sqlite.SQLiteDatabase;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 /**
- * An <code>SQLiteAssetHelper</code> for the Lexicon database.
+ * An {@link SQLiteAssetHelper} for the lexicon database.
  */
 public class LexiconHelper extends SQLiteAssetHelper {
     private static final int DB_VERSION = 1;
 
     /**
      * Class constructor.
-     *
      * @param context   the <code>Context</code> to use
      */
     public LexiconHelper(Context context) {

@@ -29,10 +29,9 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 /**
- * A ContentProvider for basic data stored by the app.
+ * A ContentProvider for the syntax bookmarks table.
  */
 public class SyntaxBookmarksProvider extends ContentProvider {
-
     private static final String TAG = "SyntaxBookmarksProvider";
     public static String AUTHORITY
             = "com.benlinskey.greekreference.data.appdata.SyntaxBookmarksProvider";
@@ -82,6 +81,10 @@ public class SyntaxBookmarksProvider extends ContentProvider {
         }
     }
 
+    /**
+     * Queries the database for sections matching the specified criteria.
+     * @return a <code>Cursor</code> containing the results of the query
+     */
     private Cursor searchSections(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
         Log.w(TAG, "searchSections(" + uri + ", " + projection + ", " + selection + ", " + selectionArgs);
@@ -95,7 +98,6 @@ public class SyntaxBookmarksProvider extends ContentProvider {
 
     /**
      * Searches the database for the word specified by the given URI.
-     *
      * @param uri   the <code>Uri</code> specifying the word for which to search
      * @return a <code>Cursor</code> containing the results of the query
      */
