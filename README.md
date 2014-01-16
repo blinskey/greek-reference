@@ -6,6 +6,9 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
   <img alt="Get it on Google Play"
        src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 </a>
+<a href="http://www.amazon.com/gp/product/B00HV37XXG">
+    <img alt="Available at Amazon" src="amazon-apps-store-us-black-177x60.png">
+</a>
 
 ## Status
 
