@@ -21,10 +21,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * An <code>SQLiteOpenHelper</code> for the AppData database.
+ * An {@link SQLiteOpenHelper} for the AppData database.
  */
 public class AppDataDbHelper extends SQLiteOpenHelper {
-    // TODO: Change "STRING" to "TEXT."
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "AppData.db";
 
@@ -33,15 +32,16 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
             + " INTEGER PRIMARY KEY, " + AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID
             + " INTEGER, " + AppDataContract.LexiconHistory.COLUMN_NAME_WORD + " TEXT " + ")";
     private static final String SQL_CREATE_LEXICON_FAVORITES_TABLE = "CREATE TABLE "
-            + AppDataContract.LexiconFavorites.TABLE_NAME + " (" + AppDataContract.LexiconFavorites._ID
-            + " INTEGER PRIMARY KEY, " + AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID
-            + " INTEGER, " + AppDataContract.LexiconFavorites.COLUMN_NAME_WORD + " TEXT " + ")";
+            + AppDataContract.LexiconFavorites.TABLE_NAME + " (" 
+            + AppDataContract.LexiconFavorites._ID + " INTEGER PRIMARY KEY, " 
+            + AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " INTEGER, " 
+            + AppDataContract.LexiconFavorites.COLUMN_NAME_WORD + " TEXT " + ")";
     private static final String SQL_CREATE_SYNTAX_BOOKMARKS_TABLE = "CREATE TABLE "
             + AppDataContract.SyntaxBookmarks.TABLE_NAME + " ("
             + AppDataContract.SyntaxBookmarks._ID + " INTEGER PRIMARY KEY, "
             + AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " INTEGER, "
             + AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION + " TEXT " + ")";
-
+    
     private static final String SQL_DELETE_LEXICON_HISTORY_TABLE = "DROP TABLE IF EXISTS "
             + AppDataContract.LexiconHistory.TABLE_NAME;
     private static final String SQL_DELETE_LEXICON_FAVORITES_TABLE = "DROP TABLE IF EXISTS "
@@ -51,19 +51,20 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
 
     /**
      * Class constructor.
-     *
-     * @param context   the current <code>Context</code>
+     * @param context   the <code>Context</code> to use
      */
     public AppDataDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_LEXICON_FAVORITES_TABLE);
         db.execSQL(SQL_CREATE_LEXICON_HISTORY_TABLE);
         db.execSQL(SQL_CREATE_SYNTAX_BOOKMARKS_TABLE);
     }
 
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Delete everything on upgrade.
         db.execSQL(SQL_DELETE_LEXICON_FAVORITES_TABLE);
@@ -72,6 +73,7 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }

@@ -22,15 +22,13 @@ import android.database.sqlite.SQLiteDatabase;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 /**
- * An <code>SQLiteAssetHelper</code> for the Syntax database.
+ * An {@link SQLiteAssetHelper} for the syntax database.
  */
 public class SyntaxHelper extends SQLiteAssetHelper {
-
     private static final int DB_VERSION = 1;
 
     /**
      * Class constructor.
-     *
      * @param context   the <code>Context</code> to use
      */
     public SyntaxHelper(Context context) {

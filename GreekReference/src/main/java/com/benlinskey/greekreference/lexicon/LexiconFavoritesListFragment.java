@@ -31,18 +31,11 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider;
 
 /**
- * Boilerplate description:
- * A list fragment representing a list of Items. This fragment
- * also supports tablet devices by allowing list items to be given an
- * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link LexiconDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
+ * A {@link LexiconListFragment} used to display a list of all words stored in 
+ * the lexicon favorites list.
  */
 public class LexiconFavoritesListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>{
-
     public static final String NAME = "lexicon_favorites";
     SimpleCursorAdapter mAdapter;
 
@@ -87,8 +80,7 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public LexiconFavoritesListFragment() {
-    }
+    public LexiconFavoritesListFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,16 +95,19 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
         getLoaderManager().initLoader(0, null, this);
     }
 
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), LexiconFavoritesProvider.CONTENT_URI, PROJECTION, SELECTION,
                 SELECTION_ARGS, SORT_ORDER);
     }
 
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
         setNoItemsView(R.string.lexicon_favorites_empty_view);
     }
 
+    @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }

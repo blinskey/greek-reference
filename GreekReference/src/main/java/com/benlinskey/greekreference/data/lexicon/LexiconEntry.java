@@ -30,7 +30,6 @@ import java.util.ArrayList;
  * A class representing a lexicon entry.
  */
 public class LexiconEntry {
-
     private static final String TAG = "LexiconEntry";
 
     // Names are identical to XML element names.
@@ -51,10 +50,8 @@ public class LexiconEntry {
     /**
      * Returns a formatted version of this lexicon entry contained in a <code>CharSequence</code>
      * with spans specifying style information.
-     *
      * @param textSize the size of the font in the <code>GreekTextView</code> to which this
      *                 <code>CharSequence</code> will be added. Used to calculate indent size.
-     *
      * @return a <code>CharSequence</code> containing this lexicon entry
      */
     public SpannedString toSpanned(float textSize) {

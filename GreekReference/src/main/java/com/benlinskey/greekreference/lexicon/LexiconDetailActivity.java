@@ -30,16 +30,9 @@ import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
- * An activity representing a single Word detail screen. This
- * activity is only used on handset devices. On tablet-size devices,
- * item details are presented side-by-side with a list of items
- * in a {@link MainActivity}.
- * <p>
- * This activity is mostly just a 'shell' activity containing nothing
- * more than a {@link LexiconDetailFragment}.
+ * A {@link DetailActivity} used to display lexicon entries.
  */
 public class LexiconDetailActivity extends DetailActivity {
-
     public static final String ARG_LEXICON_ID = "lexicon_id";
     public static final String ARG_WORD = "word";
     private int mLexiconId;
@@ -91,6 +84,11 @@ public class LexiconDetailActivity extends DetailActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
+    /**
+     * Sets the Lexicon Favorite icon to the appropriate state based on the currently selected 
+     * lexicon entry.
+     * @param menu the <code>Menu</code> containing the Favorite icon
+     */
     private void setLexiconFavoriteIcon(Menu menu) {
         LexiconListFragment fragment = (LexiconListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
@@ -115,19 +113,28 @@ public class LexiconDetailActivity extends DetailActivity {
                 NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_add_favorite:
-                LexiconDetailFragment addFavoriteFragment = (LexiconDetailFragment) getFragmentManager()
-                        .findFragmentById(R.id.item_detail_container);
+                LexiconDetailFragment addFavoriteFragment 
+                        = (LexiconDetailFragment) getFragmentManager()
+                                .findFragmentById(R.id.item_detail_container);
                 addFavoriteFragment.addLexiconFavorite(mLexiconId, mWord);
                 return true;
             case R.id.action_remove_favorite:
-                LexiconDetailFragment removeFavoriteFragment = (LexiconDetailFragment) getFragmentManager()
-                        .findFragmentById(R.id.item_detail_container);
+                LexiconDetailFragment removeFavoriteFragment 
+                        = (LexiconDetailFragment) getFragmentManager()
+                                .findFragmentById(R.id.item_detail_container);
                 removeFavoriteFragment.removeLexiconFavorite(mLexiconId);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Returns <code>true</code> if the word with the specified lexicon ID is 
+     * a member of the favorites list.
+     * @param  lexiconId the lexicon ID to check
+     * @return <code>true</code> if the specified word is a member of the
+     *         favorites list, or <code>false</code> otherwise
+     */
     private boolean isFavorite(int lexiconId) {
         String[] columns = new String[] {AppDataContract.LexiconFavorites._ID};
         String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
@@ -142,6 +149,9 @@ public class LexiconDetailActivity extends DetailActivity {
         return result;
     }
 
+    /**
+     * Sets the navigation bar navigation mode and title to the appropriate values.
+     */
     protected void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -149,4 +159,3 @@ public class LexiconDetailActivity extends DetailActivity {
         actionBar.setTitle(mTitle);
     }
 }
-

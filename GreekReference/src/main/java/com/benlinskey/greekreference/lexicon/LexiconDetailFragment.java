@@ -36,7 +36,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * A fragment representing a single Lexicon detail screen.
+ * A {@link DetailFragment} used to display a lexicon entry.
  */
 public class LexiconDetailFragment extends DetailFragment {
     public static final String TAG = "LexiconDetailFragment";
@@ -50,8 +50,7 @@ public class LexiconDetailFragment extends DetailFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public LexiconDetailFragment() {
-    }
+    public LexiconDetailFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +89,11 @@ public class LexiconDetailFragment extends DetailFragment {
         return rootView;
     }
 
+    /**
+     * Adds the specified word to the lexicon favorites list.
+     * @param lexiconId the lexicon ID of the word to add
+     * @param word      the word to add
+     */
     protected void addLexiconFavorite(int lexiconId, String word) {
         ContentValues values = new ContentValues();
         values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, lexiconId);
@@ -99,6 +103,10 @@ public class LexiconDetailFragment extends DetailFragment {
         displayToast(getString(R.string.toast_favorite_added));
     }
 
+    /**
+     * Removes the specified word from the lexicon favorites list.
+     * @param lexiconId the lexicon ID of the word to remove
+     */
     protected void removeLexiconFavorite(int lexiconId) {
         String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = {Integer.toString(lexiconId)};
@@ -108,8 +116,12 @@ public class LexiconDetailFragment extends DetailFragment {
         displayToast(getString(R.string.toast_favorite_removed));
     }
 
-    // The following two methods should only be used in two-pane mode.
+    // NOTE: The following two methods should only be used in two-pane mode.
     // TODO: Throw exception if these methods are called in one-pane mode.
+    
+    /**
+     * Adds the currently selected word to the lexicon favorites list.
+     */
     public void addLexiconFavorite() {
         LexiconListFragment fragment = (LexiconListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
@@ -118,6 +130,9 @@ public class LexiconDetailFragment extends DetailFragment {
         addLexiconFavorite(lexiconId, word);
     }
 
+    /**
+     * Removes the currently selected word from the lexicon favorites list.
+     */
     public void removeLexiconFavorite() {
         LexiconListFragment fragment = (LexiconListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
@@ -125,6 +140,11 @@ public class LexiconDetailFragment extends DetailFragment {
         removeLexiconFavorite(lexiconId);
     }
 
+    /**
+     * Returns the word corresponding to the specified lexicon ID.
+     * @param  id the lexicon ID for which to search
+     * @return    the corresponding word
+     */
     private String getWordFromLexiconId(int id) {
         String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD};
         String selection = LexiconContract._ID + " = ?";

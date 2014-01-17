@@ -96,7 +96,6 @@ public class LexiconProvider extends ContentProvider {
 
     /**
      * Searches the database.
-     *
      * @param uri               the <code>uri</code> used to conduct the query
      * @param projection        the columns to select
      * @param selection         the parameterized search criteria
@@ -116,7 +115,6 @@ public class LexiconProvider extends ContentProvider {
 
     /**
      * Searches the database for suggestions matching the specified text.
-     *
      * @param query     the search query for which to generate suggestions
      * @return a <code>Cursor</code> containing search suggestions
      */
@@ -143,8 +141,7 @@ public class LexiconProvider extends ContentProvider {
     }
 
     /**
-     * Queries the database for the word specified in the given URI.
-     *
+     * Queries the database for the word specified by the given URI.
      * @param uri   a <code>Uri</code> specifying the word for which to search
      * @return a <code>Cursor</code> containing the results of the query
      */
