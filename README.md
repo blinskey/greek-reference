@@ -24,7 +24,7 @@ Unfortunately, I'm not able to distribute all of the icons used in this app. [Se
 
 ## Contributing
 
-Pull requests are welcome and encouraged. Please target your requests to the `dev` branch. All development happens there and is merged into `master` to create release builds.
+Pull requests are welcome and encouraged. Please read the [contributing guidelines][contributing] to get started.
 
 ## Icons
 
@@ -66,3 +66,4 @@ This project is licensed under the [Apache License, version 2.0][Apache], with t
 [TypefaceTextView]: http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/
 [Google Play]: https://play.google.com/store/apps/details?id=com.benlinskey.greekreference
 [Releases page]: https://github.com/blinskey/greek-reference/releases
+[contributing]: CONTRIBUTING.md
