@@ -42,7 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * A fragment representing a single Item detail screen.
+ * A {@link DetailFragment} used to display a syntax section.
  */
 public class SyntaxDetailFragment extends DetailFragment {
     public static final String TAG = "SyntaxDetailFragment";
@@ -96,6 +96,11 @@ public class SyntaxDetailFragment extends DetailFragment {
         return rootView;
     }
 
+    /**
+     * Returns the section title corresponding to the specified syntax ID.
+     * @param  id the syntax ID for which to search
+     * @return    the corresponding section title
+     */
     private String getSectionFromSyntaxId(int id) {
         String[] projection = {SyntaxContract.COLUMN_NAME_SECTION};
         String selection = SyntaxContract._ID + " = ?";
@@ -111,15 +116,25 @@ public class SyntaxDetailFragment extends DetailFragment {
         return section;
     }
 
+    /**
+     * Adds the specified word to the lexicon favorites list.
+     * @param syntaxId the syntax ID of the section
+     * @param section  the section title to add
+     */
     protected void addSyntaxBookmark(int syntaxId, String section) {
         ContentValues values = new ContentValues();
         values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID, syntaxId);
         values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION, section);
-        getActivity().getContentResolver().insert(AppDataContract.SyntaxBookmarks.CONTENT_URI, values);
+        getActivity().getContentResolver().insert(AppDataContract.SyntaxBookmarks.CONTENT_URI,
+                values);
         getActivity().invalidateOptionsMenu();
         displayToast(getString(R.string.toast_bookmark_added));
     }
 
+    /**
+     * Removes the specified section from the syntax bookmarks list.
+     * @param syntaxId the syntax ID of the section to remove
+     */
     protected void removeSyntaxBookmark(int syntaxId) {
         String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
         String[] selectionArgs = {Integer.toString(syntaxId)};
@@ -131,6 +146,10 @@ public class SyntaxDetailFragment extends DetailFragment {
 
     // The following two methods should only be used in two-pane mode.
     // TODO: Throw exception if these methods are called in one-pane mode.
+
+    /**
+     * Adds the currently selected section to the syntax bookmarks list.
+     */
     public void addSyntaxBookmark() {
         SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
@@ -139,12 +158,13 @@ public class SyntaxDetailFragment extends DetailFragment {
         addSyntaxBookmark(syntaxId, section);
     }
 
+    /**
+     * Removes the currently selected section from the syntax bookmarks list.
+     */
     public void removeSyntaxBookmark() {
         SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         int syntaxId = fragment.getSelectedSyntaxId();
         removeSyntaxBookmark(syntaxId);
     }
-
-
 }

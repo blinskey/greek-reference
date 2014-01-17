@@ -22,7 +22,6 @@ import android.content.Context;
  * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
  */
 public class NavigationDrawerRow extends NavigationDrawerItem {
-
     private static final int TYPE = 1;
     private int mIconUnhighlighted;
     private int mIconHighlighted;

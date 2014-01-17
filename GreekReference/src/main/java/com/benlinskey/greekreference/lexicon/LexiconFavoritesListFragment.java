@@ -161,7 +161,8 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
         }
     }
 
-    private void setSelectedLexiconItemId(int id) {
+    @Override
+    protected void setSelectedLexiconItemId(int id) {
         String[] columns = new String[] {AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID};
         String selection = AppDataContract.LexiconFavorites._ID + " = ?";
         String[] selectionArgs = new String[] {Integer.toString(id)};

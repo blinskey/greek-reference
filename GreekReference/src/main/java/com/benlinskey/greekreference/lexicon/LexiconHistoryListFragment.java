@@ -31,18 +31,11 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 
 /**
- * Boilerplate description:
- * A list fragment representing a list of Items. This fragment
- * also supports tablet devices by allowing list items to be given an
- * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link LexiconDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
+ * A {@link LexiconListFragment} used to display a list of all words stored in
+ * the lexicon history list.
  */
 public class LexiconHistoryListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>{
-
     public static final String NAME = "lexicon_History";
     SimpleCursorAdapter mAdapter;
     static final String[] PROJECTION = new String[] {AppDataContract.LexiconHistory._ID,
@@ -78,11 +71,7 @@ public class LexiconHistoryListFragment extends LexiconListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: Add progress indicator.
-
         // Create and set list adapter.
-        // TODO: Replace this with a more efficient adapter.
-        // TODO: Override getView to use custom typeface.
         String[] fromColumns = {AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
         int[] toViews = {android.R.id.text1};
         mAdapter = new android.widget.SimpleCursorAdapter(getActivity(),
@@ -92,16 +81,19 @@ public class LexiconHistoryListFragment extends LexiconListFragment
         getLoaderManager().initLoader(0, null, this);
     }
 
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), LexiconHistoryProvider.CONTENT_URI, PROJECTION, SELECTION,
                 SELECTION_ARGS, ORDER_BY);
     }
 
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
         setNoItemsView(R.string.lexicon_history_empty_view);
     }
 
+    @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
     }
@@ -151,7 +143,8 @@ public class LexiconHistoryListFragment extends LexiconListFragment
 
     }
 
-    private void setSelectedLexiconItemId(int id) {
+    @Override
+    protected void setSelectedLexiconItemId(int id) {
         String[] columns = new String[] {AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID};
         String selection = AppDataContract.LexiconHistory._ID + " = ?";
         String[] selectionArgs = new String[] {Integer.toString(id)};

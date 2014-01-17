@@ -149,9 +149,7 @@ public class LexiconDetailActivity extends DetailActivity {
         return result;
     }
 
-    /**
-     * Sets the navigation bar navigation mode and title to the appropriate values.
-     */
+    @Override
     protected void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);

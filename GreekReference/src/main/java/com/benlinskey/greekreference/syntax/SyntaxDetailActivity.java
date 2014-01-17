@@ -31,20 +31,11 @@ import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
- * An activity representing a single Word detail screen. This
- * activity is only used on handset devices. On tablet-size devices,
- * item details are presented side-by-side with a list of items
- * in a {@link com.benlinskey.greekreference.MainActivity}.
- * <p>
- * This activity is mostly just a 'shell' activity containing nothing
- * more than a {@link com.benlinskey.greekreference.lexicon.LexiconDetailFragment}.
+ * A {@link DetailActivity} used to display syntax sections.
  */
 public class SyntaxDetailActivity extends DetailActivity {
-
     private static final String TAG = "SyntaxDetailActivity";
-
     private CharSequence mTitle; // Used to store the last screen title.
-
     public static final String ARG_SYNTAX_ID = "syntax_id";
     public static final String ARG_SECTION = "section";
     private int mSyntaxId;
@@ -133,6 +124,13 @@ public class SyntaxDetailActivity extends DetailActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Returns <code>true</code> if the word with the specified syntax ID is
+     * a member of the bookmarks list.
+     * @param  syntaxId the syntax ID to check
+     * @return <code>true</code> if the specified word is a member of the
+     *         bookmarks list, or <code>false</code> otherwise
+     */
     private boolean isBookmark(int syntaxId) {
         Log.w(TAG, "isBookmark(); id: " + syntaxId);
         String[] columns = new String[] {AppDataContract.SyntaxBookmarks._ID};
@@ -148,6 +146,7 @@ public class SyntaxDetailActivity extends DetailActivity {
         return result;
     }
 
+    @Override
     protected void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);

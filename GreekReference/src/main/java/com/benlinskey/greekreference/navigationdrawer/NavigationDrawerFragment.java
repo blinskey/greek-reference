@@ -43,7 +43,6 @@ import com.benlinskey.greekreference.R;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-
     /**
      * Remember the position of the selected item.
      */
@@ -73,8 +72,7 @@ public class NavigationDrawerFragment extends Fragment {
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    public NavigationDrawerFragment() {
-    }
+    public NavigationDrawerFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,6 +129,9 @@ public class NavigationDrawerFragment extends Fragment {
         return mDrawerListView;
     }
 
+    /**
+     * @return  <code>true</code> if the navigation drawer is open or false otherwise
+     */
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
     }
@@ -218,7 +219,8 @@ public class NavigationDrawerFragment extends Fragment {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
 
-        // We don't want to swap out the fragments if we're just returning from a configuration change.
+        // We don't want to swap out the fragments if we're just returning from a configuration
+        // change.
         if (mFromSavedInstanceState) {
             mFromSavedInstanceState = false;
             return;
@@ -278,8 +280,8 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     /**
-     * Per the navigation drawer design guidelines, updates the action bar to show the global_menu app
-     * 'context', rather than just what's in the current screen.
+     * Per the navigation drawer design guidelines, updates the action bar to show the global_menu
+     * app 'context', rather than just what's in the current screen.
      */
     private void showGlobalContextActionBar() {
         ActionBar actionBar = getActionBar();

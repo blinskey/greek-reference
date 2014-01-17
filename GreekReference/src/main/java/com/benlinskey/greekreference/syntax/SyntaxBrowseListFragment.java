@@ -29,17 +29,11 @@ import android.widget.SimpleCursorAdapter;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
 
 /**
- * A list fragment representing a list of Items. This fragment
- * also supports tablet devices by allowing list items to be given an
- * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link com.benlinskey.greekreference.lexicon.LexiconDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
+ * A {@link SyntaxListFragment} used to display a list of all sections in the Overview of Greek
+ * Syntax text.
  */
 public class SyntaxBrowseListFragment extends SyntaxListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
-
     public static final String NAME = "syntax_browse";
     private SimpleCursorAdapter mAdapter;
     private static final String[] PROJECTION = new String[] {SyntaxContract._ID,
@@ -86,7 +80,6 @@ public class SyntaxBrowseListFragment extends SyntaxListFragment
         super.onCreate(savedInstanceState);
 
         // TODO: Create a custom adapter with support for chapter headings.
-        // TODO: Display a title page with author name, &c. when nothing is selected.
         String[] fromColumns = {SyntaxContract.COLUMN_NAME_SECTION};
         int[] toViews = {android.R.id.text1};
         mAdapter = new SimpleCursorAdapter(getActivity(),
@@ -158,7 +151,8 @@ public class SyntaxBrowseListFragment extends SyntaxListFragment
         }
     }
 
-    private void setSelectedSyntaxItemId(int id) {
+    @Override
+    protected void setSelectedSyntaxItemId(int id) {
         mSelectedSyntaxId = id + 1;
     }
 }

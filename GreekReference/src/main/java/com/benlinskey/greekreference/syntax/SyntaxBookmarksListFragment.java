@@ -30,15 +30,11 @@ import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
- * A list fragment representing a list of Items. This fragment
- * also supports tablet devices by allowing list items to be given an
- * 'activated' state upon selection. This helps indicate which item is
- * currently being viewed in a {@link com.benlinskey.greekreference.lexicon.LexiconDetailFragment}.
- * <p>
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
+ * A {@link SyntaxListFragment} used to display a list of all words stored in the syntax bookmarks
+ * list.
  */
-public class SyntaxBookmarksListFragment extends SyntaxListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class SyntaxBookmarksListFragment extends SyntaxListFragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "SyntaxBookmarksListFragment";
     public static final String NAME = "syntax_bookmarks";
     private SimpleCursorAdapter mAdapter;
@@ -163,7 +159,8 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment implements L
         }
     }
 
-    private void setSelectedSyntaxItemId(int id) {
+    @Override
+    protected void setSelectedSyntaxItemId(int id) {
         String[] columns = new String[] {AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID};
         String selection = AppDataContract.SyntaxBookmarks._ID + " = ?";
         String[] selectionArgs = new String[] {Integer.toString(id)};

@@ -27,16 +27,21 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 // TODO: Simplify callback interface of this class's children now that we're getting the
 // selected item's ID from the getSelectedLexiconId() method here.
 public abstract class SyntaxListFragment extends BaseListFragment {
-
     private static final String TAG = "SyntaxListFragment";
-
     private static final int NO_SELECTION = -1;
     protected int mSelectedSyntaxId = NO_SELECTION;
 
+    /**
+     * @return <code>true</code> if no list item is selected or <code>false</code> otherwise
+     */
     public boolean nothingIsSelected() {
         return NO_SELECTION == mSelectedSyntaxId;
     }
 
+    /**
+     * @return <code>true</code> if the selected word is in the bookmarks list or
+     * <code>false</code> otherwise
+     */
     public boolean selectedSectionIsBookmarked() {
         String[] columns = new String[] {AppDataContract.SyntaxBookmarks._ID};
         String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
@@ -52,5 +57,14 @@ public abstract class SyntaxListFragment extends BaseListFragment {
         return result;
     }
 
+    /**
+     * @return  the syntax database ID of the selected item
+     */
     public int getSelectedSyntaxId() { return mSelectedSyntaxId; }
+
+    /**
+     * Sets the selected item ID.
+     * @param id the <code>ListView</code> position of the item to select
+     */
+    protected abstract void setSelectedSyntaxItemId(int id);
 }

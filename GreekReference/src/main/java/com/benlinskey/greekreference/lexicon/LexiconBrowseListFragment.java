@@ -137,11 +137,8 @@ public class LexiconBrowseListFragment extends LexiconListFragment
         mCallbacks.onItemSelected(NAME, position + 1); // Positions are off by one from database ID.
     }
 
-    /**
-     * Sets the selected item ID.
-     * @param id the <code>ListView</code> position of the item to select
-     */
-    private void setSelectedLexiconItemId(int id) {
+    @Override
+    protected void setSelectedLexiconItemId(int id) {
         mSelectedLexiconId = id + 1;
     }
 
