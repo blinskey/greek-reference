@@ -126,6 +126,7 @@ public class LexiconProvider extends ContentProvider {
         String[] projection = new String[] {"_id as " + LexiconContract._ID,
                                             LexiconContract.COLUMN_GREEK_NO_SYMBOLS + " AS "
                                             + SearchManager.SUGGEST_COLUMN_TEXT_1,
+                                            LexiconContract.COLUMN_GREEK_LOWERCASE,
                                             "_id AS "
                                             + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID};
         String selection = LexiconContract.COLUMN_BETA_SYMBOLS + " LIKE ? OR "
@@ -134,7 +135,7 @@ public class LexiconProvider extends ContentProvider {
         String[] selectionArgs = new String[] {query.toLowerCase() + "%",
                                                query.toLowerCase() + "%",
                                                query.toLowerCase() + "%"};
-        String sortOrder = LexiconContract._ID + " ASC";
+        String sortOrder = LexiconContract.COLUMN_GREEK_LOWERCASE + " ASC";
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(LexiconContract.TABLE_NAME);
         return queryBuilder.query(mDatabase, projection, selection, selectionArgs, null, null,
