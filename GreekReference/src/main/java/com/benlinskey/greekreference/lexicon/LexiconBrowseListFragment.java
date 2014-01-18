@@ -40,9 +40,11 @@ public class LexiconBrowseListFragment extends LexiconListFragment
     public final static String NAME = "lexicon_browse";
     SimpleCursorAdapter mAdapter;
     static final String[] PROJECTION
-            = new String[] {LexiconContract._ID, LexiconContract.COLUMN_GREEK_FULL_WORD};
+            = new String[] {LexiconContract._ID, LexiconContract.COLUMN_GREEK_FULL_WORD,
+                    LexiconContract.COLUMN_GREEK_LOWERCASE};
     static final String SELECTION = "";
     static final String[] SELECTION_ARGS = {};
+    static final String ORDER_BY = LexiconContract.COLUMN_GREEK_LOWERCASE + " ASC";
 
     /**
      * The fragment's current callback object, which is notified of list item
@@ -89,7 +91,7 @@ public class LexiconBrowseListFragment extends LexiconListFragment
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), LexiconContract.CONTENT_URI, PROJECTION, SELECTION,
-                SELECTION_ARGS, null);
+                SELECTION_ARGS, ORDER_BY);
     }
 
     @Override
@@ -133,13 +135,16 @@ public class LexiconBrowseListFragment extends LexiconListFragment
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        setSelectedLexiconItemId(position);
-        mCallbacks.onItemSelected(NAME, position + 1); // Positions are off by one from database ID.
+
+        Cursor cursor = (Cursor) mAdapter.getItem(position);
+        int lexiconId = cursor.getInt(0);
+        setSelectedLexiconItemId(lexiconId);
+        mCallbacks.onItemSelected(NAME, lexiconId); // Positions are off by one from database ID.
     }
 
     @Override
     protected void setSelectedLexiconItemId(int id) {
-        mSelectedLexiconId = id + 1;
+        mSelectedLexiconId = id;
     }
 
     /**
