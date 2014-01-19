@@ -31,22 +31,41 @@ android {
             storeFile file("debug.keystore")
         }
 
-        /*
         release {
-            storeFile file(System.console().readLine("\n\$ Enter keystore path: "))
-            storePassword System.console().readLine("\n\$ Enter keystore password: ")
-            keyAlias System.console().readLine("\n\$ Enter key alias: ")
-            keyPassword System.console().readLine("\n\$ Enter key password: ")
+            def keyStore = 'default'
+            def keyStorePassword = ''
+            def alias = ''
+            def aliasPassword = ''
+            gradle.taskGraph.whenReady { taskGraph ->
+                if (taskGraph.hasTask(':GreekReference:assembleRelease')) {
+                    keyStore = System.console().readLine("\nKey store name: ")
+                    keyStorePassword = System.console().readLine("Key store password: ")
+                    alias = System.console().readLine("Key alias: ")
+                    aliasPassword = System.console().readLine("Key password: ")
+
+                    if (keyStore.size() <= 0) {
+                        throw new InvalidUserDataException("You must enter a key store name.")
+                    } else if (keyStorePassword.size() <= 0) {
+                        throw new InvalidUserDataException("You must enter a key store password.")
+                    } else if (alias.size() <= 0) {
+                        throw new InvalidUserDataException("You must enter a key alias.")
+                    } else if (aliasPassword.size() <= 0) {
+                        throw new InvalidUserDataException("You must enter a key password.")
+                    }
+                }
+
+                storeFile file(keyStore)
+                storePassword keyStorePassword
+                keyAlias alias
+                keyPassword aliasPassword
+            }
         }
-        */
     }
 
     buildTypes {
-        /*
         release {
             signingConfig signingConfigs.release
         }
-        */
     }
 }
 
