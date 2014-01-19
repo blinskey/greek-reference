@@ -16,14 +16,12 @@
 
 package com.benlinskey.greekreference.data.appdata;
 
-import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
@@ -81,7 +79,6 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG, "Upgrading database!");
         // NOTE: This method currently only handles upgrades from version 1 of the database to
         // version 2. If we make any further changes, we'll need to introduce some more complex
         // logic here.
@@ -90,7 +87,6 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
         String table = AppDataContract.LexiconFavorites.TABLE_NAME;
         String[] columns = {AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID};
         Cursor oldData = db.query(table, columns, null, null, null, null, null, null);
-        Log.d(TAG, "Number of items in old table: " + oldData.getCount());
 
         // Drop and recreate the Lexicon Favorites table.
         db.execSQL(SQL_DELETE_LEXICON_FAVORITES_TABLE);
@@ -101,11 +97,9 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
         String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD,
                 LexiconContract.COLUMN_GREEK_LOWERCASE};
         String selection = LexiconContract._ID + " = ?";
-        Log.d(TAG, "Number of items in cursor before loop: " + oldData.getCount());
         while (oldData.moveToNext()) {
             // Get lexicon ID of old item.
             int lexiconId = oldData.getInt(0);
-            Log.d(TAG, "Retrieved old item with ID " + lexiconId);
 
             // Select the data we need for the old item.
             String[] selectionArgs = {Integer.toString(lexiconId)};
