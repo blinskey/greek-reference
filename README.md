@@ -18,7 +18,7 @@ The latest release is version 1.0.3. The corresponding version of the [Greek Ref
 
 The texts used in this app are contained in a pair of databases called `lexicon.db` and `syntax.db`. These are generated using a simple Java program, the [Greek Reference Database Creator][]. They are then zipped and placed in this project's `assets` directory. The files must be named `lexicon.zip` and `syntax.zip` in order to work with the [SQLiteAssetHelper][Android SQLiteAssetHelper] library used to copy them to the user's device.
 
-Greek Reference uses the new Gradle-based Android build system. The Gradle build file is set up to prompt the user for developer key information when building the project. If you'd just like to build a debug APK using Android Studio, make sure to comment out the `release` sections of the `GreekReference/build.gradle` file. Otherwise, Android Studio won't be able to build the project. You'll also need to copy your `debug.keystore` file from your `.android` directory to the `GreekReference` directory.
+Greek Reference uses the new Gradle-based Android build system. To assemble a debug build, you'll need to first copy your `debug.keystore` file from your `.android` directory to the `GreekReference` directory. Then run `./gradlew assembleDebug` from the project root directory, or use the Android Studio GUI to build the project.
 
 Unfortunately, I'm not able to distribute all of the icons used in this app. [See below](https://github.com/blinskey/greek-reference#icons) for details. For now, you'll need to provide your own properly named icons in order to build the project. I'd like to cobble together a set of placeholder icons at some point in the future to remedy this problem. (See issue #39.)
 
