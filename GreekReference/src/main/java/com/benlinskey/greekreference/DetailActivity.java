@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -87,11 +88,23 @@ public abstract class DetailActivity extends Activity {
             textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
             textView.setTextColor(getResources().getColor(android.R.color.black));
             textView.setPadding(25, 25, 25, 25);
-            textView.setText(Html.fromHtml(getString(R.string.message_about)));
+
+            Activity activity = getActivity();
+            String packageName = activity.getPackageName();
+            String versionName = null;
+            try {
+                versionName = activity.getPackageManager().getPackageInfo(packageName, 0).versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            String aboutString = getString(R.string.about_intro) + versionName + "</p>"
+                    + getString(R.string.message_about);
+            textView.setText(Html.fromHtml(aboutString));
             textView.setMovementMethod(LinkMovementMethod.getInstance());
 
             WebView webView = new WebView(getActivity());
-            webView.loadDataWithBaseURL(null, getString(R.string.apache_license), "text/html", null, null);
+            webView.loadDataWithBaseURL(null, getString(R.string.apache_license), "text/html",
+                    null, null);
 
             layout.addView(textView);
             layout.addView(webView);

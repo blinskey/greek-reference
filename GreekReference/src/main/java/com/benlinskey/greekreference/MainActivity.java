@@ -28,6 +28,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -805,7 +806,18 @@ public class MainActivity extends Activity
             textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
             textView.setTextColor(getResources().getColor(android.R.color.black));
             textView.setPadding(25, 25, 25, 25);
-            textView.setText(Html.fromHtml(getString(R.string.message_about)));
+
+            Activity activity = getActivity();
+            String packageName = activity.getPackageName();
+            String versionName = null;
+            try {
+                versionName = activity.getPackageManager().getPackageInfo(packageName, 0).versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            String aboutString = getString(R.string.about_intro) + versionName + "</p>"
+                    + getString(R.string.message_about);
+            textView.setText(Html.fromHtml(aboutString));
             textView.setMovementMethod(LinkMovementMethod.getInstance());
 
             WebView webView = new WebView(getActivity());

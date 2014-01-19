@@ -355,5 +355,10 @@ limitations under the License.
         ]]>
         "
     </string>
+    <string name="about_intro">
+        <![CDATA[
+            "<p>Version "
+        ]]>
+    </string>
 
 </resources>
