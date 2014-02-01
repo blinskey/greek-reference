@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
 
     <string name="app_name">Greek Reference</string>
@@ -40,29 +39,21 @@
     <string name="feedback_subject">Greek Reference feedback</string>
     <string name="feedback_intent_chooser">Send feedback via</string>
     <string name="toast_clear_lexicon_favorites">Favorites cleared.</string>
-    <string name="clear_lexicon_favorites_dialog_message">
-        Are you sure you want to permanently clear your favorites list?
-    </string>
+    <string name="clear_lexicon_favorites_dialog_message">        Are you sure you want to permanently clear your favorites list?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="clear_syntax_bookmarks_dialog_message">
-        Are you sure you want to permanently clear your bookmarks list?
-    </string>
+    <string name="clear_syntax_bookmarks_dialog_message">        Are you sure you want to permanently clear your bookmarks list?</string>
     <string name="toast_clear_syntax_bookmarks">Bookmarks cleared.</string>
     <string name="toast_favorite_added">Favorite added.</string>
     <string name="toast_favorite_removed">Favorite removed.</string>
     <string name="toast_bookmark_added">Bookmark added.</string>
     <string name="toast_bookmark_removed">Bookmark removed.</string>
-    <string name="lexicon_favorites_empty_view">
-        Tap the star icon to save your favorite words.
-    </string>
+    <string name="lexicon_favorites_empty_view">        Tap the star icon to save your favorite words.</string>
     <string name="lexicon_history_empty_view">Your history is empty.</string>
-    <string name="syntax_bookamrks_empty_view">
-        Tap the bookmark icon to save your favorite sections.
-    </string>
+    <string name="syntax_bookamrks_empty_view">        Tap the bookmark icon to save your favorite sections.</string>
     <string name="title_help">Help</string>
     <string name="message_help">
-        <![CDATA[
+<![CDATA[
         <p>
             To search the lexicon, tap the magnifying glass icon. You can use either Greek characters or
             <a href="http://en.wikipedia.org/wiki/Beta_code#Encoding">Beta code</a> to search.
@@ -80,10 +71,12 @@
         ]]>
     </string>
     <string name="title_about">About</string>
-    <!-- NOTE: I'm currently displaying the following string in a TextView, not a WebView, so some
-         of these tags are ignored, and I've added a few extra <br> tags in the list at the end. -->
+    <!--
+         NOTE: I'm currently displaying the following string in a TextView, not a WebView, so some
+         of these tags are ignored, and I've added a few extra <br> tags in the list at the end.
+    -->
     <string name="message_about">
-        <![CDATA[
+<![CDATA[
         <p>
             Greek Reference is open source! You can find the project on GitHub at
             <a href="https://github.com/blinskey/greek-reference">https://github.com/blinskey/greek-reference</a>.
@@ -137,7 +130,7 @@
         ]]>
     </string>
     <string name="syntax_footer">
-        <![CDATA[
+<![CDATA[
         <p>
             <i>Text from</i> <a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.04.0052">Overview of Greek Syntax</a>
             <i>by <a href="http://daedalus.umkc.edu">Jeffrey A. Rydberg-Cox</a>. Select the About
@@ -145,9 +138,8 @@
         </p>
         ]]>
     </string>
-    <string name="apache_license">
-        "
-        <![CDATA[
+    <string name="apache_license">        "
+<![CDATA[
         <pre style="word-wrap: break-word; white-space: pre-wrap;">
 
                              Apache License
@@ -353,12 +345,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
         </pre>
         ]]>
-        "
-    </string>
+        "</string>
     <string name="about_intro">
-        <![CDATA[
+<![CDATA[
             "<p>Version "
         ]]>
     </string>
+    <string name="pref_textSize">Font size</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_textSize_item_small">Small</string>
+    <string name="pref_textSize_item_medium">Medium</string>
+    <string name="pref_textSize_item_large">Large</string>
+    <string name="settings">Settings</string>
+    <string name="pref_textSize_key">PREF_TEXT_SIZE_KEY</string>
 
 </resources>

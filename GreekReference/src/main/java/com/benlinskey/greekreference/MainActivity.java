@@ -32,6 +32,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -92,6 +93,8 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         // Restore any saved state.
         if (null == savedInstanceState) {
@@ -452,6 +455,9 @@ public class MainActivity extends Activity
                 return true;
             case R.id.action_clear_bookmarks:
                 clearSyntaxBookmarks();
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_about:
                 displayAbout();

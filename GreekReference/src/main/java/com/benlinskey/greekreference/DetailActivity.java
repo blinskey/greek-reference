@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -51,6 +52,8 @@ public abstract class DetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
 
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
         // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -61,6 +64,9 @@ public abstract class DetailActivity extends Activity {
         switch (item.getItemId()) {
             case R.id.action_about:
                 displayAbout();
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case R.id.action_feedback:
                 sendFeedback();

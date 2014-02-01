@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_textSize_entries">
+        <item>@string/pref_textSize_item_small</item>
+        <item>@string/pref_textSize_item_medium</item>
+        <item>@string/pref_textSize_item_large</item>
+    </array>
+    <array name="pref_textSize_values">
+        <item>@string/pref_textSize_item_small</item>
+        <item>@string/pref_textSize_item_medium</item>
+        <item>@string/pref_textSize_item_large</item>
+    </array>
+</resources>
