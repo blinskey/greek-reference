@@ -25,7 +25,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
  * An {@link SQLiteAssetHelper} for the lexicon database.
  */
 public class LexiconHelper extends SQLiteAssetHelper {
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     /**
      * Class constructor.
@@ -33,7 +33,7 @@ public class LexiconHelper extends SQLiteAssetHelper {
      */
     public LexiconHelper(Context context) {
         super(context, LexiconContract.DB_NAME, null, DB_VERSION);
-        setForcedUpgradeVersion(DB_VERSION); // Copy entire database on upgrade.
+        setForcedUpgrade(DB_VERSION);
     }
 
     @Override
