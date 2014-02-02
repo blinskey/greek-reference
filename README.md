@@ -12,7 +12,7 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
 
 ## Status
 
-The latest release is version 1.0.3. The corresponding version of the [Greek Reference Database Creator][] is 1.1.0. You can view a changelog for each release on the [Releases page][].
+The latest release is version 1.1.0. The corresponding version of the [Greek Reference Database Creator][] is 1.1.1. You can view a changelog for each release on the [Releases page][].
 
 ## Building the App
 
@@ -34,7 +34,7 @@ The app icon, which is also excluded from the repository, was constructed in par
 
 ## Texts
 
-This project includes the text of *An Intermediate Greek-English Lexicon*, by Henry George Liddell and Robert Scott. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at <http://www.perseus.tufts.edu/hopper/>.
+This project includes the text of *An Intermediate Greek-English Lexicon*, by Henry George Liddell and Robert Scott. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at <http://www.perseus.tufts.edu/hopper/>. I have made a number of corrections to the original text.
 
 The project also includes the text of *Overview of Greek Syntax*, by Jeffrey A. Rydberg-Cox. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at <http://www.perseus.tufts.edu/hopper/>.
 
