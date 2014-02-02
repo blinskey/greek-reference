@@ -7,4 +7,7 @@
         android:entries="@array/pref_textSize_entries"
         android:entryValues="@array/pref_textSize_values"
         android:defaultValue="@string/pref_textSize_item_medium"/>
+    <com.benlinskey.greekreference.AboutPreference
+        android:key="@string/pref_about_key"
+        android:title="@string/title_about"/>
 </PreferenceScreen>

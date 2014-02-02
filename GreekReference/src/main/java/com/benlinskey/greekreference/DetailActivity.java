@@ -62,9 +62,6 @@ public abstract class DetailActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_about:
-                displayAbout();
-                return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
@@ -76,65 +73,6 @@ public abstract class DetailActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A {@link DialogFragment} containing information about this app.
-     */
-    public static class AboutDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.title_about);
-
-            LinearLayout layout = new LinearLayout(getActivity());
-            layout.setOrientation(LinearLayout.VERTICAL);
-
-            TextView textView = new TextView(getActivity());
-            textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
-            textView.setTextColor(getResources().getColor(android.R.color.black));
-            textView.setPadding(25, 25, 25, 25);
-
-            Activity activity = getActivity();
-            String packageName = activity.getPackageName();
-            String versionName = null;
-            try {
-                versionName = activity.getPackageManager().getPackageInfo(packageName, 0).versionName;
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            String aboutString = getString(R.string.about_intro) + versionName + "</p>"
-                    + getString(R.string.message_about);
-            textView.setText(Html.fromHtml(aboutString));
-            textView.setMovementMethod(LinkMovementMethod.getInstance());
-
-            WebView webView = new WebView(getActivity());
-            webView.loadDataWithBaseURL(null, getString(R.string.apache_license), "text/html",
-                    null, null);
-
-            layout.addView(textView);
-            layout.addView(webView);
-
-            ScrollView scrollView = new ScrollView(getActivity());
-            scrollView.addView(layout);
-            builder.setView(scrollView);
-
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            return builder.create();
-        }
-    }
-
-    /**
-     * Displays a dialog fragment containing information about this app.
-     */
-    private void displayAbout() {
-        AboutDialogFragment dialogFragment = new AboutDialogFragment();
-        dialogFragment.show(getFragmentManager(), "about");
     }
 
     /**

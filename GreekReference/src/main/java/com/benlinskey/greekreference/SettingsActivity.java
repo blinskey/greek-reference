@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -71,6 +72,19 @@ public class SettingsActivity extends Activity {
             addPreferencesFromResource(R.xml.preferences);
             Preference textSizePref = findPreference(getString(R.string.pref_textSize_key));
             textSizePref.setSummary("%s"); // Set summary to currently selected option.
+
+            // Set About summary to application version.
+            Activity activity = getActivity();
+            String packageName = activity.getPackageName();
+            String versionName = null;
+            try {
+                versionName = activity.getPackageManager().getPackageInfo(packageName, 0).versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            String summary = getString(R.string.version) + versionName;
+            Preference aboutPref = findPreference(getString(R.string.pref_about_key));
+            aboutPref.setSummary(summary);
         }
     }
 

@@ -25,9 +25,6 @@
           android:icon="@drawable/ic_star_color"
           android:title="@string/action_remove_favorite"
           android:showAsAction="always"/>
-    <item android:id="@+id/action_about"
-        android:title="@string/action_about"
-        android:showAsAction="never"/>
     <item android:id="@+id/action_settings"
         android:title="@string/settings"
         android:showAsAction="never"/>
