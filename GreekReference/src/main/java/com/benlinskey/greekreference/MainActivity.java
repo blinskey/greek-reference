@@ -414,7 +414,7 @@ public class MainActivity extends Activity
 
         // Inflate the options menu from XML. We have to handle the menu here rather than in the 
         // fragment so that we can hide them when the navigation drawer is open.
-        if (Mode.isLexiconMode(mMode)) {
+        if (mMode.isLexiconMode()) {
             getMenuInflater().inflate(R.menu.lexicon_menu, menu);
             setLexiconFavoriteIcon(menu);
 
@@ -425,7 +425,7 @@ public class MainActivity extends Activity
 
             restoreActionBar();
             return super.onCreateOptionsMenu(menu);
-        } else if (Mode.isSyntaxMode(mMode)) {
+        } else if (mMode.isSyntaxMode()) {
             getMenuInflater().inflate(R.menu.syntax_menu, menu);
             setSyntaxBookmarkIcon(menu);
             restoreActionBar();
@@ -443,9 +443,9 @@ public class MainActivity extends Activity
             return super.onCreateOptionsMenu(menu);
         }
 
-        if (Mode.isLexiconMode(mMode)) {
+        if (mMode.isLexiconMode()) {
             setLexiconFavoriteIcon(menu);
-        } else if (Mode.isSyntaxMode(mMode)) {
+        } else if (mMode.isSyntaxMode()) {
             setSyntaxBookmarkIcon(menu);
         } else {
             throw new IllegalStateException("Invalid mode");

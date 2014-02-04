@@ -90,43 +90,12 @@ public enum Mode {
     }
 
     /**
-     * Returns <code>true</code> if the specified <code>Mode</code> is a 
-     * lexicon mode.
-     * <p>
-     * This method is deprecated. The non-static method <code>isLexiconMode</code> should be used
-     * instead.
-     * @param  mode the <code>Mode</code> to check
-     * @return <code>true</code> if the specified <code>Mode</code> is a
-     *         lexicon mode, or <code>false</code> otherwise
-     */
-    @Deprecated
-    public static boolean isLexiconMode(Mode mode) {
-        return mode.equals(LEXICON_BROWSE) || mode.equals(LEXICON_FAVORITES)
-                || mode.equals(LEXICON_HISTORY);
-    }
-
-    /**
      * Returns <code>true</code> if this is a lexicon mode.
      * @return <code>true</code> if this is a lexicon mode, or <code>false</code> otherwise
      */
     public boolean isLexiconMode() {
         return this.equals(LEXICON_BROWSE) || this.equals(LEXICON_FAVORITES)
                 || this.equals(LEXICON_HISTORY);
-    }
-
-    /**
-     * Returns <code>true</code> if the specified <code>Mode</code> is a 
-     * syntax mode.
-     * <p>
-     * This method is deprecated. The non-static method <code>isSyntaxMode</code> should be used
-     * instead.
-     * @param  mode the <code>Mode</code> to check
-     * @return <code>true</code> if the specified <code>Mode</code> is a
-     *         syntax mode, or <code>false</code> otherwise
-     */
-    @Deprecated
-    public static boolean isSyntaxMode(Mode mode) {
-        return mode.equals(SYNTAX_BROWSE) || mode.equals(SYNTAX_BOOKMARKS);
     }
 
     /**
