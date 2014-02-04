@@ -33,7 +33,7 @@ public class SyntaxHelper extends SQLiteAssetHelper {
      */
     public SyntaxHelper(Context context) {
         super(context, SyntaxContract.DB_NAME, null, DB_VERSION);
-        setForcedUpgradeVersion(DB_VERSION); // Copy entire database on upgrade.
+        setForcedUpgrade(DB_VERSION); // Copy entire database on upgrade.
     }
 
     @Override
