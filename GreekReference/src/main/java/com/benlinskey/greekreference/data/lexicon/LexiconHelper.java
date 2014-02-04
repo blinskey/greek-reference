@@ -25,7 +25,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
  * An {@link SQLiteAssetHelper} for the lexicon database.
  */
 public class LexiconHelper extends SQLiteAssetHelper {
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
 
     /**
      * Class constructor.

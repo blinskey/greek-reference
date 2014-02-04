@@ -21,6 +21,7 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.widget.SimpleCursorAdapter;
 
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
+import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 
 /**
  * A {@link LexiconListFragment} used to display a list of all words in the
