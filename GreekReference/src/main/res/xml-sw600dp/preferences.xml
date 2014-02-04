@@ -31,6 +31,7 @@
     <SwitchPreference
         android:key="@string/pref_onePane_key"
         android:title="@string/pref_onePane"
+        android:summary="@string/pref_onePane_summary"
         android:defaultValue="false"/>
     <com.benlinskey.greekreference.AboutPreference
         android:key="@string/pref_about_key"

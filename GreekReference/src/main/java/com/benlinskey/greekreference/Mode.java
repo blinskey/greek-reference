@@ -117,11 +117,23 @@ public enum Mode {
     /**
      * Returns <code>true</code> if the specified <code>Mode</code> is a 
      * syntax mode.
+     * <p>
+     * This method is deprecated. The non-static method <code>isSyntaxMode</code> should be used
+     * instead.
      * @param  mode the <code>Mode</code> to check
      * @return <code>true</code> if the specified <code>Mode</code> is a
      *         syntax mode, or <code>false</code> otherwise
      */
+    @Deprecated
     public static boolean isSyntaxMode(Mode mode) {
         return mode.equals(SYNTAX_BROWSE) || mode.equals(SYNTAX_BOOKMARKS);
+    }
+
+    /**
+     * Returns <code>true</code> if this is a syntax mode.
+     * @return <code>true</code> if this is a syntax mode, or <code>false</code> otherwise
+     */
+    public boolean isSyntaxMode() {
+        return this.equals(SYNTAX_BROWSE) || this.equals(SYNTAX_BOOKMARKS);
     }
 }

@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,8 +40,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -79,7 +76,6 @@ public class MainActivity extends Activity
     private CharSequence mTitle;
     private CharSequence mSubtitle;
     private Mode mMode;
-    private boolean mLargeScreen; // Indicates whether this is a tablet.
     private boolean mTwoPane;   // Indicates whether we're actually using the tablet layout.
 
     // Application state bundle keys
@@ -120,41 +116,34 @@ public class MainActivity extends Activity
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
             // res/values-sw600dp)..
-            mLargeScreen = true;
+            mTwoPane = true;
         }
 
-        checkTabletMode();
-
-        if (onePaneMode()) {
-            mTwoPane = false;
-            findViewById(R.id.item_detail_container).setVisibility(View.GONE);
-        }
-
+        checkTabletDisplayMode();
         handleIntent(getIntent());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        checkTabletMode();
+        checkTabletDisplayMode();
     }
 
     /**
      * If the app is running on a large screen, sets the display mode to either one-pane or
-     * two-pane depending on the setting stored in the app preferences. This method does no work
-     * on phones, since one-pane mode is always used on small screens.
+     * two-pane depending on the setting stored in the app preferences and the currently selected
+     * navigation drawer mode. This method does no work on phones, since one-pane mode is always
+     * used on small screens.
      */
-    private void checkTabletMode() {
-        if (!mLargeScreen) {
+    private void checkTabletDisplayMode() {
+        if (!mTwoPane) {
             return;
         }
-        View rightPane = findViewById(R.id.item_detail_container);
-        if (onePaneMode()) {
-            mTwoPane = false;
-            rightPane.setVisibility(View.GONE);
+        View leftPane = findViewById(R.id.item_list_container);
+        if (onePaneModeSelected() && mMode.equals(Mode.LEXICON_BROWSE)) {
+            leftPane.setVisibility(View.GONE);
         } else {
-            mTwoPane = true;
-            rightPane.setVisibility(View.VISIBLE);
+            leftPane.setVisibility(View.VISIBLE);
         }
     }
 
@@ -164,7 +153,7 @@ public class MainActivity extends Activity
      * @return  <code>true</code> if the user has selected the one-pane mode preference or
      *          <code>false</code> otherwise
      */
-    private boolean onePaneMode() {
+    private boolean onePaneModeSelected() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String key = getString(R.string.pref_onePane_key);
         return prefs.getBoolean(key, false);
@@ -701,6 +690,7 @@ public class MainActivity extends Activity
             default:
                 throw new IllegalArgumentException("Invalid mode");
         }
+        checkTabletDisplayMode(); // Make sure we're showing or hiding the left pane as is appropriate.
     }
 
     private void switchToLexiconBrowse() {
