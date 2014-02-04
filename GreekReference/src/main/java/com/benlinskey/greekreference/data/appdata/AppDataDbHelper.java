@@ -22,6 +22,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
@@ -31,8 +32,7 @@ import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 public class AppDataDbHelper extends SQLiteOpenHelper {
     private static final String TAG = "AppDataDbHelper";
 
-    // Version 2 adds a column to lexicon favorites table.
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "AppData.db";
     private Context mContext;
 
@@ -45,8 +45,7 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
             + AppDataContract.LexiconFavorites.TABLE_NAME + " (" 
             + AppDataContract.LexiconFavorites._ID + " INTEGER PRIMARY KEY, " 
             + AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " INTEGER, " 
-            + AppDataContract.LexiconFavorites.COLUMN_NAME_WORD + " TEXT, "
-            + AppDataContract.LexiconFavorites.COLUMN_NAME_LOWERCASE + " TEXT " + ")";
+            + AppDataContract.LexiconFavorites.COLUMN_NAME_WORD + " TEXT" + ")";
 
     private static final String SQL_CREATE_SYNTAX_BOOKMARKS_TABLE = "CREATE TABLE "
             + AppDataContract.SyntaxBookmarks.TABLE_NAME + " ("
@@ -79,13 +78,11 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // NOTE: This method currently only handles upgrades from version 1 of the database to
-        // version 2. If we make any further changes, we'll need to introduce some more complex
-        // logic here.
+        // This method handles upgrades from versions 1 and 2 of the database to version 3.
 
         // Get a cursor containing the contents of the old Lexicon Favorites table.
         String table = AppDataContract.LexiconFavorites.TABLE_NAME;
-        String[] columns = {AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID};
+        String[] columns = {AppDataContract.LexiconFavorites.COLUMN_NAME_WORD};
         Cursor oldData = db.query(table, columns, null, null, null, null, null, null);
 
         // Drop and recreate the Lexicon Favorites table.
@@ -94,31 +91,24 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
 
         // Repopulate the table.
         ContentResolver resolver = mContext.getContentResolver();
-        String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD,
-                LexiconContract.COLUMN_GREEK_LOWERCASE};
-        String selection = LexiconContract._ID + " = ?";
+        String[] projection = {LexiconContract._ID};
+        String selection = LexiconContract.COLUMN_GREEK_FULL_WORD + " = ?";
         while (oldData.moveToNext()) {
-            // Get lexicon ID of old item.
-            int lexiconId = oldData.getInt(0);
+            // Get word from the old row.
+            String word = oldData.getString(0);
 
-            // Select the data we need for the old item.
-            String[] selectionArgs = {Integer.toString(lexiconId)};
+            // Get the word's lexicon ID.
+            String[] selectionArgs = {word};
             Cursor lexiconCursor = resolver.query(LexiconContract.CONTENT_URI, projection,
                     selection, selectionArgs, null);
-
-            // Get the two strings we need for this item.
             lexiconCursor.moveToFirst();
-            int wordIndex = lexiconCursor.getColumnIndexOrThrow(LexiconContract.COLUMN_GREEK_FULL_WORD);
-            int lowercaseIndex
-                    = lexiconCursor.getColumnIndexOrThrow(LexiconContract.COLUMN_GREEK_LOWERCASE);
-            String word = lexiconCursor.getString(wordIndex);
-            String lowercase = lexiconCursor.getString(lowercaseIndex);
+            int idIndex = lexiconCursor.getColumnIndexOrThrow(LexiconContract._ID);
+            int id = lexiconCursor.getInt(idIndex);
 
             // Insert this item into the new LexiconFavorites table.
-            ContentValues values = new ContentValues(3);
-            values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, lexiconId);
+            ContentValues values = new ContentValues(2);
+            values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, id);
             values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, word);
-            values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LOWERCASE, lowercase);
             db.insert(AppDataContract.LexiconFavorites.TABLE_NAME, null, values);
         }
     }

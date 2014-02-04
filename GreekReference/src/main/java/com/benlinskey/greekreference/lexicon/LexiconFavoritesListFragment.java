@@ -43,8 +43,7 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
     // doesn't work due to accented characters.
     private static final String[] PROJECTION = new String[] {AppDataContract.LexiconFavorites._ID,
             AppDataContract.LexiconFavorites.COLUMN_NAME_WORD,
-            AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID,
-            AppDataContract.LexiconFavorites.COLUMN_NAME_LOWERCASE};
+            AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID};
     private static final String SELECTION = "";
     private static final String[] SELECTION_ARGS = {};
     private static final String SORT_ORDER
