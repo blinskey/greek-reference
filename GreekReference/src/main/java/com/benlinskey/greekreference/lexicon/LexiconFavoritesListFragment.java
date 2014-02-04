@@ -48,7 +48,7 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
     private static final String SELECTION = "";
     private static final String[] SELECTION_ARGS = {};
     private static final String SORT_ORDER
-            = AppDataContract.LexiconFavorites.COLUMN_NAME_LOWERCASE + " ASC";
+            = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " ASC";
 
     /**
      * The serialization (saved instance state) Bundle key representing the
