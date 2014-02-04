@@ -28,6 +28,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -39,6 +40,7 @@ import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -77,7 +79,8 @@ public class MainActivity extends Activity
     private CharSequence mTitle;
     private CharSequence mSubtitle;
     private Mode mMode;
-    private boolean mTwoPane;
+    private boolean mLargeScreen; // Indicates whether this is a tablet.
+    private boolean mTwoPane;   // Indicates whether we're actually using the tablet layout.
 
     // Application state bundle keys
     private static final String KEY_TITLE = "action_bar_title";
@@ -116,12 +119,55 @@ public class MainActivity extends Activity
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
-            // res/values-sw600dp). If this view is present, then the
-            // activity should be in two-pane mode.
-            mTwoPane = true;
+            // res/values-sw600dp)..
+            mLargeScreen = true;
+        }
+
+        checkTabletMode();
+
+        if (onePaneMode()) {
+            mTwoPane = false;
+            findViewById(R.id.item_detail_container).setVisibility(View.GONE);
         }
 
         handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkTabletMode();
+    }
+
+    /**
+     * If the app is running on a large screen, sets the display mode to either one-pane or
+     * two-pane depending on the setting stored in the app preferences. This method does no work
+     * on phones, since one-pane mode is always used on small screens.
+     */
+    private void checkTabletMode() {
+        if (!mLargeScreen) {
+            return;
+        }
+        View rightPane = findViewById(R.id.item_detail_container);
+        if (onePaneMode()) {
+            mTwoPane = false;
+            rightPane.setVisibility(View.GONE);
+        } else {
+            mTwoPane = true;
+            rightPane.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Checks whether the user has selected the one-pane mode preference. This method always
+     * returns <code>false</code> on phones.
+     * @return  <code>true</code> if the user has selected the one-pane mode preference or
+     *          <code>false</code> otherwise
+     */
+    private boolean onePaneMode() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String key = getString(R.string.pref_onePane_key);
+        return prefs.getBoolean(key, false);
     }
 
     @Override
