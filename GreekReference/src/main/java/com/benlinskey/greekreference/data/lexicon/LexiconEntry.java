@@ -55,11 +55,12 @@ public class LexiconEntry {
      * @return a <code>CharSequence</code> containing this lexicon entry
      */
     public SpannedString toSpanned(float textSize) {
-        // TODO: Display orth.
         // TOOD: Split this into multiple methods.
 
-        // Create mWord string.
-        SpannableString wordStr = new SpannableString(mWord);
+        // Create heading string.
+        // Use the "orth" value, not the "key" value!
+        //SpannableString wordStr = new SpannableString(mWord);
+        SpannableString wordStr = new SpannableString(mOrth);
         wordStr.setSpan(new StyleSpan(Typeface.BOLD), 0, wordStr.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
