@@ -213,7 +213,7 @@ public class LexiconXmlParser {
                 String name = parser.getName();
                 if (name.equals("trans")) {
                     // Check child tags.
-                } else if (name.equals("tr")) {
+                } else if (name.equals("tr") && parser.getText() != null) {
                     parser.next();
 
                     // Create italicized string.
