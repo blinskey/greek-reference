@@ -28,10 +28,14 @@
         android:entries="@array/pref_textSize_entries"
         android:entryValues="@array/pref_textSize_values"
         android:defaultValue="@string/pref_textSize_item_medium"/>
-    <SwitchPreference
+    <CheckBoxPreference
         android:key="@string/pref_onePane_key"
         android:title="@string/pref_onePane"
         android:summary="@string/pref_onePane_summary"
+        android:defaultValue="false"/>
+    <CheckBoxPreference
+        android:key="@string/pref_perseus_tool_key"
+        android:title="@string/pref_perseus_tool"
         android:defaultValue="false"/>
     <com.benlinskey.greekreference.AboutPreference
         android:key="@string/pref_about_key"

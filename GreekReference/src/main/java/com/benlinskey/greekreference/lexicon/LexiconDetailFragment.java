@@ -23,10 +23,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -106,7 +108,27 @@ public class LexiconDetailFragment extends DetailFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.lexicon_detail_fragment_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater); // TODO: Is this necessary?
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_perseus_tool);
+        if (perseusToolOptionDisabled()) {
+            item.setVisible(false);
+        } else {
+            item.setVisible(true);
+        }
+    }
+
+    /**
+     * Checks whether the user has disabled the View on Perseus option in the settings.
+     * @return  <code>true</code> if the user has disabled the option or <code>false</code>
+     *          otherwise
+     */
+    private boolean perseusToolOptionDisabled() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        return prefs.getBoolean(getString(R.string.pref_perseus_tool_key), false);
     }
 
     @Override

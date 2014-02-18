@@ -24,7 +24,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -62,10 +61,6 @@ public class PerseusToolActivity extends Activity {
         actionBar.setTitle(getString(R.string.title_lexicon));
         actionBar.setSubtitle(getString(R.string.subtitle_perseus_tool));
 
-        // TODO: Use custom font to display polytonic Greek characters. We can download the HTML
-        // for the page and then inject custom CSS to use Noto Serif, but this custom font won't
-        // be used if the user clicks on a link and loads a new page.
-
         // Create the URL to retrieve.
         Intent intent = getIntent();
         String morph = intent.getStringExtra(LexiconDetailFragment.PERSEUS_TOOL_EXTRA_KEY);
@@ -85,7 +80,8 @@ public class PerseusToolActivity extends Activity {
             }
         });
 
-        // Handle errors.
+        // We inject a custom style element into each page here in order to load a local typeface.
+        // The WebView security features prevent us from loading a local CSS file instead.
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -95,7 +91,11 @@ public class PerseusToolActivity extends Activity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                view.loadUrl("javascript:(function(){var style=document.createElement('style');style.innerHTML='<style>@font-face {font-family: NotoSerif;src: url(\"fonts/NotoSerif-Regular.ttf\");}.greek {font-family: NotoSerif, Gentium, Cardo, serif;}</style>';document.getElementsByTagName('head')[0].appendChild(style);})();");
+                view.loadUrl("javascript:(function(){var style=document.createElement('style');"
+                        + "style.innerHTML='<style>@font-face{font-family:NotoSerif;"
+                        + "src: url(\"fonts/NotoSerif-Regular.ttf\");}.greek{font-family:"
+                        + "NotoSerif, Gentium, Cardo, serif;}</style>';"
+                        + "document.getElementsByTagName('head')[0].appendChild(style);})();");
             }
 
             @Override
