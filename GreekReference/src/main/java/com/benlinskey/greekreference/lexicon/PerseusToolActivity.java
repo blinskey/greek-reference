@@ -24,6 +24,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -86,6 +87,18 @@ public class PerseusToolActivity extends Activity {
 
         // Handle errors.
         mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                view.loadUrl("javascript:(function(){var style=document.createElement('style');style.innerHTML='<style>@font-face {font-family: NotoSerif;src: url(\"fonts/NotoSerif-Regular.ttf\");}.greek {font-family: NotoSerif, Gentium, Cardo, serif;}</style>';document.getElementsByTagName('head')[0].appendChild(style);})();");
+            }
+
+            @Override
             public void onReceivedError(WebView view, int errorCode, String description,
                     String failingUrl) {
                 Toast.makeText(activity, getString(R.string.webview_error) + description,
