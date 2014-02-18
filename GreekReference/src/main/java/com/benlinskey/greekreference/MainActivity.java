@@ -510,6 +510,9 @@ public class MainActivity extends Activity
      */
     private void clearHistory() {
         getContentResolver().delete(AppDataContract.LexiconHistory.CONTENT_URI, null, null);
+
+        swapInFragments(new LexiconHistoryListFragment(), new LexiconDetailFragment());
+
         Toast toast = Toast.makeText(getApplicationContext(),
                 getString(R.string.toast_clear_history), Toast.LENGTH_SHORT);
         toast.show();
@@ -538,6 +541,11 @@ public class MainActivity extends Activity
                 public void onClick(DialogInterface dialogInterface, int i) {
                     getActivity().getContentResolver()
                             .delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
+
+                    MainActivity activity = (MainActivity) getActivity();
+                    activity.swapInFragments(new LexiconFavoritesListFragment(),
+                            new LexiconDetailFragment());
+
                     Toast toast = Toast.makeText(getActivity(),
                             getString(R.string.toast_clear_lexicon_favorites), Toast.LENGTH_SHORT);
                     toast.show();
@@ -576,6 +584,11 @@ public class MainActivity extends Activity
                 public void onClick(DialogInterface dialogInterface, int i) {
                     getContentResolver().delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, null, 
                             null);
+
+                    MainActivity activity = (MainActivity) getActivity();
+                    activity.swapInFragments(new SyntaxBookmarksListFragment(),
+                            new SyntaxDetailFragment());
+
                     Toast toast = Toast.makeText(getApplicationContext(),
                             getString(R.string.toast_clear_syntax_bookmarks), Toast.LENGTH_SHORT);
                     toast.show();
