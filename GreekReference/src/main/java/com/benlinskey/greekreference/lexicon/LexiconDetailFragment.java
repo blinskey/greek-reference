@@ -16,11 +16,22 @@
 
 package com.benlinskey.greekreference.lexicon;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -40,6 +51,7 @@ import java.io.InputStream;
  */
 public class LexiconDetailFragment extends DetailFragment {
     public static final String TAG = "LexiconDetailFragment";
+    public static final String PERSEUS_TOOL_EXTRA_KEY = "com.benlinskey.greekreference.lexicon.PerseusToolExtraKey";
 
     // Fragment arguments representing strings containing entry information
     public static final String ARG_ENTRY = "entry";
@@ -55,6 +67,8 @@ public class LexiconDetailFragment extends DetailFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
 
         if (getArguments() != null && getArguments().containsKey(ARG_ENTRY)) {
             mBlank = false;
@@ -87,6 +101,22 @@ public class LexiconDetailFragment extends DetailFragment {
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.lexicon_detail_fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater); // TODO: Is this necessary?
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_perseus_tool:
+                displayPerseusTool();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -158,5 +188,57 @@ public class LexiconDetailFragment extends DetailFragment {
             throw new IllegalArgumentException("Invalid lexicon ID: " + id);
         }
         return word;
+    }
+
+    /**
+     * Searches for this word in the Perseus Greek Word Study Tool and displays the resulting
+     * page in a <code>WebView</code>, or displays an error dialog if there is no network
+     * connection.
+     */
+    private void displayPerseusTool() {
+        if (!networkConnectionAvailable()) {
+            displayNoNetworkConnectionError();
+            return;
+        }
+
+        Intent intent = new Intent(getActivity(), PerseusToolActivity.class);
+        String morph = mLexiconEntry.getOrth();
+        intent.putExtra(PERSEUS_TOOL_EXTRA_KEY, morph);
+        startActivity(intent);
+    }
+
+    /**
+     * Checks whether the device is connected to the Internet.
+     * @return  <code>true</code> if the device is connected to the Internet or <code>false</code>
+     *          otherwise
+     */
+    private boolean networkConnectionAvailable() {
+        ConnectivityManager manager = (ConnectivityManager)
+                getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    /**
+     * Displays an error dialog that explains that a network connection is required to use the
+     * selected feature.
+     */
+    private void displayNoNetworkConnectionError() {
+        new NoNetworkConnectionDialogFragment().show(getFragmentManager(), null);
+    }
+
+    private static class NoNetworkConnectionDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.dialog_no_network_connection)
+                   .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialog, int which) {
+                           dismiss();
+                       }
+                   });
+            return builder.create();
+        }
     }
 }

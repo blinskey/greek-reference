@@ -843,6 +843,7 @@ public class MainActivity extends Activity
      * A {@link DialogFragment} containing help text.
      */
     public static class HelpDialogFragment extends DialogFragment {
+        // TODO: Either make these dialog fragment classes private or reuse a single one everywhere.
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

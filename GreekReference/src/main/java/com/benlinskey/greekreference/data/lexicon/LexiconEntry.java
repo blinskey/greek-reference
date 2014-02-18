@@ -128,6 +128,14 @@ public class LexiconEntry {
         this.mOrth = orth;
     }
 
+    public String getWord() {
+        return mWord;
+    }
+
+    public String getOrth() {
+        return mOrth;
+    }
+
     /**
      * Adds a mNote to the mNote string. Note that this does not replace previously added notes.
      *

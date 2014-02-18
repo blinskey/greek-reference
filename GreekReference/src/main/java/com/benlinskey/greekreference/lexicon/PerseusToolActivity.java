@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.lexicon;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -25,34 +25,97 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.benlinskey.greekreference.R;
+import com.benlinskey.greekreference.SettingsActivity;
 
 /**
- * The basic activity from which all detail activities inherit. This class 
- * contains a single {@link DetailFragment} and is only used on phones.
+ * TODO
  */
-public abstract class DetailActivity extends Activity {
-    // TODO: Some code is repeated from MainActivity here. It would be good to
-    // move this to a superclass or otherwise consolidate it somehow.
-
-    private static final String TAG = "DetailActivity";
-    protected CharSequence mTitle; // Used to store the last screen title.
+public class PerseusToolActivity extends Activity {
+    private static final String TAG = "PerseusToolActivity";
+    private static final String URL_START = "http://www.perseus.tufts.edu/hopper/morph?l=";
+    private WebView mWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_PROGRESS);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_detail);
+        setContentView(R.layout.activity_perseus_tool);
 
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
-        // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.title_lexicon));
+        actionBar.setSubtitle(getString(R.string.subtitle_perseus_tool));
+
+        // TODO: Use custom font to display polytonic Greek characters. We can download the HTML
+        // for the page and then inject custom CSS to use Noto Serif, but this custom font won't
+        // be used if the user clicks on a link and loads a new page.
+
+        // Create the URL to retrieve.
+        Intent intent = getIntent();
+        String morph = intent.getStringExtra(LexiconDetailFragment.PERSEUS_TOOL_EXTRA_KEY);
+        String url = URL_START + morph + "#content";
+
+        // Display a progress bar.
+        mWebView = (WebView) findViewById(R.id.perseus_tool_webview);
+        WebSettings settings = mWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        final Activity activity = this;
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                if (100 == progress) {
+                    activity.setProgressBarVisibility(false);
+                }
+                activity.setProgress(progress * 1000);
+            }
+        });
+
+        // Handle errors.
+        mWebView.setWebViewClient(new WebViewClient() {
+            public void onReceivedError(WebView view, int errorCode, String description,
+                    String failingUrl) {
+                Toast.makeText(activity, getString(R.string.webview_error) + description,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Enable pinch-to-zoom.
+        settings.setBuiltInZoomControls(true);
+        settings.setDisplayZoomControls(false);
+
+        mWebView.loadUrl(url);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // Use the back button to navigate through the web history if the user
+        // has clicked any links.
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
+            mWebView.goBack();
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.global_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -64,12 +127,17 @@ public abstract class DetailActivity extends Activity {
             case R.id.action_feedback:
                 sendFeedback();
                 return true;
-               case R.id.action_help:
+            case R.id.action_help:
                 displayHelp();
+                return true;
+            case android.R.id.home:
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // TODO: Move all of the common global options menu code below to a superclass.
 
     /**
      * Launches an email app that the user can use to send feedback about this app.
@@ -82,7 +150,7 @@ public abstract class DetailActivity extends Activity {
     }
 
     /**
-     * A {@link DialogFragment} containing help text.
+     * A {@link android.app.DialogFragment} containing help text.
      */
     public static class HelpDialogFragment extends DialogFragment {
         @Override
@@ -117,9 +185,4 @@ public abstract class DetailActivity extends Activity {
         HelpDialogFragment dialogFragment = new HelpDialogFragment();
         dialogFragment.show(getFragmentManager(), "help");
     }
-
-    /**
-     * Sets the navigation bar navigation mode and title to the appropriate values.
-     */
-    protected abstract void restoreActionBar();
 }

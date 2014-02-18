@@ -363,6 +363,12 @@ limitations under the License.
     <string name="pref_onePane_summary">
         Hide the left pane displaying the list of words in Lexicon Browse mode
     </string>
+    <string name="action_perseus_tool">View on Perseus</string>
+    <string name="subtitle_perseus_tool">Perseus Greek Word Study Tool</string>
+    <string name="webview_error">"Error: "</string>
+    <string name="dialog_no_network_connection">
+        "You must be connected to the Internet to use this feature."
+    </string>
 
 
 </resources>

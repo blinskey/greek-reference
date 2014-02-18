@@ -71,7 +71,7 @@ public class LexiconDetailActivity extends DetailActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.lexicon_detail_menu, menu);
+        getMenuInflater().inflate(R.menu.lexicon_detail_activity_menu, menu);
         setLexiconFavoriteIcon(menu);
         restoreActionBar();
         return super.onCreateOptionsMenu(menu);
