@@ -1,9 +1,0 @@
-@font-face {
-    font-family: NotoSerif;
-    src: url("fonts/NotoSerif-Regular.ttf");
-}
-
-.greek {
-    font-family: NotoSerif, Gentium, Cardo, serif;
-    color: red;
-}
