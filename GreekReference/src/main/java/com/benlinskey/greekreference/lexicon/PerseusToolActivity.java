@@ -43,7 +43,8 @@ import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.SettingsActivity;
 
 /**
- * TODO
+ * Displays the Perseus Greek Word Study Tool page in a <code>WebView</code>. This class uses
+ * CSS injection to properly display Greek characters using the Noto Serif font.
  */
 public class PerseusToolActivity extends Activity {
     private static final String TAG = "PerseusToolActivity";
@@ -82,6 +83,7 @@ public class PerseusToolActivity extends Activity {
 
         // We inject a custom style element into each page here in order to load a local typeface.
         // The WebView security features prevent us from loading a local CSS file instead.
+        // We don't do anything to cache the font here; I don't know if that's possible.
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
