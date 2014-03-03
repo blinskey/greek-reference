@@ -358,18 +358,10 @@ public class MainActivity extends Activity
      * @param word the selected word
      */
     void addHistory(String id, String word) {
-        // Check whether this word is already contained in the list.
-        String[] projection = {AppDataContract.LexiconHistory._ID};
+        // If the word is already in the list, delete it.
         String selection = AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = {id};
-        Cursor cursor = getContentResolver().query(LexiconHistoryProvider.CONTENT_URI, projection, 
-                selection, selectionArgs, null);
-
-        // If word is already in list, delete it.
-        if (cursor.getCount() > 0) {
-            getContentResolver().delete(LexiconHistoryProvider.CONTENT_URI, selection, 
-                    selectionArgs);
-        }
+        getContentResolver().delete(LexiconHistoryProvider.CONTENT_URI, selection, selectionArgs);
 
         // Add word to top of list.
         ContentValues values = new ContentValues();
