@@ -523,7 +523,7 @@ public class MainActivity extends Activity
      * lexicon favorites list. If the user answers in the affirmative, the list is cleared.
      * Otherwise, the dialog is dismissed and no further action is taken.
      */
-    public static class ClearLexiconFavoritesDialogFragment extends DialogFragment {
+    private class ClearLexiconFavoritesDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -531,8 +531,8 @@ public class MainActivity extends Activity
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    getActivity().getContentResolver()
-                            .delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
+                    getContentResolver().delete(AppDataContract.LexiconFavorites.CONTENT_URI, null,
+                            null);
 
                     MainActivity activity = (MainActivity) getActivity();
                     activity.swapInFragments(new LexiconFavoritesListFragment(),
@@ -581,6 +581,11 @@ public class MainActivity extends Activity
                     activity.swapInFragments(new SyntaxBookmarksListFragment(),
                             new SyntaxDetailFragment());
 
+                    // onPrepareOptionsMenu() isn't being called after the fragment transaction for
+                    // some reason, so we need to manually invalidate the menu here.
+                    activity.getFragmentManager().executePendingTransactions();
+                    invalidateOptionsMenu();
+
                     Toast toast = Toast.makeText(getApplicationContext(),
                             getString(R.string.toast_clear_syntax_bookmarks), Toast.LENGTH_SHORT);
                     toast.show();
@@ -589,7 +594,7 @@ public class MainActivity extends Activity
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    // Do nothing.
+                    dialogInterface.dismiss();
                 }
             });
             return builder.create();
