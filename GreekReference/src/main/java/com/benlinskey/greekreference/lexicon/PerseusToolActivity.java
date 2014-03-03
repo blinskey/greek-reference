@@ -43,8 +43,8 @@ import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.SettingsActivity;
 
 /**
- * Displays the Perseus Greek Word Study Tool page in a <code>WebView</code>. This class uses
- * CSS injection to properly display Greek characters using the Noto Serif font.
+ * Displays the Perseus Greek Word Study Tool page in a <code>WebView</code>. This class adds a style
+ * element to each page in order to properly display Greek characters using the Noto Serif font.
  */
 public class PerseusToolActivity extends Activity {
     private static final String TAG = "PerseusToolActivity";
