@@ -1,0 +1,3 @@
+[submodule "db-creator"]
+	path = db-creator
+	url = git@github.com:blinskey/greek-reference-database-creator.git
