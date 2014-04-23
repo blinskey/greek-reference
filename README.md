@@ -12,15 +12,20 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
 
 ## Status
 
-The latest release is version 1.3.1. The corresponding version of the [Greek Reference Database Creator][] is 1.2.0. You can view a changelog for each release on the [Releases page][].
+The latest published release is version 1.3.1. The corresponding version of the [Greek Reference Database Creator][] is 1.2.0.
+
+Version 1.4 is an unpublished release incorporating improvements to the build process.
+
+You can view a changelog for each release on the [Releases page][].
+
 
 ## Building the App
 
-The texts used in this app are contained in a pair of databases called `lexicon.db` and `syntax.db`. These are generated using a simple Java program, the [Greek Reference Database Creator][]. They are then zipped and placed in this project's `assets` directory. The files must be named `lexicon.zip` and `syntax.zip` in order to work with the [SQLiteAssetHelper][Android SQLiteAssetHelper] library used to copy them to the user's device.
+The texts used in this app are contained in a pair of databases called `lexicon.db` and `syntax.db`. These are generated using a simple Java program, the [Greek Reference Database Creator][], which is included as a submodule in this repository. The database files are zipped and placed in this project's `assets` directory. They must be named `lexicon.zip` and `syntax.zip` in order to work with the [SQLiteAssetHelper][Android SQLiteAssetHelper] library used to copy them to the user's device.
 
-Greek Reference uses the new Gradle-based Android build system. To assemble a debug build, you'll need to first copy your `debug.keystore` file from your `.android` directory to the `GreekReference` directory. Then run `./gradlew assembleDebug` from the project root directory, or use the Android Studio GUI to build the project.
+Greek Reference uses the new Gradle-based Android build system. To assemble a debug build, you'll need to first copy your `debug.keystore` file from your `.android` directory to the `GreekReference` directory. Then run `./gradlew assembleDebug` from the project root directory. If you'd like to assemble a signed APK, place your keystore in the root directory along with a `release.properties` file containing your keystore credentials. An example file called `release.properties.sample` is included in the project.
 
-Unfortunately, I'm not able to distribute all of the icons used in this app. [See below](https://github.com/blinskey/greek-reference#icons) for details. For now, you'll need to provide your own properly named icons in order to build the project. I'd like to cobble together a set of placeholder icons at some point in the future to remedy this problem. (See issue #39.)
+Unfortunately, some of the icons used in the published version of this app are not licensed for redistribution and are therefore excluded from the repository. [See below](https://github.com/blinskey/greek-reference#icons) for details. The `GreekReference/src/res/placeholder-icons` directory contains a collection of icons from the free [Android Action Bar Icon Pack][1] that can be used in place of the non-free icons used in the published version of this app. They're just white rectangles, intended to make it easy to build the app, not to be functional. To use them, copy the contents of this directory into the `res`, merging the identically named `drawable` directories. If you'd like to suggest some more suitable freely licensed icons, please feel free to submit a pull request.
 
 ## Contributing
 
@@ -28,7 +33,7 @@ Pull requests are welcome and encouraged. Please read the [contributing guidelin
 
 ## Icons
 
-This project includes icons from <http://www.androidicons.com>. Since they're not licensed for redistribution, the icons are excluded from the repository. If you'd like to build the app yourself, you'll need to provide your own replacement icons. Sorry for the inconvenience.
+This project includes icons from <http://www.androidicons.com>.
 
 The app icon, which is also excluded from the repository, was constructed in part from an icon obtained from the "Boilerplates" icon set available at <http://www.android-icons.com>. The icon set is licensed under the Creative Commons Attribution 3.0 Unported License. See <http://creativecommons.org/licenses/by/3.0/> for details.
 
