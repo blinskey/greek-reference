@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.+'
+        classpath 'com.android.tools.build:gradle:0.9.+'
     }
 }
 apply plugin: 'android'
@@ -14,7 +14,7 @@ repositories {
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.0"
+    buildToolsVersion "19.0.2"
 
     defaultConfig {
         minSdkVersion 14
@@ -31,45 +31,27 @@ android {
             storeFile file("debug.keystore")
         }
 
-        release {
-            def keyStore = 'default'
-            def keyStorePassword = ''
-            def alias = ''
-            def aliasPassword = ''
-            gradle.taskGraph.whenReady { taskGraph ->
-                if (taskGraph.hasTask(':GreekReference:assembleRelease')) {
-                    keyStore = System.console().readLine("\nKey store name: ")
-                    keyStorePassword = System.console().readLine("Key store password: ")
-                    alias = System.console().readLine("Key alias: ")
-                    aliasPassword = System.console().readLine("Key password: ")
-
-                    if (keyStore.size() <= 0) {
-                        throw new InvalidUserDataException("You must enter a key store name.")
-                    } else if (keyStorePassword.size() <= 0) {
-                        throw new InvalidUserDataException("You must enter a key store password.")
-                    } else if (alias.size() <= 0) {
-                        throw new InvalidUserDataException("You must enter a key alias.")
-                    } else if (aliasPassword.size() <= 0) {
-                        throw new InvalidUserDataException("You must enter a key password.")
-                    }
-                }
-
-                storeFile file(keyStore)
-                storePassword keyStorePassword
-                keyAlias alias
-                keyPassword aliasPassword
-            }
-        }
+        release
     }
 
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            runProguard true
+            zipAlign true
         }
     }
+
+    def props = new Properties()
+    props.load(new FileInputStream(rootProject.file("release.properties")))
+    android.signingConfigs.release.storeFile rootProject.file(props.keyStore)
+    android.signingConfigs.release.storePassword props.keyStorePassword
+    android.signingConfigs.release.keyAlias props.keyAlias
+    android.signingConfigs.release.keyPassword props.keyAliasPassword
+
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:18.0.0'
+    compile 'com.android.support:support-v4:19.0.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 }

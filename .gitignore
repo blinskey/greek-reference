@@ -1,12 +1,13 @@
 *.keystore
+release.properties
 
-# Default Android Studio .gitignore files ##
+# Default Android Studio .gitignore files
 .gradle
 /local.properties
 /.idea/workspace.xml
 .DS_Store
 
-## GitHub .gitignore files ##
+## GitHub .gitignore files
 
 # built application files
 *.apk

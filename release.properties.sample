@@ -1,0 +1,4 @@
+keyStore=yourKeystoreName
+keyStorePassword=yourPassword
+keyAlias=yourAlias
+keyAliasPassword=yourAliasPassword
