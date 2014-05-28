@@ -25,7 +25,7 @@ The texts used in this app are contained in a pair of databases called `lexicon.
 
 Greek Reference uses the new Gradle-based Android build system. To assemble a debug build, you'll need to first copy your `debug.keystore` file from your `.android` directory to the `GreekReference` directory. Then run `./gradlew assembleDebug` from the project root directory. If you'd like to assemble a signed APK, place your keystore in the root directory along with a `release.properties` file containing your keystore credentials. An example file called `release.properties.sample` is included in the project.
 
-Unfortunately, some of the icons used in the published version of this app are not licensed for redistribution and are therefore excluded from the repository. [See below](https://github.com/blinskey/greek-reference#icons) for details. The `GreekReference/src/res/placeholder-icons` directory contains a collection of icons from the free [Android Action Bar Icon Pack][1] that can be used in place of the non-free icons used in the published version of this app. They're just white rectangles, intended to make it easy to build the app, not to be functional. To use them, copy the contents of this directory into the `res`, merging the identically named `drawable` directories. If you'd like to suggest some more suitable freely licensed icons, please feel free to submit a pull request.
+Unfortunately, some of the icons used in the published version of this app are not licensed for redistribution and are therefore excluded from the repository. [See below](https://github.com/blinskey/greek-reference#icons) for details. The `GreekReference/src/res/placeholder-icons` directory contains a collection of icons from the free [Android Action Bar Icon Pack][] that can be used in place of the non-free icons used in the published version of this app. They're just white rectangles, intended to make it easy to build the app, not to be functional. To use them, copy the contents of this directory into `res`, merging the identically named `drawable` directories. If you'd like to suggest some more suitable freely licensed icons, please feel free to submit a pull request.
 
 ## Contributing
 
@@ -72,3 +72,4 @@ This project is licensed under the [Apache License, version 2.0][Apache], with t
 [Google Play]: https://play.google.com/store/apps/details?id=com.benlinskey.greekreference
 [Releases page]: https://github.com/blinskey/greek-reference/releases
 [contributing]: CONTRIBUTING.md
+[Android Action Bar Icon Pack]: http://developer.android.com/design/downloads/index.html
