@@ -57,11 +57,11 @@ Sorry, we're limited to texts available from the Perseus Digital Library. If you
 
 The app was originally called Greek Reference but was later renamed to Ancient Greek Lexicon & Syntax in order to make it easier for users to find the app. At the moment, the original name still persists in this repository's name, the app icon caption, and a few other places.
 
-**What should I do if I've spotted an error in the text?**
+**What should I do if I've spotted an error in the lexicon?**
 
 Open an issue here or send an email to <greekreference@benlinskey.com>. We'll fix the text and pass the info on to Perseus.
 
-**What should I do if I encounter a bug in the program?**
+**What should I do if I encounter a bug?**
 
 If Android gives you the option to submit a crash report, please do so. You can also open an issue here or email <greekreference@benlinskey.com> with a description of the problem.
 
@@ -71,7 +71,7 @@ Feel free to open an issue or send an email to <greekreference@benlinskey.com>. 
 
 ## Press
 
-- [The *New York Times Book Review*, "Gateways to the Classical World"](http://www.nytimes.com/2014/08/24/books/review/gateways-to-the-classical-world.html)
+- [The *New York Times Sunday Book Review*, "Gateways to the Classical World"](http://www.nytimes.com/2014/08/24/books/review/gateways-to-the-classical-world.html)
 
 ## Icons
 
