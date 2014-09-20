@@ -69,6 +69,10 @@ If Android gives you the option to submit a crash report, please do so. You can 
 
 Feel free to open an issue or send an email to <greekreference@benlinskey.com>. You can also check the [Issues](https://github.com/blinskey/greek-reference/issues) page for a list of features and bugfixes currently on our to-do list.
 
+**Can you make a Latin version of the app?**
+
+Several users have requested a Latin version. While I'm not planning to make such an app myself, I'd be happy to help anyone who wants to do so. Feel free to fork the project and to get in touch with me if you'd like to discuss the app's design.
+
 ## Press
 
 - [The *New York Times Sunday Book Review*, "Gateways to the Classical World"](http://www.nytimes.com/2014/08/24/books/review/gateways-to-the-classical-world.html)
