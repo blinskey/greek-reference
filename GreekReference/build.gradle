@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.13.2'
     }
 }
 apply plugin: 'android'
@@ -13,12 +13,12 @@ repositories {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.0.2"
+    compileSdkVersion 21
+    buildToolsVersion "21"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 21
     }
 
     compileOptions {
@@ -53,6 +53,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.0'
+    compile 'com.android.support:support-v4:21.0.0'
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 }

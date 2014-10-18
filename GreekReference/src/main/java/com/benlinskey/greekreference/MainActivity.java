@@ -523,7 +523,7 @@ public class MainActivity extends Activity
      * lexicon favorites list. If the user answers in the affirmative, the list is cleared.
      * Otherwise, the dialog is dismissed and no further action is taken.
      */
-    private class ClearLexiconFavoritesDialogFragment extends DialogFragment {
+    public static class ClearLexiconFavoritesDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -531,7 +531,7 @@ public class MainActivity extends Activity
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    getContentResolver().delete(AppDataContract.LexiconFavorites.CONTENT_URI, null,
+                    getActivity().getContentResolver().delete(AppDataContract.LexiconFavorites.CONTENT_URI, null,
                             null);
 
                     MainActivity activity = (MainActivity) getActivity();
@@ -566,7 +566,7 @@ public class MainActivity extends Activity
      * syntax bookmarks list. If the user answers in the affirmative, the list is cleared.
      * Otherwise, the dialog is dismissed and no further action is taken.
      */
-    private class ClearSyntaxBookmarksDialogFragment extends DialogFragment {
+    public static class ClearSyntaxBookmarksDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -574,7 +574,7 @@ public class MainActivity extends Activity
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    getContentResolver().delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, null, 
+                    getActivity().getContentResolver().delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, null,
                             null);
 
                     MainActivity activity = (MainActivity) getActivity();
@@ -584,9 +584,9 @@ public class MainActivity extends Activity
                     // onPrepareOptionsMenu() isn't being called after the fragment transaction for
                     // some reason, so we need to manually invalidate the menu here.
                     activity.getFragmentManager().executePendingTransactions();
-                    invalidateOptionsMenu();
+                    activity.invalidateOptionsMenu();
 
-                    Toast toast = Toast.makeText(getApplicationContext(),
+                    Toast toast = Toast.makeText(activity.getApplicationContext(),
                             getString(R.string.toast_clear_syntax_bookmarks), Toast.LENGTH_SHORT);
                     toast.show();
                 }
