@@ -24,7 +24,7 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
 
 ## Status
 
-The latest release is version 1.4.2. The corresponding version of the [Greek Reference Database Creator][] is 1.2.0.
+The latest release is version 1.5.0. The corresponding version of the [Greek Reference Database Creator][] is 1.2.0.
 
 You can view a changelog for each release on the [Releases page][].
 
