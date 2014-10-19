@@ -1,5 +1,6 @@
 *.keystore
 release.properties
+build
 
 # Default Android Studio .gitignore files
 .gradle
