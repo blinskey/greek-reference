@@ -16,27 +16,25 @@
   ~ limitations under the License.
   -->
 
-<menu 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_add_bookmark"
         android:title="@string/action_add_bookmark"
         android:icon="@drawable/ic_bookmark_light"
-        app:showAsAction="ifRoom"/>
+        android:showAsAction="ifRoom"/>
     <item android:id="@+id/action_remove_bookmark"
           android:title="@string/action_remove_bookmark"
           android:icon="@drawable/ic_bookmark_color"
-          app:showAsAction="ifRoom"/>
+          android:showAsAction="ifRoom"/>
     <item android:id="@+id/action_clear_bookmarks"
         android:title="@string/action_clear_bookmarks"
-        app:showAsAction="never"/>
+        android:showAsAction="never"/>
     <item android:id="@+id/action_settings"
         android:title="@string/settings"
-        app:showAsAction="never"/>
+        android:showAsAction="never"/>
     <item android:id="@+id/action_feedback"
         android:title="@string/action_feedback"
-        app:showAsAction="never"/>
+        android:showAsAction="never"/>
     <item android:id="@+id/action_help"
         android:title="@string/action_help"
-        app:showAsAction="never"/>
+        android:showAsAction="never"/>
 </menu>
