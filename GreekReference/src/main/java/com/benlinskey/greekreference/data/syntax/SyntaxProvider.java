@@ -67,7 +67,7 @@ public class SyntaxProvider extends ContentProvider {
         Log.w(TAG, "In SyntaxProvider.query()");
         switch (sMatcher.match(uri)) {
             case SECTIONS:
-                return searchSections(uri, projection, selection, selectionArgs, sortOrder);
+                return searchSections(uri, projection, selection, selectionArgs);
             case SECTION_ID:
                 return getSection(uri);
             default:
@@ -81,11 +81,9 @@ public class SyntaxProvider extends ContentProvider {
      * @param projection        the columns to select
      * @param selection         the parameterized search criteria
      * @param selectionArgs     the search criteria arguments
-     * @param sortOrder         the order in which to sort the results
      * @return a <code>Cursor</code> containing the results of the query
      */
-    private Cursor searchSections(Uri uri, String[] projection, String selection, String[] selectionArgs,
-            String sortOrder) {
+    private Cursor searchSections(Uri uri, String[] projection, String selection, String[] selectionArgs) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(SyntaxContract.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,

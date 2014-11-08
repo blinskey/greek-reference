@@ -207,7 +207,7 @@ public class MainActivity extends Activity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String fragmentName, int id) {
+    public void onItemSelected(String fragmentName) {
         switch (fragmentName) {
             case LexiconBrowseListFragment.NAME:
             case LexiconFavoritesListFragment.NAME:
@@ -280,7 +280,7 @@ public class MainActivity extends Activity
             throw new IllegalStateException("Failed to retrieve syntax section");
         }
 
-        displaySyntaxSection(id, section, xml);
+        displaySyntaxSection(section, xml);
     }
 
     /**
@@ -326,11 +326,10 @@ public class MainActivity extends Activity
     /**
      * Displays the specified Overview of Greek Syntax section in a
      * {@link SyntaxDetailFragment}.
-     * @param id      the syntax database ID of the selected section
      * @param section the selected section's title
      * @param xml     the selected section's XML
      */
-    void displaySyntaxSection(final String id, String section, String xml) {
+    void displaySyntaxSection(String section, String xml) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putString(SyntaxDetailFragment.ARG_XML, xml);

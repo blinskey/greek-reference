@@ -24,6 +24,7 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.DetailActivity;
 import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;

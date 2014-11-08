@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 
@@ -55,7 +56,7 @@ public class LexiconHistoryListFragment extends LexiconListFragment
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String fragmentName, int id) {
+        public void onItemSelected(String fragmentName) {
         }
     };
 
@@ -133,7 +134,7 @@ public class LexiconHistoryListFragment extends LexiconListFragment
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(NAME, lexiconHistoryId); // Database IDs start at 1.
+        mCallbacks.onItemSelected(NAME); // Database IDs start at 1.
     }
 
     @Override

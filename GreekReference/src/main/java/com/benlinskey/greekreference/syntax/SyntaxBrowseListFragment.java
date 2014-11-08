@@ -64,7 +64,7 @@ public class SyntaxBrowseListFragment extends SyntaxListFragment
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String fragmentName, int id) {
+        public void onItemSelected(String fragmentName) {
         }
     };
 
@@ -139,7 +139,7 @@ public class SyntaxBrowseListFragment extends SyntaxListFragment
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
         setSelectedSyntaxItemId(position);
-        mCallbacks.onItemSelected(NAME, position);
+        mCallbacks.onItemSelected(NAME);
     }
 
     @Override

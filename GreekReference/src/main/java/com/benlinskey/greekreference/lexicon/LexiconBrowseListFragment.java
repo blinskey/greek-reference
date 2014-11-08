@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
@@ -61,7 +62,7 @@ public class LexiconBrowseListFragment extends LexiconListFragment
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String fragmentName, int id) {
+        public void onItemSelected(String fragmentName) {
         }
     };
 
@@ -137,7 +138,7 @@ public class LexiconBrowseListFragment extends LexiconListFragment
         Cursor cursor = (Cursor) mAdapter.getItem(position);
         int lexiconId = cursor.getInt(0);
         setSelectedLexiconItemId(lexiconId);
-        mCallbacks.onItemSelected(NAME, lexiconId); // Positions are off by one from database ID.
+        mCallbacks.onItemSelected(NAME); // Positions are off by one from database ID.
     }
 
     @Override
@@ -154,6 +155,6 @@ public class LexiconBrowseListFragment extends LexiconListFragment
         int position = id - 1;
         setActivatedPosition(position);
         getListView().setSelection(position);
-        mCallbacks.onItemSelected(NAME, position);
+        mCallbacks.onItemSelected(NAME);
     }
 }

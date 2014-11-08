@@ -132,6 +132,6 @@ public abstract class BaseListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String fragmentName, int id);
+        public void onItemSelected(String fragmentName);
     }
 }

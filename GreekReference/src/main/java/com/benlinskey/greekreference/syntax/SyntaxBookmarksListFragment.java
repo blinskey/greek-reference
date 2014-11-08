@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
@@ -68,7 +69,7 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String fragmentName, int id) {
+        public void onItemSelected(String fragmentName) {
         }
     };
 
@@ -146,7 +147,7 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment
         Cursor cursor = (Cursor) mAdapter.getItem(position);
         int syntaxBookmarksId = cursor.getInt(0);
         setSelectedSyntaxItemId(syntaxBookmarksId);
-        mCallbacks.onItemSelected(NAME, syntaxBookmarksId);
+        mCallbacks.onItemSelected(NAME);
     }
 
     @Override

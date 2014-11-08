@@ -37,6 +37,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.DetailFragment;
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;

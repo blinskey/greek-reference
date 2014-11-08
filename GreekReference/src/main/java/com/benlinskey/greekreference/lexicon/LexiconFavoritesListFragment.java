@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider;
 
@@ -71,7 +72,7 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String fragmentName, int id) {
+        public void onItemSelected(String fragmentName) {
         }
     };
 
@@ -148,7 +149,7 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
         Cursor cursor = (Cursor) mAdapter.getItem(position);
         int lexiconFavoritesId = cursor.getInt(0);
         setSelectedLexiconItemId(lexiconFavoritesId);
-        mCallbacks.onItemSelected(NAME, lexiconFavoritesId);
+        mCallbacks.onItemSelected(NAME);
     }
 
     @Override
