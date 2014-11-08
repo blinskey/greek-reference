@@ -72,7 +72,6 @@ public class SyntaxXmlParser {
     private void readXml(XmlPullParser parser) throws XmlPullParserException, IOException {
         while(parser.next() != XmlPullParser.END_TAG) {
             String name = parser.getName();
-            Log.w(TAG +": tagname", name);
 
             //noinspection StatementWithEmptyBody
             switch (name) {
@@ -333,7 +332,6 @@ public class SyntaxXmlParser {
     }
 
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
-        Log.w(TAG, "In skip().");
         if (parser.getEventType() != XmlPullParser.START_TAG) {
             throw new IllegalStateException();
         }
