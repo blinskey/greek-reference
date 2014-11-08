@@ -78,18 +78,25 @@ public class LexiconXmlParser {
             }
 
             String name = parser.getName();
-            if (name.equals("entry")) {
-                entry = readEntry(parser);
-            } else if (name.equals("form")) {
-                readForm(parser, entry);
-            } else if (name.equals("note")){
-                readNote(parser, entry);
-            } else if (name.equals("etym")) {
-                readEtym(parser, entry);
-            } else if (name.equals("sense")) {
-                readSense(parser, entry);
-            } else {
-                skip(parser);
+            switch (name) {
+                case "entry":
+                    entry = readEntry(parser);
+                    break;
+                case "form":
+                    readForm(parser, entry);
+                    break;
+                case "note":
+                    readNote(parser, entry);
+                    break;
+                case "etym":
+                    readEtym(parser, entry);
+                    break;
+                case "sense":
+                    readSense(parser, entry);
+                    break;
+                default:
+                    skip(parser);
+                    break;
             }
         }
 

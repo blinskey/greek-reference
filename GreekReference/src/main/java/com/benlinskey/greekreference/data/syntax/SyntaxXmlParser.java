@@ -75,18 +75,24 @@ public class SyntaxXmlParser {
             Log.w(TAG +": tagname", name);
 
             //noinspection StatementWithEmptyBody
-            if (name.equals("section")) {
-                // This is the root element. Move to the next tag.
-            } else if (name.equals("head")) {
-                readHead(parser);
-            } else if (name.equals("p")) {
-                mText += "<p>";
-                readBody(parser);
-                mText += "</p>";
-            } else if (name.equals("listBibl")) {
-                readListBibl(parser);
-            } else {
-                skip(parser);
+            switch (name) {
+                case "section":
+                    // This is the root element. Move to the next tag.
+                    break;
+                case "head":
+                    readHead(parser);
+                    break;
+                case "p":
+                    mText += "<p>";
+                    readBody(parser);
+                    mText += "</p>";
+                    break;
+                case "listBibl":
+                    readListBibl(parser);
+                    break;
+                default:
+                    skip(parser);
+                    break;
             }
         }
 
