@@ -211,9 +211,8 @@ public class LexiconXmlParser {
                 text = new SpannableString(temp);
             } else if (XmlPullParser.START_TAG == parser.getEventType()) {
                 String name = parser.getName();
-                if (name.equals("trans")) {
-                    // Check child tags.
-                } else if (name.equals("tr") && parser.getText() != null) {
+                // NOTE: If name is "trans," check child tags.
+                if (name.equals("tr") && parser.getText() != null) {
                     parser.next();
 
                     // Create italicized string.
