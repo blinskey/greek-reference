@@ -29,7 +29,7 @@
           android:icon="@android:drawable/ic_menu_search"
           android:title="@string/search"
           android:showAsAction="ifRoom|collapseActionView"
-          android:actionViewClass="android.widget.SearchView" />"
+          android:actionViewClass="android.widget.SearchView" />
     <item android:id="@+id/action_clear_history"
           android:title="@string/action_clear_history"
           android:showAsAction="never"
