@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.lexicon;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -51,6 +52,7 @@ public class PerseusToolActivity extends Activity {
     private static final String URL_START = "http://www.perseus.tufts.edu/hopper/morph?l=";
     private WebView mWebView;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_PROGRESS);
