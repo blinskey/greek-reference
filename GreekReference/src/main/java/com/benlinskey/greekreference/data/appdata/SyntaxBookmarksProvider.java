@@ -31,7 +31,6 @@ import android.provider.BaseColumns;
  * A ContentProvider for the syntax bookmarks table.
  */
 public class SyntaxBookmarksProvider extends ContentProvider {
-    private static final String TAG = "SyntaxBookmarksProvider";
     public static String AUTHORITY
             = "com.benlinskey.greekreference.data.appdata.SyntaxBookmarksProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/appData");
@@ -39,7 +38,6 @@ public class SyntaxBookmarksProvider extends ContentProvider {
             + "/vnd.benlinskey.greekreference";
     public static final String CONTENT_WORD_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "vnd.benlinskey.greekreference";
-    public static final String LIMIT = "50"; // Limit on number of results returned by query
 
     private SQLiteDatabase mDatabase;
 
