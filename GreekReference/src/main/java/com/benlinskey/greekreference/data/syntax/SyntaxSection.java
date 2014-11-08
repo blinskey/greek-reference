@@ -39,7 +39,7 @@ public class SyntaxSection {
      * Class constructor.
      */
     public SyntaxSection() {
-        mList = new LinkedList<String>();
+        mList = new LinkedList<>();
     }
 
     /**

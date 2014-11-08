@@ -60,7 +60,7 @@ public class GreekTextView extends TextView {
 
     /** An <code>LruCache</code> for previously loaded typefaces. */
     private static LruCache<String, Typeface> sTypefaceCache =
-            new LruCache<String, Typeface>(12);
+            new LruCache<>(12);
 
     /**
      * Class constructor.

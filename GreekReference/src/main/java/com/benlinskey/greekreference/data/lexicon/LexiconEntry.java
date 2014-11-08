@@ -44,7 +44,7 @@ public class LexiconEntry {
      * Class constructor.
      */
     public LexiconEntry() {
-        mSenseList = new ArrayList<Sense>();
+        mSenseList = new ArrayList<>();
     }
 
     /**
