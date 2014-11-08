@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.benlinskey.greekreference.navigationdrawer.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.benlinskey.greekreference.navigationdrawer.CheckableLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -14,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp"
+            tools:ignore="ContentDescription"/>
         <TextView android:id="@+id/navigation_drawer_row_text"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
