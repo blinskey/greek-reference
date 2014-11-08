@@ -26,7 +26,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 /**
  * A ContentProvider for the syntax bookmarks table.
@@ -87,7 +86,6 @@ public class SyntaxBookmarksProvider extends ContentProvider {
      */
     private Cursor searchSections(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
-        Log.w(TAG, "searchSections(" + uri + ", " + projection + ", " + selection + ", " + selectionArgs);
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(AppDataContract.SyntaxBookmarks.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
