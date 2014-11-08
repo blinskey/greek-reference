@@ -90,9 +90,6 @@ public class LexiconDetailActivity extends DetailActivity {
      * @param menu the <code>Menu</code> containing the Favorite icon
      */
     private void setLexiconFavoriteIcon(Menu menu) {
-        LexiconListFragment fragment = (LexiconListFragment) getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-
         MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
         MenuItem removeFavorite = menu.findItem(R.id.action_remove_favorite);
 

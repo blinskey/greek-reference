@@ -88,9 +88,6 @@ public class SyntaxDetailActivity extends DetailActivity {
     }
 
     private void setSyntaxBookmarkIcon(Menu menu) {
-        SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-
         MenuItem addBookmark = menu.findItem(R.id.action_add_bookmark);
         MenuItem removeBookmark = menu.findItem(R.id.action_remove_bookmark);
 

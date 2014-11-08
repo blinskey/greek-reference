@@ -107,7 +107,7 @@ public class SyntaxDetailFragment extends DetailFragment {
         String[] selectionArgs = {Integer.toString(id)};
         Cursor cursor = getActivity().getContentResolver()
                 .query(SyntaxContract.CONTENT_URI, projection, selection, selectionArgs, null);
-        String section = null;
+        String section;
         if (cursor.moveToFirst()) {
             section = cursor.getString(0);
         } else {

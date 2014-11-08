@@ -225,8 +225,6 @@ public class LexiconXmlParser {
                     text = new SpannableString(temp);
                 } else if (name.equals("foreign")) {
                     // Greek words are in beta code.
-                    String lang = parser.getAttributeValue(null, "lang");
-
                     parser.next();
 
                     String foreign = parser.getText();

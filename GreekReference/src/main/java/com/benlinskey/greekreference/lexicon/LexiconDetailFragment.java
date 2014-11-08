@@ -203,7 +203,7 @@ public class LexiconDetailFragment extends DetailFragment {
         String[] selectionArgs = {Integer.toString(id)};
         Cursor cursor = getActivity().getContentResolver()
                 .query(LexiconContract.CONTENT_URI, projection, selection, selectionArgs, null);
-        String word = null;
+        String word;
         if (cursor.moveToFirst()) {
             word = cursor.getString(0);
         } else {

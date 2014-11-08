@@ -242,8 +242,8 @@ public class MainActivity extends Activity
         Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI, columns, selection, 
                 selectionArgs, null);
 
-        String entry = null;
-        String word = null;
+        String entry;
+        String word;
         if (cursor.moveToFirst()) {
             entry = cursor.getString(0);
             word = cursor.getString(1);
@@ -270,8 +270,8 @@ public class MainActivity extends Activity
         Cursor cursor = getContentResolver().query(SyntaxContract.CONTENT_URI, columns, selection, 
                 selectionArgs, null);
 
-        String xml = null;
-        String section = null;
+        String xml;
+        String section;
         if (cursor.moveToFirst()) {
             xml = cursor.getString(0);
             section = cursor.getString(1);
@@ -612,7 +612,7 @@ public class MainActivity extends Activity
         // Get data.
         Cursor cursor = getContentResolver().query(data, null, null, null, null);
         cursor.moveToFirst();
-        String id = "";
+        String id;
         try {
             int idIndex = cursor.getColumnIndexOrThrow(LexiconContract._ID);
             id = cursor.getString(idIndex);

@@ -42,7 +42,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = null;
+        View view;
         NavigationDrawerItem item = this.getItem(position);
         if (item.isRow()) {
             view = getRowView(convertView, parent, item, position);
@@ -54,7 +54,6 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
 
     public View getRowView(View convertView, ViewGroup parentView, NavigationDrawerItem item,
             int position) {
-        NavigationDrawerRow row = (NavigationDrawerRow) item;
         NavigationDrawerRowHolder navigationDrawerRowHolder = null;
 
         if (null == convertView) {
