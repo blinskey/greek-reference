@@ -45,7 +45,7 @@ Pull requests are welcome and encouraged. Please read the [contributing guidelin
 
 **Can you add the full LSJ lexicon?**
 
-The app only includes texts that the Perseus Digital Library has released under open source licenses. The full LSJ isn't available under such a license, so we're limited to the LSJ. You can read more about this topic on the Perseus blog's ["Notes on the status of LSJ and Lewis and Short"](http://sites.tufts.edu/perseusupdates/other-information/notes-on-the-status-of-lsj-and-lewis-and-short/) page. 
+The app only includes texts that the Perseus Digital Library has released under open source licenses. The full LSJ isn't available under such a license, so we're limited to the Middle Liddell. You can read more about this topic on the Perseus blog's ["Notes on the status of LSJ and Lewis and Short"](http://sites.tufts.edu/perseusupdates/other-information/notes-on-the-status-of-lsj-and-lewis-and-short/) page. 
 
 If you're using the app on a device connected to the Internet, you can use the View on Perseus option in the action bar menu to open the Perseus Greek Word Study Tool page for a word. The page will be displayed with properly rendered Greek characters and will contain links to the full LSJ entry.
 
