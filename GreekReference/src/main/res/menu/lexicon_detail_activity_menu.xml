@@ -16,28 +16,31 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>
     <item android:id="@+id/action_add_favorite"
           android:icon="@drawable/ic_star_light"
           android:title="@string/action_add_favorite"
-          android:showAsAction="ifRoom"/>
+          app:showAsAction="ifRoom"/>
     <item android:id="@+id/action_remove_favorite"
           android:icon="@drawable/ic_star_color"
           android:title="@string/action_remove_favorite"
-          android:showAsAction="always"/>
+          app:showAsAction="always"/>
     <item android:id="@+id/action_settings"
         android:title="@string/settings"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:menuCategory="secondary"
         android:orderInCategory="2"/>
     <item android:id="@+id/action_feedback"
         android:title="@string/action_feedback"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:menuCategory="secondary"
         android:orderInCategory="3"/>
     <item android:id="@+id/action_help"
         android:title="@string/action_help"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:menuCategory="secondary"
         android:orderInCategory="4"/>
 </menu>
