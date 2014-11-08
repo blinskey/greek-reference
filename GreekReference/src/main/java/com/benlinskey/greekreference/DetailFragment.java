@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -72,6 +73,7 @@ public abstract class DetailFragment extends Fragment {
     // repeatedly taps an icon that displays a toast.
     protected Toast mToast;
 
+    @SuppressLint("ShowToast")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
