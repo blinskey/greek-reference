@@ -37,7 +37,6 @@ public final class LexiconContract implements BaseColumns {
 
     /**
      * Empty private constructor to prevent instantiation.
-     * @return [description]
      */
     private LexiconContract() {}
 }
