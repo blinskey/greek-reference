@@ -11,7 +11,7 @@
     <string name="nav_drawer_heading_grammar">GRAMMAR</string>
     <string name="nav_drawer_row_browse_grammar">Browse</string>
     <string name="nav_drawer_row_bookmarks">Bookmarks</string>
-    <string name="database_progress_dialog">Installing databases...</string>
+    <string name="database_progress_dialog">Installing databases&#8230;</string>
     <string name="search_hint">Search lexicon</string>
     <string name="search_description">Lexicon entries</string>
     <string name="search">Search</string>
