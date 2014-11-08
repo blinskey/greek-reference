@@ -68,9 +68,7 @@ public class SyntaxDetailFragment extends DetailFragment {
             InputStream in = new ByteArrayInputStream(xml.getBytes());
             try {
                 mSection = parser.parse(in);
-            } catch (XmlPullParserException e) {
-                Log.e(TAG, Log.getStackTraceString(e));
-            } catch (IOException e) {
+            } catch (XmlPullParserException | IOException e) {
                 Log.e(TAG, Log.getStackTraceString(e));
             }
         } else {
