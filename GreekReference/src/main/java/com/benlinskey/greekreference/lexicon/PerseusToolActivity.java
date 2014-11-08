@@ -41,7 +41,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.SettingsActivity;
 
 /**

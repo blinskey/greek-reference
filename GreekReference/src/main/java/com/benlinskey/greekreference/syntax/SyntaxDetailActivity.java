@@ -27,7 +27,6 @@ import android.view.MenuItem;
 
 import com.benlinskey.greekreference.DetailActivity;
 import com.benlinskey.greekreference.MainActivity;
-import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
