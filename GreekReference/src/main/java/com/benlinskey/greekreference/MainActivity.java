@@ -390,6 +390,7 @@ public class MainActivity extends Activity
      */
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
+        assert actionBar != null;
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
         actionBar.setSubtitle(mSubtitle);

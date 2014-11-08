@@ -60,6 +60,7 @@ public class PerseusToolActivity extends Activity {
         setContentView(R.layout.activity_perseus_tool);
 
         ActionBar actionBar = getActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.title_lexicon));
         actionBar.setSubtitle(getString(R.string.subtitle_perseus_tool));

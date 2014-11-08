@@ -52,6 +52,7 @@ public abstract class DetailActivity extends Activity {
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
