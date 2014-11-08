@@ -33,6 +33,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -160,7 +161,7 @@ public class MainActivity extends Activity
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_TITLE, (String) mTitle);
         outState.putString(KEY_SUBTITLE, (String) mSubtitle);
@@ -168,7 +169,7 @@ public class MainActivity extends Activity
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mTitle = savedInstanceState.getString(KEY_TITLE);
         mSubtitle = savedInstanceState.getString(KEY_SUBTITLE);

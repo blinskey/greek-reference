@@ -18,6 +18,7 @@ package com.benlinskey.greekreference;
 
 import android.content.Context;
 import android.preference.DialogPreference;
+import android.support.annotation.NonNull;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
@@ -39,7 +40,7 @@ public class AboutPreference extends DialogPreference {
     }
 
     @Override
-    protected void onBindDialogView(View view) {
+    protected void onBindDialogView(@NonNull View view) {
         super.onBindDialogView(view);
 
         TextView textView = (TextView) view.findViewById(R.id.aboutDialogTextView);
