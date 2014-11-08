@@ -58,11 +58,7 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
 
     @Override
     public void toggle() {
-        if (mIsChecked) {
-            mIsChecked = false;
-        } else {
-            mIsChecked = true;
-        }
+        mIsChecked = !mIsChecked;
         updateColor();
     }
 
