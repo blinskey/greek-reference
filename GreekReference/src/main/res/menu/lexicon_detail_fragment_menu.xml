@@ -16,10 +16,11 @@
   ~ limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_perseus_tool"
         android:title="@string/action_perseus_tool"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:menuCategory="secondary"
         android:orderInCategory="1"/>
 </menu>
