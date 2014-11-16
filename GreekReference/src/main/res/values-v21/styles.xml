@@ -3,7 +3,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#212121</item>
+        <item name="colorAccent">#2196F3</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearanceDark</item>
     </style>
 
     <!-- Dividers for navigation drawer list view. -->
@@ -17,6 +19,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="TextAppearanceDark" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/primary_text_default_material_light</item>
     </style>
 
 </resources>

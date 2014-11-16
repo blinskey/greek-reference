@@ -29,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="25dp"
-            style="@android:style/TextAppearance.Medium"/>
+            style="@android:style/TextAppearance.Medium"
+            android:textColor="@color/primary_text_default_material_light"/>
         <!-- NOTE: Putting a WebView in a ScrollView shouldn't be a problem here if we can ensure
              that the WebView will always be properly sized. -->
         <WebView

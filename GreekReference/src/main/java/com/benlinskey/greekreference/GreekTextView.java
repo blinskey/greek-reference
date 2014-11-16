@@ -83,6 +83,10 @@ public class GreekTextView extends TextView {
             }
             setTypeface(typeface);
 
+            int textColor = getResources().getColor(
+                android.support.v7.appcompat.R.color.primary_text_default_material_light);
+            setTextColor(textColor);
+
             // Note: This flag is required for proper typeface rendering
             setPaintFlags(getPaintFlags() | Paint.SUBPIXEL_TEXT_FLAG);
         }

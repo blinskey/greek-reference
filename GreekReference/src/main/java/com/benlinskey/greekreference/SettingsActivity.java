@@ -74,6 +74,7 @@ public class SettingsActivity extends ActionBarActivity {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
+
             Preference textSizePref = findPreference(getString(R.string.pref_textSize_key));
             textSizePref.setSummary("%s"); // Set summary to currently selected option.
 

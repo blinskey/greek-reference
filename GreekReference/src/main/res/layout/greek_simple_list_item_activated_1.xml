@@ -43,4 +43,5 @@
     android:paddingRight="?android:attr/listPreferredItemPaddingRight"
     android:background="?android:attr/activatedBackgroundIndicator"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:textColor="@color/primary_text_default_material_light"
 />
