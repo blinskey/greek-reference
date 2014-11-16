@@ -16,8 +16,6 @@
 
 package com.benlinskey.greekreference;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -26,6 +24,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
@@ -36,7 +36,7 @@ import android.widget.TextView;
  * The basic activity from which all detail activities inherit. This class 
  * contains a single {@link DetailFragment} and is only used on phones.
  */
-public abstract class DetailActivity extends Activity {
+public abstract class DetailActivity extends ActionBarActivity {
     // TODO: Some code is repeated from MainActivity here. It would be good to
     // move this to a superclass or otherwise consolidate it somehow.
 
@@ -51,7 +51,7 @@ public abstract class DetailActivity extends Activity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         // Show the Up button in the action bar.
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
     }

@@ -16,8 +16,6 @@
 
 package com.benlinskey.greekreference;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -34,7 +32,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -42,7 +44,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +70,7 @@ import com.benlinskey.greekreference.syntax.SyntaxListFragment;
  * layout containing a {@link BaseListFragment} and a {@link DetailFragment}.
  * On phones, it displays only a <code>BaseListFragment</code>.
  */
-public class MainActivity extends Activity 
+public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, 
                    BaseListFragment.Callbacks {
     private static final String TAG = "MainActivity";
@@ -110,7 +111,7 @@ public class MainActivity extends Activity
                 .findFragmentById(R.id.navigation_drawer);
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, 
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         if (findViewById(R.id.item_detail_container) != null) {
@@ -183,8 +184,8 @@ public class MainActivity extends Activity
     }
 
     /**
-     * Processes an <code>Intent</code> if it can be handled by this <code>Activity</code> or 
-     * throws an exception if this <code>Activity</code> cannot handle the specified 
+     * Processes an <code>Intent</code> if it can be handled by this <code>Activity</code> or
+     * throws an exception if this <code>Activity</code> cannot handle the specified
      * <code>Intent</code>.
      * @param intent    the <code>Intent</code> to handle
      */
@@ -235,11 +236,11 @@ public class MainActivity extends Activity
                 .findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedLexiconId());
 
-        String[] columns = new String[] {LexiconContract.COLUMN_ENTRY, 
+        String[] columns = new String[] {LexiconContract.COLUMN_ENTRY,
                 LexiconContract.COLUMN_GREEK_FULL_WORD};
         String selection = LexiconContract._ID + " = ?";
         String[] selectionArgs = new String[] {id};
-        Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI, columns, selection, 
+        Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI, columns, selection,
                 selectionArgs, null);
 
         String entry;
@@ -263,11 +264,11 @@ public class MainActivity extends Activity
                 .findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedSyntaxId());
 
-        String[] columns = new String[] {SyntaxContract.COLUMN_NAME_XML, 
+        String[] columns = new String[] {SyntaxContract.COLUMN_NAME_XML,
                 SyntaxContract.COLUMN_NAME_SECTION};
         String selection = SyntaxContract._ID + " = ?";
         String[] selectionArgs = new String[] {id};
-        Cursor cursor = getContentResolver().query(SyntaxContract.CONTENT_URI, columns, selection, 
+        Cursor cursor = getContentResolver().query(SyntaxContract.CONTENT_URI, columns, selection,
                 selectionArgs, null);
 
         String xml;
@@ -352,7 +353,7 @@ public class MainActivity extends Activity
     }
 
     /**
-     * Adds the specified word to the lexicon history list. If the word is already contained in the 
+     * Adds the specified word to the lexicon history list. If the word is already contained in the
      * list, it will be moved to the top of the list.
      * @param id   the lexicon database ID of the selected word
      * @param word the selected word
@@ -373,9 +374,9 @@ public class MainActivity extends Activity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         /*
-         * We consider the user to have learned the drawer once he or she selects an item. This 
-         * prevents the drawer from appearing repeatedly in the one-pane mode. This is just a quick 
-         * workaround; we might want to implement a more sophisticated solution at some point in 
+         * We consider the user to have learned the drawer once he or she selects an item. This
+         * prevents the drawer from appearing repeatedly in the one-pane mode. This is just a quick
+         * workaround; we might want to implement a more sophisticated solution at some point in
          * the future.
          */
         if (mNavigationDrawerFragment != null) {
@@ -389,7 +390,7 @@ public class MainActivity extends Activity
      * Sets the navigation bar navigation mode and title to the appropriate values.
      */
     public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
@@ -398,13 +399,13 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Only show items in the action bar relevant to this screen if the drawer is not showing. 
+        // Only show items in the action bar relevant to this screen if the drawer is not showing.
         // Otherwise, let the drawer decide what to show in the action bar.
         if (mNavigationDrawerFragment.isDrawerOpen()) {
             return super.onCreateOptionsMenu(menu);
         }
 
-        // Inflate the options menu from XML. We have to handle the menu here rather than in the 
+        // Inflate the options menu from XML. We have to handle the menu here rather than in the
         // fragment so that we can hide them when the navigation drawer is open.
         if (mMode.isLexiconMode()) {
             getMenuInflater().inflate(R.menu.lexicon_menu, menu);
@@ -412,7 +413,8 @@ public class MainActivity extends Activity
 
             // Get the SearchView and set the searchable configuration.
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+            SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_search));
+            //SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
             restoreActionBar();
@@ -429,7 +431,7 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // Only show items in the action bar relevant to this screen if the drawer is not showing. 
+        // Only show items in the action bar relevant to this screen if the drawer is not showing.
         // Otherwise, let the drawer decide what to show in the action bar.
         if (mNavigationDrawerFragment.isDrawerOpen()) {
             return super.onCreateOptionsMenu(menu);
@@ -463,13 +465,13 @@ public class MainActivity extends Activity
                 removeFavoriteFragment.removeLexiconFavorite();
                 return true;
             case R.id.action_add_bookmark:
-                SyntaxDetailFragment addBookmarkFragment 
+                SyntaxDetailFragment addBookmarkFragment
                         = (SyntaxDetailFragment) getFragmentManager()
                                 .findFragmentById(R.id.item_detail_container);
                 addBookmarkFragment.addSyntaxBookmark();
                 return true;
             case R.id.action_remove_bookmark:
-                SyntaxDetailFragment removeBookmarkFragment 
+                SyntaxDetailFragment removeBookmarkFragment
                         = (SyntaxDetailFragment) getFragmentManager()
                                 .findFragmentById(R.id.item_detail_container);
                 removeBookmarkFragment.removeSyntaxBookmark();
@@ -666,7 +668,7 @@ public class MainActivity extends Activity
         if (!mMode.equals(Mode.LEXICON_BROWSE)) {
             switchToLexiconBrowse();
 
-            // Make sure the fragments are swapped before we try to get the 
+            // Make sure the fragments are swapped before we try to get the
             // LexiconBrowseListFragment.
             getFragmentManager().executePendingTransactions();
         }
@@ -678,7 +680,7 @@ public class MainActivity extends Activity
      */
     private void switchToMode(Mode mode) {
         // TODO: Condense this code by storing title and fragments as fields of each Mode? The only
-        // problem with this idea is that we'd need static access to string resources. (I.e., we 
+        // problem with this idea is that we'd need static access to string resources. (I.e., we
         // can't get a context from the enum class itself, so we'd need to use some sort of kludgy
         // workaround.)
         switch (mode) {
@@ -791,12 +793,12 @@ public class MainActivity extends Activity
     }
 
     /**
-     * Sets the Lexicon Favorite icon to the appropriate state based on the currently selected 
+     * Sets the Lexicon Favorite icon to the appropriate state based on the currently selected
      * lexicon entry.
      * @param menu the <code>Menu</code> containing the Favorite icon
      */
     private void setLexiconFavoriteIcon(Menu menu) {
-        LexiconListFragment fragment 
+        LexiconListFragment fragment
                 = (LexiconListFragment) getFragmentManager()
                         .findFragmentById(R.id.item_list_container);
 
