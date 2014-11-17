@@ -34,7 +34,7 @@ android {
         release {
             signingConfig signingConfigs.release
             runProguard true
-            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+            proguardFile 'proguard.cfg'
             zipAlign true
         }
     }
