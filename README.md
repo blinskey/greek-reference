@@ -35,7 +35,7 @@ The texts used in this app are contained in a pair of databases called `lexicon.
 
 The app uses the new Gradle-based Android build system. If you'd like to assemble a signed APK, place your keystore in the root directory along with a `release.properties` file containing your keystore credentials. An example file called `release.properties.sample` is included in the project.
 
-Unfortunately, some of the icons used in the published version of this app are not licensed for redistribution and are therefore excluded from the repository. [See below](https://github.com/blinskey/greek-reference#icons) for details. The `GreekReference/src/res/placeholder-icons` directory contains a collection of icons from the free [Android Action Bar Icon Pack][] that can be used in place of the non-free icons used in the published version of this app. They're just white rectangles, intended to make it easy to build the app, not to be functional. To use them, copy the contents of this directory into `res`, merging the identically named `drawable` directories. If you'd like to suggest some more suitable freely licensed icons, please feel free to submit a pull request.
+Unfortunately, some of the icons used in the published version of this app are not licensed for redistribution and are therefore excluded from the repository. [See below](https://github.com/blinskey/greek-reference#icons) for details. (**Update:** These icons will be made open source in the near future, at which point they will be added to this repository.) The `GreekReference/src/res/placeholder-icons` directory contains a collection of icons from the free [Android Action Bar Icon Pack][] that can be used in place of the non-free icons used in the published version of this app. They're just white rectangles, intended to make it easy to build the app, not to be functional. To use them, copy the contents of this directory into `res`, merging the identically named `drawable` directories. If you'd like to suggest some more suitable freely licensed icons, please feel free to submit a pull request.
 
 ## Contributing
 
@@ -45,7 +45,7 @@ Pull requests are welcome and encouraged. Please read the [contributing guidelin
 
 **Can you add the full LSJ lexicon?**
 
-The app only includes texts that the Perseus Digital Library has released under open source licenses. The full LSJ isn't available under such a license, so we're limited to the Middle Liddell. You can read more about this topic on the Perseus blog's ["Notes on the status of LSJ and Lewis and Short"](http://sites.tufts.edu/perseusupdates/other-information/notes-on-the-status-of-lsj-and-lewis-and-short/) page. 
+The app only includes texts that the Perseus Digital Library has released under open source licenses. The full LSJ isn't available under such a license, so we're limited to the Middle Liddell. You can read more about this topic on the Perseus blog's ["Notes on the status of LSJ and Lewis and Short"](http://sites.tufts.edu/perseusupdates/other-information/notes-on-the-status-of-lsj-and-lewis-and-short/) page.
 
 If you're using the app on a device connected to the Internet, you can use the View on Perseus option in the action bar menu to open the Perseus Greek Word Study Tool page for a word. The page will be displayed with properly rendered Greek characters and will contain links to the full LSJ entry.
 
@@ -82,6 +82,8 @@ Several users have requested a Latin version. While I'm not planning to make suc
 This project includes icons from <http://www.androidicons.com>.
 
 The app icon, which is excluded from the repository, was constructed in part from an icon obtained from the "Boilerplates" icon set available at <http://www.android-icons.com>. The icon set is licensed under the Creative Commons Attribution 3.0 Unported License. See <http://creativecommons.org/licenses/by/3.0/> for details.
+
+The creators of the Android Developer Icons have [announced](http://androidicons.com/) that the icon set will be made open source in early December. The icons will be added to this repository once this has occurred.
 
 ## Texts
 
