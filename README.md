@@ -10,6 +10,8 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
     <img alt="Available at Amazon" src="amazon-apps-store-us-black-177x60.png">
 </a>
 
+If you find this app useful, please consider [making a donation](GiveDirectly) to help poor households in Kenya and Uganda.
+
 ## Contents
 
 - [Status](#status)
@@ -121,3 +123,4 @@ This project is licensed under the [Apache License, version 2.0][Apache], with t
 [Releases page]: https://github.com/blinskey/greek-reference/releases
 [contributing]: CONTRIBUTING.md
 [Android Action Bar Icon Pack]: http://developer.android.com/design/downloads/index.html
+[GiveDirectly]: https://givedirectly.org
