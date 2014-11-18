@@ -17,8 +17,6 @@
 package com.benlinskey.greekreference.lexicon;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -27,6 +25,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
@@ -48,7 +48,7 @@ import com.benlinskey.greekreference.SettingsActivity;
  * Displays the Perseus Greek Word Study Tool page in a <code>WebView</code>. This class adds a style
  * element to each page in order to properly display Greek characters using the Noto Serif font.
  */
-public class PerseusToolActivity extends Activity {
+public class PerseusToolActivity extends ActionBarActivity {
     private static final String TAG = "PerseusToolActivity";
     private static final String URL_START = "http://www.perseus.tufts.edu/hopper/morph?l=";
     private WebView mWebView;
@@ -60,7 +60,7 @@ public class PerseusToolActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perseus_tool);
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.title_lexicon));
@@ -75,7 +75,7 @@ public class PerseusToolActivity extends Activity {
         mWebView = (WebView) findViewById(R.id.perseus_tool_webview);
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
-        final Activity activity = this;
+        final ActionBarActivity activity = this;
         mWebView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (100 == progress) {
