@@ -37,8 +37,6 @@ The texts used in this app are contained in a pair of databases called `lexicon.
 
 The app uses the new Gradle-based Android build system. If you'd like to assemble a signed APK, place your keystore in the root directory along with a `release.properties` file containing your keystore credentials. An example file called `release.properties.sample` is included in the project.
 
-Unfortunately, some of the icons used in the published version of this app are not licensed for redistribution and are therefore excluded from the repository. [See below](https://github.com/blinskey/greek-reference#icons) for details. (**Update:** These icons will be made open source in the near future, at which point they will be added to this repository.) The `GreekReference/src/res/placeholder-icons` directory contains a collection of icons from the free [Android Action Bar Icon Pack][] that can be used in place of the non-free icons used in the published version of this app. They're just white rectangles, intended to make it easy to build the app, not to be functional. To use them, copy the contents of this directory into `res`, merging the identically named `drawable` directories. If you'd like to suggest some more suitable freely licensed icons, please feel free to submit a pull request.
-
 ## Contributing
 
 Pull requests are welcome and encouraged. Please read the [contributing guidelines][contributing] to get started.
@@ -81,11 +79,9 @@ Several users have requested a Latin version. While I'm not planning to make suc
 
 ## Icons
 
-This project includes icons from <http://www.androidicons.com>.
+This project includes icons from the [Android Developer Icons][android-icons] set created by [Opoloo][]. These icons are licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license][CC BY-SA 4.0].
 
-The app icon, which is excluded from the repository, was constructed in part from an icon obtained from the "Boilerplates" icon set available at <http://www.android-icons.com>. The icon set is licensed under the Creative Commons Attribution 3.0 Unported License. See <http://creativecommons.org/licenses/by/3.0/> for details.
-
-The creators of the Android Developer Icons have [announced](http://androidicons.com/) that the icon set will be made open source in early December. The icons will be added to this repository once this has occurred.
+The app icon was constructed in part from an icon obtained from the "Boilerplates" icon set formerly available at <http://www.android-icons.com>. The icon set is licensed under the [Creative Commons Attribution 3.0 Unported license][CC BY 3.0]. The app icon also includes an icon from the Android Developer Icons set.
 
 ## Texts
 
@@ -93,7 +89,7 @@ This project includes the text of *An Intermediate Greek-English Lexicon*, by He
 
 The project also includes the text of *Overview of Greek Syntax*, by Jeffrey A. Rydberg-Cox. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at <http://www.perseus.tufts.edu/hopper/>.
 
-The above texts are licensed under a Creative Commons Attribution-ShareAlike 3.0 United States License. See <http://creativecommons.org/licenses/by-sa/3.0/us/> for details.
+The above texts are licensed under a [Creative Commons Attribution-ShareAlike 3.0 United States license](CC BY-SA 3.0 US).
 
 ## Third-Party Resources
 
@@ -104,6 +100,7 @@ This program uses the following open source resources. Thanks to their creators 
 - [NotoSerif font][]
 - [Perseus][] texts (see above)
 - [TypefaceTextView][]
+- [Android Developer Icons][android-icons]
 - "Boilerplates" icons from <http://www.android-icons.com>
 
 I am particularly grateful to Jeffrey A. Rydberg-Cox for making his *Overview of Greek Syntax* available through Perseus under a Creative Commons license. You can visit his website at <http://daedalus.umkc.edu>.
@@ -124,3 +121,8 @@ This project is licensed under the [Apache License, version 2.0][Apache], with t
 [contributing]: CONTRIBUTING.md
 [Android Action Bar Icon Pack]: http://developer.android.com/design/downloads/index.html
 [GiveDirectly]: https://givedirectly.org
+[CC By 3.0]: http://creativecommons.org/licenses/by/3.0/
+[CC BY-SA 3.0 US]: http://creativecommons.org/licenses/by-sa/3.0/us/
+[CC BY-SA 4.0]: http://creativecommons.org/licenses/by-sa/4.0/
+[android-icons]: http://androidicons.com
+[Opoloo]: http://www.opoloo.com/
