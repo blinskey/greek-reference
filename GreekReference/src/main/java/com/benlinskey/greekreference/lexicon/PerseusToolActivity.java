@@ -79,7 +79,7 @@ public class PerseusToolActivity extends ActionBarActivity {
         mWebView.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 if (100 == progress) {
-                    activity.setProgressBarVisibility(false);
+                    activity.setSupportProgressBarVisibility(false);
                 }
                 activity.setProgress(progress * 1000);
             }
