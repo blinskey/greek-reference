@@ -40,7 +40,6 @@ public abstract class DetailActivity extends ActionBarActivity {
     // TODO: Some code is repeated from MainActivity here. It would be good to
     // move this to a superclass or otherwise consolidate it somehow.
 
-    private static final String TAG = "DetailActivity";
     protected CharSequence mTitle; // Used to store the last screen title.
 
     @Override

@@ -30,9 +30,9 @@ import android.widget.TextView;
  * A {@link android.preference.DialogPreference} containing information about this app.
  */
 public class AboutPreference extends DialogPreference {
+
     public AboutPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         setDialogLayoutResource(R.layout.about_preference_layout);
         setPositiveButtonText(R.string.ok);
         setNegativeButtonText(null);

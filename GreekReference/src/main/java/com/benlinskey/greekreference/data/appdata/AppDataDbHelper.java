@@ -29,7 +29,6 @@ import com.benlinskey.greekreference.data.lexicon.LexiconContract;
  * An {@link SQLiteOpenHelper} for the AppData database.
  */
 public class AppDataDbHelper extends SQLiteOpenHelper {
-    private static final String TAG = "AppDataDbHelper";
 
     public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "AppData.db";
@@ -52,16 +51,12 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
             + AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " INTEGER, "
             + AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION + " TEXT " + ")";
     
-    private static final String SQL_DELETE_LEXICON_HISTORY_TABLE = "DROP TABLE IF EXISTS "
-            + AppDataContract.LexiconHistory.TABLE_NAME;
     private static final String SQL_DELETE_LEXICON_FAVORITES_TABLE = "DROP TABLE IF EXISTS "
             + AppDataContract.LexiconFavorites.TABLE_NAME;
-    private static final String SQL_DELETE_SYNTAX_BOOKMARKS_TABLE = "DROP TABLE IF EXISTS "
-            + AppDataContract.SyntaxBookmarks.TABLE_NAME;
 
     /**
      * Class constructor.
-     * @param context   the <code>Context</code> to use
+     * @param context the {@code Context} to use
      */
     public AppDataDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

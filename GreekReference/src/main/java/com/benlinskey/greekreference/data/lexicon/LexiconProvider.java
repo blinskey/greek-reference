@@ -30,9 +30,10 @@ import android.net.Uri;
  * A content provider for the lexicon database.
  */
 public class LexiconProvider extends ContentProvider {
-    private final static String LIMIT = "20"; // Maximum number of search suggestions to return
 
-    public static String AUTHORITY = "com.benlinskey.greekreference.data.lexicon.LexiconProvider";
+    private static final String LIMIT = "20"; // Maximum number of search suggestions to return
+
+    public static final String AUTHORITY = "com.benlinskey.greekreference.data.lexicon.LexiconProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/lexicon");
 
     public static final String WORDS_MIME_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
@@ -40,18 +41,18 @@ public class LexiconProvider extends ContentProvider {
     public static final String ENTRY_MIME_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
                                                  + "/vnd.benlinskey.greekreference";
 
-    private LexiconHelper mHelper;
-    private SQLiteDatabase mDatabase = null;
-
     private static final int SEARCH = 0;
     private static final int SEARCH_SUGGEST = 1;
     private static final int GET_WORD = 2;
     private static final UriMatcher sMatcher = buildUriMatcher();
 
+    private LexiconHelper mHelper;
+    private SQLiteDatabase mDatabase = null;
+    
     /**
-     * Returns a <code>UriMatcher</code> for this <code>ContentProvider</code>.
+     * Returns a {@code UriMatcher} for this {@code ContentProvider}.
      *
-     * @return a <code>UriMatcher</code> for this <code>ContentProvider</code>.
+     * @return a {@code UriMatcher} for this {@code ContentProvider}.
      */
     private static UriMatcher buildUriMatcher() {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -96,12 +97,12 @@ public class LexiconProvider extends ContentProvider {
 
     /**
      * Searches the database.
-     * @param uri               the <code>uri</code> used to conduct the query
+     * @param uri               the {@code uri} used to conduct the query
      * @param projection        the columns to select
      * @param selection         the parameterized search criteria
      * @param selectionArgs     the search criteria arguments
      * @param sortOrder         the order in which to sort the results
-     * @return a <code>Cursor</code> containing the results of the query
+     * @return a {@code Cursor} containing the results of the query
      */
     private Cursor search(Uri uri, String[] projection, String selection, String[] selectionArgs,
                           String sortOrder) {
@@ -116,7 +117,7 @@ public class LexiconProvider extends ContentProvider {
     /**
      * Searches the database for suggestions matching the specified text.
      * @param query     the search query for which to generate suggestions
-     * @return a <code>Cursor</code> containing search suggestions
+     * @return a {@code Cursor} containing search suggestions
      */
     private Cursor getSuggestions(String query) {
         // TODO: Change "_ID" to "_id" in database schema.
@@ -142,8 +143,8 @@ public class LexiconProvider extends ContentProvider {
 
     /**
      * Queries the database for the word specified by the given URI.
-     * @param uri   a <code>Uri</code> specifying the word for which to search
-     * @return a <code>Cursor</code> containing the results of the query
+     * @param uri a {@code Uri} specifying the word for which to search
+     * @return a {@code Cursor} containing the results of the query
      */
     private Cursor getWord(Uri uri) {
         String id = uri.getLastPathSegment();
@@ -191,5 +192,4 @@ public class LexiconProvider extends ContentProvider {
             mDatabase = mHelper.getReadableDatabase();
         }
     }
-
 }

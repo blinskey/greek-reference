@@ -56,9 +56,10 @@ import android.widget.TextView;
  * caching, which ensures that the custom typeface is only created once.
  */
 public class GreekTextView extends TextView {
+
     private static final String TYPEFACE_NAME = "NotoSerif-Regular.ttf";
 
-    /** An <code>LruCache</code> for previously loaded typefaces. */
+    /** An {@code LruCache} for previously loaded typefaces. */
     private static LruCache<String, Typeface> sTypefaceCache =
             new LruCache<>(12);
 

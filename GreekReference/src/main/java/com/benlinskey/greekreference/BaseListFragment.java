@@ -31,7 +31,6 @@ import android.widget.TextView;
  * basic setup and UI tasks common to all of this app's list fragments.
  */
 public abstract class BaseListFragment extends ListFragment {
-    private static final String TAG = "BaseListFragment";
     protected TextView mEmptyView;
 
     /**
@@ -91,9 +90,13 @@ public abstract class BaseListFragment extends ListFragment {
     protected void setActivateOnItemClick(boolean activateOnItemClick) {
         // When setting CHOICE_MODE_SINGLE, ListView will automatically
         // give items the 'activated' state when touched.
-        getListView().setChoiceMode(activateOnItemClick
-                ? ListView.CHOICE_MODE_SINGLE
-                : ListView.CHOICE_MODE_NONE);
+        int choiceMode;
+        if (activateOnItemClick) {
+            choiceMode = ListView.CHOICE_MODE_SINGLE;
+        } else {
+            choiceMode = ListView.CHOICE_MODE_NONE;
+        }
+        getListView().setChoiceMode(choiceMode);
     }
 
     /**
@@ -114,7 +117,7 @@ public abstract class BaseListFragment extends ListFragment {
      * special empty view containing a message explaining how to populate the
      * view.
      * @param stringId the resource ID of the string to display in the new
-     *                 empty view
+     *     empty view
      */
     protected void setNoItemsView(int stringId) {
         // We can't actually remove the current empty view, so we just make it invisible.

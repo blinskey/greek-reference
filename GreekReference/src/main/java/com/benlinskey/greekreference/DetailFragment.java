@@ -46,8 +46,8 @@ public abstract class DetailFragment extends Fragment {
 
         /**
          * Enum type constructor.
-         * @param name  the name of the size defined in the preferences array
-         * @param size  the text size in scaled pixels
+         * @param name the name of the size defined in the preferences array
+         * @param size the text size in scaled pixels
          */
         private TextSize(String name, float size) {
             mName = name;
@@ -56,8 +56,8 @@ public abstract class DetailFragment extends Fragment {
 
         /**
          * Returns the text size in scaled pixels for the specified size.
-         * @param name  the name of the size defined in the preferences array
-         * @return  the corresponding text size in scaled pixels
+         * @param name the name of the size defined in the preferences array
+         * @return the corresponding text size in scaled pixels
          */
         public static float getScaledPixelSize(String name) {
             for (TextSize tx : TextSize.values()) {
@@ -97,7 +97,7 @@ public abstract class DetailFragment extends Fragment {
     }
 
     /**
-     * Sets the <code>GreekTextView</code>'s text size to the size stored in the preferences.
+     * Sets the {@code GreekTextView}'s text size to the size stored in the preferences.
      */
     private void setTextSize() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());

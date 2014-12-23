@@ -73,12 +73,8 @@ import com.benlinskey.greekreference.syntax.SyntaxListFragment;
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, 
                    BaseListFragment.Callbacks {
+
     private static final String TAG = "MainActivity";
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-    private CharSequence mTitle;
-    private CharSequence mSubtitle;
-    private Mode mMode;
-    private boolean mTwoPane;   // Indicates whether we're actually using the tablet layout.
 
     // Application state bundle keys
     private static final String KEY_TITLE = "action_bar_title";
@@ -89,6 +85,12 @@ public class MainActivity extends ActionBarActivity
     
     // Custom intent action
     public static final String ACTION_SET_MODE = "com.benlinskey.greekreference.SET_MODE";
+
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private CharSequence mTitle;
+    private CharSequence mSubtitle;
+    private Mode mMode;
+    private boolean mTwoPane;   // Indicates whether we're actually using the tablet layout.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,9 +153,8 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Checks whether the user has selected the one-pane mode preference. This method always
-     * returns <code>false</code> on phones.
-     * @return  <code>true</code> if the user has selected the one-pane mode preference or
-     *          <code>false</code> otherwise
+     * returns false on phones.
+     * @return true if the user has selected the one-pane mode preference or false otherwise
      */
     private boolean onePaneModeSelected() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -184,10 +185,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     * Processes an <code>Intent</code> if it can be handled by this <code>Activity</code> or
-     * throws an exception if this <code>Activity</code> cannot handle the specified
-     * <code>Intent</code>.
-     * @param intent    the <code>Intent</code> to handle
+     * Processes an <code>Intent</code> if it can be handled by this {@code Activity} or
+     * throws an exception if this {@code Activity} cannot handle the specified {@code Intent}.
+     * @param intent the {@code Intent} to handle
      */
     void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -286,8 +286,8 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Displays the specified lexicon entry in a {@link LexiconDetailFragment}.
-     * @param id    the lexicon database ID of the selected entry
-     * @param word  the word whose entry is selected
+     * @param id the lexicon database ID of the selected entry
+     * @param word the word whose entry is selected
      * @param entry the selected entry's XML
      */
     void displayLexiconEntry(final String id, String word, String entry) {
@@ -325,10 +325,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     * Displays the specified Overview of Greek Syntax section in a
-     * {@link SyntaxDetailFragment}.
+     * Displays the specified Overview of Greek Syntax section in a {@link SyntaxDetailFragment}.
      * @param section the selected section's title
-     * @param xml     the selected section's XML
+     * @param xml the selected section's XML
      */
     void displaySyntaxSection(String section, String xml) {
         if (mTwoPane) {
@@ -355,7 +354,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * Adds the specified word to the lexicon history list. If the word is already contained in the
      * list, it will be moved to the top of the list.
-     * @param id   the lexicon database ID of the selected word
+     * @param id the lexicon database ID of the selected word
      * @param word the selected word
      */
     void addHistory(String id, String word) {
@@ -605,7 +604,7 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Finds and selects the lexicon entry corresponding to the specified URI.
-     * @param data  the URI of the lexicon entry to select
+     * @param data the URI of the lexicon entry to select
      */
     private void getLexiconEntry(Uri data) {
         ensureModeIsLexiconBrowse();
@@ -630,8 +629,8 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Searches the lexicon for a word and displays the result.
-     * @param query     a string containing the word for which to search. This string is case
-     *                  insensitive and may be written in either Greek characters or Beta code.
+     * @param query a string containing the word for which to search. This string is case
+     *     insensitive and may be written in either Greek characters or Beta code.
      */
     // TODO: Handle words with multiple entries.
     void search(String query) {
@@ -676,7 +675,7 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Switches the mode to the specified {@link Mode}.
-     * @param mode the <code>Mode</code> to which to switch
+     * @param mode the {@code Mode} to which to switch
      */
     private void switchToMode(Mode mode) {
         // TODO: Condense this code by storing title and fragments as fields of each Mode? The only
@@ -770,9 +769,9 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Replaces the currently displayed fragment(s) with the specified fragment(s).
-     * @param listFragment   the {@link BaseListFragment} to swap in
-     * @param detailFragment the {@link DetailFragment} to swap in, or <code>null</code> if the
-     *                       app is in one-pane mode
+     * @param listFragment the {@link BaseListFragment} to swap in
+     * @param detailFragment the {@link DetailFragment} to swap in, or null if the app is in
+     *     one-pane mode
      */
     private void swapInFragments(Fragment listFragment, Fragment detailFragment) {
         // TODO: Check for invalid null arguments.
@@ -795,7 +794,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * Sets the Lexicon Favorite icon to the appropriate state based on the currently selected
      * lexicon entry.
-     * @param menu the <code>Menu</code> containing the Favorite icon
+     * @param menu the {@code Menu} containing the Favorite icon
      */
     private void setLexiconFavoriteIcon(Menu menu) {
         LexiconListFragment fragment
@@ -820,7 +819,7 @@ public class MainActivity extends ActionBarActivity
     /**
      * Sets the Syntax Bookmark icon to the appropriate state based on the currently selected
      * syntax section.
-     * @param menu the <code>Menu</code> containing the Bookmark icon
+     * @param menu the {@code Menu} containing the Bookmark icon
      */
     private void setSyntaxBookmarkIcon(Menu menu) {
         SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()

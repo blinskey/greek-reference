@@ -17,8 +17,7 @@
 package com.benlinskey.greekreference;
 
 /**
-* An enum type to track the various app modes accessible from the navigation 
-* drawer.
+* An enum type to track the various app modes accessible from the navigation drawer.
 */
 public enum Mode {
     LEXICON_BROWSE(1, "lexicon_browse"),
@@ -32,9 +31,8 @@ public enum Mode {
 
     /**
      * Enum constructor.
-     * @param position the navigation drawer position corresponding to this
-     *                 mode
-     * @param name     the name of this mode
+     * @param position the navigation drawer position corresponding to this mode
+     * @param name the name of this mode
      */
     Mode(int position, String name) {
         mPosition = position;
@@ -61,10 +59,9 @@ public enum Mode {
     }
 
     /**
-     * Returns the <code>Mode</code> corresponding to the specified navigation
-     * drawer position.
+     * Returns the {@code Mode} corresponding to the specified navigation drawer position.
      * @param  position the navigation drawer position for which to search
-     * @return the <code>Mode</code> corresponding to the specified position
+     * @return the {@code Mode} corresponding to the specified position
      */
     public static Mode getModeFromPosition(int position) {
         for (Mode m : Mode.values()) {
@@ -76,9 +73,9 @@ public enum Mode {
     }
 
     /**
-     * Returns the <code>Mode</code> corresponding to the specified name.
+     * Returns the {@code Mode} corresponding to the specified name.
      * @param  name the name for which to search
-     * @return the <code>Mode</code> corresponding to the specified name
+     * @return the {@code Mode} corresponding to the specified name
      */
     public static Mode getModeFromName(String name) {
         for (Mode m : Mode.values()) {
@@ -90,17 +87,18 @@ public enum Mode {
     }
 
     /**
-     * Returns <code>true</code> if this is a lexicon mode.
-     * @return <code>true</code> if this is a lexicon mode, or <code>false</code> otherwise
+     * Returns true if this is a lexicon mode.
+     * @return true if this is a lexicon mode, or false otherwise
      */
     public boolean isLexiconMode() {
-        return this.equals(LEXICON_BROWSE) || this.equals(LEXICON_FAVORITES)
+        return this.equals(LEXICON_BROWSE)
+                || this.equals(LEXICON_FAVORITES)
                 || this.equals(LEXICON_HISTORY);
     }
 
     /**
-     * Returns <code>true</code> if this is a syntax mode.
-     * @return <code>true</code> if this is a syntax mode, or <code>false</code> otherwise
+     * Returns trueif this is a syntax mode.
+     * @return trueif this is a syntax mode, or false otherwise
      */
     public boolean isSyntaxMode() {
         return this.equals(SYNTAX_BROWSE) || this.equals(SYNTAX_BOOKMARKS);

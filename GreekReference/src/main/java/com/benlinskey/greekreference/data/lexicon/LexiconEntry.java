@@ -30,7 +30,6 @@ import java.util.ArrayList;
  * A class representing a lexicon entry.
  */
 public class LexiconEntry {
-    private static final String TAG = "LexiconEntry";
 
     // Names are identical to XML element names.
     // Comments indicate structure within "entry" element.
@@ -48,11 +47,11 @@ public class LexiconEntry {
     }
 
     /**
-     * Returns a formatted version of this lexicon entry contained in a <code>CharSequence</code>
+     * Returns a formatted version of this lexicon entry contained in a {@code CharSequence}
      * with spans specifying style information.
-     * @param textSize the size of the font in the <code>GreekTextView</code> to which this
-     *                 <code>CharSequence</code> will be added. Used to calculate indent size.
-     * @return a <code>CharSequence</code> containing this lexicon entry
+     * @param textSize the size of the font in the {@code GreekTextView} to which this
+     *                 {@code CharSequence} will be added. Used to calculate indent size.
+     * @return a {@code CharSequence} containing this lexicon entry
      */
     public SpannedString toSpanned(float textSize) {
         // TOOD: Split this into multiple methods.
@@ -154,11 +153,10 @@ public class LexiconEntry {
     }
 
     /**
-     * Adds a new <code>Sense</code> to this lexicon entry.
-     *
-     * @param level     the level of the entry hierarchy at which this sense item is found
-     * @param n         the symbol to display at the start of this sense item
-     * @param text      the text of this sense item
+     * Adds a new {@code Sense} to this lexicon entry.
+     * @param level the level of the entry hierarchy at which this sense item is found
+     * @param n the symbol to display at the start of this sense item
+     * @param text the text of this sense item
      */
     public void addSense(String level, String n, SpannableString text) {
         Sense sense = new Sense(level, n, text);
@@ -174,10 +172,9 @@ public class LexiconEntry {
         private SpannedString text; // Full text, including formatting.
 
         /**
-         * Class constructor.
-         *
-         * @param level     the level of the entry hierarchy at which this sense item is found
-         * @param n         the symbol to display at the start of this sense item
+         * Constructs a new {@code Sense}.
+         * @param level the level of the entry hierarchy at which this sense item is found
+         * @param n the symbol to display at the start of this sense item
          */
         public Sense(String level, String n, SpannableString text) {
             this.level = Integer.parseInt(level);

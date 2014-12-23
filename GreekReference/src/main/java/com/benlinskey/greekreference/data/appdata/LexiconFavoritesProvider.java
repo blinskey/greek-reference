@@ -31,7 +31,8 @@ import android.provider.BaseColumns;
  * A {@link ContentProvider} for the lexicon favorites table.
  */
 public class LexiconFavoritesProvider extends ContentProvider {
-    public static String AUTHORITY = "com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider";
+    public static final String AUTHORITY =
+            "com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/appData");
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/vnd.benlinskey.greekreference";
@@ -39,16 +40,15 @@ public class LexiconFavoritesProvider extends ContentProvider {
             + "vnd.benlinskey.greekreference";
     public static final String LIMIT = "50"; // Limit on number of results returned by query
 
-    private SQLiteDatabase mDatabase;
-
     private static final int WORDS = 0;
     private static final int WORD_ID = 1;
     private static final UriMatcher sMatcher = buildUriMatcher();
 
+    private SQLiteDatabase mDatabase;
+
     /**
-     * Returns a <code>UriMatcher</code> for this <code>ContentProvider</code>.
-     *
-     * @return a <code>UriMatcher</code> for this <code>ContentProvider</code>.
+     * Returns a {@code UriMatcher} for this {@code ContentProvider}.
+     * @return a {@code UriMatcher} for this {@code ContentProvider}
      */
     private static UriMatcher buildUriMatcher() {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -80,7 +80,7 @@ public class LexiconFavoritesProvider extends ContentProvider {
 
     /**
      * Queries the database for words matching the specified criteria.
-     * @return a <code>Cursor</code> containing the results of the query
+     * @return a {@code Cursor} containing the results of the query
      */
     private Cursor searchWords(Uri uri, String[] projection, String selection, 
             String[] selectionArgs, String sortOrder) {
@@ -94,8 +94,8 @@ public class LexiconFavoritesProvider extends ContentProvider {
 
     /**
      * Searches the database for the word specified by the given URI.
-     * @param uri   the <code>Uri</code> specifying the word for which to search
-     * @return a <code>Cursor</code> containing the results of the query
+     * @param uri the {@code Uri} specifying the word for which to search
+     * @return a {@code Cursor} containing the results of the query
      */
     private Cursor getWord(Uri uri) {
         String id = uri.getLastPathSegment();

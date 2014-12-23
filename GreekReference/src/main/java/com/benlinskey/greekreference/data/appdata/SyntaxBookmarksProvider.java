@@ -31,7 +31,8 @@ import android.provider.BaseColumns;
  * A ContentProvider for the syntax bookmarks table.
  */
 public class SyntaxBookmarksProvider extends ContentProvider {
-    public static String AUTHORITY
+
+    public static final String AUTHORITY
             = "com.benlinskey.greekreference.data.appdata.SyntaxBookmarksProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/appData");
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
@@ -39,16 +40,15 @@ public class SyntaxBookmarksProvider extends ContentProvider {
     public static final String CONTENT_WORD_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "vnd.benlinskey.greekreference";
 
-    private SQLiteDatabase mDatabase;
-
     private static final int SECTIONS = 0;
     private static final int SECTION_ID = 1;
     private static final UriMatcher sMatcher = buildUriMatcher();
 
+    private SQLiteDatabase mDatabase;
+
     /**
-     * Returns a <code>UriMatcher</code> for this <code>ContentProvider</code>.
-     *
-     * @return a <code>UriMatcher</code> for this <code>ContentProvider</code>.
+     * Returns a {@code UriMatcher} for this {@code ContentProvider}.
+     * @return a {@code UriMatcher} for this {@code ContentProvider}.
      */
     private static UriMatcher buildUriMatcher() {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -80,7 +80,7 @@ public class SyntaxBookmarksProvider extends ContentProvider {
 
     /**
      * Queries the database for sections matching the specified criteria.
-     * @return a <code>Cursor</code> containing the results of the query
+     * @return a {@code Cursor} containing the results of the query
      */
     private Cursor searchSections(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
@@ -94,8 +94,8 @@ public class SyntaxBookmarksProvider extends ContentProvider {
 
     /**
      * Searches the database for the word specified by the given URI.
-     * @param uri   the <code>Uri</code> specifying the word for which to search
-     * @return a <code>Cursor</code> containing the results of the query
+     * @param uri the {@code Uri} specifying the word for which to search
+     * @return a {@code Cursor} containing the results of the query
      */
     private Cursor getSection(Uri uri) {
         String id = uri.getLastPathSegment();
