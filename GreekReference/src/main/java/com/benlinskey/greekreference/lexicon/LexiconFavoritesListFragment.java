@@ -36,8 +36,8 @@ import com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider;
  */
 public class LexiconFavoritesListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>{
+
     public static final String NAME = "lexicon_favorites";
-    SimpleCursorAdapter mAdapter;
 
     // Note that we have to select the lexicon ID in order to alphabetize; alphabetizing by word
     // doesn't work due to accented characters.
@@ -48,6 +48,8 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
     private static final String[] SELECTION_ARGS = {};
     private static final String SORT_ORDER
             = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " ASC";
+
+    private SimpleCursorAdapter mAdapter;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -72,8 +74,7 @@ public class LexiconFavoritesListFragment extends LexiconListFragment
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String fragmentName) {
-        }
+        public void onItemSelected(String fragmentName) {}
     };
 
     /**

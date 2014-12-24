@@ -44,6 +44,7 @@ import com.benlinskey.greekreference.R;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
+
     /**
      * Remember the position of the selected item.
      */
@@ -131,7 +132,7 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     /**
-     * @return  <code>true</code> if the navigation drawer is open or false otherwise
+     * @return true if the navigation drawer is open or false otherwise
      */
     public boolean isDrawerOpen() {
         return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
@@ -139,9 +140,8 @@ public class NavigationDrawerFragment extends Fragment {
 
     /**
      * Users of this fragment must call this method to set up the navigation drawer interactions.
-     *
-     * @param fragmentId   The android:id of this fragment in its activity's layout.
-     * @param drawerLayout The DrawerLayout containing this fragment's UI.
+     * @param fragmentId the id of this fragment in its activity's layout
+     * @param drawerLayout the {@link DrawerLayout} containing this fragment's UI
      */
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
         mFragmentContainerView = getActivity().findViewById(fragmentId);

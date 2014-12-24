@@ -34,7 +34,9 @@ import com.benlinskey.greekreference.data.syntax.SyntaxContract;
  */
 public class SyntaxBrowseListFragment extends SyntaxListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
+
     public static final String NAME = "syntax_browse";
+
     private SimpleCursorAdapter mAdapter;
     private static final String[] PROJECTION = new String[] {SyntaxContract._ID,
             SyntaxContract.COLUMN_NAME_SECTION};

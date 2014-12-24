@@ -33,8 +33,10 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
  * A {@link DetailActivity} used to display lexicon entries.
  */
 public class LexiconDetailActivity extends DetailActivity {
+    
     public static final String ARG_LEXICON_ID = "lexicon_id";
     public static final String ARG_WORD = "word";
+    
     private int mLexiconId;
     private String mWord;
 
@@ -56,7 +58,6 @@ public class LexiconDetailActivity extends DetailActivity {
         // For more information, see the Fragments API guide at:
         //
         // http://developer.android.com/guide/components/fragments.html
-        //
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
             arguments.putString(LexiconDetailFragment.ARG_ENTRY,
@@ -87,7 +88,7 @@ public class LexiconDetailActivity extends DetailActivity {
     /**
      * Sets the Lexicon Favorite icon to the appropriate state based on the currently selected 
      * lexicon entry.
-     * @param menu the <code>Menu</code> containing the Favorite icon
+     * @param menu the {@code Menu} containing the Favorite icon
      */
     private void setLexiconFavoriteIcon(Menu menu) {
         MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
@@ -126,11 +127,11 @@ public class LexiconDetailActivity extends DetailActivity {
     }
 
     /**
-     * Returns <code>true</code> if the word with the specified lexicon ID is 
+     * Returns {@code true} if the word with the specified lexicon ID is 
      * a member of the favorites list.
-     * @param  lexiconId the lexicon ID to check
-     * @return <code>true</code> if the specified word is a member of the
-     *         favorites list, or <code>false</code> otherwise
+     * @param lexiconId the lexicon ID to check
+     * @return {@code true} if the specified word is a member of the
+     *     favorites list, or {@code false} otherwise
      */
     private boolean isFavorite(int lexiconId) {
         String[] columns = new String[] {AppDataContract.LexiconFavorites._ID};

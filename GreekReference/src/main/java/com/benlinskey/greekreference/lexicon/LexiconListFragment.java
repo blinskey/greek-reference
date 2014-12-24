@@ -28,20 +28,20 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 // selected item's ID from the getSelectedLexiconId() method here.
 // TODO: Make selectedId generic and move to superclass.
 public abstract class LexiconListFragment extends BaseListFragment {
-    private static final String TAG = "LexiconListFragment";
+
     private static final int NO_SELECTION = -1;
+
     protected int mSelectedLexiconId = NO_SELECTION;
 
     /**
-     * @return <code>true</code> if no list item is selected or <code>false</code> otherwise
+     * @return true if no list item is selected or false otherwise
      */
     public boolean nothingIsSelected() {
         return NO_SELECTION == mSelectedLexiconId;
     }
 
     /**
-     * @return <code>true</code> if the selected word is in the favorites list or
-     * <code>false</code> otherwise
+     * @return true if the selected word is in the favorites list or false otherwise
      */
     public boolean selectedWordIsFavorite() {
         String[] columns = new String[] {AppDataContract.LexiconFavorites._ID};
@@ -59,7 +59,7 @@ public abstract class LexiconListFragment extends BaseListFragment {
     }
 
     /**
-     * @return  the lexicon database ID of the selected item
+     * @return the lexicon database ID of the selected item
      */
     public int getSelectedLexiconId() {
         return mSelectedLexiconId;
@@ -67,7 +67,7 @@ public abstract class LexiconListFragment extends BaseListFragment {
 
     /**
      * Sets the selected item ID.
-     * @param id the <code>ListView</code> position of the item to select
+     * @param id the {@code ListView} position of the item to select
      */
     protected abstract void setSelectedLexiconItemId(int id);
 }

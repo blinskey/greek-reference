@@ -35,9 +35,9 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
  */
 public class SyntaxBookmarksListFragment extends SyntaxListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
-    private static final String TAG = "SyntaxBookmarksListFragment";
+
     public static final String NAME = "syntax_bookmarks";
-    private SimpleCursorAdapter mAdapter;
+
     private static final String[] PROJECTION = new String[] {AppDataContract.SyntaxBookmarks._ID,
             AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION,
             AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID};
@@ -45,6 +45,8 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment
     private static final String[] SELECTION_ARGS = {};
     private static final String SORT_ORDER
             = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " ASC";
+
+    private SimpleCursorAdapter mAdapter;
 
     /**
      * The serialization (saved instance state) Bundle key representing the

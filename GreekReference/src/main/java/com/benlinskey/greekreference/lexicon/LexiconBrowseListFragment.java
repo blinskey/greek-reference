@@ -35,15 +35,18 @@ import com.benlinskey.greekreference.data.lexicon.LexiconContract;
  */
 public class LexiconBrowseListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
+
+    public static final String NAME = "lexicon_browse";
+
     private static final String TAG = "LexiconBrowseListFragment";
-    public final static String NAME = "lexicon_browse";
-    SimpleCursorAdapter mAdapter;
-    static final String[] PROJECTION
+    private static final String[] PROJECTION
             = new String[] {LexiconContract._ID, LexiconContract.COLUMN_GREEK_FULL_WORD,
                     LexiconContract.COLUMN_GREEK_LOWERCASE};
-    static final String SELECTION = "";
-    static final String[] SELECTION_ARGS = {};
-    static final String ORDER_BY = LexiconContract.COLUMN_GREEK_LOWERCASE + " ASC";
+    private static final String SELECTION = "";
+    private static final String[] SELECTION_ARGS = {};
+    private static final String ORDER_BY = LexiconContract.COLUMN_GREEK_LOWERCASE + " ASC";
+
+    private SimpleCursorAdapter mAdapter;
 
     /**
      * The fragment's current callback object, which is notified of list item

@@ -96,8 +96,8 @@ public class SyntaxDetailFragment extends DetailFragment {
 
     /**
      * Returns the section title corresponding to the specified syntax ID.
-     * @param  id the syntax ID for which to search
-     * @return    the corresponding section title
+     * @param id the syntax ID for which to search
+     * @return the corresponding section title
      */
     private String getSectionFromSyntaxId(int id) {
         String[] projection = {SyntaxContract.COLUMN_NAME_SECTION};
@@ -117,7 +117,7 @@ public class SyntaxDetailFragment extends DetailFragment {
     /**
      * Adds the specified word to the lexicon favorites list.
      * @param syntaxId the syntax ID of the section
-     * @param section  the section title to add
+     * @param section the section title to add
      */
     protected void addSyntaxBookmark(int syntaxId, String section) {
         ContentValues values = new ContentValues();

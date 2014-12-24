@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
  * </ul>
  */
 public class CheckableLinearLayout extends LinearLayout implements Checkable {
+
     private boolean mIsChecked = false;
 
     public CheckableLinearLayout(Context context) {

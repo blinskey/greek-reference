@@ -37,12 +37,14 @@ import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 public class LexiconHistoryListFragment extends LexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>{
     public static final String NAME = "lexicon_History";
-    SimpleCursorAdapter mAdapter;
-    static final String[] PROJECTION = new String[] {AppDataContract.LexiconHistory._ID,
+
+    private static final String[] PROJECTION = new String[] {AppDataContract.LexiconHistory._ID,
             AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
-    static final String SELECTION = "";
-    static final String[] SELECTION_ARGS = {};
-    static final String ORDER_BY = AppDataContract.LexiconHistory._ID + " DESC";
+    private static final String SELECTION = "";
+    private static final String[] SELECTION_ARGS = {};
+    private static final String ORDER_BY = AppDataContract.LexiconHistory._ID + " DESC";
+
+    private SimpleCursorAdapter mAdapter;
 
     /**
      * The fragment's current callback object, which is notified of list item

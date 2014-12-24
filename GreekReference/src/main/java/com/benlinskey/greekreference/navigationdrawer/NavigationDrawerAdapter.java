@@ -28,11 +28,12 @@ import android.widget.TextView;
 import com.benlinskey.greekreference.R;
 
 /**
- * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
+ * Based on the tutorial at {@llink http://www.michenux.net/android-navigation-drawer-748.html}.
  */
 public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> {
+
     private LayoutInflater mInflater;
-    Context mContext;
+    private Context mContext;
 
     public NavigationDrawerAdapter(Context context, int id, NavigationDrawerItem[] objects) {
         super(context, id, objects);

@@ -34,10 +34,13 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
  * A {@link DetailActivity} used to display syntax sections.
  */
 public class SyntaxDetailActivity extends DetailActivity {
-    private static final String TAG = "SyntaxDetailActivity";
-    private CharSequence mTitle; // Used to store the last screen title.
+
     public static final String ARG_SYNTAX_ID = "syntax_id";
     public static final String ARG_SECTION = "section";
+
+    private static final String TAG = "SyntaxDetailActivity";
+
+    private CharSequence mTitle; // Used to store the last screen title.
     private int mSyntaxId;
     private String mSection;
 
@@ -122,11 +125,9 @@ public class SyntaxDetailActivity extends DetailActivity {
     }
 
     /**
-     * Returns <code>true</code> if the word with the specified syntax ID is
-     * a member of the bookmarks list.
-     * @param  syntaxId the syntax ID to check
-     * @return <code>true</code> if the specified word is a member of the
-     *         bookmarks list, or <code>false</code> otherwise
+     * Returns true if the word with the specified syntax ID is a member of the bookmarks list.
+     * @param syntaxId the syntax ID to check
+     * @return true if the specified word is a member of the bookmarks list, or false otherwise
      */
     private boolean isBookmark(int syntaxId) {
         Log.w(TAG, "isBookmark(); id: " + syntaxId);

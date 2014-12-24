@@ -32,15 +32,14 @@ public abstract class SyntaxListFragment extends BaseListFragment {
     protected int mSelectedSyntaxId = NO_SELECTION;
 
     /**
-     * @return <code>true</code> if no list item is selected or <code>false</code> otherwise
+     * @return true if no list item is selected or false otherwise
      */
     public boolean nothingIsSelected() {
         return NO_SELECTION == mSelectedSyntaxId;
     }
 
     /**
-     * @return <code>true</code> if the selected word is in the bookmarks list or
-     * <code>false</code> otherwise
+     * @return true if the selected word is in the bookmarks list or false otherwise
      */
     public boolean selectedSectionIsBookmarked() {
         String[] columns = new String[] {AppDataContract.SyntaxBookmarks._ID};
@@ -58,13 +57,13 @@ public abstract class SyntaxListFragment extends BaseListFragment {
     }
 
     /**
-     * @return  the syntax database ID of the selected item
+     * @return the syntax database ID of the selected item
      */
     public int getSelectedSyntaxId() { return mSelectedSyntaxId; }
 
     /**
      * Sets the selected item ID.
-     * @param id the <code>ListView</code> position of the item to select
+     * @param id the {@code ListView} position of the item to select
      */
     protected abstract void setSelectedSyntaxItemId(int id);
 }

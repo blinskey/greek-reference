@@ -52,11 +52,13 @@ import java.io.InputStream;
  * A {@link DetailFragment} used to display a lexicon entry.
  */
 public class LexiconDetailFragment extends DetailFragment {
+
     public static final String TAG = "LexiconDetailFragment";
     public static final String PERSEUS_TOOL_EXTRA_KEY = "com.benlinskey.greekreference.lexicon.PerseusToolExtraKey";
 
     // Fragment arguments representing strings containing entry information
     public static final String ARG_ENTRY = "entry";
+
     private LexiconEntry mLexiconEntry = null;
     private boolean mBlank = true; // True if no entry displayed.
 
@@ -123,8 +125,8 @@ public class LexiconDetailFragment extends DetailFragment {
 
     /**
      * Checks whether the user has disabled the View on Perseus option in the settings.
-     * @return  <code>true</code> if the user has disabled the option or <code>false</code>
-     *          otherwise
+     * @return {@code true} if the user has disabled the option or {@code false}
+     *     otherwise
      */
     private boolean perseusToolOptionDisabled() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -144,7 +146,7 @@ public class LexiconDetailFragment extends DetailFragment {
     /**
      * Adds the specified word to the lexicon favorites list.
      * @param lexiconId the lexicon ID of the word to add
-     * @param word      the word to add
+     * @param word the word to add
      */
     protected void addLexiconFavorite(int lexiconId, String word) {
         ContentValues values = new ContentValues();
@@ -194,8 +196,8 @@ public class LexiconDetailFragment extends DetailFragment {
 
     /**
      * Returns the word corresponding to the specified lexicon ID.
-     * @param  id the lexicon ID for which to search
-     * @return    the corresponding word
+     * @param id the lexicon ID for which to search
+     * @return the corresponding word
      */
     private String getWordFromLexiconId(int id) {
         String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD};
@@ -231,8 +233,8 @@ public class LexiconDetailFragment extends DetailFragment {
 
     /**
      * Checks whether the device is connected to the Internet.
-     * @return  <code>true</code> if the device is connected to the Internet or <code>false</code>
-     *          otherwise
+     * @return {@code true} if the device is connected to the Internet or {@code false}
+     *     otherwise
      */
     private boolean networkConnectionAvailable() {
         ConnectivityManager manager = (ConnectivityManager)
