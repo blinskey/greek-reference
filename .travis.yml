@@ -1,0 +1,14 @@
+language: android
+android:
+    components:
+        # Build tools version
+        - build-tools-21.0.1
+
+        # SDK version
+        - android-21
+    
+script: "./gradlew assembleDebug"
+
+git:
+    submodules: false
+
