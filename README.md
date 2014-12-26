@@ -1,5 +1,7 @@
 # Ancient Greek Lexicon & Syntax
 
+[![Build Status](https://travis-ci.org/blinskey/greek-reference.svg?branch=dev)](https://travis-ci.org/blinskey/greek-reference)
+
 This is an ancient Greek lexicon and grammar for Android incorporating open source texts from the [Perseus Digital Library][Perseus]. It's also known by the alternate name Greek Reference.
 
 <a href="https://play.google.com/store/apps/details?id=com.benlinskey.greekreference">
