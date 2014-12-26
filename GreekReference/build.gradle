@@ -31,21 +31,23 @@ android {
     }
 
     buildTypes {
-        release {
-            signingConfig signingConfigs.release
-            minifyEnabled true
-            proguardFile 'proguard.cfg'
-            zipAlignEnabled true
+        def propsFile = rootProject.file("release.properties")
+        if (propsFile.exists()) {
+            def props = new Properties()
+            props.load(new FileInputStream(propsFile))
+            android.signingConfigs.release.storeFile rootProject.file(props.keyStore)
+            android.signingConfigs.release.storePassword props.keyStorePassword
+            android.signingConfigs.release.keyAlias props.keyAlias
+            android.signingConfigs.release.keyPassword props.keyAliasPassword
+
+            release {
+                signingConfig signingConfigs.release
+                minifyEnabled true
+                proguardFile 'proguard.cfg'
+                zipAlignEnabled true
+            }
         }
     }
-
-    def props = new Properties()
-    props.load(new FileInputStream(rootProject.file("release.properties")))
-    android.signingConfigs.release.storeFile rootProject.file(props.keyStore)
-    android.signingConfigs.release.storePassword props.keyStorePassword
-    android.signingConfigs.release.keyAlias props.keyAlias
-    android.signingConfigs.release.keyPassword props.keyAliasPassword
-
 }
 
 dependencies {
