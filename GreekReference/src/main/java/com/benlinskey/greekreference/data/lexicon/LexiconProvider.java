@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.os.Build;
 
 /**
  * A content provider for the lexicon database.
@@ -120,9 +121,17 @@ public class LexiconProvider extends ContentProvider {
     private Cursor getSuggestions(String query) {
         // TODO: Change "_ID" to "_id" in database schema.
 
+        // We can only display polytonic characters in search suggestions on Android 5.0 and later.
+        String suggestionCol;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+           suggestionCol = LexiconContract.COLUMN_GREEK_FULL_WORD;
+        } else {
+           suggestionCol = LexiconContract.COLUMN_GREEK_NO_SYMBOLS;
+        }
+        
         String[] projection = new String[] {
             "_id as " + LexiconContract._ID,
-            LexiconContract.COLUMN_GREEK_NO_SYMBOLS + " AS " + SearchManager.SUGGEST_COLUMN_TEXT_1,
+            suggestionCol + " AS " + SearchManager.SUGGEST_COLUMN_TEXT_1,
             LexiconContract.COLUMN_GREEK_LOWERCASE,
             "_id AS " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
         };
