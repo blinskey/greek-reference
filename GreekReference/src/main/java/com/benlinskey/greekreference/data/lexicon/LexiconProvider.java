@@ -31,16 +31,15 @@ import android.net.Uri;
  */
 public class LexiconProvider extends ContentProvider {
 
-    private static final String LIMIT = "20"; // Maximum number of search suggestions to return
-
     public static final String AUTHORITY = "com.benlinskey.greekreference.data.lexicon.LexiconProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/lexicon");
 
-    public static final String WORDS_MIME_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-                                                 + "/vnd.benlinskey.greekreference";
-    public static final String ENTRY_MIME_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-                                                 + "/vnd.benlinskey.greekreference";
+    public static final String WORDS_MIME_TYPE = 
+            ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.benlinskey.greekreference";
+    public static final String ENTRY_MIME_TYPE = 
+            ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.benlinskey.greekreference";
 
+    private static final String LIMIT = "20"; // Maximum number of search suggestions to return
     private static final int SEARCH = 0;
     private static final int SEARCH_SUGGEST = 1;
     private static final int GET_WORD = 2;
@@ -51,7 +50,6 @@ public class LexiconProvider extends ContentProvider {
     
     /**
      * Returns a {@code UriMatcher} for this {@code ContentProvider}.
-     *
      * @return a {@code UriMatcher} for this {@code ContentProvider}.
      */
     private static UriMatcher buildUriMatcher() {
@@ -72,14 +70,14 @@ public class LexiconProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
-                        String sortOrder) {
+            String sortOrder) {
         getReadableDatabase();
 
         switch (sMatcher.match(uri)) {
             case SEARCH_SUGGEST:
                 if (null == selectionArgs) {
                     throw new IllegalArgumentException(
-                        "selectionArgs must be provided for the URI: " + uri);
+                            "selectionArgs must be provided for the URI: " + uri);
                 }
                 return getSuggestions(selectionArgs[0]);
             case SEARCH:
@@ -97,43 +95,48 @@ public class LexiconProvider extends ContentProvider {
 
     /**
      * Searches the database.
-     * @param uri               the {@code uri} used to conduct the query
-     * @param projection        the columns to select
-     * @param selection         the parameterized search criteria
-     * @param selectionArgs     the search criteria arguments
-     * @param sortOrder         the order in which to sort the results
+     * @param uri the {@code uri} used to conduct the query
+     * @param projection the columns to select
+     * @param selection the parameterized search criteria
+     * @param selectionArgs the search criteria arguments
+     * @param sortOrder the order in which to sort the results
      * @return a {@code Cursor} containing the results of the query
      */
     private Cursor search(Uri uri, String[] projection, String selection, String[] selectionArgs,
-                          String sortOrder) {
+            String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(LexiconContract.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
-                                           null, sortOrder);
+                null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
     /**
      * Searches the database for suggestions matching the specified text.
-     * @param query     the search query for which to generate suggestions
+     * @param query the search query for which to generate suggestions
      * @return a {@code Cursor} containing search suggestions
      */
     private Cursor getSuggestions(String query) {
         // TODO: Change "_ID" to "_id" in database schema.
 
-        String[] projection = new String[] {"_id as " + LexiconContract._ID,
-                                            LexiconContract.COLUMN_GREEK_NO_SYMBOLS + " AS "
-                                            + SearchManager.SUGGEST_COLUMN_TEXT_1,
-                                            LexiconContract.COLUMN_GREEK_LOWERCASE,
-                                            "_id AS "
-                                            + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID};
+        String[] projection = new String[] {
+            "_id as " + LexiconContract._ID,
+            LexiconContract.COLUMN_GREEK_NO_SYMBOLS + " AS " + SearchManager.SUGGEST_COLUMN_TEXT_1,
+            LexiconContract.COLUMN_GREEK_LOWERCASE,
+            "_id AS " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
+        };
+        
         String selection = LexiconContract.COLUMN_BETA_SYMBOLS + " LIKE ? OR "
                 + LexiconContract.COLUMN_BETA_NO_SYMBOLS + " LIKE ? OR "
                 + LexiconContract.COLUMN_GREEK_LOWERCASE + " LIKE ?";
-        String[] selectionArgs = new String[] {query.toLowerCase() + "%",
-                                               query.toLowerCase() + "%",
-                                               query.toLowerCase() + "%"};
+        
+        String[] selectionArgs = new String[] {
+            query.toLowerCase() + "%",
+            query.toLowerCase() + "%",
+            query.toLowerCase() + "%"
+        };
+        
         String sortOrder = LexiconContract.COLUMN_GREEK_LOWERCASE + " ASC";
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(LexiconContract.TABLE_NAME);
