@@ -21,8 +21,6 @@ If you find this app useful, please consider [making a donation](GiveDirectly) t
 - [Contributing](#contributing)
 - [Frequently Asked Questions](#frequently-asked-questions)
 - [Press](#press)
-- [Icons](#icons)
-- [Texts](#texts)
 - [Third-Party Resources](#third-party-resources)
 - [License](#license)
 
@@ -78,22 +76,6 @@ Several users have requested a Latin version. While I'm not planning to make suc
 
 - [The *New York Times Sunday Book Review*, "Gateways to the Classical World"](http://www.nytimes.com/2014/08/24/books/review/gateways-to-the-classical-world.html)
 
-## Icons
-
-The app icon was constructed in part from an icon obtained from the "Boilerplates" icon set formerly available at <http://www.android-icons.com>. The icon set is licensed under the [Creative Commons Attribution 3.0 Unported license][CC BY 3.0]. The app icon also includes an icon from the Android Developer Icons set created by [Opoloo][]. That icon set is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license][CC BY-SA 4.0].
-
-The remaining icons used in this app are taken from the [Google Material Design 
-Icons][material-design-icons] set, licensed under a [Creative Common Attribution 4.0 
-International license][CC BY 4.0].
-
-## Texts
-
-This project includes the text of *An Intermediate Greek-English Lexicon*, by Henry George Liddell and Robert Scott. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at <http://www.perseus.tufts.edu/hopper/>. I have made a number of corrections to the original text.
-
-The project also includes the text of *Overview of Greek Syntax*, by Jeffrey A. Rydberg-Cox. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at <http://www.perseus.tufts.edu/hopper/>.
-
-The above texts are licensed under a [Creative Commons Attribution-ShareAlike 3.0 United States license](CC BY-SA 3.0 US).
-
 ## Third-Party Resources
 
 This program uses the following open source resources. Thanks to their creators for making their work available.
@@ -108,6 +90,20 @@ This program uses the following open source resources. Thanks to their creators 
 - [Google Material Design Icons][material-design-icons]
 
 I am particularly grateful to Jeffrey A. Rydberg-Cox for making his *Overview of Greek Syntax* available through Perseus under a Creative Commons license. You can visit his website at <http://daedalus.umkc.edu>.
+
+### Texts
+
+This project includes the text of *An Intermediate Greek-English Lexicon*, by Henry George Liddell and Robert Scott. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at <http://www.perseus.tufts.edu/hopper/>. I have made a number of corrections to the original text.
+
+The project also includes the text of *Overview of Greek Syntax*, by Jeffrey A. Rydberg-Cox. Text provided by Perseus Digital Library, with funding from The Annenberg CPB/Project. Original version available for viewing and download at <http://www.perseus.tufts.edu/hopper/>.
+
+The above texts are licensed under a [Creative Commons Attribution-ShareAlike 3.0 United States license](CC BY-SA 3.0 US).
+
+### Icons
+
+The app icon was constructed in part from an icon obtained from the "Boilerplates" icon set formerly available at <http://www.android-icons.com>. The icon set is licensed under the [Creative Commons Attribution 3.0 Unported license][CC BY 3.0]. The app icon also includes an icon from the Android Developer Icons set created by [Opoloo][]. That icon set is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license][CC BY-SA 4.0].
+
+The remaining icons used in this app are taken from the [Google Material Design Icons][material-design-icons] set, licensed under a [Creative Common Attribution 4.0 International license][CC BY 4.0].
 
 ## License
 
