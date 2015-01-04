@@ -81,13 +81,20 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         if (((ListView) parentView).isItemChecked(position)) {
             // Item is highlighted.
             ((NavigationDrawerRow) item).setIconHighlighted(true);
-            navigationDrawerRowHolder.textView
-                    .setTextColor(mContext.getResources().getColor(android.R.color.white));
+            TextView textView = navigationDrawerRowHolder.textView;
+            int textDark = mContext.getResources().getColor(R.color.primary_dark_material_dark);
+            int backgroundLight = 
+                    mContext.getResources().getColor(R.color.background_material_light);
+            textView.setTextColor(textDark);
+            convertView.setBackgroundColor(backgroundLight);
         } else {
             // Item is not highlighted.
             ((NavigationDrawerRow) item).setIconHighlighted(false);
-            navigationDrawerRowHolder.textView
-                    .setTextColor(mContext.getResources().getColor(android.R.color.black));
+            TextView textView = navigationDrawerRowHolder.textView;
+            int textLight = mContext.getResources().getColor(R.color.primary_dark_material_light);
+            int backgroundWhite = mContext.getResources().getColor(R.color.background_white);
+            textView.setTextColor(textLight);
+            convertView.setBackgroundColor(backgroundWhite);
         }
 
         navigationDrawerRowHolder.imageView

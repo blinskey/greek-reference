@@ -112,25 +112,25 @@ public class NavigationDrawerFragment extends Fragment {
         NavigationDrawerItem[] items = new NavigationDrawerItem[] {
                 new NavigationDrawerHeading(100, getString(R.string.nav_drawer_heading_lexicon)),
                 new NavigationDrawerRow(101, getString(R.string.nav_drawer_row_browse_lexicon),
-                        R.drawable.ic_subject_grey600_24dp, R.drawable.ic_subject_white_24dp, 
+                        R.drawable.ic_subject_grey600_24dp, R.drawable.ic_subject_black_24dp,
                         getActivity()),
                 new NavigationDrawerRow(102, getString(R.string.nav_drawer_row_favorites),
-                        R.drawable.ic_favorite_grey600_24dp, R.drawable.ic_favorite_white_24dp, 
+                        R.drawable.ic_favorite_grey600_24dp, R.drawable.ic_favorite_black_24dp,
                         getActivity()),
                 new NavigationDrawerRow(103, getString(R.string.nav_drawer_row_history),
-                        R.drawable.ic_history_grey600_24dp, R.drawable.ic_history_white_24dp, 
+                        R.drawable.ic_history_grey600_24dp, R.drawable.ic_history_black_24dp,
                         getActivity()),
                 new NavigationDrawerHeading(200, getString(R.string.nav_drawer_heading_grammar)),
                 new NavigationDrawerRow(201, getString(R.string.nav_drawer_row_browse_grammar),
-                        R.drawable.ic_subject_grey600_24dp, R.drawable.ic_subject_white_24dp, 
+                        R.drawable.ic_subject_grey600_24dp, R.drawable.ic_subject_black_24dp,
                         getActivity()),
                 new NavigationDrawerRow(202, getString(R.string.nav_drawer_row_bookmarks),
-                        R.drawable.ic_bookmark_grey600_24dp, R.drawable.ic_bookmark_white_24dp, 
+                        R.drawable.ic_bookmark_grey600_24dp, R.drawable.ic_bookmark_black_24dp,
                         getActivity())
         };
 
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity(),
-                android.R.layout.simple_list_item_activated_1, items));
+                android.R.layout.simple_list_item_activated_2, items));
 
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

@@ -49,7 +49,6 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
     @Override
     public void setChecked(boolean b) {
         mIsChecked = b;
-        updateColor();
     }
 
     @Override
@@ -60,18 +59,5 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
     @Override
     public void toggle() {
         mIsChecked = !mIsChecked;
-        updateColor();
-    }
-
-    /**
-     * Updates the background, text, and icon colors to reflect the current checked or unchecked
-     * state of this row.
-     */
-    private void updateColor() {
-        if (mIsChecked) {
-            setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-        } else {
-            setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        }
     }
 }
