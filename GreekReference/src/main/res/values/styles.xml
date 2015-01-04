@@ -2,8 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">#212121</item>
-        <item name="colorAccent">#2196F3</item>
+        <item name="colorPrimary">@color/blue_accent_dark</item>
+        <item name="colorAccent">@color/color_blue_primary</item>
         <item name="android:textAppearanceMedium">@style/TextAppearanceDark</item>
     </style>
 
