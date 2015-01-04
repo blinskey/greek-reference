@@ -329,11 +329,4 @@ public class NavigationDrawerFragment extends Fragment {
         mCurrentSelectedPosition = position;
         mDrawerListView.setItemChecked(position, true);
     }
-
-    /**
-     * Hides the navigation drawer icon.
-     */
-    public void disableDrawerIndicator() {
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
-    }
 }
