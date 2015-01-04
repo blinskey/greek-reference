@@ -101,7 +101,7 @@ The above texts are licensed under a [Creative Commons Attribution-ShareAlike 3.
 
 ### Icons
 
-The app icon was constructed in part from an icon obtained from the "Boilerplates" icon set formerly available at <http://www.android-icons.com>. The icon set is licensed under the [Creative Commons Attribution 3.0 Unported license][CC BY 3.0]. The app icon also includes an icon from the Android Developer Icons set created by [Opoloo][]. That icon set is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license][CC BY-SA 4.0].
+The app icon was constructed in part from an icon obtained from the "Boilerplates" icon set formerly available at <http://www.android-icons.com>. The icon set is licensed under the [Creative Commons Attribution 3.0 Unported license][CC BY 3.0]. The app icon also includes an icon from the [Android Developer Icons][android-icons] set created by [Opoloo][]. That icon set is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license][CC BY-SA 4.0].
 
 The remaining icons used in this app are taken from the [Google Material Design Icons][material-design-icons] set, licensed under a [Creative Common Attribution 4.0 International license][CC BY 4.0].
 
