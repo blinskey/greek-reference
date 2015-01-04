@@ -112,16 +112,21 @@ public class NavigationDrawerFragment extends Fragment {
         NavigationDrawerItem[] items = new NavigationDrawerItem[] {
                 new NavigationDrawerHeading(100, getString(R.string.nav_drawer_heading_lexicon)),
                 new NavigationDrawerRow(101, getString(R.string.nav_drawer_row_browse_lexicon),
-                        R.drawable.ic_list_dark, R.drawable.ic_list_light, getActivity()),
+                        R.drawable.ic_subject_grey600_24dp, R.drawable.ic_subject_white_24dp, 
+                        getActivity()),
                 new NavigationDrawerRow(102, getString(R.string.nav_drawer_row_favorites),
-                        R.drawable.ic_star_dark, R.drawable.ic_star_light, getActivity()),
+                        R.drawable.ic_favorite_grey600_24dp, R.drawable.ic_favorite_white_24dp, 
+                        getActivity()),
                 new NavigationDrawerRow(103, getString(R.string.nav_drawer_row_history),
-                        R.drawable.ic_clock_dark, R.drawable.ic_clock_light, getActivity()),
+                        R.drawable.ic_history_grey600_24dp, R.drawable.ic_history_white_24dp, 
+                        getActivity()),
                 new NavigationDrawerHeading(200, getString(R.string.nav_drawer_heading_grammar)),
                 new NavigationDrawerRow(201, getString(R.string.nav_drawer_row_browse_grammar),
-                        R.drawable.ic_book_dark, R.drawable.ic_book_light, getActivity()),
+                        R.drawable.ic_subject_grey600_24dp, R.drawable.ic_subject_white_24dp, 
+                        getActivity()),
                 new NavigationDrawerRow(202, getString(R.string.nav_drawer_row_bookmarks),
-                        R.drawable.ic_bookmark_dark, R.drawable.ic_bookmark_light, getActivity())
+                        R.drawable.ic_bookmark_grey600_24dp, R.drawable.ic_bookmark_white_24dp, 
+                        getActivity())
         };
 
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity(),
@@ -160,7 +165,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
-                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
+                R.drawable.ic_menu_white_24dp,    /* nav drawer image to replace 'Up' caret */
                 R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
                 R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
         ) {

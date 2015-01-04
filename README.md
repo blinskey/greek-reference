@@ -32,7 +32,6 @@ The latest release is version 1.7.1. The corresponding version of the [Greek Ref
 
 You can view a changelog for each release on the [Releases page][].
 
-
 ## Building the App
 
 The texts used in this app are contained in a pair of databases called `lexicon.db` and `syntax.db`. These are generated using a simple Java program, the [Greek Reference Database Creator][], which is included as a submodule in this repository. The database files are zipped and placed in this project's `assets` directory. They must be named `lexicon.zip` and `syntax.zip` in order to work with the [SQLiteAssetHelper][Android SQLiteAssetHelper] library used to copy them to the user's device.
@@ -81,9 +80,11 @@ Several users have requested a Latin version. While I'm not planning to make suc
 
 ## Icons
 
-This project includes icons from the [Android Developer Icons][android-icons] set created by [Opoloo][]. These icons are licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license][CC BY-SA 4.0].
+The app icon was constructed in part from an icon obtained from the "Boilerplates" icon set formerly available at <http://www.android-icons.com>. The icon set is licensed under the [Creative Commons Attribution 3.0 Unported license][CC BY 3.0]. The app icon also includes an icon from the Android Developer Icons set created by [Opoloo][]. That icon set is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license][CC BY-SA 4.0].
 
-The app icon was constructed in part from an icon obtained from the "Boilerplates" icon set formerly available at <http://www.android-icons.com>. The icon set is licensed under the [Creative Commons Attribution 3.0 Unported license][CC BY 3.0]. The app icon also includes an icon from the Android Developer Icons set.
+The remaining icons used in this app are taken from the [Google Material Design 
+Icons][material-design-icons] set, licensed under a [Creative Common Attribution 4.0 
+International license][CC BY 4.0].
 
 ## Texts
 
@@ -104,6 +105,7 @@ This program uses the following open source resources. Thanks to their creators 
 - [TypefaceTextView][]
 - [Android Developer Icons][android-icons]
 - "Boilerplates" icons from <http://www.android-icons.com>
+- [Google Material Design Icons][material-design-icons]
 
 I am particularly grateful to Jeffrey A. Rydberg-Cox for making his *Overview of Greek Syntax* available through Perseus under a Creative Commons license. You can visit his website at <http://daedalus.umkc.edu>.
 
@@ -126,5 +128,7 @@ This project is licensed under the [Apache License, version 2.0][Apache], with t
 [CC By 3.0]: http://creativecommons.org/licenses/by/3.0/
 [CC BY-SA 3.0 US]: http://creativecommons.org/licenses/by-sa/3.0/us/
 [CC BY-SA 4.0]: http://creativecommons.org/licenses/by-sa/4.0/
+[CC BY 4.0]: http://creativecommons.org/licenses/by/4.0/
 [android-icons]: http://androidicons.com
 [Opoloo]: http://www.opoloo.com/
+[material-design-icons]: https://github.com/google/material-design-icons
