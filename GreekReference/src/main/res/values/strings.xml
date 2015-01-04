@@ -96,6 +96,7 @@
             George Liddell and Robert Scott. Text provided by Perseus Digital Library, with funding
             from The Annenberg CPB/Project. Original version available for viewing and download at
             <a href="http://www.perseus.tufts.edu/hopper/">http://www.perseus.tufts.edu/hopper/</a>.
+            I have made a number of corrections to the original text.
         </p>
         <p>
             The app also includes the text of <i>Overview of Greek Syntax</i>, by Jeffrey A.
@@ -108,10 +109,26 @@
             States License. See <a href="http://creativecommons.org/licenses/by-sa/3.0/us/">http://creativecommons.org/licenses/by-sa/3.0/us/</a>
             for details.
         </p>
+        <p>
+          The app icon was constructed in part from an icon obtained from the "Boilerplates" icon
+          set formerly available at <a href="http://www.android-icons.com">android-icons.com</a>.
+          The icon set is licensed under the <a href="http://creativecommons.org/licenses/by-sa/3.0/us/">
+          Creative Commons Attribution 3.0 Unported license</a>. The app icon also includes an icon
+          from the <a href="http://www.android-icons.com">Android Developer Icons</a> set created by
+          <a href="opoloo.com">Opoloo</a>. That icon set is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">
+          Creative Commons Attribution-ShareAlike 4.0 International license</a>. The app icon is
+          licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+          Commons Attribution-ShareAlike 4.0 International license</a>.
+        </p>
+        <p>
+          The remaining icons used in this app are taken from the <a href="https://github.com/google/material-design-icons">
+          Google Material Design Icons</a> set, licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">
+          Creative Common Attribution 4.0 International license</a>.
+        </p>
         <hr>
         <p>
-            The following open source resources were used in the development of this app. Thanks to
-            their creators for making their work available.
+            The following additional open source resources were used in the development of this app.
+            Thanks to their creators for making their work available.
             <ul>
                 <li><a href="https://github.com/jgilfelt/android-sqlite-asset-helper">SQLiteAssetHelper</a></li>
                 <br>
