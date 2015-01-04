@@ -22,7 +22,7 @@ package com.benlinskey.greekreference.navigationdrawer;
 public class NavigationDrawerHeading extends NavigationDrawerItem {
 
     private static final int TYPE = 0;
-
+    
     public NavigationDrawerHeading(int id, String label) {
         super(id, label);
     }
@@ -36,7 +36,7 @@ public class NavigationDrawerHeading extends NavigationDrawerItem {
     public boolean isRow() {
         return false;
     }
-
+  
     @Override
     public boolean updateActionBarTitle() {
         return false;

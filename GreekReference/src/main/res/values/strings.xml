@@ -4,11 +4,11 @@
     <string name="app_name">Greek Reference</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_drawer_heading_lexicon">LEXICON</string>
+    <string name="nav_drawer_heading_lexicon">Lexicon</string>
     <string name="nav_drawer_row_browse_lexicon">Browse</string>
     <string name="nav_drawer_row_favorites">Favorites</string>
     <string name="nav_drawer_row_history">History</string>
-    <string name="nav_drawer_heading_grammar">GRAMMAR</string>
+    <string name="nav_drawer_heading_grammar">Syntax</string>
     <string name="nav_drawer_row_browse_grammar">Browse</string>
     <string name="nav_drawer_row_bookmarks">Bookmarks</string>
     <string name="database_progress_dialog">Installing databases&#8230;</string>
@@ -48,9 +48,13 @@
     <string name="toast_favorite_removed">Favorite removed.</string>
     <string name="toast_bookmark_added">Bookmark added.</string>
     <string name="toast_bookmark_removed">Bookmark removed.</string>
-    <string name="lexicon_favorites_empty_view">        Tap the star icon to save your favorite words.</string>
+    <string name="lexicon_favorites_empty_view">
+        Tap the Add to Favorites icon to save your favorite words to this list.
+    </string>
     <string name="lexicon_history_empty_view">Your history is empty.</string>
-    <string name="syntax_bookamrks_empty_view">        Tap the bookmark icon to save your favorite sections.</string>
+    <string name="syntax_bookmarks_empty_view">
+        Tap the Bookmark icon to save your favorite sections to this list.
+    </string>
     <string name="title_help">Help</string>
     <string name="message_help">
 <![CDATA[

@@ -48,7 +48,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         if (item.isRow()) {
             view = getRowView(convertView, parent, item, position);
         } else {
-            view = getHeadingView(convertView, parent, item);
+            view = getHeadingView(convertView, parent, (NavigationDrawerHeading) item, position);
         }
         return view;
     }
@@ -81,13 +81,20 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         if (((ListView) parentView).isItemChecked(position)) {
             // Item is highlighted.
             ((NavigationDrawerRow) item).setIconHighlighted(true);
-            navigationDrawerRowHolder.textView
-                    .setTextColor(mContext.getResources().getColor(android.R.color.white));
+            TextView textView = navigationDrawerRowHolder.textView;
+            int textDark = mContext.getResources().getColor(R.color.primary_dark_material_dark);
+            int backgroundLight =
+                    mContext.getResources().getColor(R.color.background_material_light);
+            textView.setTextColor(textDark);
+            convertView.setBackgroundColor(backgroundLight);
         } else {
             // Item is not highlighted.
             ((NavigationDrawerRow) item).setIconHighlighted(false);
-            navigationDrawerRowHolder.textView
-                    .setTextColor(mContext.getResources().getColor(android.R.color.black));
+            TextView textView = navigationDrawerRowHolder.textView;
+            int textDark = mContext.getResources().getColor(R.color.primary_dark_material_dark);
+            int backgroundWhite = mContext.getResources().getColor(R.color.background_white);
+            textView.setTextColor(textDark);
+            convertView.setBackgroundColor(backgroundWhite);
         }
 
         navigationDrawerRowHolder.imageView
@@ -96,14 +103,20 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         return convertView;
     }
 
-    public View getHeadingView(View convertView, ViewGroup parentView, NavigationDrawerItem item) {
-        NavigationDrawerHeading heading = (NavigationDrawerHeading) item;
+    public View getHeadingView(View convertView, ViewGroup parentView, NavigationDrawerItem item, 
+            int position) {
         NavigationDrawerHeadingHolder holder = null;
+        TextView textView;
 
         if (null == convertView) {
-            convertView = mInflater.inflate(R.layout.navigation_drawer_heading, parentView, false);
-            TextView textView = (TextView)
-                    convertView.findViewById(R.id.navigation_drawer_heading_text);
+            if (0 == position) {
+                convertView = mInflater.inflate(R.layout.navigation_drawer_heading_first,
+                        parentView, false);
+            } else {
+                convertView = mInflater.inflate(R.layout.navigation_drawer_heading,
+                        parentView, false);
+            }
+            textView = (TextView) convertView.findViewById(R.id.navigation_drawer_heading_text);
 
             holder = new NavigationDrawerHeadingHolder();
             holder.textView = textView;
@@ -114,7 +127,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
             holder = (NavigationDrawerHeadingHolder) convertView.getTag();
         }
 
-        holder.textView.setText(heading.getLabel());
+        holder.textView.setText(item.getLabel());
 
         return convertView;
     }
