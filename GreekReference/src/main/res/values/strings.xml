@@ -4,11 +4,11 @@
     <string name="app_name">Greek Reference</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_drawer_heading_lexicon">LEXICON</string>
+    <string name="nav_drawer_heading_lexicon">Lexicon</string>
     <string name="nav_drawer_row_browse_lexicon">Browse</string>
     <string name="nav_drawer_row_favorites">Favorites</string>
     <string name="nav_drawer_row_history">History</string>
-    <string name="nav_drawer_heading_grammar">GRAMMAR</string>
+    <string name="nav_drawer_heading_grammar">Syntax</string>
     <string name="nav_drawer_row_browse_grammar">Browse</string>
     <string name="nav_drawer_row_bookmarks">Bookmarks</string>
     <string name="database_progress_dialog">Installing databases&#8230;</string>

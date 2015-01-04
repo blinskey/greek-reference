@@ -3,20 +3,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:paddingTop="8dp">
-    
-    <View style="@style/ThinDivider"
-          android:layout_gravity="top"/>
+              android:layout_height="48dp"
+              android:paddingTop="8dp"
+              android:gravity="center_vertical">
 
     <TextView android:id="@+id/navigation_drawer_heading_text"
-              android:layout_height="47dp"
+              android:layout_height="wrap_content"
               android:layout_width="match_parent"
               style="@style/TextAppearance.AppCompat.Small"
               android:textColor="@color/secondary_text_default_material_light"
               android:textStyle="bold"
-              android:paddingLeft="16dp"
-              android:gravity="center_vertical"
-              android:layout_gravity="center_vertical"/>
-
+              android:paddingLeft="16dp"/>
+    
 </LinearLayout>
