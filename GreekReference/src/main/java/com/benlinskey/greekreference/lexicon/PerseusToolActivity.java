@@ -23,6 +23,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -120,8 +121,26 @@ public class PerseusToolActivity extends ActionBarActivity {
         mWebView.loadUrl(url);
     }
 
+    
+    // Workaround for a bug related to the appcompat-v7 library on some LG devices. Thanks to 
+    // Alex Lockwood for the fix: http://stackoverflow.com/questions/26833242/nullpointerexception-phonewindowonkeyuppanel1002-main
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
+            openOptionsMenu();
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }    
+    
     @Override
     public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
+        // Workaround for a bug related to the appcompat-v7 library on some LG devices. See comment
+        // above onKeyUp method.
+        if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
+            return true;
+        }
+        
         // Use the back button to navigate through the web history if the user
         // has clicked any links.
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
@@ -205,4 +224,6 @@ public class PerseusToolActivity extends ActionBarActivity {
         HelpDialogFragment dialogFragment = new HelpDialogFragment();
         dialogFragment.show(getFragmentManager(), "help");
     }
+
+   
 }
