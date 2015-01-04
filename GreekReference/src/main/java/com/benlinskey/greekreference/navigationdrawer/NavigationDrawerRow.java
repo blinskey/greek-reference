@@ -29,13 +29,11 @@ public class NavigationDrawerRow extends NavigationDrawerItem {
     private int mIconHighlighted;
     private int mCurrentIcon;
 
-    public NavigationDrawerRow(int id, String label, String iconUnhighlighted,
-            String iconHighlighted, Context context) {
+    public NavigationDrawerRow(int id, String label, int iconUnhighlighted,
+            int iconHighlighted, Context context) {
         super(id, label);
-        mIconUnhighlighted = context.getResources().getIdentifier(iconUnhighlighted, "drawable",
-                context.getPackageName());
-        mIconHighlighted = context.getResources().getIdentifier(iconHighlighted, "drawable",
-                context.getPackageName());
+        mIconUnhighlighted = iconUnhighlighted;
+        mIconHighlighted = iconHighlighted;
         mCurrentIcon = mIconUnhighlighted;
     }
 

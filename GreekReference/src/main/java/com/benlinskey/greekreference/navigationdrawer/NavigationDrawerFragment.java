@@ -112,16 +112,16 @@ public class NavigationDrawerFragment extends Fragment {
         NavigationDrawerItem[] items = new NavigationDrawerItem[] {
                 new NavigationDrawerHeading(100, getString(R.string.nav_drawer_heading_lexicon)),
                 new NavigationDrawerRow(101, getString(R.string.nav_drawer_row_browse_lexicon),
-                        "ic_list_dark", "ic_list_light", getActivity()),
+                        R.drawable.ic_list_dark, R.drawable.ic_list_light, getActivity()),
                 new NavigationDrawerRow(102, getString(R.string.nav_drawer_row_favorites),
-                        "ic_star_dark", "ic_star_light", getActivity()),
+                        R.drawable.ic_star_dark, R.drawable.ic_star_light, getActivity()),
                 new NavigationDrawerRow(103, getString(R.string.nav_drawer_row_history),
-                        "ic_clock_dark", "ic_clock_light", getActivity()),
+                        R.drawable.ic_clock_dark, R.drawable.ic_clock_light, getActivity()),
                 new NavigationDrawerHeading(200, getString(R.string.nav_drawer_heading_grammar)),
                 new NavigationDrawerRow(201, getString(R.string.nav_drawer_row_browse_grammar),
-                        "ic_book_dark", "ic_book_light", getActivity()),
+                        R.drawable.ic_book_dark, R.drawable.ic_book_light, getActivity()),
                 new NavigationDrawerRow(202, getString(R.string.nav_drawer_row_bookmarks),
-                        "ic_bookmark_dark", "ic_bookmark_light", getActivity())
+                        R.drawable.ic_bookmark_dark, R.drawable.ic_bookmark_light, getActivity())
         };
 
         mDrawerListView.setAdapter(new NavigationDrawerAdapter(getActivity(),
