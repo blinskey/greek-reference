@@ -52,7 +52,7 @@
         Tap the Add to Favorites icon to save your favorite words to this list.
     </string>
     <string name="lexicon_history_empty_view">Your history is empty.</string>
-    <string name="syntax_bookamrks_empty_view">
+    <string name="syntax_bookmarks_empty_view">
         Tap the Bookmark icon to save your favorite sections to this list.
     </string>
     <string name="title_help">Help</string>

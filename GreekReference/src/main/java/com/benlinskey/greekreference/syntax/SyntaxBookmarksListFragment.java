@@ -104,7 +104,7 @@ public class SyntaxBookmarksListFragment extends SyntaxListFragment
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
-        setNoItemsView(R.string.syntax_bookamrks_empty_view);
+        setNoItemsView(R.string.syntax_bookmarks_empty_view);
     }
 
     @Override
