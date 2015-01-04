@@ -107,7 +107,7 @@ The remaining icons used in this app are taken from the [Google Material Design 
 
 ## License
 
-This project is licensed under the [Apache License, version 2.0][Apache], with the exception of the texts of *An Intermediate Greek-English Lexicon* and *Overview of Greek Syntax*, which are distributed under Creative Commons licenses as [described above](https://github.com/blinskey/greek-reference#texts).
+This project's source code is licensed under the [Apache License, version 2.0][Apache]. The app icon is licensed under a [Creative Commons Attribution-Share Alike 4.0 International License][CC BY 4.0].
 
 [Greek Reference Database Creator]: https://github.com/blinskey/greek-reference-database-creator
 [Apache]: http://www.apache.org/licenses/LICENSE-2.0
