@@ -125,7 +125,7 @@ public class PerseusToolActivity extends ActionBarActivity {
     // Workaround for a bug related to the appcompat-v7 library on some LG devices. Thanks to 
     // Alex Lockwood for the fix: http://stackoverflow.com/questions/26833242/nullpointerexception-phonewindowonkeyuppanel1002-main
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
         if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
             openOptionsMenu();
             return true;

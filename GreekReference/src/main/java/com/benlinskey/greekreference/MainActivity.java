@@ -906,7 +906,7 @@ public class MainActivity extends ActionBarActivity
     }
     
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
         if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
             openOptionsMenu();
             return true;

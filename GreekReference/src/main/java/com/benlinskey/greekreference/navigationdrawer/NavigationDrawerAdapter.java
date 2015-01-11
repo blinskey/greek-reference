@@ -48,7 +48,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         if (item.isRow()) {
             view = getRowView(convertView, parent, item, position);
         } else {
-            view = getHeadingView(convertView, parent, (NavigationDrawerHeading) item, position);
+            view = getHeadingView(convertView, parent, item, position);
         }
         return view;
     }
