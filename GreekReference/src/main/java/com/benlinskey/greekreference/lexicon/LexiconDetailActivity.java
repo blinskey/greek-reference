@@ -26,15 +26,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.benlinskey.greekreference.AbstractDetailActivity;
 import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.DetailActivity;
 import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
- * A {@link DetailActivity} used to display lexicon entries.
+ * A {@link com.benlinskey.greekreference.AbstractDetailActivity} used to display lexicon entries.
  */
-public class LexiconDetailActivity extends DetailActivity {
+public class LexiconDetailActivity extends AbstractDetailActivity {
     
     public static final String ARG_LEXICON_ID = "lexicon_id";
     public static final String ARG_WORD = "word";

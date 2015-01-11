@@ -30,7 +30,7 @@ import android.widget.TextView;
  * The basic class from which every list fragment inherits. This class handles
  * basic setup and UI tasks common to all of this app's list fragments.
  */
-public abstract class BaseListFragment extends ListFragment {
+public abstract class AbstractListFragment extends ListFragment {
     protected TextView mEmptyView;
 
     /** The padding, in pixels, to apply to {@code mEmptyView}. */

@@ -31,10 +31,10 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider;
 
 /**
- * A {@link LexiconListFragment} used to display a list of all words stored in 
+ * A {@link AbstractLexiconListFragment} used to display a list of all words stored in
  * the lexicon favorites list.
  */
-public class LexiconFavoritesListFragment extends LexiconListFragment
+public class LexiconFavoritesListFragment extends AbstractLexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>{
 
     public static final String NAME = "lexicon_favorites";

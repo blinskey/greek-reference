@@ -30,12 +30,12 @@ import com.benlinskey.greekreference.R;
 /**
  * Based on the tutorial at {@llink http://www.michenux.net/android-navigation-drawer-748.html}.
  */
-public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> {
+public class NavigationDrawerAdapter extends ArrayAdapter<AbstractNavigationDrawerItem> {
 
     private LayoutInflater mInflater;
     private Context mContext;
 
-    public NavigationDrawerAdapter(Context context, int id, NavigationDrawerItem[] objects) {
+    public NavigationDrawerAdapter(Context context, int id, AbstractNavigationDrawerItem[] objects) {
         super(context, id, objects);
         this.mInflater = LayoutInflater.from(context);
         mContext = context;
@@ -44,7 +44,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
-        NavigationDrawerItem item = this.getItem(position);
+        AbstractNavigationDrawerItem item = this.getItem(position);
         if (item.isRow()) {
             view = getRowView(convertView, parent, item, position);
         } else {
@@ -53,7 +53,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         return view;
     }
 
-    public View getRowView(View convertView, ViewGroup parentView, NavigationDrawerItem item,
+    public View getRowView(View convertView, ViewGroup parentView, AbstractNavigationDrawerItem item,
             int position) {
         NavigationDrawerRowHolder navigationDrawerRowHolder = null;
 
@@ -103,7 +103,7 @@ public class NavigationDrawerAdapter extends ArrayAdapter<NavigationDrawerItem> 
         return convertView;
     }
 
-    public View getHeadingView(View convertView, ViewGroup parentView, NavigationDrawerItem item, 
+    public View getHeadingView(View convertView, ViewGroup parentView, AbstractNavigationDrawerItem item,
             int position) {
         NavigationDrawerHeadingHolder holder = null;
         TextView textView;

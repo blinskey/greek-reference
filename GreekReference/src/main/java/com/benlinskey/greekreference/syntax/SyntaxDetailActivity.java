@@ -27,15 +27,15 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.benlinskey.greekreference.DetailActivity;
+import com.benlinskey.greekreference.AbstractDetailActivity;
 import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
- * A {@link DetailActivity} used to display syntax sections.
+ * A {@link com.benlinskey.greekreference.AbstractDetailActivity} used to display syntax sections.
  */
-public class SyntaxDetailActivity extends DetailActivity {
+public class SyntaxDetailActivity extends AbstractDetailActivity {
 
     public static final String ARG_SYNTAX_ID = "syntax_id";
     public static final String ARG_SECTION = "section";

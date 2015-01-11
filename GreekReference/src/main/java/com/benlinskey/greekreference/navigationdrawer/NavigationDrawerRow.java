@@ -21,7 +21,7 @@ import android.content.Context;
 /**
  * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
  */
-public class NavigationDrawerRow extends NavigationDrawerItem {
+public class NavigationDrawerRow extends AbstractNavigationDrawerItem {
 
     private static final int TYPE = 1;
 

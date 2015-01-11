@@ -18,7 +18,7 @@ package com.benlinskey.greekreference.lexicon;
 
 import android.database.Cursor;
 
-import com.benlinskey.greekreference.BaseListFragment;
+import com.benlinskey.greekreference.AbstractListFragment;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
@@ -27,7 +27,7 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 // TODO: Simplify callback interface of this class's children now that we're getting the
 // selected item's ID from the getSelectedLexiconId() method here.
 // TODO: Make selectedId generic and move to superclass.
-public abstract class LexiconListFragment extends BaseListFragment {
+public abstract class AbstractLexiconListFragment extends AbstractListFragment {
 
     private static final int NO_SELECTION = -1;
 

@@ -37,9 +37,9 @@ import android.widget.TextView;
 
 /**
  * The basic activity from which all detail activities inherit. This class 
- * contains a single {@link DetailFragment} and is only used on phones.
+ * contains a single {@link AbstractDetailFragment} and is only used on phones.
  */
-public abstract class DetailActivity extends ActionBarActivity {
+public abstract class AbstractDetailActivity extends ActionBarActivity {
     // TODO: Some code is repeated from MainActivity here. It would be good to
     // move this to a superclass or otherwise consolidate it somehow.
 

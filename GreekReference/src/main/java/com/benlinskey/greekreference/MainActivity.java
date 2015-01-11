@@ -54,27 +54,27 @@ import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
+import com.benlinskey.greekreference.lexicon.AbstractLexiconListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconDetailActivity;
 import com.benlinskey.greekreference.lexicon.LexiconDetailFragment;
 import com.benlinskey.greekreference.lexicon.LexiconFavoritesListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconHistoryListFragment;
-import com.benlinskey.greekreference.lexicon.LexiconListFragment;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
+import com.benlinskey.greekreference.syntax.AbstractSyntaxListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxDetailActivity;
 import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
-import com.benlinskey.greekreference.syntax.SyntaxListFragment;
 
 /**
  * The app's primary activity. On tablets, this activity displays a two-pane
- * layout containing a {@link BaseListFragment} and a {@link DetailFragment}.
- * On phones, it displays only a <code>BaseListFragment</code>.
+ * layout containing a {@link AbstractListFragment} and a {@link AbstractDetailFragment}.
+ * On phones, it displays only a <code>AbstractListFragment</code>.
  */
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, 
-                   BaseListFragment.Callbacks {
+                   AbstractListFragment.Callbacks {
 
     private static final String TAG = "MainActivity";
 
@@ -206,7 +206,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     * Callback method from {@link BaseListFragment.Callbacks}
+     * Callback method from {@link AbstractListFragment.Callbacks}
      * indicating that the item with the given ID was selected.
      */
     @Override
@@ -234,7 +234,7 @@ public class MainActivity extends ActionBarActivity
         // TODO: Verify that we're in the correct mode here and in similar
         // situations through this class and throw an exception if we're not.
 
-        LexiconListFragment fragment = (LexiconListFragment) getFragmentManager()
+        AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedLexiconId());
 
@@ -262,7 +262,7 @@ public class MainActivity extends ActionBarActivity
      * item's entry.
      */
     private void syntaxItemSelected() {
-        SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()
+        AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedSyntaxId());
 
@@ -314,7 +314,7 @@ public class MainActivity extends ActionBarActivity
             transaction.replace(R.id.item_detail_container, fragment);
             transaction.commitAllowingStateLoss();
         } else {
-            LexiconListFragment fragment = (LexiconListFragment) getFragmentManager()
+            AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getFragmentManager()
                     .findFragmentById(R.id.item_list_container);
             int lexiconId = fragment.getSelectedLexiconId();
 
@@ -341,7 +341,7 @@ public class MainActivity extends ActionBarActivity
             transaction.replace(R.id.item_detail_container, fragment);
             transaction.commitAllowingStateLoss();
         } else {
-            SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()
+            AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getFragmentManager()
                     .findFragmentById(R.id.item_list_container);
             int syntaxId = fragment.getSelectedSyntaxId();
 
@@ -771,8 +771,8 @@ public class MainActivity extends ActionBarActivity
 
     /**
      * Replaces the currently displayed fragment(s) with the specified fragment(s).
-     * @param listFragment the {@link BaseListFragment} to swap in
-     * @param detailFragment the {@link DetailFragment} to swap in, or null if the app is in
+     * @param listFragment the {@link AbstractListFragment} to swap in
+     * @param detailFragment the {@link AbstractDetailFragment} to swap in, or null if the app is in
      *     one-pane mode
      */
     private void swapInFragments(Fragment listFragment, Fragment detailFragment) {
@@ -799,8 +799,8 @@ public class MainActivity extends ActionBarActivity
      * @param menu the {@code Menu} containing the Favorite icon
      */
     private void setLexiconFavoriteIcon(Menu menu) {
-        LexiconListFragment fragment
-                = (LexiconListFragment) getFragmentManager()
+        AbstractLexiconListFragment fragment
+                = (AbstractLexiconListFragment) getFragmentManager()
                         .findFragmentById(R.id.item_list_container);
 
         MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
@@ -824,7 +824,7 @@ public class MainActivity extends ActionBarActivity
      * @param menu the {@code Menu} containing the Bookmark icon
      */
     private void setSyntaxBookmarkIcon(Menu menu) {
-        SyntaxListFragment fragment = (SyntaxListFragment) getFragmentManager()
+        AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
 
         MenuItem addBookmark = menu.findItem(R.id.action_add_bookmark);

@@ -29,10 +29,10 @@ import android.widget.SimpleCursorAdapter;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
 
 /**
- * A {@link SyntaxListFragment} used to display a list of all sections in the Overview of Greek
+ * A {@link AbstractSyntaxListFragment} used to display a list of all sections in the Overview of Greek
  * Syntax text.
  */
-public class SyntaxBrowseListFragment extends SyntaxListFragment
+public class SyntaxBrowseListFragment extends AbstractSyntaxListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String NAME = "syntax_browse";

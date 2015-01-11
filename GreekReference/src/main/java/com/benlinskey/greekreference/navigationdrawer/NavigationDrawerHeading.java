@@ -19,7 +19,7 @@ package com.benlinskey.greekreference.navigationdrawer;
 /**
  * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
  */
-public class NavigationDrawerHeading extends NavigationDrawerItem {
+public class NavigationDrawerHeading extends AbstractNavigationDrawerItem {
 
     private static final int TYPE = 0;
     

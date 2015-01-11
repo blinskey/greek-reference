@@ -109,7 +109,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        NavigationDrawerItem[] items = new NavigationDrawerItem[] {
+        AbstractNavigationDrawerItem[] items = new AbstractNavigationDrawerItem[] {
                 new NavigationDrawerHeading(100, getString(R.string.nav_drawer_heading_lexicon)),
                 new NavigationDrawerRow(101, getString(R.string.nav_drawer_row_browse_lexicon),
                         R.drawable.ic_subject_grey600_24dp, R.drawable.ic_subject_black_24dp,

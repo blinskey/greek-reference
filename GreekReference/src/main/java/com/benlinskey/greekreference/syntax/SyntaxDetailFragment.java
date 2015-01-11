@@ -27,7 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.benlinskey.greekreference.DetailFragment;
+import com.benlinskey.greekreference.AbstractDetailFragment;
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -42,9 +42,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * A {@link DetailFragment} used to display a syntax section.
+ * A {@link com.benlinskey.greekreference.AbstractDetailFragment} used to display a syntax section.
  */
-public class SyntaxDetailFragment extends DetailFragment {
+public class SyntaxDetailFragment extends AbstractDetailFragment {
     public static final String TAG = "SyntaxDetailFragment";
     public static final String ARG_XML = "xml";
     private SyntaxSection mSection;
@@ -149,7 +149,7 @@ public class SyntaxDetailFragment extends DetailFragment {
      * Adds the currently selected section to the syntax bookmarks list.
      */
     public void addSyntaxBookmark() {
-        SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getFragmentManager()
+        AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         int syntaxId = fragment.getSelectedSyntaxId();
         String section = getSectionFromSyntaxId(syntaxId);
@@ -160,7 +160,7 @@ public class SyntaxDetailFragment extends DetailFragment {
      * Removes the currently selected section from the syntax bookmarks list.
      */
     public void removeSyntaxBookmark() {
-        SyntaxListFragment fragment = (SyntaxListFragment) getActivity().getFragmentManager()
+        AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         int syntaxId = fragment.getSelectedSyntaxId();
         removeSyntaxBookmark(syntaxId);

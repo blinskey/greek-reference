@@ -30,10 +30,10 @@ import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
- * A {@link SyntaxListFragment} used to display a list of all words stored in the syntax bookmarks
+ * A {@link AbstractSyntaxListFragment} used to display a list of all words stored in the syntax bookmarks
  * list.
  */
-public class SyntaxBookmarksListFragment extends SyntaxListFragment
+public class SyntaxBookmarksListFragment extends AbstractSyntaxListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String NAME = "syntax_bookmarks";

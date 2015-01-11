@@ -30,10 +30,10 @@ import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
- * A {@link LexiconListFragment} used to display a list of all words in the
+ * A {@link AbstractLexiconListFragment} used to display a list of all words in the
  * lexicon.
  */
-public class LexiconBrowseListFragment extends LexiconListFragment
+public class LexiconBrowseListFragment extends AbstractLexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public static final String NAME = "lexicon_browse";

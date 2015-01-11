@@ -19,12 +19,12 @@ package com.benlinskey.greekreference.navigationdrawer;
 /**
  * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
  */
-public abstract class NavigationDrawerItem {
+public abstract class AbstractNavigationDrawerItem {
 
     private int mId;
     private String mLabel;
 
-    public NavigationDrawerItem(int id, String label) {
+    public AbstractNavigationDrawerItem(int id, String label) {
         mId = id;
         mLabel = label;
     }

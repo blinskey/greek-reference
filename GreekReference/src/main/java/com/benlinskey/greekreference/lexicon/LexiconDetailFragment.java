@@ -37,8 +37,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.benlinskey.greekreference.AbstractDetailFragment;
 import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.DetailFragment;
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
@@ -49,9 +49,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * A {@link DetailFragment} used to display a lexicon entry.
+ * A {@link com.benlinskey.greekreference.AbstractDetailFragment} used to display a lexicon entry.
  */
-public class LexiconDetailFragment extends DetailFragment {
+public class LexiconDetailFragment extends AbstractDetailFragment {
 
     public static final String TAG = "LexiconDetailFragment";
     public static final String PERSEUS_TOOL_EXTRA_KEY = "com.benlinskey.greekreference.lexicon.PerseusToolExtraKey";
@@ -177,7 +177,7 @@ public class LexiconDetailFragment extends DetailFragment {
      * Adds the currently selected word to the lexicon favorites list.
      */
     public void addLexiconFavorite() {
-        LexiconListFragment fragment = (LexiconListFragment) getActivity().getFragmentManager()
+        AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         int lexiconId = fragment.getSelectedLexiconId();
         String word = getWordFromLexiconId(lexiconId);
@@ -188,7 +188,7 @@ public class LexiconDetailFragment extends DetailFragment {
      * Removes the currently selected word from the lexicon favorites list.
      */
     public void removeLexiconFavorite() {
-        LexiconListFragment fragment = (LexiconListFragment) getActivity().getFragmentManager()
+        AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
         int lexiconId = fragment.getSelectedLexiconId();
         removeLexiconFavorite(lexiconId);

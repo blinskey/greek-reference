@@ -31,10 +31,10 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 
 /**
- * A {@link LexiconListFragment} used to display a list of all words stored in
+ * A {@link AbstractLexiconListFragment} used to display a list of all words stored in
  * the lexicon history list.
  */
-public class LexiconHistoryListFragment extends LexiconListFragment
+public class LexiconHistoryListFragment extends AbstractLexiconListFragment
         implements LoaderManager.LoaderCallbacks<Cursor>{
     public static final String NAME = "lexicon_History";
 

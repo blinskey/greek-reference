@@ -27,7 +27,7 @@ import android.widget.Toast;
 /**
  * The basic class from which every detail fragment inherits.
  */
-public abstract class DetailFragment extends Fragment {
+public abstract class AbstractDetailFragment extends Fragment {
     private static final String KEY_SCROLL_Y = "scroll_y";
 
     /**
