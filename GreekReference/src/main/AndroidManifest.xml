@@ -65,19 +65,23 @@
         <provider
             android:name="com.benlinskey.greekreference.data.lexicon.LexiconProvider"
             android:authorities="com.benlinskey.greekreference.data.lexicon.LexiconProvider"
-            android:exported="true" />
+            android:exported="false"/>
         <provider
             android:name="com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider"
-            android:authorities="com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider" />
+            android:authorities="com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider" 
+            android:exported="false"/>
         <provider
             android:name="com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider"
-            android:authorities="com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider" />
+            android:authorities="com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider" 
+            android:exported="false"/>
         <provider
             android:name="com.benlinskey.greekreference.data.syntax.SyntaxProvider"
-            android:authorities="com.benlinskey.greekreference.data.syntax.SyntaxProvider" />
+            android:authorities="com.benlinskey.greekreference.data.syntax.SyntaxProvider" 
+            android:exported="false"/>
         <provider
             android:name="com.benlinskey.greekreference.data.appdata.SyntaxBookmarksProvider"
-            android:authorities="com.benlinskey.greekreference.data.appdata.SyntaxBookmarksProvider" />
+            android:authorities="com.benlinskey.greekreference.data.appdata.SyntaxBookmarksProvider" 
+            android:exported="false"/>
     </application>
 
 </manifest>
