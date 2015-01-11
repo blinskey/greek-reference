@@ -23,7 +23,6 @@ import android.provider.BaseColumns;
  * A contract class for the AppData database. 
  */
 public final class AppDataContract {
-    // TODO: Move content URI declarations to this class.
 
     /**
      * Empty private constructor to prevent instantiation.

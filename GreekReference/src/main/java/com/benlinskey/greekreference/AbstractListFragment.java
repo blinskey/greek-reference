@@ -31,6 +31,7 @@ import android.widget.TextView;
  * basic setup and UI tasks common to all of this app's list fragments.
  */
 public abstract class AbstractListFragment extends ListFragment {
+    
     protected TextView mEmptyView;
 
     /** The padding, in pixels, to apply to {@code mEmptyView}. */

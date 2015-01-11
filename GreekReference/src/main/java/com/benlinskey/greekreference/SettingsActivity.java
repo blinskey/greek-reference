@@ -27,6 +27,7 @@ import android.widget.TextView;
  * An activity containing a {@link android.preference.PreferenceFragment}.
  */
 public class SettingsActivity extends ActionBarActivity {
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

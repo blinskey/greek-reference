@@ -68,31 +68,33 @@ import com.benlinskey.greekreference.syntax.SyntaxDetailActivity;
 import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
 
 /**
- * The app's primary activity. On tablets, this activity displays a two-pane
- * layout containing a {@link AbstractListFragment} and a {@link AbstractDetailFragment}.
- * On phones, it displays only a <code>AbstractListFragment</code>.
+ * The app's primary activity. On tablets, this activity displays a two-pane layout containing an 
+ * {@link AbstractListFragment} and an {@link AbstractDetailFragment}. On phones, it displays only 
+ * an {@code AbstractListFragment}.
  */
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, 
                    AbstractListFragment.Callbacks {
-
+    
+    /** Intent bundle key. */
+    public static final String KEY_MODE = "mode";
+    
+    /** Custom intent action. */
+    public static final String ACTION_SET_MODE = "com.benlinskey.greekreference.SET_MODE";
+    
     private static final String TAG = "MainActivity";
 
     // Application state bundle keys
     private static final String KEY_TITLE = "action_bar_title";
     private static final String KEY_SUBTITLE = "action_bar_subtitle";
 
-    // Intent bundle key
-    public static final String KEY_MODE = "mode";
-    
-    // Custom intent action
-    public static final String ACTION_SET_MODE = "com.benlinskey.greekreference.SET_MODE";
-
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private CharSequence mSubtitle;
     private Mode mMode;
-    private boolean mTwoPane;   // Indicates whether we're actually using the tablet layout.
+    
+    /** Indicates whether we're using the tablet layout. */
+    private boolean mTwoPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

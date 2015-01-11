@@ -31,6 +31,7 @@ import android.provider.BaseColumns;
  * A {@link ContentProvider} for the lexicon favorites table.
  */
 public class LexiconFavoritesProvider extends ContentProvider {
+    
     public static final String AUTHORITY =
             "com.benlinskey.greekreference.data.appdata.LexiconFavoritesProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/appData");
