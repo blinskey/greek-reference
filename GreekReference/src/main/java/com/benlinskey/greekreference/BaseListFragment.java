@@ -33,6 +33,9 @@ import android.widget.TextView;
 public abstract class BaseListFragment extends ListFragment {
     protected TextView mEmptyView;
 
+    /** The padding, in pixels, to apply to {@code mEmptyView}. */
+    private static final int EMPTY_LIST_SIDE_PADDING = 100;
+
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -124,6 +127,7 @@ public abstract class BaseListFragment extends ListFragment {
         getListView().getEmptyView().setVisibility(View.INVISIBLE);
         getListView().setEmptyView(mEmptyView);
         mEmptyView.setText(stringId);
+        mEmptyView.setPadding(EMPTY_LIST_SIDE_PADDING, 0, EMPTY_LIST_SIDE_PADDING, 0);
     }
 
     /**
