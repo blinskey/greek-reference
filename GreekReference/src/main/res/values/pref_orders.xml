@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2015 Benjamin Linskey
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<!-- Defines the order values for all preferences. -->
+<!-- TODO: Standardize preference resource names throughout app to the values used here. -->
+<resources>
+    <integer name="pref_typeface">1</integer>
+    <integer name="pref_text_size">2</integer>
+    <integer name="pref_perseus_tool">3</integer>
+    <integer name="pref_one_pane">4</integer>
+    <integer name="pref_about">5</integer>
+</resources>

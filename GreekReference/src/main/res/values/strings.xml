@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string name="app_name">Greek Reference</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -396,4 +397,9 @@ limitations under the License.
     </string>
     <string name="pref_perseus_tool_key">PREF_PERSEUS_TOOL_KEY</string>
     <string name="pref_perseus_tool">Hide \"View on Perseus\" option</string>
+    <string name="pref_typeface_key">PREF_TYPEFACE_KEY</string>
+    <string name="pref_typeface">Typeface</string>
+    <string name="pref_typeface_notoSerif">Noto Serif</string>
+    <string name="pref_typeface_roboto">Roboto</string>
+    <string name="pref_typeface_default" android:src="@string/pref_typeface_notoSerif"/>
 </resources>

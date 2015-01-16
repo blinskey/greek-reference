@@ -97,6 +97,7 @@ public abstract class AbstractDetailFragment extends Fragment {
         setTextSize();
     }
 
+    // TODO: Move this method to the GreekTextView class.
     /**
      * Sets the {@code GreekTextView}'s text size to the size stored in the preferences.
      */
