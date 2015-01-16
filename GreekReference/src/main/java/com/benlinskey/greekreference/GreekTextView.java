@@ -33,6 +33,8 @@ package com.benlinskey.greekreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
@@ -56,6 +58,12 @@ import android.widget.TextView;
  * <p>
  * The principal functionality retained from the original TypfaceTextView class is the typeface
  * caching, which ensures that the custom typeface is only created once.
+ * <p>
+ * This class uses callbacks to update the font settings when preferences are changed. This 
+ * functionality requires that a strong reference to each instance of this class be retained.
+ * <p>
+ * The text size can be permanently fixed at the medium value by setting the 
+ * {@code allowTextSizeChanges} attribute to false in a {@code GreekTextView} XML layout.
  */
 public class GreekTextView extends TextView 
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -67,6 +75,8 @@ public class GreekTextView extends TextView
     /** An {@code LruCache} for previously loaded typefaces. */
     private static LruCache<String, Typeface> sTypefaceCache = new LruCache<>(12);
 
+    private final boolean mAllowTextSizeChanges;
+    
     /**
      * Constructs a new {@code GreekTextView}.
      *
@@ -75,6 +85,16 @@ public class GreekTextView extends TextView
      */
     public GreekTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray attrArray = 
+                context.getTheme().obtainStyledAttributes(attrs, R.styleable.greek_text_view, 0, 0);
+        try {
+            mAllowTextSizeChanges = 
+                    attrArray.getBoolean(R.styleable.greek_text_view_allowTextSizeChanges, true);
+        } finally {
+            attrArray.recycle();
+        }
+        
         setFont(context);
         PreferenceManager.getDefaultSharedPreferences(context)
                 .registerOnSharedPreferenceChangeListener(this);
@@ -87,7 +107,7 @@ public class GreekTextView extends TextView
     public void setFont(Context context) {
         setTypeface(context);
         setTextColor();
-        // TODO: Set text size here.
+        setTextSize(context);
     }
 
     /**
@@ -142,13 +162,34 @@ public class GreekTextView extends TextView
         int textColor = getResources().getColor(TEXT_COLOR);
         setTextColor(textColor);
     }
+    
+    /**
+     * Sets the {@code GreekTextView}'s text size to the size stored in the preferences. This method
+     * will have no effect if {@link #mAllowTextSizeChanges} is set to false.
+     * @param context the {@link Context} to use
+     */
+    private void setTextSize(Context context) {
+        if (!mAllowTextSizeChanges) {
+            return;
+        }
+        
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String textSizeKey = context.getString(R.string.pref_textSize_key);
+        String defaultSize = context.getString(R.string.pref_textSize_item_medium);
+        String textSize = prefs.getString(textSizeKey, defaultSize);
+        float sp = TextSize.getScaledPixelSize(textSize);
+        setTextSize(sp);
+    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Log.d("debug", "In callback");
-        if (key.equals(getResources().getString(R.string.pref_typeface_key))) {
+        Resources res = getResources();
+        if (key.equals(res.getString(R.string.pref_typeface_key))) {
             Log.d("debug", "Typeface changed.");
             setTypeface(getContext());
+        } else if (key.equals(res.getString(R.string.pref_textSize_key))) {
+           setTextSize(getContext());
         }
     }
 }
