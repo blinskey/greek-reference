@@ -24,7 +24,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * A {@link ContentProvider} for the syntax database.
@@ -64,7 +63,6 @@ public class SyntaxProvider extends ContentProvider {
                         String sortOrder) {
         getReadableDatabase();
 
-        Log.w(TAG, "In SyntaxProvider.query()");
         switch (sMatcher.match(uri)) {
             case SECTIONS:
                 return searchSections(uri, projection, selection, selectionArgs);
@@ -98,7 +96,6 @@ public class SyntaxProvider extends ContentProvider {
      * @return a <code>Cursor</code> containing the results of the query
      */
     private Cursor getSection(Uri uri) {
-        Log.w(TAG, "In getSection(" + uri + ")");
         String id = uri.getLastPathSegment();
         String[] projection = new String[] {SyntaxContract._ID,
                 SyntaxContract.COLUMN_NAME_CHAPTER,
