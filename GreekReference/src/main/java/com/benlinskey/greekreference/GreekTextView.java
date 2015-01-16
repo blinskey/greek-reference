@@ -41,7 +41,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
 
 /**
@@ -183,10 +182,8 @@ public class GreekTextView extends TextView
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Log.d("debug", "In callback");
         Resources res = getResources();
         if (key.equals(res.getString(R.string.pref_typeface_key))) {
-            Log.d("debug", "Typeface changed.");
             setTypeface(getContext());
         } else if (key.equals(res.getString(R.string.pref_textSize_key))) {
            setTextSize(getContext());
