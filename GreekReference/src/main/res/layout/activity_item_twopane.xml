@@ -1,52 +1,60 @@
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ItemListActivity">
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <include layout="@layout/action_bar"/>
+    
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:baselineAligned="false"
-        android:divider="?android:attr/dividerHorizontal"
-        android:orientation="horizontal"
-        android:showDividers="middle"
         tools:context=".ItemListActivity">
-
-        <!--
-        This layout is a two-pane layout for the Items
-        master/detail flow. See res/values-large/refs.xml and
-        res/values-sw600dp/refs.xml for an example of layout aliases
-        that replace the single-pane version of the layout with
-        this two-pane version.
-
-        For more on layout aliases, see:
-        http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
-        -->
-
-        <FrameLayout
-            android:id="@+id/item_list_container"
+        
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_width="0dp"
-            android:layout_weight="1"/>
-
-        <FrameLayout
-            android:id="@+id/item_detail_container"
-            android:layout_width="0dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:baselineAligned="false"
+            android:divider="?android:attr/dividerHorizontal"
+            android:orientation="horizontal"
+            android:showDividers="middle"
+            tools:context=".ItemListActivity">
+    
+            <!--
+            This layout is a two-pane layout for the Items
+            master/detail flow. See res/values-large/refs.xml and
+            res/values-sw600dp/refs.xml for an example of layout aliases
+            that replace the single-pane version of the layout with
+            this two-pane version.
+    
+            For more on layout aliases, see:
+            http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
+            -->
+    
+            <FrameLayout
+                android:id="@+id/item_list_container"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+    
+            <FrameLayout
+                android:id="@+id/item_detail_container"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+    
+        </LinearLayout>
+    
+        <fragment android:id="@+id/navigation_drawer"
+            android:layout_width="@dimen/navigation_drawer_width"
             android:layout_height="match_parent"
-            android:layout_weight="3" />
-
-    </LinearLayout>
-
-    <fragment android:id="@+id/navigation_drawer"
-        android:layout_width="@dimen/navigation_drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:name="com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment" />
-
-</android.support.v4.widget.DrawerLayout>
+            android:layout_gravity="start"
+            android:name="com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment" />
+    
+    </android.support.v4.widget.DrawerLayout>
+    
+</LinearLayout>

@@ -1,21 +1,27 @@
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ItemListActivity">
+    android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/item_list_container"
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:layout_weight="1"/>
+    <include layout="@layout/action_bar"/>
+    
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <fragment android:id="@+id/navigation_drawer"
-        android:layout_width="@dimen/navigation_drawer_width"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:name="com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment" />
+        <FrameLayout
+            android:id="@+id/item_list_container"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>
+        
+        <fragment android:id="@+id/navigation_drawer"
+            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:name="com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment" />
 
-</android.support.v4.widget.DrawerLayout>
+    </android.support.v4.widget.DrawerLayout>
+    
+</LinearLayout>
