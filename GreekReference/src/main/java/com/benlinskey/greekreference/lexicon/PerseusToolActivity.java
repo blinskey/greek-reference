@@ -63,6 +63,11 @@ public class PerseusToolActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perseus_tool);
         
+        // Set the status bar background color.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.blue_accent_dark));
+        }
+        
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);

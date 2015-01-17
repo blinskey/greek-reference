@@ -151,7 +151,8 @@
             See <a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a>
             for details.
         </p>
-            License for SQLiteAssetHelper, Noto Serif font, and TypefaceTextView:
+            License for SQLiteAssetHelper, Noto Serif font, TypefaceTextView, 
+            and ScrimInsetsFrameLayout:
         ]]>
     </string>
     <string name="syntax_footer">

@@ -117,12 +117,15 @@ public class MainActivity extends ActionBarActivity
             mSubtitle = savedInstanceState.getString(KEY_SUBTITLE);
             mMode = Mode.getModeFromName(savedInstanceState.getString(KEY_MODE));
         }
+        
+        // Set the status bar background color.
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.blue_accent_dark));
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
-                .findFragmentById(R.id.navigation_drawer);
+                .findFragmentById(R.id.navigation_drawer_fragment);
 
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer_fragment_container,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         if (findViewById(R.id.item_detail_container) != null) {

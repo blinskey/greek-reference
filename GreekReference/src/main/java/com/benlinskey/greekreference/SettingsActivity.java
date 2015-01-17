@@ -21,6 +21,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -34,6 +35,11 @@ public class SettingsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         
+        // Set the status bar background color.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.blue_accent_dark));
+        }
+
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
