@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="navigation_drawer_width">320dp</dimen>
+    <dimen name="action_bar_elevation">2dp</dimen>
 </resources>
