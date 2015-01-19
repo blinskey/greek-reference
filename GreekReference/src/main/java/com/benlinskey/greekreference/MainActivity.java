@@ -38,6 +38,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -103,6 +104,10 @@ public class MainActivity extends ActionBarActivity
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
+        // Set the toolbar to act as the action bar.
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(toolbar);
+
         // Restore any saved state.
         if (null == savedInstanceState) {
             mTitle = getString(R.string.title_lexicon);
@@ -112,12 +117,15 @@ public class MainActivity extends ActionBarActivity
             mSubtitle = savedInstanceState.getString(KEY_SUBTITLE);
             mMode = Mode.getModeFromName(savedInstanceState.getString(KEY_MODE));
         }
+        
+        // Set the status bar background color.
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.blue_accent_dark));
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
-                .findFragmentById(R.id.navigation_drawer);
+                .findFragmentById(R.id.navigation_drawer_fragment);
 
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer_fragment_container,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         if (findViewById(R.id.item_detail_container) != null) {
@@ -126,6 +134,8 @@ public class MainActivity extends ActionBarActivity
             // res/values-sw600dp)..
             mTwoPane = true;
         }
+        
+        restoreActionBar();
 
         checkTabletDisplayMode();
         handleIntent(getIntent());
@@ -394,7 +404,15 @@ public class MainActivity extends ActionBarActivity
      */
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
+        
+        // The action bar will be null when this is called from NavigationDrawerFragment's 
+        // constructor. We call this method again near the end of this class's constructor to 
+        // set the action bar title.
+        // TODO: Find a more elegant way to handle this.
+        if (null == actionBar) {
+            return;
+        }
+        
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
         actionBar.setSubtitle(mSubtitle);

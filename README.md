@@ -88,6 +88,7 @@ This program uses the following open source resources. Thanks to their creators 
 - [Android Developer Icons][android-icons]
 - "Boilerplates" icons from <http://www.android-icons.com>
 - [Google Material Design Icons][material-design-icons]
+- [ScrimInsetsFrameLayout][] from the [Google I/O app][google-io]
 
 I am particularly grateful to Jeffrey A. Rydberg-Cox for making his *Overview of Greek Syntax* available through Perseus under a Creative Commons license. You can visit his website at <http://daedalus.umkc.edu>.
 
@@ -128,3 +129,5 @@ This project's source code is licensed under the [Apache License, version 2.0][A
 [android-icons]: http://androidicons.com
 [Opoloo]: http://www.opoloo.com/
 [material-design-icons]: https://github.com/google/material-design-icons
+[ScrimInsetsFrameLayout]: https://github.com/google/iosched/blob/master/android/src/main/java/com/google/samples/apps/iosched/ui/widget/ScrimInsetsFrameLayout.java
+[google-io]: https://github.com/google/iosched

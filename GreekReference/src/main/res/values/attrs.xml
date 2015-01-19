@@ -16,7 +16,13 @@
   -->
 
 <resources>
+
     <declare-styleable name="greek_text_view">
         <attr name="allowTextSizeChanges" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="ScrimInsetsView">
+        <attr name="insetForeground" format="reference|color"/>
+    </declare-styleable>
+
 </resources>
