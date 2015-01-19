@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orderingFromXml="false">
     <ListPreference
         android:key="@string/pref_textSize_key"
         android:title="@string/pref_textSize"
         android:dialogTitle="@string/pref_textSize"
         android:entries="@array/pref_textSize_entries"
         android:entryValues="@array/pref_textSize_values"
-        android:defaultValue="@string/pref_textSize_item_medium"/>
+        android:defaultValue="@string/pref_textSize_item_medium"
+        android:order="@integer/pref_text_size"/>
     <CheckBoxPreference
         android:key="@string/pref_perseus_tool_key"
         android:title="@string/pref_perseus_tool"
-        android:defaultValue="false"/>
+        android:defaultValue="false"
+        android:order="@integer/pref_perseus_tool"/>
     <com.benlinskey.greekreference.AboutPreference
         android:key="@string/pref_about_key"
-        android:title="@string/title_about"/>
+        android:title="@string/title_about"
+        android:order="@integer/pref_about"/>
 </PreferenceScreen>

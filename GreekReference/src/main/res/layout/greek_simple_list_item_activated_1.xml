@@ -33,6 +33,7 @@
 <!-- Adapted from android.R.layout.simple_list_item_activated_1.xml. -->
 
 <com.benlinskey.greekreference.GreekTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -44,4 +45,5 @@
     android:background="?android:attr/activatedBackgroundIndicator"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:textColor="@color/primary_text_default_material_light"
+    custom:allowTextSizeChanges="false"
 />
