@@ -23,5 +23,6 @@
         <item name="android:textAppearanceMedium">@style/TextAppearanceDark</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
     </style>
 </resources>

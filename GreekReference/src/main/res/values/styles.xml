@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/blue_primary</item>
         <item name="colorAccent">@color/blue_accent_light</item>
         <item name="android:textAppearanceMedium">@style/TextAppearanceDark</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
     </style>
 
     <!-- Dividers for navigation drawer list view. -->
@@ -27,6 +28,10 @@
     <style name="NavigationDrawerText">
         <item name="android:textColor">#000000</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
+        <item name="suggestionRowLayout">@layout/search_suggestion_row</item>
     </style>
 
 </resources>
