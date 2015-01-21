@@ -25,8 +25,9 @@ public class NavigationDrawerRow extends AbstractNavigationDrawerItem {
 
     private static final int TYPE = 1;
 
-    private int mIconUnhighlighted;
-    private int mIconHighlighted;
+    private final int mIconUnhighlighted;
+    private final int mIconHighlighted;
+    
     private int mCurrentIcon;
 
     public NavigationDrawerRow(int id, String label, int iconUnhighlighted,

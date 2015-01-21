@@ -32,8 +32,8 @@ import com.benlinskey.greekreference.R;
  */
 public class NavigationDrawerAdapter extends ArrayAdapter<AbstractNavigationDrawerItem> {
 
-    private LayoutInflater mInflater;
-    private Context mContext;
+    private final LayoutInflater mInflater;
+    private final Context mContext;
 
     public NavigationDrawerAdapter(Context context, int id, AbstractNavigationDrawerItem[] objects) {
         super(context, id, objects);

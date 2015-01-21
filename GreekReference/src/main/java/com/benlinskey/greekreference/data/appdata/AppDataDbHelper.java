@@ -32,7 +32,8 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "AppData.db";
-    private Context mContext;
+    
+    private final Context mContext;
 
     private static final String SQL_CREATE_LEXICON_HISTORY_TABLE = "CREATE TABLE "
             + AppDataContract.LexiconHistory.TABLE_NAME + " (" + AppDataContract.LexiconHistory._ID

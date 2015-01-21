@@ -34,7 +34,7 @@ public class SyntaxXmlParser {
     // TODO: Modify this for display in a WebView.
 
     private static final String TAG = "SyntaxXmlParser";
-    private SyntaxSection mSection;
+    private final SyntaxSection mSection;
     private String mText = "";
 
     // This is a kludgy solution to a parsing bug in the Participles section. I'm not implementing

@@ -167,9 +167,9 @@ public class LexiconEntry {
      * A class representing a "sense" element in a lexicon XML document.
      */
     private static class Sense {
-        private int level; // attribute -- numerical level
-        private String n; // attribute -- displayed level
-        private SpannedString text; // Full text, including formatting.
+        private final int level; // attribute -- numerical level
+        private final String n; // attribute -- displayed level
+        private final SpannedString text; // Full text, including formatting.
 
         /**
          * Constructs a new {@code Sense}.

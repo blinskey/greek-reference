@@ -41,12 +41,7 @@ public abstract class AbstractNavigationDrawerItem {
         return mLabel;
     }
 
-    public void setLabel(String label) {
-        mLabel = label;
-    }
-
     public abstract boolean isEnabled();
     public abstract boolean isRow();
     public abstract int getType();
-    public abstract boolean updateActionBarTitle();
 }

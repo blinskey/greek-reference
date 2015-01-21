@@ -35,14 +35,4 @@ public class LexiconHelper extends SQLiteAssetHelper {
         super(context, LexiconContract.DB_NAME, null, DB_VERSION);
         setForcedUpgrade(DB_VERSION);
     }
-
-    @Override
-    public synchronized SQLiteDatabase getReadableDatabase() {
-        return super.getReadableDatabase();
-    }
-
-    @Override
-    public synchronized SQLiteDatabase getWritableDatabase() {
-        return super.getWritableDatabase();
-    }
 }

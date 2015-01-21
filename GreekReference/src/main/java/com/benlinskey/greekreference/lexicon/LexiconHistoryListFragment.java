@@ -56,7 +56,7 @@ public class LexiconHistoryListFragment extends AbstractLexiconListFragment
      * A dummy implementation of the {@link Callbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
         public void onItemSelected(String fragmentName) {
         }
@@ -137,12 +137,6 @@ public class LexiconHistoryListFragment extends AbstractLexiconListFragment
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
         mCallbacks.onItemSelected(NAME); // Database IDs start at 1.
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
     }
 
     @Override

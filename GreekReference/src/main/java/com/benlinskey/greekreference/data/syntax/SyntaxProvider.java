@@ -29,21 +29,22 @@ import android.net.Uri;
  * A {@link ContentProvider} for the syntax database.
  */
 public class SyntaxProvider extends ContentProvider {
-    private final static String TAG = "SyntaxProvider";
-    public static String AUTHORITY = "com.benlinskey.greekreference.data.syntax.SyntaxProvider";
+
+    public static final String AUTHORITY = 
+            "com.benlinskey.greekreference.data.synta.SyntaxProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/syntax");
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/vnd.benlinskey.greekreference";
     public static final String CONTENT_SECTION_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "vnd.benlinskey.greekreference";
 
-    private SQLiteDatabase mDatabase = null;
-    private SyntaxHelper mHelper;
-
     private static final int SECTIONS = 0;
     private static final int SECTION_ID = 1;
     private static final UriMatcher sMatcher = buildUriMatcher();
-
+    
+    private SQLiteDatabase mDatabase = null;
+    private SyntaxHelper mHelper;
+    
     private static UriMatcher buildUriMatcher() {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(AUTHORITY, "syntax", SECTIONS);
