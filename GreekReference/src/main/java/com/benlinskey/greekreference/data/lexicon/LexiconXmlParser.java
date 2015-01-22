@@ -33,7 +33,7 @@ import java.io.InputStream;
 /**
  * Parses XML files obtained from the lexicon database.
  * <p>
- * Based on the tutorial at {@link http://developer.android.com/training/basics/network-ops/xml.html#read}.
+ * Based on the tutorial at http://developer.android.com/training/basics/network-ops/xml.html#read.
  */
 public class LexiconXmlParser {
     
@@ -43,7 +43,7 @@ public class LexiconXmlParser {
     /**
      * Parses a lexicon entry encoded in XML.
      * @param in an input stream containing an entry encoded in XML
-     * @return a {@codeLexiconEntry} containing the data encoded in the parsed XML document
+     * @return a {@code LexiconEntry} containing the data encoded in the parsed XML document
      * @throws org.xmlpull.v1.XmlPullParserException
      * @throws java.io.IOException
      */
@@ -62,8 +62,8 @@ public class LexiconXmlParser {
     /**
      * Reads in XML and calls appropriate methods to parse elements.
      *
-     * @param parser    the {@codeXmlPullParser} with which to parse the data
-     * @return a {@codeLexiconEntry} containing the data encoded in the parsed XML document
+     * @param parser the {@code XmlPullParser} with which to parse the data
+     * @return a {@code LexiconEntry} containing the data encoded in the parsed XML document
      * @throws org.xmlpull.v1.XmlPullParserException
      * @throws java.io.IOException
      */
@@ -105,9 +105,9 @@ public class LexiconXmlParser {
     }
 
     /**
-     * Processes an {@codeentry} tag.
-     * @param parser    the {@codeXmlPullParser} with which to parse the data
-     * @return a {@codeLexiconEntry} object.
+     * Processes an {@code entry} tag.
+     * @param parser    the {@code XmlPullParser} with which to parse the data
+     * @return a {@code LexiconEntry} object.
      */
     private LexiconEntry readEntry(XmlPullParser parser) {
         String word = parser.getAttributeValue(NAMESPACE, "key");
@@ -117,10 +117,10 @@ public class LexiconXmlParser {
     }
 
     /**
-     * Processes a {@codeform} tag and adds the extracted data to the specified
-     * {@codeLexiconEntry}.
-     * @param parser    the {@codeXmlPullParser} with which to parse the data
-     * @param entry     the {@codeLexiconEntry} to which to add the extracted data
+     * Processes a {@code form} tag and adds the extracted data to the specified
+     * {@code LexiconEntry}.
+     * @param parser the {@code XmlPullParser} with which to parse the data
+     * @param entry the {@code LexiconEntry} to which to add the extracted data
      */
     private void readForm(XmlPullParser parser, LexiconEntry entry) throws XmlPullParserException,
             IOException {
@@ -135,10 +135,10 @@ public class LexiconXmlParser {
     }
 
     /**
-     * Processes a {@codenote} element and adds the extracted data to the specified
-     * {@codeLexiconEntry}.
-     * @param parser    the {@codeXmlPullParser} with which to parse the data
-     * @param entry     the {@codeLexiconEntry} to which to add the extracted data
+     * Processes a {@code note} element and adds the extracted data to the specified
+     * {@code LexiconEntry}.
+     * @param parser the {@code XmlPullParser} with which to parse the data
+     * @param entry the {@code LexiconEntry} to which to add the extracted data
      */
     private void readNote(XmlPullParser parser, LexiconEntry entry) throws XmlPullParserException,
             IOException {
@@ -155,10 +155,10 @@ public class LexiconXmlParser {
     }
 
     /**
-     * Processes a {@codeetym} tag and adds the extracted data to the specified
-     * {@codeLexiconEntry}.
-     * @param parser    the {@codeXmlPullParser} with which to parse the data
-     * @param entry     the {@codeLexiconEntry} to which to add the extracted data
+     * Processes a {@code etym} tag and adds the extracted data to the specified
+     * {@code LexiconEntry}.
+     * @param parser the {@code XmlPullParser} with which to parse the data
+     * @param entry the {@code LexiconEntry} to which to add the extracted data
      */
     private void readEtym(XmlPullParser parser, LexiconEntry entry) throws XmlPullParserException,
             IOException {
@@ -191,10 +191,10 @@ public class LexiconXmlParser {
     }
 
     /**
-     * Processes a {@codesense} tag and adds the extracted data to the specified
-     * {@codeLexiconEntry}.
-     * @param parser    the {@codeXmlPullParser} with which to parse the data
-     * @param entry     the {@codeLexiconEntry} to which to add the extracted data
+     * Processes a {@code sense} tag and adds the extracted data to the specified
+     * {@code LexiconEntry}.
+     * @param parser the {@code XmlPullParser} with which to parse the data
+     * @param entry the {@code LexiconEntry} to which to add the extracted data
      */
     private void readSense(XmlPullParser parser, LexiconEntry entry) throws XmlPullParserException,
             IOException {
@@ -265,7 +265,7 @@ public class LexiconXmlParser {
 
     /**
      * Skips an element.
-     * @param parser    the {@codeXmlPullParser} with which to parse the data
+     * @param parser the {@code XmlPullParser} with which to parse the data
      * @throws org.xmlpull.v1.XmlPullParserException
      * @throws java.io.IOException
      */
@@ -289,7 +289,7 @@ public class LexiconXmlParser {
 
     /**
      * Returns text from within an XML element.
-     * @param parser the {@codeXmlPullParser} with which to parse the text
+     * @param parser the {@code XmlPullParser} with which to parse the text
      * @return the text extracted from the element
      * @throws org.xmlpull.v1.XmlPullParserException
      * @throws java.io.IOException

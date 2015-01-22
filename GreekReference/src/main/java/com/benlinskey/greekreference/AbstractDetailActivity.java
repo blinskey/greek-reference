@@ -25,7 +25,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,7 +43,8 @@ public abstract class AbstractDetailActivity extends ActionBarActivity {
     // TODO: Some code is repeated from MainActivity here. It would be good to
     // move this to a superclass or otherwise consolidate it somehow.
 
-    protected CharSequence mTitle; // Used to store the last screen title.
+    /** Stores the mode title. */
+    protected CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +70,15 @@ public abstract class AbstractDetailActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.action_feedback:
-                sendFeedback();
-                return true;
-               case R.id.action_help:
-                displayHelp();
-                return true;
+        case R.id.action_settings:
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        case R.id.action_feedback:
+            sendFeedback();
+            return true;
+        case R.id.action_help:
+            displayHelp();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -87,16 +87,18 @@ public abstract class AbstractDetailActivity extends ActionBarActivity {
      * Launches an email app that the user can use to send feedback about this app.
      */
     private void sendFeedback() {
-        Intent intent = new Intent(Intent.ACTION_SENDTO,
-                Uri.fromParts("mailto", getString(R.string.feedback_email), null));
+        Uri uri = Uri.fromParts("mailto", getString(R.string.feedback_email), null);
+        Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
-        startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
+        Intent chooser = Intent.createChooser(intent, getString(R.string.feedback_intent_chooser));
+        startActivity(chooser);
     }
 
     /**
      * A {@link DialogFragment} containing help text.
      */
     public static class HelpDialogFragment extends DialogFragment {
+        
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -106,8 +108,10 @@ public abstract class AbstractDetailActivity extends ActionBarActivity {
             textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
             textView.setTextColor(getResources().getColor(android.R.color.black));
             textView.setPadding(25, 25, 25, 25);
+            
             textView.setText(Html.fromHtml(getString(R.string.message_help)));
             textView.setMovementMethod(LinkMovementMethod.getInstance());
+            
             ScrollView scrollView = new ScrollView(getActivity());
             scrollView.addView(textView);
             builder.setView(scrollView);
@@ -118,6 +122,7 @@ public abstract class AbstractDetailActivity extends ActionBarActivity {
                     dialogInterface.dismiss();
                 }
             });
+            
             return builder.create();
         }
     }
@@ -136,7 +141,8 @@ public abstract class AbstractDetailActivity extends ActionBarActivity {
     protected abstract void restoreActionBar();
 
     // The following two methods are a workaround for a bug related to the appcompat-v7 library
-    // on some LG devices. Thanks to Alex Lockwood for the fix: http://stackoverflow.com/questions/26833242/nullpointerexception-phonewindowonkeyuppanel1002-main
+    // on some LG devices. Thanks to Alex Lockwood for the fix: 
+    // http://stackoverflow.com/questions/26833242/nullpointerexception-phonewindowonkeyuppanel1002-main
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -147,7 +153,7 @@ public abstract class AbstractDetailActivity extends ActionBarActivity {
     }
 
     @Override
-    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
             openOptionsMenu();
             return true;

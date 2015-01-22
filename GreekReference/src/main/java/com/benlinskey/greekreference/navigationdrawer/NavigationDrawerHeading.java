@@ -17,7 +17,7 @@
 package com.benlinskey.greekreference.navigationdrawer;
 
 /**
- * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
+ * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
  */
 public class NavigationDrawerHeading extends AbstractNavigationDrawerItem {
 
@@ -37,11 +37,6 @@ public class NavigationDrawerHeading extends AbstractNavigationDrawerItem {
         return false;
     }
   
-    @Override
-    public boolean updateActionBarTitle() {
-        return false;
-    }
-
     @Override
     public int getType() {
         return TYPE;

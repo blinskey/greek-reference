@@ -15,9 +15,9 @@
   ~ limitations under the License.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="blue_primary">#2196F3</color>
     <color name="blue_accent_dark">#1976D2</color>
     <color name="blue_accent_light">#64B5F6</color>
-    <color name="blue_accent_alt">#FAFAFA</color>
+    <color name="blue_accent_alt" tools:ignore="UnusedResources">#FAFAFA</color>
 </resources>

@@ -16,8 +16,10 @@
 
 package com.benlinskey.greekreference.syntax;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -56,24 +58,15 @@ public class SyntaxDetailActivity extends AbstractDetailActivity {
 
         mTitle = getString(R.string.title_syntax);
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
-            arguments.putString(SyntaxDetailFragment.ARG_XML,
-                    getIntent().getStringExtra(SyntaxDetailFragment.ARG_XML));
+            String stringExtra = getIntent().getStringExtra(SyntaxDetailFragment.ARG_XML);
+            arguments.putString(SyntaxDetailFragment.ARG_XML, stringExtra);
             SyntaxDetailFragment fragment = new SyntaxDetailFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
-                    .replace(R.id.item_detail_container, fragment)
-                    .commitAllowingStateLoss();
+                                .replace(R.id.item_detail_container, fragment)
+                                .commitAllowingStateLoss();
         }
     }
 
@@ -108,20 +101,21 @@ public class SyntaxDetailActivity extends AbstractDetailActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        FragmentManager mgr = getFragmentManager();
         switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
-                return true;
-            case R.id.action_add_bookmark:
-                SyntaxDetailFragment addBookmarkFragment = (SyntaxDetailFragment) getFragmentManager()
-                        .findFragmentById(R.id.item_detail_container);
-                addBookmarkFragment.addSyntaxBookmark(mSyntaxId, mSection);
-                return true;
-            case R.id.action_remove_bookmark:
-                SyntaxDetailFragment removeBookmarkFragment = (SyntaxDetailFragment) getFragmentManager()
-                        .findFragmentById(R.id.item_detail_container);
-                removeBookmarkFragment.removeSyntaxBookmark(mSyntaxId);
-                return true;
+        case android.R.id.home:
+            NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
+            return true;
+        case R.id.action_add_bookmark:
+            SyntaxDetailFragment addBookmarkFragment = 
+                    (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            addBookmarkFragment.addSyntaxBookmark(mSyntaxId, mSection);
+            return true;
+        case R.id.action_remove_bookmark:
+            SyntaxDetailFragment removeBookmarkFragment = 
+                    (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            removeBookmarkFragment.removeSyntaxBookmark(mSyntaxId);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -136,8 +130,8 @@ public class SyntaxDetailActivity extends AbstractDetailActivity {
         String[] columns = new String[] {AppDataContract.SyntaxBookmarks._ID};
         String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
         String[] selectionArgs = new String[] {Integer.toString(syntaxId)};
-        Cursor cursor = getContentResolver().query(AppDataContract.SyntaxBookmarks.CONTENT_URI,
-                columns, selection, selectionArgs, null);
+        Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
+        Cursor cursor = getContentResolver().query(uri, columns, selection, selectionArgs, null);
         boolean result = false;
         if (cursor.getCount() > 0) {
             result = true;
@@ -156,7 +150,8 @@ public class SyntaxDetailActivity extends AbstractDetailActivity {
     }
 
     // The following two methods are a workaround for a bug related to the appcompat-v7 library
-    // on some LG devices. Thanks to Alex Lockwood for the fix: http://stackoverflow.com/questions/26833242/nullpointerexception-phonewindowonkeyuppanel1002-main
+    // on some LG devices. Thanks to Alex Lockwood for the fix: 
+    // http://stackoverflow.com/questions/26833242/nullpointerexception-phonewindowonkeyuppanel1002-main
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

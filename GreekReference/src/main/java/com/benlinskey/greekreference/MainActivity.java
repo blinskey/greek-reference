@@ -20,8 +20,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -75,7 +77,7 @@ import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
  */
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, 
-                   AbstractListFragment.Callbacks {
+                AbstractListFragment.Callbacks {
     
     /** Intent bundle key. */
     public static final String KEY_MODE = "mode";
@@ -129,9 +131,6 @@ public class MainActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         if (findViewById(R.id.item_detail_container) != null) {
-            // The detail container view will be present only in the
-            // large-screen layouts (res/values-large and
-            // res/values-sw600dp)..
             mTwoPane = true;
         }
         
@@ -224,17 +223,17 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onItemSelected(String fragmentName) {
         switch (fragmentName) {
-            case LexiconBrowseListFragment.NAME:
-            case LexiconFavoritesListFragment.NAME:
-            case LexiconHistoryListFragment.NAME:
-                lexiconItemSelected();
-                break;
-            case SyntaxBrowseListFragment.NAME:
-            case SyntaxBookmarksListFragment.NAME:
-                syntaxItemSelected();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid fragment name");
+        case LexiconBrowseListFragment.NAME:
+        case LexiconFavoritesListFragment.NAME:
+        case LexiconHistoryListFragment.NAME:
+            lexiconItemSelected();
+            break;
+        case SyntaxBrowseListFragment.NAME:
+        case SyntaxBookmarksListFragment.NAME:
+            syntaxItemSelected();
+            break;
+        default:
+            throw new IllegalArgumentException("Invalid fragment name");
         }
         invalidateOptionsMenu();
     }
@@ -246,16 +245,20 @@ public class MainActivity extends ActionBarActivity
         // TODO: Verify that we're in the correct mode here and in similar
         // situations through this class and throw an exception if we're not.
 
-        AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
+        
+        FragmentManager mgr = getFragmentManager();
+        AbstractLexiconListFragment fragment = 
+                (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedLexiconId());
 
-        String[] columns = new String[] {LexiconContract.COLUMN_ENTRY,
-                LexiconContract.COLUMN_GREEK_FULL_WORD};
+        String[] columns = new String[] {
+            LexiconContract.COLUMN_ENTRY,
+            LexiconContract.COLUMN_GREEK_FULL_WORD
+        };
         String selection = LexiconContract._ID + " = ?";
         String[] selectionArgs = new String[] {id};
-        Cursor cursor = getContentResolver().query(LexiconContract.CONTENT_URI, columns, selection,
-                selectionArgs, null);
+        Uri uri = LexiconContract.CONTENT_URI;
+        Cursor cursor = getContentResolver().query(uri, columns, selection, selectionArgs, null);
 
         String entry;
         String word;
@@ -274,16 +277,19 @@ public class MainActivity extends ActionBarActivity
      * item's entry.
      */
     private void syntaxItemSelected() {
-        AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-        String id = Integer.toString(fragment.getSelectedSyntaxId());
+        FragmentManager mgr = getFragmentManager();;
+        AbstractSyntaxListFragment fragment = 
+                (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
 
-        String[] columns = new String[] {SyntaxContract.COLUMN_NAME_XML,
-                SyntaxContract.COLUMN_NAME_SECTION};
+        String[] columns = new String[] {
+            SyntaxContract.COLUMN_NAME_XML,
+            SyntaxContract.COLUMN_NAME_SECTION
+        };
         String selection = SyntaxContract._ID + " = ?";
+        String id = Integer.toString(fragment.getSelectedSyntaxId());
         String[] selectionArgs = new String[] {id};
-        Cursor cursor = getContentResolver().query(SyntaxContract.CONTENT_URI, columns, selection,
-                selectionArgs, null);
+        Uri uri = SyntaxContract.CONTENT_URI;
+        Cursor cursor = getContentResolver().query(uri, columns, selection, selectionArgs, null);
 
         String xml;
         String section;
@@ -306,7 +312,8 @@ public class MainActivity extends ActionBarActivity
      */
     void displayLexiconEntry(final String id, String word, String entry) {
         // If user searches from Quick Search Box, we may need to change mode.
-        if (!mMode.equals(Mode.LEXICON_BROWSE) && !mMode.equals(Mode.LEXICON_FAVORITES)
+        if (!mMode.equals(Mode.LEXICON_BROWSE) 
+                && !mMode.equals(Mode.LEXICON_FAVORITES)
                 && !mMode.equals(Mode.LEXICON_HISTORY)) {
             switchToLexiconBrowse();
         }
@@ -326,12 +333,12 @@ public class MainActivity extends ActionBarActivity
             transaction.replace(R.id.item_detail_container, fragment);
             transaction.commitAllowingStateLoss();
         } else {
-            AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getFragmentManager()
-                    .findFragmentById(R.id.item_list_container);
-            int lexiconId = fragment.getSelectedLexiconId();
-
+            FragmentManager mgr = getFragmentManager();
+            AbstractLexiconListFragment fragment = 
+                    (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
             Intent intent = new Intent(this, LexiconDetailActivity.class);
             intent.putExtra(LexiconDetailFragment.ARG_ENTRY, entry);
+            int lexiconId = fragment.getSelectedLexiconId();
             intent.putExtra(LexiconDetailActivity.ARG_LEXICON_ID, lexiconId);
             intent.putExtra(LexiconDetailActivity.ARG_WORD, word);
             startActivity(intent);
@@ -353,12 +360,12 @@ public class MainActivity extends ActionBarActivity
             transaction.replace(R.id.item_detail_container, fragment);
             transaction.commitAllowingStateLoss();
         } else {
-            AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getFragmentManager()
-                    .findFragmentById(R.id.item_list_container);
-            int syntaxId = fragment.getSelectedSyntaxId();
-
+            FragmentManager mgr = getFragmentManager();
+            AbstractSyntaxListFragment fragment = 
+                    (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
             Intent intent = new Intent(this, SyntaxDetailActivity.class);
             intent.putExtra(SyntaxDetailFragment.ARG_XML, xml);
+            int syntaxId = fragment.getSelectedSyntaxId();
             intent.putExtra(SyntaxDetailActivity.ARG_SYNTAX_ID, syntaxId);
             intent.putExtra(SyntaxDetailActivity.ARG_SECTION, section);
             startActivity(intent);
@@ -386,12 +393,10 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        /*
-         * We consider the user to have learned the drawer once he or she selects an item. This
-         * prevents the drawer from appearing repeatedly in the one-pane mode. This is just a quick
-         * workaround; we might want to implement a more sophisticated solution at some point in
-         * the future.
-         */
+         // We consider the user to have learned the drawer once he or she selects an item. This
+         // prevents the drawer from appearing repeatedly in the one-pane mode. This is just a quick
+         // workaround; we might want to implement a more sophisticated solution at some point in
+         // the future.
         if (mNavigationDrawerFragment != null) {
             mNavigationDrawerFragment.userLearnedDrawer();
         }
@@ -434,8 +439,8 @@ public class MainActivity extends ActionBarActivity
 
             // Get the SearchView and set the searchable configuration.
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_search));
-            //SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+            MenuItem searchItem = menu.findItem(R.id.menu_search);
+            SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
             restoreActionBar();
@@ -472,49 +477,46 @@ public class MainActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO: Move favorite and bookmark code to fragments?
         // TODO: Move favorite and bookmark options to fragments?
+        FragmentManager mgr = getFragmentManager();
         switch (item.getItemId()) {
-            case R.id.action_add_favorite:
-                LexiconDetailFragment addFavoriteFragment =
-                        (LexiconDetailFragment) getFragmentManager()
-                                .findFragmentById(R.id.item_detail_container);
-                addFavoriteFragment.addLexiconFavorite();
-                return true;
-            case R.id.action_remove_favorite:
-                LexiconDetailFragment removeFavoriteFragment =
-                        (LexiconDetailFragment) getFragmentManager()
-                                .findFragmentById(R.id.item_detail_container);
-                removeFavoriteFragment.removeLexiconFavorite();
-                return true;
-            case R.id.action_add_bookmark:
-                SyntaxDetailFragment addBookmarkFragment
-                        = (SyntaxDetailFragment) getFragmentManager()
-                                .findFragmentById(R.id.item_detail_container);
-                addBookmarkFragment.addSyntaxBookmark();
-                return true;
-            case R.id.action_remove_bookmark:
-                SyntaxDetailFragment removeBookmarkFragment
-                        = (SyntaxDetailFragment) getFragmentManager()
-                                .findFragmentById(R.id.item_detail_container);
-                removeBookmarkFragment.removeSyntaxBookmark();
-                return true;
-            case R.id.action_clear_history:
-                clearHistory();
-                return true;
-            case R.id.action_clear_favorites:
-                clearLexiconFavorites();
-                return true;
-            case R.id.action_clear_bookmarks:
-                clearSyntaxBookmarks();
-                return true;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.action_feedback:
-                sendFeedback();
-                return true;
-            case R.id.action_help:
-                displayHelp();
-                return true;
+        case R.id.action_add_favorite:
+            LexiconDetailFragment addFavoriteFragment =
+                    (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            addFavoriteFragment.addLexiconFavorite();
+            return true;
+        case R.id.action_remove_favorite:
+            LexiconDetailFragment removeFavoriteFragment =
+                    (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            removeFavoriteFragment.removeLexiconFavorite();
+            return true;
+        case R.id.action_add_bookmark:
+            SyntaxDetailFragment addBookmarkFragment
+                    = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            addBookmarkFragment.addSyntaxBookmark();
+            return true;
+        case R.id.action_remove_bookmark:
+            SyntaxDetailFragment removeBookmarkFragment
+                    = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            removeBookmarkFragment.removeSyntaxBookmark();
+            return true;
+        case R.id.action_clear_history:
+            clearHistory();
+            return true;
+        case R.id.action_clear_favorites:
+            clearLexiconFavorites();
+            return true;
+        case R.id.action_clear_bookmarks:
+            clearSyntaxBookmarks();
+            return true;
+        case R.id.action_settings:
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        case R.id.action_feedback:
+            sendFeedback();
+            return true;
+        case R.id.action_help:
+            displayHelp();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -528,8 +530,8 @@ public class MainActivity extends ActionBarActivity
 
         swapInFragments(new LexiconHistoryListFragment(), new LexiconDetailFragment());
 
-        Toast toast = Toast.makeText(getApplicationContext(),
-                getString(R.string.toast_clear_history), Toast.LENGTH_SHORT);
+        String msg = getString(R.string.toast_clear_history);
+        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -551,27 +553,31 @@ public class MainActivity extends ActionBarActivity
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage(R.string.clear_lexicon_favorites_dialog_message);
+            
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    getActivity().getContentResolver().delete(AppDataContract.LexiconFavorites.CONTENT_URI, null,
-                            null);
+                    ContentResolver resolver = getActivity().getContentResolver();
+                    resolver.delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
 
                     MainActivity activity = (MainActivity) getActivity();
-                    activity.swapInFragments(new LexiconFavoritesListFragment(),
-                            new LexiconDetailFragment());
+                    Fragment listFragment = new LexiconFavoritesListFragment();
+                    Fragment detailFragment = new LexiconDetailFragment();
+                    activity.swapInFragments(listFragment, detailFragment);
 
-                    Toast toast = Toast.makeText(getActivity(),
-                            getString(R.string.toast_clear_lexicon_favorites), Toast.LENGTH_SHORT);
+                    String msg = getString(R.string.toast_clear_lexicon_favorites);
+                    Toast toast = Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT);
                     toast.show();
                 }
             });
+            
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                 }
             });
+            
             return builder.create();
         }
     }
@@ -594,32 +600,38 @@ public class MainActivity extends ActionBarActivity
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage(R.string.clear_syntax_bookmarks_dialog_message);
+            
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    getActivity().getContentResolver().delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, null,
-                            null);
-
                     MainActivity activity = (MainActivity) getActivity();
-                    activity.swapInFragments(new SyntaxBookmarksListFragment(),
-                            new SyntaxDetailFragment());
+                    
+                    Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
+                    activity.getContentResolver().delete(uri, null, null);
+
+                    Fragment listFragment = new SyntaxBookmarksListFragment();
+                    Fragment detailFragment = new SyntaxDetailFragment();
+                    activity.swapInFragments(listFragment, detailFragment);
 
                     // onPrepareOptionsMenu() isn't being called after the fragment transaction for
                     // some reason, so we need to manually invalidate the menu here.
                     activity.getFragmentManager().executePendingTransactions();
                     activity.invalidateOptionsMenu();
 
-                    Toast toast = Toast.makeText(activity.getApplicationContext(),
-                            getString(R.string.toast_clear_syntax_bookmarks), Toast.LENGTH_SHORT);
+                    String msg = getString(R.string.toast_clear_syntax_bookmarks);
+                    Context context = activity.getApplicationContext();
+                    Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
                     toast.show();
                 }
             });
+            
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                 }
             });
+            
             return builder.create();
         }
     }
@@ -644,8 +656,9 @@ public class MainActivity extends ActionBarActivity
         }
 
         // Set this item's state to activated on tablets and scroll the list to the item.
-        LexiconBrowseListFragment fragment = (LexiconBrowseListFragment) getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
+        FragmentManager mgr = getFragmentManager();
+        LexiconBrowseListFragment fragment = 
+                (LexiconBrowseListFragment) mgr.findFragmentById(R.id.item_list_container);
         fragment.selectItem(Integer.parseInt(id));
     }
 
@@ -660,22 +673,26 @@ public class MainActivity extends ActionBarActivity
         String selection = LexiconContract.COLUMN_BETA_SYMBOLS + " = ? OR "
                 + LexiconContract.COLUMN_BETA_NO_SYMBOLS + " = ? OR "
                 + LexiconContract.COLUMN_GREEK_LOWERCASE + " = ?";
-        String[] selectionArgs = new String[] {query.toLowerCase(), query.toLowerCase(),
-                query.toLowerCase()};
+        String[] selectionArgs = new String[] {
+            query.toLowerCase(), 
+            query.toLowerCase(),
+            query.toLowerCase()
+        };
         String sortOrder = LexiconContract._ID + " ASC";
-        Cursor cursor = getContentResolver().query(LexiconProvider.CONTENT_URI, columns, selection,
-                selectionArgs, sortOrder);
+        ContentResolver resolver = getContentResolver();
+        Uri uri = LexiconProvider.CONTENT_URI;
+        Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, sortOrder);
 
         if (cursor.moveToFirst()) {
             String id = cursor.getString(0);
             ensureModeIsLexiconBrowse();
-            LexiconBrowseListFragment fragment
-                    = (LexiconBrowseListFragment) getFragmentManager()
-                        .findFragmentById(R.id.item_list_container);
+            FragmentManager mgr = getFragmentManager();
+            LexiconBrowseListFragment fragment = 
+                    (LexiconBrowseListFragment) mgr.findFragmentById(R.id.item_list_container);
             fragment.selectItem(Integer.parseInt(id));
         } else {
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    getString(R.string.toast_search_no_results), Toast.LENGTH_LONG);
+            String msg = getString(R.string.toast_search_no_results);
+            Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
             toast.show();
         }
 
@@ -700,30 +717,28 @@ public class MainActivity extends ActionBarActivity
      * @param mode the {@code Mode} to which to switch
      */
     private void switchToMode(Mode mode) {
-        // TODO: Condense this code by storing title and fragments as fields of each Mode? The only
-        // problem with this idea is that we'd need static access to string resources. (I.e., we
-        // can't get a context from the enum class itself, so we'd need to use some sort of kludgy
-        // workaround.)
         switch (mode) {
-            case LEXICON_BROWSE:
-                switchToLexiconBrowse();
-                break;
-            case LEXICON_FAVORITES:
-                switchToLexiconFavorites();
-                break;
-            case LEXICON_HISTORY:
-                switchToLexiconHistory();
-                break;
-            case SYNTAX_BROWSE:
-                switchToSyntaxBrowse();
-                break;
-            case SYNTAX_BOOKMARKS:
-                switchToSyntaxBookmarks();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid mode");
+        case LEXICON_BROWSE:
+            switchToLexiconBrowse();
+            break;
+        case LEXICON_FAVORITES:
+            switchToLexiconFavorites();
+            break;
+        case LEXICON_HISTORY:
+            switchToLexiconHistory();
+            break;
+        case SYNTAX_BROWSE:
+            switchToSyntaxBrowse();
+            break;
+        case SYNTAX_BOOKMARKS:
+            switchToSyntaxBookmarks();
+            break;
+        default:
+            throw new IllegalArgumentException("Invalid mode");
         }
-        checkTabletDisplayMode(); // Make sure we're showing or hiding the left pane as is appropriate.
+        
+        // Make sure we're showing or hiding the left pane appropriately.
+        checkTabletDisplayMode(); 
     }
 
     private void switchToLexiconBrowse() {
@@ -819,9 +834,9 @@ public class MainActivity extends ActionBarActivity
      * @param menu the {@code Menu} containing the Favorite icon
      */
     private void setLexiconFavoriteIcon(Menu menu) {
+        FragmentManager mgr = getFragmentManager();
         AbstractLexiconListFragment fragment
-                = (AbstractLexiconListFragment) getFragmentManager()
-                        .findFragmentById(R.id.item_list_container);
+                = (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
 
         MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
         MenuItem removeFavorite = menu.findItem(R.id.action_remove_favorite);
@@ -844,8 +859,9 @@ public class MainActivity extends ActionBarActivity
      * @param menu the {@code Menu} containing the Bookmark icon
      */
     private void setSyntaxBookmarkIcon(Menu menu) {
-        AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
+        FragmentManager mgr = getFragmentManager();
+        AbstractSyntaxListFragment fragment = 
+                (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
 
         MenuItem addBookmark = menu.findItem(R.id.action_add_bookmark);
         MenuItem removeBookmark = menu.findItem(R.id.action_remove_bookmark);
@@ -866,8 +882,8 @@ public class MainActivity extends ActionBarActivity
      * Launches an email app that the user can use to send feedback about this app.
      */
     private void sendFeedback() {
-        Intent intent = new Intent(Intent.ACTION_SENDTO,
-                Uri.fromParts("mailto", getString(R.string.feedback_email), null));
+        Uri uri = Uri.fromParts("mailto", getString(R.string.feedback_email), null);
+        Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
         startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
     }
@@ -888,6 +904,7 @@ public class MainActivity extends ActionBarActivity
             textView.setPadding(25, 25, 25, 25);
             textView.setText(Html.fromHtml(getString(R.string.message_help)));
             textView.setMovementMethod(LinkMovementMethod.getInstance());
+            
             ScrollView scrollView = new ScrollView(getActivity());
             scrollView.addView(textView);
             builder.setView(scrollView);

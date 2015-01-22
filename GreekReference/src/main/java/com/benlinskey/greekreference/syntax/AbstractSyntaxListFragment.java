@@ -16,7 +16,9 @@
 
 package com.benlinskey.greekreference.syntax;
 
+import android.content.ContentResolver;
 import android.database.Cursor;
+import android.net.Uri;
 
 import com.benlinskey.greekreference.AbstractListFragment;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -24,10 +26,13 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 /**
  * The basic class from which every syntax list fragment inherits.
  */
-// TODO: Simplify callback interface of this class's children now that we're getting the
-// selected item's ID from the getSelectedLexiconId() method here.
 public abstract class AbstractSyntaxListFragment extends AbstractListFragment {
+    
+    // TODO: Simplify callback interface of this class's children now that we're getting the
+    // selected item's ID from the getSelectedLexiconId() method here.
+    
     private static final int NO_SELECTION = -1;
+    
     protected int mSelectedSyntaxId = NO_SELECTION;
 
     /**
@@ -44,9 +49,9 @@ public abstract class AbstractSyntaxListFragment extends AbstractListFragment {
         String[] columns = new String[] {AppDataContract.SyntaxBookmarks._ID};
         String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
         String[] selectionArgs = new String[] {Integer.toString(mSelectedSyntaxId)};
-        Cursor cursor = getActivity().getContentResolver()
-                .query(AppDataContract.SyntaxBookmarks.CONTENT_URI, columns, selection,
-                        selectionArgs, null);
+        ContentResolver resolver = getActivity().getContentResolver();
+        Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
+        Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
         boolean result = false;
         if (cursor.getCount() > 0) {
             result = true;

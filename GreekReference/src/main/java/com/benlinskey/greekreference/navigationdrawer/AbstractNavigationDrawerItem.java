@@ -17,7 +17,7 @@
 package com.benlinskey.greekreference.navigationdrawer;
 
 /**
- * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
+ * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
  */
 public abstract class AbstractNavigationDrawerItem {
 

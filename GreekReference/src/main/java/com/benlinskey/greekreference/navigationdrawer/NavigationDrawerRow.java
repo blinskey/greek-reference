@@ -19,7 +19,7 @@ package com.benlinskey.greekreference.navigationdrawer;
 import android.content.Context;
 
 /**
- * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
+ * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
  */
 public class NavigationDrawerRow extends AbstractNavigationDrawerItem {
 
@@ -46,11 +46,6 @@ public class NavigationDrawerRow extends AbstractNavigationDrawerItem {
     @Override
     public boolean isRow() {
         return true;
-    }
-
-    @Override
-    public boolean updateActionBarTitle() {
-        return false;
     }
 
     public int getIcon() {

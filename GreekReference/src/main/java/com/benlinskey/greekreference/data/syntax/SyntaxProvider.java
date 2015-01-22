@@ -31,7 +31,7 @@ import android.net.Uri;
 public class SyntaxProvider extends ContentProvider {
 
     public static final String AUTHORITY = 
-            "com.benlinskey.greekreference.data.synta.SyntaxProvider";
+            "com.benlinskey.greekreference.data.syntax.SyntaxProvider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/syntax");
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/vnd.benlinskey.greekreference";

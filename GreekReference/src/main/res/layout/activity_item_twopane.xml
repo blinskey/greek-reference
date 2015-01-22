@@ -48,7 +48,8 @@
         android:layout_gravity="start"
         android:elevation="10dp"
         android:fitsSystemWindows="true"
-        app:insetForeground="?attr/colorPrimaryDark">
+        app:insetForeground="?attr/colorPrimaryDark"
+        tools:ignore="UnusedAttribute">
         
         <fragment android:id="@+id/navigation_drawer_fragment"
             android:layout_width="@dimen/navigation_drawer_width"

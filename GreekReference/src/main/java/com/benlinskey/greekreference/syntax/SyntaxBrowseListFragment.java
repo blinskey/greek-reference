@@ -38,8 +38,10 @@ public class SyntaxBrowseListFragment extends AbstractSyntaxListFragment
     public static final String NAME = "syntax_browse";
 
     private SimpleCursorAdapter mAdapter;
-    private static final String[] PROJECTION = new String[] {SyntaxContract._ID,
-            SyntaxContract.COLUMN_NAME_SECTION};
+    private static final String[] PROJECTION = new String[] {
+        SyntaxContract._ID,
+        SyntaxContract.COLUMN_NAME_SECTION
+    };
     private static final String SELECTION = "";
     private static final String[] SELECTION_ARGS = {};
 
@@ -50,26 +52,20 @@ public class SyntaxBrowseListFragment extends AbstractSyntaxListFragment
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
     /**
-     * The fragment's current callback object, which is notified of list item
-     * clicks.
-     */
-    private Callbacks mCallbacks = sDummyCallbacks;
-
-    /**
-     * The current activated item position. Only used on tablets.
-     */
-    private int mActivatedPosition = ListView.INVALID_POSITION;
-
-    /**
      * A dummy implementation of the {@link Callbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
     private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String fragmentName) {
-        }
+        public void onItemSelected(String fragmentName) {}
     };
+    
+    /** The fragment's current callback object, which is notified of list item clicks. */
+    private Callbacks mCallbacks = sDummyCallbacks;
 
+    /** The current activated item position. Only used on tablets. */
+    private int mActivatedPosition = ListView.INVALID_POSITION;
+    
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -84,8 +80,8 @@ public class SyntaxBrowseListFragment extends AbstractSyntaxListFragment
         // TODO: Create a custom adapter with support for chapter headings.
         String[] fromColumns = {SyntaxContract.COLUMN_NAME_SECTION};
         int[] toViews = {android.R.id.text1};
-        mAdapter = new SimpleCursorAdapter(getActivity(),
-                android.R.layout.simple_list_item_activated_1, null, fromColumns, toViews, 0);
+        int layout = android.R.layout.simple_list_item_activated_1;
+        mAdapter = new SimpleCursorAdapter(getActivity(), layout, null, fromColumns, toViews, 0);
         setListAdapter(mAdapter);
         getLoaderManager().initLoader(0, null, this);
     }
