@@ -525,9 +525,6 @@ public class MainActivity extends ActionBarActivity
      */
     private void clearHistory() {
         getContentResolver().delete(AppDataContract.LexiconHistory.CONTENT_URI, null, null);
-
-        swapInFragments(new LexiconHistoryListFragment(), new LexiconDetailFragment());
-
         Toast toast = Toast.makeText(getApplicationContext(),
                 getString(R.string.toast_clear_history), Toast.LENGTH_SHORT);
         toast.show();
@@ -556,11 +553,6 @@ public class MainActivity extends ActionBarActivity
                 public void onClick(DialogInterface dialogInterface, int i) {
                     getActivity().getContentResolver().delete(AppDataContract.LexiconFavorites.CONTENT_URI, null,
                             null);
-
-                    MainActivity activity = (MainActivity) getActivity();
-                    activity.swapInFragments(new LexiconFavoritesListFragment(),
-                            new LexiconDetailFragment());
-
                     Toast toast = Toast.makeText(getActivity(),
                             getString(R.string.toast_clear_lexicon_favorites), Toast.LENGTH_SHORT);
                     toast.show();
@@ -600,16 +592,7 @@ public class MainActivity extends ActionBarActivity
                     getActivity().getContentResolver().delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, null,
                             null);
 
-                    MainActivity activity = (MainActivity) getActivity();
-                    activity.swapInFragments(new SyntaxBookmarksListFragment(),
-                            new SyntaxDetailFragment());
-
-                    // onPrepareOptionsMenu() isn't being called after the fragment transaction for
-                    // some reason, so we need to manually invalidate the menu here.
-                    activity.getFragmentManager().executePendingTransactions();
-                    activity.invalidateOptionsMenu();
-
-                    Toast toast = Toast.makeText(activity.getApplicationContext(),
+                    Toast toast = Toast.makeText(getActivity(),
                             getString(R.string.toast_clear_syntax_bookmarks), Toast.LENGTH_SHORT);
                     toast.show();
                 }
