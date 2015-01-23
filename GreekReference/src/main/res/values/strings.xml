@@ -403,5 +403,5 @@ limitations under the License.
     <string name="pref_typeface">Typeface</string>
     <string name="pref_typeface_notoSerif">Noto Serif</string>
     <string name="pref_typeface_roboto">Roboto</string>
-    <string name="pref_typeface_default">@string/pref_typeface_notoSerif</string>
+    <string name="pref_typeface_default">@string/pref_typeface_roboto</string>
 </resources>
