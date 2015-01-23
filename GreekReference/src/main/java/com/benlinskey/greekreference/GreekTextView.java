@@ -88,15 +88,16 @@ public class GreekTextView extends TextView
         TypedArray attrArray = 
                 context.getTheme().obtainStyledAttributes(attrs, R.styleable.greek_text_view, 0, 0);
         try {
-            mAllowTextSizeChanges = 
-                    attrArray.getBoolean(R.styleable.greek_text_view_allowTextSizeChanges, true);
+            int attribute = R.styleable.greek_text_view_allowTextSizeChanges;
+            mAllowTextSizeChanges = attrArray.getBoolean(attribute, true);
         } finally {
             attrArray.recycle();
         }
         
         setFont(context);
-        PreferenceManager.getDefaultSharedPreferences(context)
-                .registerOnSharedPreferenceChangeListener(this);
+        
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.registerOnSharedPreferenceChangeListener(this);
     }
     
     /**

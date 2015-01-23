@@ -202,8 +202,8 @@ public class SettingsActivity extends ActionBarActivity {
             String packageName = context.getPackageName();
             String versionName = null;
             try {
-                versionName = 
-                        context.getPackageManager().getPackageInfo(packageName, 0).versionName;
+                PackageManager manager = context.getPackageManager();
+                versionName = manager.getPackageInfo(packageName, 0).versionName;
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
