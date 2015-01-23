@@ -37,6 +37,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
@@ -127,7 +128,11 @@ public class GreekTextView extends TextView
      * @param context the {@link Context} to use.
      * @return true iff the typeface preference is set to Roboto
      */
-    private boolean robotoTypefaceSet(Context context) {
+    private boolean robotoTypefacePreferenceSet(Context context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return false;
+        }
+        
         String typefacePref = getTypefaceSetting(context);
         return context.getString(R.string.pref_typeface_roboto).equals(typefacePref);
     }
@@ -137,7 +142,7 @@ public class GreekTextView extends TextView
      * @param context the {@link Context} to use
      */
     private void setTypeface(Context context) {
-        if (robotoTypefaceSet(context)) {
+        if (robotoTypefacePreferenceSet(context)) {
            setTypeface(Typeface.DEFAULT);
         } else if (!isInEditMode() && !TextUtils.isEmpty(NOTO_SERIF)) {
             Typeface typeface = sTypefaceCache.get(NOTO_SERIF);
