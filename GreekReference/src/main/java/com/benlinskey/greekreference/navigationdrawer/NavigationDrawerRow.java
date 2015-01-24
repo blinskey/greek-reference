@@ -19,14 +19,15 @@ package com.benlinskey.greekreference.navigationdrawer;
 import android.content.Context;
 
 /**
- * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
+ * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
  */
 public class NavigationDrawerRow extends AbstractNavigationDrawerItem {
 
     private static final int TYPE = 1;
 
-    private int mIconUnhighlighted;
-    private int mIconHighlighted;
+    private final int mIconUnhighlighted;
+    private final int mIconHighlighted;
+    
     private int mCurrentIcon;
 
     public NavigationDrawerRow(int id, String label, int iconUnhighlighted,
@@ -45,11 +46,6 @@ public class NavigationDrawerRow extends AbstractNavigationDrawerItem {
     @Override
     public boolean isRow() {
         return true;
-    }
-
-    @Override
-    public boolean updateActionBarTitle() {
-        return false;
     }
 
     public int getIcon() {

@@ -73,7 +73,7 @@ public class GreekTextView extends TextView
             android.support.v7.appcompat.R.color.primary_text_default_material_light;
 
     /** An {@code LruCache} for previously loaded typefaces. */
-    private static LruCache<String, Typeface> sTypefaceCache = new LruCache<>(12);
+    private static final LruCache<String, Typeface> sTypefaceCache = new LruCache<>(12);
 
     private final boolean mAllowTextSizeChanges;
     

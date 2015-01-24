@@ -18,9 +18,11 @@ package com.benlinskey.greekreference.syntax;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -38,15 +40,15 @@ public class SyntaxBookmarksListFragment extends AbstractSyntaxListFragment
 
     public static final String NAME = "syntax_bookmarks";
 
-    private static final String[] PROJECTION = new String[] {AppDataContract.SyntaxBookmarks._ID,
-            AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION,
-            AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID};
+    private static final String[] PROJECTION = new String[] {
+        AppDataContract.SyntaxBookmarks._ID,
+        AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION,
+        AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID
+    };
     private static final String SELECTION = "";
     private static final String[] SELECTION_ARGS = {};
-    private static final String SORT_ORDER
-            = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " ASC";
-
-    private SimpleCursorAdapter mAdapter;
+    private static final String SORT_ORDER = 
+            AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " ASC";
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -54,33 +56,28 @@ public class SyntaxBookmarksListFragment extends AbstractSyntaxListFragment
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
-    /**
-     * The fragment's current callback object, which is notified of list item
-     * clicks.
-     */
+    private SimpleCursorAdapter mAdapter;
+    
+    /** The fragment's current callback object, which is notified of list item clicks. */
     private Callbacks mCallbacks = sDummyCallbacks;
 
-    /**
-     * The current activated item position. Only used on tablets.
-     */
+    /** The current activated item position. Only used on tablets. */
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
-    private static Callbacks sDummyCallbacks = new Callbacks() {
+    private static final Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String fragmentName) {
-        }
+        public void onItemSelected(String fragmentName) {}
     };
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SyntaxBookmarksListFragment() {
-    }
+    public SyntaxBookmarksListFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,8 +86,8 @@ public class SyntaxBookmarksListFragment extends AbstractSyntaxListFragment
         // TODO: Add chapter name before section name in this list?
         String[] fromColumns = {AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION};
         int[] toViews = {android.R.id.text1};
-        mAdapter = new SimpleCursorAdapter(getActivity(),
-                android.R.layout.simple_list_item_activated_1, null, fromColumns, toViews, 0);
+        int layout = android.R.layout.simple_list_item_activated_1;
+        mAdapter = new SimpleCursorAdapter(getActivity(), layout, null, fromColumns, toViews, 0);
         setListAdapter(mAdapter);
         getLoaderManager().initLoader(0, null, this);
     }
@@ -166,9 +163,9 @@ public class SyntaxBookmarksListFragment extends AbstractSyntaxListFragment
         String[] columns = new String[] {AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID};
         String selection = AppDataContract.SyntaxBookmarks._ID + " = ?";
         String[] selectionArgs = new String[] {Integer.toString(id)};
-        Cursor cursor = getActivity().getContentResolver()
-                .query(AppDataContract.SyntaxBookmarks.CONTENT_URI, columns, selection,
-                        selectionArgs, null);
+        ContentResolver resolver = getActivity().getContentResolver();
+        Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
+        Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
 
         if (cursor.moveToFirst()) {
             mSelectedSyntaxId = cursor.getInt(0);

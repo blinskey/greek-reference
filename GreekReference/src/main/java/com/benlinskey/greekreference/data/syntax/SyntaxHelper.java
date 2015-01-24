@@ -35,15 +35,4 @@ public class SyntaxHelper extends SQLiteAssetHelper {
         super(context, SyntaxContract.DB_NAME, null, DB_VERSION);
         setForcedUpgrade(DB_VERSION); // Copy entire database on upgrade.
     }
-
-    @Override
-    public synchronized SQLiteDatabase getReadableDatabase() {
-        return super.getReadableDatabase();
-    }
-
-    @Override
-    public synchronized SQLiteDatabase getWritableDatabase() {
-        return super.getWritableDatabase();
-    }
-
 }

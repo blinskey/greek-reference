@@ -16,8 +16,11 @@
 
 package com.benlinskey.greekreference.syntax;
 
+import android.app.FragmentManager;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
@@ -45,8 +48,10 @@ import java.io.InputStream;
  * A {@link com.benlinskey.greekreference.AbstractDetailFragment} used to display a syntax section.
  */
 public class SyntaxDetailFragment extends AbstractDetailFragment {
+    
     public static final String TAG = "SyntaxDetailFragment";
     public static final String ARG_XML = "xml";
+    
     private SyntaxSection mSection;
     private boolean mBlank = false;
 
@@ -54,8 +59,7 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SyntaxDetailFragment() {
-    }
+    public SyntaxDetailFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,6 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
 
         if (getArguments() != null && getArguments().containsKey(ARG_XML)) {
             String xml = getArguments().getString(ARG_XML);
-            Log.w(TAG + ": xml", xml);
 
             SyntaxXmlParser parser = new SyntaxXmlParser();
             InputStream in = new ByteArrayInputStream(xml.getBytes());
@@ -78,8 +81,8 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, 
+             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_item_detail, container, false);
 
         if (!mBlank) {
@@ -103,8 +106,9 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
         String[] projection = {SyntaxContract.COLUMN_NAME_SECTION};
         String selection = SyntaxContract._ID + " = ?";
         String[] selectionArgs = {Integer.toString(id)};
-        Cursor cursor = getActivity().getContentResolver()
-                .query(SyntaxContract.CONTENT_URI, projection, selection, selectionArgs, null);
+        ContentResolver resolver = getActivity().getContentResolver();
+        Uri uri = SyntaxContract.CONTENT_URI;
+        Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
         String section;
         if (cursor.moveToFirst()) {
             section = cursor.getString(0);
@@ -123,8 +127,8 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
         ContentValues values = new ContentValues();
         values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID, syntaxId);
         values.put(AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION, section);
-        getActivity().getContentResolver().insert(AppDataContract.SyntaxBookmarks.CONTENT_URI,
-                values);
+        Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
+        getActivity().getContentResolver().insert(uri, values);
         getActivity().invalidateOptionsMenu();
         displayToast(getString(R.string.toast_bookmark_added));
     }
@@ -136,8 +140,8 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
     protected void removeSyntaxBookmark(int syntaxId) {
         String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
         String[] selectionArgs = {Integer.toString(syntaxId)};
-        getActivity().getContentResolver()
-                .delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, selection, selectionArgs);
+        ContentResolver resolver = getActivity().getContentResolver();
+        resolver.delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, selection, selectionArgs);
         getActivity().invalidateOptionsMenu();
         displayToast(getString(R.string.toast_bookmark_removed));
     }
@@ -149,8 +153,9 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
      * Adds the currently selected section to the syntax bookmarks list.
      */
     public void addSyntaxBookmark() {
-        AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getActivity().getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
+        FragmentManager mgr = getActivity().getFragmentManager();
+        AbstractSyntaxListFragment fragment = 
+                (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
         int syntaxId = fragment.getSelectedSyntaxId();
         String section = getSectionFromSyntaxId(syntaxId);
         addSyntaxBookmark(syntaxId, section);
@@ -160,8 +165,9 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
      * Removes the currently selected section from the syntax bookmarks list.
      */
     public void removeSyntaxBookmark() {
-        AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getActivity().getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
+        FragmentManager mgr = getActivity().getFragmentManager();
+        AbstractSyntaxListFragment fragment = 
+                (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
         int syntaxId = fragment.getSelectedSyntaxId();
         removeSyntaxBookmark(syntaxId);
     }

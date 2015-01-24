@@ -17,7 +17,7 @@
 package com.benlinskey.greekreference.navigationdrawer;
 
 /**
- * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
+ * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
  */
 public abstract class AbstractNavigationDrawerItem {
 
@@ -41,12 +41,7 @@ public abstract class AbstractNavigationDrawerItem {
         return mLabel;
     }
 
-    public void setLabel(String label) {
-        mLabel = label;
-    }
-
     public abstract boolean isEnabled();
     public abstract boolean isRow();
     public abstract int getType();
-    public abstract boolean updateActionBarTitle();
 }

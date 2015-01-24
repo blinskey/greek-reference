@@ -27,7 +27,7 @@ public class SyntaxSection {
 
     private String mHeading = "heading";
     private String mIntro = "intro";
-    private LinkedList<String> mList; // Represents bulleted list of items.
+    private final LinkedList<String> mList; // Represents bulleted list of items.
 
     /* NOTE: I'm leaving the construction of the string with formatting information to the XML
      * parser here. This is easier, but it would be cleaner to do all of the text construction

@@ -17,6 +17,7 @@
 package com.benlinskey.greekreference.navigationdrawer;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +29,12 @@ import android.widget.TextView;
 import com.benlinskey.greekreference.R;
 
 /**
- * Based on the tutorial at {@llink http://www.michenux.net/android-navigation-drawer-748.html}.
+ * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
  */
 public class NavigationDrawerAdapter extends ArrayAdapter<AbstractNavigationDrawerItem> {
 
-    private LayoutInflater mInflater;
-    private Context mContext;
+    private final LayoutInflater mInflater;
+    private final Context mContext;
 
     public NavigationDrawerAdapter(Context context, int id, AbstractNavigationDrawerItem[] objects) {
         super(context, id, objects);
@@ -53,58 +54,57 @@ public class NavigationDrawerAdapter extends ArrayAdapter<AbstractNavigationDraw
         return view;
     }
 
-    public View getRowView(View convertView, ViewGroup parentView, AbstractNavigationDrawerItem item,
-            int position) {
-        NavigationDrawerRowHolder navigationDrawerRowHolder = null;
+    public View getRowView(View convertView, ViewGroup parentView, 
+            AbstractNavigationDrawerItem item, int position) {
+        NavigationDrawerRowHolder navDrawerRowHolder = null;
 
         if (null == convertView) {
             convertView = mInflater.inflate(R.layout.navigation_drawer_row, parentView, false);
-            TextView textView = (TextView)
-                    convertView.findViewById(R.id.navigation_drawer_row_text);
-            ImageView imageView = (ImageView)
-                    convertView.findViewById(R.id.navigation_drawer_row_icon);
+            TextView textView = 
+                    (TextView) convertView.findViewById(R.id.navigation_drawer_row_text);
+            ImageView imageView = 
+                    (ImageView) convertView.findViewById(R.id.navigation_drawer_row_icon);
 
-            navigationDrawerRowHolder = new NavigationDrawerRowHolder();
-            navigationDrawerRowHolder.textView = textView;
-            navigationDrawerRowHolder.imageView = imageView;
+            navDrawerRowHolder = new NavigationDrawerRowHolder();
+            navDrawerRowHolder.textView = textView;
+            navDrawerRowHolder.imageView = imageView;
 
-            convertView.setTag(navigationDrawerRowHolder);
+            convertView.setTag(navDrawerRowHolder);
         }
 
-        if (null == navigationDrawerRowHolder) {
-            navigationDrawerRowHolder =(NavigationDrawerRowHolder) convertView.getTag();
+        if (null == navDrawerRowHolder) {
+            navDrawerRowHolder =(NavigationDrawerRowHolder) convertView.getTag();
         }
 
-        navigationDrawerRowHolder.textView.setText(item.getLabel());
+        navDrawerRowHolder.textView.setText(item.getLabel());
 
         // Text and icon color are determined by whether the item is checked.
         if (((ListView) parentView).isItemChecked(position)) {
             // Item is highlighted.
             ((NavigationDrawerRow) item).setIconHighlighted(true);
-            TextView textView = navigationDrawerRowHolder.textView;
-            int textDark = mContext.getResources().getColor(R.color.primary_dark_material_dark);
-            int backgroundLight =
-                    mContext.getResources().getColor(R.color.background_material_light);
+            TextView textView = navDrawerRowHolder.textView;
+            Resources resources = mContext.getResources();
+            int textDark = resources.getColor(R.color.primary_dark_material_dark);
+            int backgroundLight = resources.getColor(R.color.background_material_light);
             textView.setTextColor(textDark);
             convertView.setBackgroundColor(backgroundLight);
         } else {
             // Item is not highlighted.
             ((NavigationDrawerRow) item).setIconHighlighted(false);
-            TextView textView = navigationDrawerRowHolder.textView;
+            TextView textView = navDrawerRowHolder.textView;
             int textDark = mContext.getResources().getColor(R.color.primary_dark_material_dark);
             int backgroundWhite = mContext.getResources().getColor(R.color.background_white);
             textView.setTextColor(textDark);
             convertView.setBackgroundColor(backgroundWhite);
         }
 
-        navigationDrawerRowHolder.imageView
-                .setImageResource(((NavigationDrawerRow) item).getIcon());
+        navDrawerRowHolder.imageView.setImageResource(((NavigationDrawerRow) item).getIcon());
 
         return convertView;
     }
 
-    public View getHeadingView(View convertView, ViewGroup parentView, AbstractNavigationDrawerItem item,
-            int position) {
+    public View getHeadingView(View convertView, ViewGroup parentView, 
+            AbstractNavigationDrawerItem item, int position) {
         NavigationDrawerHeadingHolder holder = null;
         TextView textView;
 
