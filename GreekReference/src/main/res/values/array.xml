@@ -11,11 +11,11 @@
         <item>@string/pref_textSize_item_large</item>
     </array>
     <array name="pref_typeface_entries">
-        <item>@string/pref_typeface_notoSerif</item>
         <item>@string/pref_typeface_roboto</item>
+        <item>@string/pref_typeface_notoSerif</item>
     </array>
     <array name="pref_typeface_values">
-        <item>@string/pref_typeface_notoSerif</item>
         <item>@string/pref_typeface_roboto</item>
+        <item>@string/pref_typeface_notoSerif</item>
     </array>
 </resources>
