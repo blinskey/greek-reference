@@ -18,9 +18,7 @@ package com.benlinskey.greekreference;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Toast;
 
