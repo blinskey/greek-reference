@@ -118,19 +118,19 @@ public class SyntaxXmlParser {
     private void readListBibl(XmlPullParser parser) throws  XmlPullParserException, IOException {
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getName().equals("bibl")) {
-                String text = "";
+                StringBuilder text = new StringBuilder();
                 while (parser.next() != XmlPullParser.END_TAG) {
                     if (parser.getEventType() == XmlPullParser.TEXT) {
-                        text += parser.getText();
+                        text.append(parser.getText());
                     } else if (parser.getName().equals("title")) {
                         String titleString = readText(parser);
-                        text += "<u>" + titleString + "</u>";
+                        text.append("<u>").append(titleString).append("</u>");
                     } else {
                         throw new XmlPullParserException("Unrecognized element: " + parser.getName());
                     }
                 }
-                text += "<br><br>";
-                mSection.addListItem(text);
+                text.append("<br><br>");
+                mSection.addListItem(text.toString());
             } else {
                 throw new XmlPullParserException("Invalid <listBibl> child");
             }
@@ -156,40 +156,40 @@ public class SyntaxXmlParser {
     }
 
     private String readQuote(XmlPullParser parser) throws XmlPullParserException, IOException {
-        String text = "\"<em>";
+        StringBuilder text = new StringBuilder("\"<em>");
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.TEXT) {
-                text += parser.getText();
+                text.append(parser.getText());
             } else if (parser.getName().equals("hi") || parser.getName().equals("emph")) {
-                text += "<b>" + readText(parser) + "</b>";
+                text.append("<b>").append(readText(parser)).append("</b>");
             } else if (parser.getName().equals("note")) {
-                text += readNote(parser);
+                text.append(readNote(parser));
             } else {
                 throw new XmlPullParserException("Unrecognized element: " + parser.getName());
             }
         }
 
-        text += "</em>\"";
+        text.append("</em>\"");
 
-        return text;
+        return text.toString();
     }
 
     private void readItem(XmlPullParser parser) throws XmlPullParserException, IOException {
-        String text = "";
+        StringBuilder text = new StringBuilder();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.TEXT) {
-                text += parser.getText();
+                text.append(parser.getText());
             } else if (parser.getName().equals("p")) {
-                text += readItemParagraph(parser);
+                text.append(readItemParagraph(parser));
             } else {
                 throw new IllegalStateException("<item> must contain only <p> elements or plain " +
                         "text.");
             }
         }
 
-        mSection.addListItem(text);
+        mSection.addListItem(text.toString());
     }
 
     private void readParticipleList(XmlPullParser parser)
@@ -211,112 +211,111 @@ public class SyntaxXmlParser {
     private String readItemParagraph(XmlPullParser parser)
             throws XmlPullParserException, IOException {
         // Note that we can't use <p> tags here, since we have to manually add bullets before list
-        // items enclosed in those tags in the XML. This will be fixed when we switch to using a
-        // WebView.
-        String paraString = "";
+        // items enclosed in those tags in the XML.
+        StringBuilder para = new StringBuilder();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.TEXT) {
-                paraString += parser.getText();
+                para.append(parser.getText());
             } else if (parser.getName().equals("hi") || parser.getName().equals("emph")) {
                 String text = readText(parser);
-                paraString += "<b>" + text + "</b> ";
+                para.append("<b>").append(text).append("</b> ");
             } else if (parser.getName().equals("bibl")) {
-                paraString += readBibl(parser);
+                para.append(readBibl(parser));
             } else if (parser.getName().equals("gloss")) {
-                paraString += readGloss(parser);
+                para.append(readGloss(parser));
             } else if (parser.getName().equals("quote")) {
-                paraString += readQuote(parser);
+                para.append(readQuote(parser));
             } else if (parser.getName().equals("foreign")) {
-                paraString += readText(parser);
+                para.append(readText(parser));
             } else if (parser.getName().equals("cit")) {
-                paraString += readCit(parser);
+                para.append(readCit(parser));
             }
         }
 
-        paraString += "<br><br>";
+        para.append("<br><br>");
 
-        return paraString;
+        return para.toString();
     }
 
     private String readCit(XmlPullParser parser) throws XmlPullParserException, IOException {
-        String citString = "";
+        StringBuilder cit = new StringBuilder();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.TEXT) {
-                citString += parser.getText();
+                cit.append(parser.getText());
             } else if (parser.getName().equals("hi") || parser.getName().equals("emph")) {
                 String text = readText(parser);
-                citString += "<b>" + text + "</b> ";
+                cit.append("<b>").append(text).append("</b> ");
             } else if (parser.getName().equals("bibl")) {
-                citString += readBibl(parser);
+                cit.append(readBibl(parser));
             } else if (parser.getName().equals("gloss")) {
-                citString += readGloss(parser);
+                cit.append(readGloss(parser));
             } else if (parser.getName().equals("quote")) {
-                citString += readQuote(parser);
+                cit.append(readQuote(parser));
             } else if (parser.getName().equals("foreign")) {
-                citString += readText(parser);
+                cit.append(readText(parser));
             } else if (parser.getName().equals("cit")) {
                 // Don't do anything special with citations for now.
-                citString += readItemParagraph(parser);
+                cit.append(readItemParagraph(parser));
             }
         }
 
-        return citString;
+        return cit.toString();
     }
 
     private String readGloss(XmlPullParser parser) throws XmlPullParserException, IOException {
-        String text = "";
+        StringBuilder text = new StringBuilder();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.TEXT) {
-                text += parser.getText();
+                text.append(parser.getText());
             } else if (parser.getName().equals("emph")) {
                 String emphText = readText(parser);
-                text += "<b>" + emphText + "</b>";
+                text.append("<b>").append(emphText).append("</b>");
             } else {
                 throw new XmlPullParserException("Unrecognized element: " + parser.getName());
             }
         }
 
-        return text;
+        return text.toString();
     }
 
     // TODO: Italicize <bibl> inside of <cit>, but bold it elsewhere.
     private String readBibl(XmlPullParser parser)
             throws XmlPullParserException, IOException {
-        String text = "<b>";
+        StringBuilder text = new StringBuilder("<b>");
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.TEXT) {
-                text += parser.getText();
+                text.append(parser.getText());
             } else if (parser.getName().equals("title")) {
                 String titleString = readText(parser);
-                text += "<u>" + titleString + "</u>";
+                text.append("<u>").append(titleString).append("</u>");
             } else {
                 throw new XmlPullParserException("Unrecognized element: " + parser.getName());
             }
         }
 
-        text += "</b>";
+        text.append("</b>");
 
-        return text;
+        return text.toString();
     }
 
     private String readNote(XmlPullParser parser) throws XmlPullParserException, IOException {
-        String text = "";
+        StringBuilder text = new StringBuilder();
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() == XmlPullParser.TEXT) {
-                text += parser.getText();
+                text.append(parser.getText());
             } else if (parser.getName().equals("foreign")) {
-                text += readText(parser);
+                text.append(readText(parser));
             } else {
                 throw new XmlPullParserException("Unrecognized element: " + parser.getName());
             }
         }
 
-        return text;
+        return text.toString();
     }
 
     private String readText(XmlPullParser parser) throws XmlPullParserException, IOException {

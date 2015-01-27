@@ -142,16 +142,16 @@ public class LexiconXmlParser {
      */
     private void readNote(XmlPullParser parser, LexiconEntry entry) throws XmlPullParserException,
             IOException {
-        String text = ""; // String to hold the entire list of notes.
+        StringBuilder text = new StringBuilder();
         while (parser.next() !=XmlPullParser.END_TAG) {
             String name = parser.getName();
             if (name != null && name.equals("foreign")) {
-                text += readText(parser);
+                text.append(readText(parser));
             } else {
-                text += parser.getText();
+                text.append(parser.getText());
             }
         }
-        entry.addNote(text);
+        entry.addNote(text.toString());
     }
 
     /**
@@ -162,7 +162,7 @@ public class LexiconXmlParser {
      */
     private void readEtym(XmlPullParser parser, LexiconEntry entry) throws XmlPullParserException,
             IOException {
-        String text = ""; // String containing entire etymology.
+        StringBuilder text = new StringBuilder();
 
         int depth = 1;
         while (depth != 0) {
@@ -180,17 +180,17 @@ public class LexiconXmlParser {
 
             // This is mixed content, so we need to check for text.
             if (XmlPullParser.TEXT == parser.getEventType()) {
-                text += parser.getText();
+                text.append(parser.getText());
             } else if (XmlPullParser.START_TAG == parser.getEventType()) {
                 String name = parser.getName();
                 if (name.equals("ref") || name.equals("foreign")) {
                     parser.next();
-                    text += parser.getText();
+                    text.append(parser.getText());
                 }
             }
         }
 
-        entry.setRef(text);
+        entry.setRef(text.toString());
     }
 
     /**
