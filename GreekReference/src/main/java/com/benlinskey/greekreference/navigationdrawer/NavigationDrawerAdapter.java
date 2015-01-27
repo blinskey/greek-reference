@@ -29,7 +29,7 @@ import android.widget.TextView;
 import com.benlinskey.greekreference.R;
 
 /**
- * Based on the tutorial at {@link http://www.michenux.net/android-navigation-drawer-748.html}.
+ * Based on the tutorial at http://www.michenux.net/android-navigation-drawer-748.html.
  */
 public class NavigationDrawerAdapter extends ArrayAdapter<AbstractNavigationDrawerItem> {
 
