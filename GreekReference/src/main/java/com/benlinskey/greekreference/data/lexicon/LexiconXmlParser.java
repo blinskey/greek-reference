@@ -167,12 +167,15 @@ public class LexiconXmlParser {
         int depth = 1;
         while (depth != 0) {
             switch (parser.next()) {
-                case XmlPullParser.END_TAG:
-                    depth--;
-                    break;
-                case XmlPullParser.START_TAG:
-                    depth++;
-                    break;
+            case XmlPullParser.END_TAG:
+                depth--;
+                break;
+            case XmlPullParser.START_TAG:
+                depth++;
+                break;
+            default:
+                // Do nothing.
+                break;
             }
 
             // This is mixed content, so we need to check for text.
@@ -205,12 +208,14 @@ public class LexiconXmlParser {
 
         while (depth != 0) {
             switch (parser.next()) {
-                case XmlPullParser.END_TAG:
-                    depth--;
-                    break;
-                case XmlPullParser.START_TAG:
-                    depth++;
-                    break;
+            case XmlPullParser.END_TAG:
+                depth--;
+                break;
+            case XmlPullParser.START_TAG:
+                depth++;
+                break;
+            default:
+                break;
             }
 
             // This is mixed content, so we need to check for text.
@@ -277,12 +282,15 @@ public class LexiconXmlParser {
         int depth = 1;
         while (depth != 0) {
             switch (parser.next()) {
-                case XmlPullParser.END_TAG:
-                    depth--;
-                    break;
-                case XmlPullParser.START_TAG:
-                    depth++;
-                    break;
+            case XmlPullParser.END_TAG:
+                depth--;
+                break;
+            case XmlPullParser.START_TAG:
+                depth++;
+                break;
+            default:
+                // Do nothing.
+                break;
             }
         }
     }
