@@ -70,12 +70,12 @@ public class LexiconHistoryProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
         switch (sMatcher.match(uri)) {
-            case WORDS:
-                return searchWords(uri, projection, selection, selectionArgs, sortOrder);
-            case WORD_ID:
-                return getWord(uri);
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
+        case WORDS:
+            return searchWords(uri, projection, selection, selectionArgs, sortOrder);
+        case WORD_ID:
+            return getWord(uri);
+        default:
+            throw new IllegalArgumentException("Unknown URI: " + uri);
         }
     }
 
@@ -116,12 +116,12 @@ public class LexiconHistoryProvider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
         switch (sMatcher.match(uri)) {
-            case WORDS:
-                return CONTENT_TYPE;
-            case WORD_ID:
-                return CONTENT_WORD_TYPE;
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
+        case WORDS:
+            return CONTENT_TYPE;
+        case WORD_ID:
+            return CONTENT_WORD_TYPE;
+        default:
+            throw new IllegalArgumentException("Unknown URI: " + uri);
         }
     }
 
@@ -145,18 +145,18 @@ public class LexiconHistoryProvider extends ContentProvider {
         int affected;
 
         switch (match) {
-            case WORDS:
-                affected = mDatabase.delete(AppDataContract.LexiconHistory.TABLE_NAME,
-                        selection, selectionArgs);
-                break;
-            case WORD_ID:
-                long id = ContentUris.parseId(uri);
-                affected = mDatabase.delete(AppDataContract.LexiconHistory.TABLE_NAME,
-                        BaseColumns._ID + "=" + id + " AND (" + selection + ")",
-                        selectionArgs);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown URI: " +  uri);
+        case WORDS:
+            affected = mDatabase.delete(AppDataContract.LexiconHistory.TABLE_NAME,
+                    selection, selectionArgs);
+            break;
+        case WORD_ID:
+            long id = ContentUris.parseId(uri);
+            affected = mDatabase.delete(AppDataContract.LexiconHistory.TABLE_NAME,
+                    BaseColumns._ID + "=" + id + " AND (" + selection + ")",
+                    selectionArgs);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown URI: " +  uri);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);

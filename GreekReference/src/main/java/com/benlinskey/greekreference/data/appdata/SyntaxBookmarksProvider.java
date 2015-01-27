@@ -69,12 +69,12 @@ public class SyntaxBookmarksProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
             String sortOrder) {
         switch (sMatcher.match(uri)) {
-            case SECTIONS:
-                return searchSections(uri, projection, selection, selectionArgs, sortOrder);
-            case SECTION_ID:
-                return getSection(uri);
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
+        case SECTIONS:
+            return searchSections(uri, projection, selection, selectionArgs, sortOrder);
+        case SECTION_ID:
+            return getSection(uri);
+        default:
+            throw new IllegalArgumentException("Unknown URI: " + uri);
         }
     }
 
@@ -114,12 +114,12 @@ public class SyntaxBookmarksProvider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
         switch (sMatcher.match(uri)) {
-            case SECTIONS:
-                return CONTENT_TYPE;
-            case SECTION_ID:
-                return CONTENT_WORD_TYPE;
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
+        case SECTIONS:
+            return CONTENT_TYPE;
+        case SECTION_ID:
+            return CONTENT_WORD_TYPE;
+        default:
+            throw new IllegalArgumentException("Unknown URI: " + uri);
         }
     }
 
@@ -143,18 +143,18 @@ public class SyntaxBookmarksProvider extends ContentProvider {
         int affected;
 
         switch (match) {
-            case SECTIONS:
-                affected = mDatabase.delete(AppDataContract.SyntaxBookmarks.TABLE_NAME,
-                        selection, selectionArgs);
-                break;
-            case SECTION_ID:
-                long id = ContentUris.parseId(uri);
-                affected = mDatabase.delete(AppDataContract.SyntaxBookmarks.TABLE_NAME,
-                        BaseColumns._ID + "=" + id + " AND (" + selection + ")",
-                        selectionArgs);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown URI: " +  uri);
+        case SECTIONS:
+            affected = mDatabase.delete(AppDataContract.SyntaxBookmarks.TABLE_NAME,
+                    selection, selectionArgs);
+            break;
+        case SECTION_ID:
+            long id = ContentUris.parseId(uri);
+            affected = mDatabase.delete(AppDataContract.SyntaxBookmarks.TABLE_NAME,
+                    BaseColumns._ID + "=" + id + " AND (" + selection + ")",
+                    selectionArgs);
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown URI: " +  uri);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);
