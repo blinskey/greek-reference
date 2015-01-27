@@ -160,8 +160,11 @@ public class LexiconProvider extends ContentProvider {
      */
     private Cursor getWord(Uri uri) {
         String id = uri.getLastPathSegment();
-        String[] projection = new String[] {LexiconContract._ID, LexiconContract.COLUMN_ENTRY,
-                LexiconContract.COLUMN_GREEK_NO_SYMBOLS};
+        String[] projection = new String[] {
+                LexiconContract._ID,
+                LexiconContract.COLUMN_ENTRY,
+                LexiconContract.COLUMN_GREEK_NO_SYMBOLS
+        };
         String selection = "_id = ?";
         String[] selectionArgs = new String[] {id};
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
@@ -173,14 +176,14 @@ public class LexiconProvider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
         switch (sMatcher.match(uri)) {
-            case SEARCH:
-                return WORDS_MIME_TYPE;
-            case SEARCH_SUGGEST:
-                return SearchManager.SUGGEST_MIME_TYPE;
-            case GET_WORD:
-                return ENTRY_MIME_TYPE;
-            default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
+        case SEARCH:
+            return WORDS_MIME_TYPE;
+        case SEARCH_SUGGEST:
+            return SearchManager.SUGGEST_MIME_TYPE;
+        case GET_WORD:
+            return ENTRY_MIME_TYPE;
+        default:
+            throw new IllegalArgumentException("Unknown URI: " + uri);
         }
     }
 

@@ -82,7 +82,8 @@ public class SyntaxProvider extends ContentProvider {
      * @param selectionArgs     the search criteria arguments
      * @return a <code>Cursor</code> containing the results of the query
      */
-    private Cursor searchSections(Uri uri, String[] projection, String selection, String[] selectionArgs) {
+    private Cursor searchSections(Uri uri, String[] projection, String selection,
+                                  String[] selectionArgs) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(SyntaxContract.TABLE_NAME);
         Cursor cursor = queryBuilder.query(mDatabase, projection, selection, selectionArgs, null,
@@ -98,10 +99,12 @@ public class SyntaxProvider extends ContentProvider {
      */
     private Cursor getSection(Uri uri) {
         String id = uri.getLastPathSegment();
-        String[] projection = new String[] {SyntaxContract._ID,
-                SyntaxContract.COLUMN_NAME_CHAPTER,
-                SyntaxContract.COLUMN_NAME_SECTION,
-                SyntaxContract.COLUMN_NAME_XML};
+        String[] projection = new String[] {
+            SyntaxContract._ID,
+            SyntaxContract.COLUMN_NAME_CHAPTER,
+            SyntaxContract.COLUMN_NAME_SECTION,
+            SyntaxContract.COLUMN_NAME_XML
+        };
         String selection = SyntaxContract._ID + " = ?";
         String[] selectionArgs = new String[] {id};
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
