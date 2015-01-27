@@ -29,7 +29,7 @@ public class LexiconHelper extends SQLiteAssetHelper {
 
     /**
      * Class constructor.
-     * @param context   the <code>Context</code> to use
+     * @param context the {@link Context} to use
      */
     public LexiconHelper(Context context) {
         super(context, LexiconContract.DB_NAME, null, DB_VERSION);
