@@ -12,7 +12,7 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
     <img alt="Available at Amazon" src="amazon-apps-store-us-black-177x60.png">
 </a>
 
-If you find this app useful, please consider [making a donation](GiveDirectly) to help poor households in Kenya and Uganda.
+If you find this app useful, please consider [making a donation][GiveDirectly] to help poor households in Kenya and Uganda.
 
 ## Contents
 
