@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 
@@ -49,6 +49,8 @@ android {
                 proguardFile 'proguard.cfg'
                 zipAlignEnabled true
             }
+        } else {
+            logger.warn("WARNING: No signing configuration found.")
         }
     }
 }
