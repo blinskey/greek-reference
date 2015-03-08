@@ -1,8 +1,8 @@
-# Ancient Greek Lexicon & Syntax
+# Greek Reference: Ancient Greek Lexicon & Syntax
 
 [![Build Status](https://travis-ci.org/blinskey/greek-reference.svg?branch=dev)](https://travis-ci.org/blinskey/greek-reference)
 
-This is an ancient Greek lexicon and grammar for Android incorporating open source texts from the [Perseus Digital Library][Perseus]. It's also known by the alternate name Greek Reference.
+This is an ancient Greek lexicon and grammar for Android incorporating open source texts from the [Perseus Digital Library][Perseus].
 
 <a href="https://play.google.com/store/apps/details?id=com.benlinskey.greekreference">
   <img alt="Get it on Google Play"
@@ -51,10 +51,6 @@ If you're using the app on a device connected to the Internet, you can use the V
 **Can you translate the app to my language?**
 
 Sorry, we're limited to texts available from the Perseus Digital Library. If you're interested in translating the app's UI text to another language, feel free to open an issue for further discussion.
-
-**What is the official name of this app?**
-
-The app was originally called Greek Reference but was later renamed to Ancient Greek Lexicon & Syntax in order to make it easier for users to find the app. At the moment, the original name still persists in this repository's name, the app icon caption, and a few other places.
 
 **What should I do if I've spotted an error in the lexicon?**
 
