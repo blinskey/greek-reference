@@ -21,7 +21,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -37,7 +36,6 @@ import java.io.InputStream;
  */
 public class LexiconXmlParser {
     
-    private static final String TAG = "LexiconXmlParser";
     private static final String NAMESPACE = null;
 
     /**
@@ -307,9 +305,8 @@ public class LexiconXmlParser {
         if (parser.next() == XmlPullParser.TEXT) {
             result = parser.getText();
             parser.nextTag();
-        } else {
-            Log.e(TAG, "No text found in readText().");
         }
+
         return result;
     }
 }

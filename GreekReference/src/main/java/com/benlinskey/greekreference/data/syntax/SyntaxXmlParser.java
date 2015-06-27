@@ -16,7 +16,6 @@
 
 package com.benlinskey.greekreference.data.syntax;
 
-import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -33,7 +32,6 @@ public class SyntaxXmlParser {
     // TODO: Use string buffers instead of string concatenation.
     // TODO: Modify this for display in a WebView.
 
-    private static final String TAG = "SyntaxXmlParser";
     private final SyntaxSection mSection;
     private String mText = "";
 
@@ -323,8 +321,6 @@ public class SyntaxXmlParser {
         if (parser.next() == XmlPullParser.TEXT) {
             result = parser.getText();
             parser.nextTag();
-        } else {
-            Log.e(TAG, "No text found in readText().");
         }
 
         return result;
