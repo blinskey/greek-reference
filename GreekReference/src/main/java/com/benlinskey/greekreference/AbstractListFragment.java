@@ -140,6 +140,6 @@ public abstract class AbstractListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String fragmentName);
+        void onItemSelected(String fragmentName);
     }
 }
