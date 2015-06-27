@@ -278,7 +278,7 @@ public class MainActivity extends ActionBarActivity
      * item's entry.
      */
     private void syntaxItemSelected() {
-        FragmentManager mgr = getFragmentManager();;
+        FragmentManager mgr = getFragmentManager();
         AbstractSyntaxListFragment fragment = 
                 (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
 
