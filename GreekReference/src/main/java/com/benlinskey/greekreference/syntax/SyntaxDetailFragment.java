@@ -112,6 +112,7 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
         String section;
         if (cursor.moveToFirst()) {
             section = cursor.getString(0);
+            cursor.close();
         } else {
             throw new IllegalArgumentException("Invalid syntax ID: " + id);
         }

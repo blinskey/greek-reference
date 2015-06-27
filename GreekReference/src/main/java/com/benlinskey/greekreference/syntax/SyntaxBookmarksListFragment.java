@@ -169,6 +169,7 @@ public class SyntaxBookmarksListFragment extends AbstractSyntaxListFragment
 
         if (cursor.moveToFirst()) {
             mSelectedSyntaxId = cursor.getInt(0);
+            cursor.close();
         } else {
             throw new IllegalArgumentException("Invalid ID: " + id);
         }

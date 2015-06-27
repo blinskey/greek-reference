@@ -173,6 +173,7 @@ public class LexiconFavoritesListFragment extends AbstractLexiconListFragment
 
         if (cursor.moveToFirst()) {
             mSelectedLexiconId = cursor.getInt(0);
+            cursor.close();
         } else {
             throw new IllegalArgumentException("Invalid ID: " + id);
         }

@@ -208,6 +208,7 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
         String word;
         if (cursor.moveToFirst()) {
             word = cursor.getString(0);
+            cursor.close();
         } else {
             throw new IllegalArgumentException("Invalid lexicon ID: " + id);
         }

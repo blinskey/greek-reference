@@ -265,6 +265,7 @@ public class MainActivity extends ActionBarActivity
         if (cursor.moveToFirst()) {
             entry = cursor.getString(0);
             word = cursor.getString(1);
+            cursor.close();
         } else {
             throw new IllegalStateException("Failed to retrieve lexicon entry");
         }
@@ -296,6 +297,7 @@ public class MainActivity extends ActionBarActivity
         if (cursor.moveToFirst()) {
             xml = cursor.getString(0);
             section = cursor.getString(1);
+            cursor.close();
             Log.w("Syntax item selected", section + ": " + xml);
         } else {
             throw new IllegalStateException("Failed to retrieve syntax section");
@@ -633,6 +635,7 @@ public class MainActivity extends ActionBarActivity
         try {
             int idIndex = cursor.getColumnIndexOrThrow(LexiconContract._ID);
             id = cursor.getString(idIndex);
+            cursor.close();
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Failed to retrieve result from database.");
             throw e;

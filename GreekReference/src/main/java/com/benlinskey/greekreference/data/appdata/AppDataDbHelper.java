@@ -100,11 +100,15 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
             int idIndex = lexiconCursor.getColumnIndexOrThrow(LexiconContract._ID);
             int id = lexiconCursor.getInt(idIndex);
 
+            lexiconCursor.close();
+
             // Insert this item into the new LexiconFavorites table.
             ContentValues values = new ContentValues(2);
             values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, id);
             values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, word);
             db.insert(AppDataContract.LexiconFavorites.TABLE_NAME, null, values);
         }
+
+        oldData.close();
     }
 }
