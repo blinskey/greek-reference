@@ -75,9 +75,10 @@ import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
  * {@link AbstractListFragment} and an {@link AbstractDetailFragment}. On phones, it displays only 
  * an {@code AbstractListFragment}.
  */
-public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, 
-                AbstractListFragment.Callbacks {
+public class MainActivity
+        extends ActionBarActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+                   AbstractListFragment.Callbacks {
     
     /** Intent bundle key. */
     public static final String KEY_MODE = "mode";
@@ -85,8 +86,6 @@ public class MainActivity extends ActionBarActivity
     /** Custom intent action. */
     public static final String ACTION_SET_MODE = "com.benlinskey.greekreference.SET_MODE";
     
-    private static final String TAG = "MainActivity";
-
     // Application state bundle keys
     private static final String KEY_TITLE = "action_bar_title";
     private static final String KEY_SUBTITLE = "action_bar_subtitle";
@@ -198,8 +197,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     /**
-     * Processes an <code>Intent</code> if it can be handled by this {@code Activity} or
-     * throws an exception if this {@code Activity} cannot handle the specified {@code Intent}.
+     * Processes an <code>Intent</code> if it can be handled by this {@code Activity}.
      * @param intent the {@code Intent} to handle
      */
     void handleIntent(Intent intent) {
@@ -637,7 +635,8 @@ public class MainActivity extends ActionBarActivity
             id = cursor.getString(idIndex);
             cursor.close();
         } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Failed to retrieve result from database.");
+            String className = getClass().getCanonicalName();
+            Log.e(className, "Failed to retrieve result from database", e);
             throw e;
         }
 
