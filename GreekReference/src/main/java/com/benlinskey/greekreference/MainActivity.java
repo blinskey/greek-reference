@@ -268,6 +268,7 @@ public class MainActivity
             word = cursor.getString(1);
             cursor.close();
         } else {
+            cursor.close();
             throw new IllegalStateException("Failed to retrieve lexicon entry");
         }
 
@@ -304,6 +305,7 @@ public class MainActivity
             cursor.close();
             Log.w("Syntax item selected", section + ": " + xml);
         } else {
+            cursor.close();
             throw new IllegalStateException("Failed to retrieve syntax section");
         }
 
