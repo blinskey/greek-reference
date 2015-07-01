@@ -257,6 +257,9 @@ public class MainActivity
         String[] selectionArgs = new String[] {id};
         Uri uri = LexiconContract.CONTENT_URI;
         Cursor cursor = getContentResolver().query(uri, columns, selection, selectionArgs, null);
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
 
         String entry;
         String word;
@@ -289,6 +292,9 @@ public class MainActivity
         String[] selectionArgs = new String[] {id};
         Uri uri = SyntaxContract.CONTENT_URI;
         Cursor cursor = getContentResolver().query(uri, columns, selection, selectionArgs, null);
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
 
         String xml;
         String section;
@@ -628,6 +634,11 @@ public class MainActivity
 
         // Get data.
         Cursor cursor = getContentResolver().query(data, null, null, null, null);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
+
         cursor.moveToFirst();
         String id;
         try {
@@ -667,6 +678,10 @@ public class MainActivity
         ContentResolver resolver = getContentResolver();
         Uri uri = LexiconProvider.CONTENT_URI;
         Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, sortOrder);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
 
         if (cursor.moveToFirst()) {
             String id = cursor.getString(0);
