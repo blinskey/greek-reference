@@ -39,3 +39,7 @@ proguard/
 *.ipr
 *.iws
 .idea/
+
+# FB Infer output
+infer-out
+
