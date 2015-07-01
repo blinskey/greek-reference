@@ -152,6 +152,7 @@ public class LexiconHistoryListFragment extends AbstractLexiconListFragment
             mSelectedLexiconId = cursor.getInt(0);
             cursor.close();
         } else {
+            cursor.close();
             throw new IllegalArgumentException("Invalid ID: " + id);
         }
     }

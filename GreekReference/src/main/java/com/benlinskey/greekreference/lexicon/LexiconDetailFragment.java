@@ -217,6 +217,7 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
             word = cursor.getString(0);
             cursor.close();
         } else {
+            cursor.close();
             throw new IllegalArgumentException("Invalid lexicon ID: " + id);
         }
         return word;
