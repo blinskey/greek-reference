@@ -52,6 +52,11 @@ public abstract class AbstractSyntaxListFragment extends AbstractListFragment {
         ContentResolver resolver = getActivity().getContentResolver();
         Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
         Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
+
         boolean result = false;
         if (cursor.getCount() > 0) {
             result = true;

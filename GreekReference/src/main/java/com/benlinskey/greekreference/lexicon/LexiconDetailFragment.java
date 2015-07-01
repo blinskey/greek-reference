@@ -19,6 +19,7 @@ package com.benlinskey.greekreference.lexicon;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -203,8 +204,14 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
         String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD};
         String selection = LexiconContract._ID + " = ?";
         String[] selectionArgs = {Integer.toString(id)};
-        Cursor cursor = getActivity().getContentResolver()
-                .query(LexiconContract.CONTENT_URI, projection, selection, selectionArgs, null);
+        ContentResolver resolver = getActivity().getContentResolver();
+        Cursor cursor = resolver.query(LexiconContract.CONTENT_URI, projection, selection,
+                                       selectionArgs, null);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
+
         String word;
         if (cursor.moveToFirst()) {
             word = cursor.getString(0);

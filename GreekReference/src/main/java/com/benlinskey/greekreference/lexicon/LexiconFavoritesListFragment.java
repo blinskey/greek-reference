@@ -18,6 +18,7 @@ package com.benlinskey.greekreference.lexicon;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -167,9 +168,14 @@ public class LexiconFavoritesListFragment extends AbstractLexiconListFragment
         String[] columns = new String[] {AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID};
         String selection = AppDataContract.LexiconFavorites._ID + " = ?";
         String[] selectionArgs = new String[] {Integer.toString(id)};
-        Cursor cursor = getActivity().getContentResolver()
-                .query(AppDataContract.LexiconFavorites.CONTENT_URI, columns, selection,
-                        selectionArgs, null);
+        ContentResolver resolver = getActivity().getContentResolver();
+        Cursor cursor = resolver.query(AppDataContract.LexiconFavorites.CONTENT_URI, columns,
+                                       selection, selectionArgs, null);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentnResolver#query() returned null");
+        }
+
 
         if (cursor.moveToFirst()) {
             mSelectedLexiconId = cursor.getInt(0);

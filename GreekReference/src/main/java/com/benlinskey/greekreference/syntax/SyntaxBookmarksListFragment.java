@@ -167,6 +167,10 @@ public class SyntaxBookmarksListFragment extends AbstractSyntaxListFragment
         Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
         Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
 
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
+
         if (cursor.moveToFirst()) {
             mSelectedSyntaxId = cursor.getInt(0);
             cursor.close();

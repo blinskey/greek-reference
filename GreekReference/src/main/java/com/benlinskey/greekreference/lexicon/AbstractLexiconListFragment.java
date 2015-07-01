@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.lexicon;
 
+import android.content.ContentResolver;
 import android.database.Cursor;
 
 import com.benlinskey.greekreference.AbstractListFragment;
@@ -47,9 +48,14 @@ public abstract class AbstractLexiconListFragment extends AbstractListFragment {
         String[] columns = new String[] {AppDataContract.LexiconFavorites._ID};
         String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = new String[] {Integer.toString(mSelectedLexiconId)};
-        Cursor cursor = getActivity().getContentResolver()
-                .query(AppDataContract.LexiconFavorites.CONTENT_URI, columns, selection,
-                        selectionArgs, null);
+        ContentResolver resolver = getActivity().getContentResolver();
+        Cursor cursor = resolver.query(AppDataContract.LexiconFavorites.CONTENT_URI, columns,
+                                       selection, selectionArgs, null);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
+
         boolean result = false;
         if (cursor.getCount() > 0) {
             result = true;

@@ -109,6 +109,11 @@ public class SyntaxDetailFragment extends AbstractDetailFragment {
         ContentResolver resolver = getActivity().getContentResolver();
         Uri uri = SyntaxContract.CONTENT_URI;
         Cursor cursor = resolver.query(uri, projection, selection, selectionArgs, null);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
+
         String section;
         if (cursor.moveToFirst()) {
             section = cursor.getString(0);

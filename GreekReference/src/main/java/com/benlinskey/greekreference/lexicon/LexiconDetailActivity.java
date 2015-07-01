@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.lexicon;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -140,7 +141,12 @@ public class LexiconDetailActivity extends AbstractDetailActivity {
         String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = new String[] {Integer.toString(lexiconId)};
         Cursor cursor = getContentResolver().query(AppDataContract.LexiconFavorites.CONTENT_URI,
-                columns, selection, selectionArgs, null);
+                                                   columns, selection, selectionArgs, null);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
+
         boolean result = false;
         if (cursor.getCount() > 0) {
             result = true;

@@ -96,6 +96,11 @@ public class AppDataDbHelper extends SQLiteOpenHelper {
             String[] selectionArgs = {word};
             Cursor lexiconCursor = resolver.query(LexiconContract.CONTENT_URI, projection,
                     selection, selectionArgs, null);
+
+            if (lexiconCursor == null) {
+                throw new NullPointerException("ContentResolver#query() returned null");
+            }
+
             lexiconCursor.moveToFirst();
             int idIndex = lexiconCursor.getColumnIndexOrThrow(LexiconContract._ID);
             int id = lexiconCursor.getInt(idIndex);

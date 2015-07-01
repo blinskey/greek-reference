@@ -132,6 +132,11 @@ public class SyntaxDetailActivity extends AbstractDetailActivity {
         String[] selectionArgs = new String[] {Integer.toString(syntaxId)};
         Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
         Cursor cursor = getContentResolver().query(uri, columns, selection, selectionArgs, null);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
+
         boolean result = false;
         if (cursor.getCount() > 0) {
             result = true;
