@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.dialogFragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -25,6 +25,8 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.benlinskey.greekreference.R;
 
 /**
  * A {@link DialogFragment} containing help text.

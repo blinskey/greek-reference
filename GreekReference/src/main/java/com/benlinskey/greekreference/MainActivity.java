@@ -16,8 +16,6 @@
 
 package com.benlinskey.greekreference;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -26,7 +24,6 @@ import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -53,6 +50,9 @@ import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
+import com.benlinskey.greekreference.dialogFragments.ClearLexiconFavoritesDialogFragment;
+import com.benlinskey.greekreference.dialogFragments.ClearSyntaxBookmarksDialogFragment;
+import com.benlinskey.greekreference.dialogFragments.HelpDialogFragment;
 import com.benlinskey.greekreference.lexicon.AbstractLexiconListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconDetailActivity;
@@ -545,82 +545,11 @@ public class MainActivity
     }
 
     /**
-     * A {@link DialogFragment} that asks the user to confirm that he or she wishes to clear the
-     * lexicon favorites list. If the user answers in the affirmative, the list is cleared.
-     * Otherwise, the dialog is dismissed and no further action is taken.
-     */
-    public static class ClearLexiconFavoritesDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.clear_lexicon_favorites_dialog_message);
-
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    ContentResolver resolver = getActivity().getContentResolver();
-                    resolver.delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
-
-                    String msg = getString(R.string.toast_clear_lexicon_favorites);
-                    Toast toast = Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
-
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-
-            return builder.create();
-        }
-    }
-
-    /**
      * Deletes all items from the syntax bookmarks list.
      */
     private void clearSyntaxBookmarks() {
         DialogFragment dialog = new ClearSyntaxBookmarksDialogFragment();
         dialog.show(getFragmentManager(), "clearBookmarks");
-    }
-
-    /**
-     * A {@link DialogFragment} that asks the user to confirm that he or she wishes to clear the
-     * syntax bookmarks list. If the user answers in the affirmative, the list is cleared.
-     * Otherwise, the dialog is dismissed and no further action is taken.
-     */
-    public static class ClearSyntaxBookmarksDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.clear_syntax_bookmarks_dialog_message);
-
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    MainActivity activity = (MainActivity) getActivity();
-
-                    Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
-                    activity.getContentResolver().delete(uri, null, null);
-
-                    String msg = getString(R.string.toast_clear_syntax_bookmarks);
-                    Context context = activity.getApplicationContext();
-                    Toast toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            });
-
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-
-            return builder.create();
-        }
     }
 
     /**
