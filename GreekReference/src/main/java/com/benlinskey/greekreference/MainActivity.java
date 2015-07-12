@@ -426,7 +426,7 @@ public class MainActivity
      * @param word the word whose entry is selected
      * @param entry the selected entry's XML
      */
-    void displayLexiconEntry(final String id, String word, String entry) {
+    private void displayLexiconEntry(final String id, String word, String entry) {
         // If user searches from Quick Search Box, we may need to change mode.
         if (!mMode.equals(Mode.LEXICON_BROWSE)
                 && !mMode.equals(Mode.LEXICON_FAVORITES)
@@ -466,7 +466,7 @@ public class MainActivity
      * @param section the selected section's title
      * @param xml the selected section's XML
      */
-    void displaySyntaxSection(String section, String xml) {
+    private void displaySyntaxSection(String section, String xml) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putString(SyntaxDetailFragment.ARG_XML, xml);
@@ -494,7 +494,7 @@ public class MainActivity
      * @param id the lexicon database ID of the selected word
      * @param word the selected word
      */
-    void addHistory(String id, String word) {
+    private void addHistory(String id, String word) {
         // If the word is already in the list, delete it.
         String selection = AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID + " = ?";
         String[] selectionArgs = {id};
@@ -591,7 +591,7 @@ public class MainActivity
      *     insensitive and may be written in either Greek characters or Beta code.
      */
     // TODO: Handle words with multiple entries.
-    void search(String query) {
+    private void search(String query) {
         String[] columns = new String[] {LexiconContract._ID};
         String selection = LexiconContract.COLUMN_BETA_SYMBOLS + " = ? OR "
                 + LexiconContract.COLUMN_BETA_NO_SYMBOLS + " = ? OR "
