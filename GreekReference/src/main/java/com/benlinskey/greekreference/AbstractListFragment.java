@@ -104,7 +104,7 @@ public abstract class AbstractListFragment extends ListFragment {
     }
 
     /**
-     * Set's this fragment's {@link ListView}'s activated position.
+     * Sets this fragment's {@link ListView}'s activated position.
      * @param position the position to set as activated
      */
     protected void setActivatedPosition(int position) {
