@@ -242,7 +242,7 @@ public class MainActivity
     }
 
     /**
-     * Processes an <code>Intent</code> if it can be handled by this {@code Activity}.
+     * Processes an {@code Intent} if it can be handled by this {@code Activity}.
      * @param intent the {@code Intent} to handle
      */
     private void handleIntent(Intent intent) {
