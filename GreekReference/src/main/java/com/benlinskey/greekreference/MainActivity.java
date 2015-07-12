@@ -136,9 +136,81 @@ public class MainActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Only show items in the action bar relevant to this screen if the drawer is not showing.
+        // Otherwise, let the drawer decide what to show in the action bar.
+        if (mNavigationDrawerFragment.isDrawerOpen()) {
+            return super.onCreateOptionsMenu(menu);
+        }
+
+        // Inflate the options menu from XML. We have to handle the menu here rather than in the
+        // fragment so that we can hide them when the navigation drawer is open.
+        if (mMode.isLexiconMode()) {
+            getMenuInflater().inflate(R.menu.lexicon_menu, menu);
+            setLexiconFavoriteIcon(menu);
+
+            // Get the SearchView and set the searchable configuration.
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            MenuItem searchItem = menu.findItem(R.id.menu_search);
+            SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+            restoreActionBar();
+            return super.onCreateOptionsMenu(menu);
+        } else if (mMode.isSyntaxMode()) {
+            getMenuInflater().inflate(R.menu.syntax_menu, menu);
+            setSyntaxBookmarkIcon(menu);
+            restoreActionBar();
+            return super.onCreateOptionsMenu(menu);
+        } else {
+            throw new IllegalStateException("Invalid mode");
+        }
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         checkTabletDisplayMode();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_TITLE, (String) mTitle);
+        outState.putString(KEY_SUBTITLE, (String) mSubtitle);
+        outState.putString(KEY_MODE, mMode.getName());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mTitle = savedInstanceState.getString(KEY_TITLE);
+        mSubtitle = savedInstanceState.getString(KEY_SUBTITLE);
+        mMode = Mode.getModeFromName(savedInstanceState.getString(KEY_MODE));
+        restoreActionBar();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Only show items in the action bar relevant to this screen if the drawer is not showing.
+        // Otherwise, let the drawer decide what to show in the action bar.
+        if (mNavigationDrawerFragment.isDrawerOpen()) {
+            return super.onCreateOptionsMenu(menu);
+        }
+
+        if (mMode.isLexiconMode()) {
+            setLexiconFavoriteIcon(menu);
+        } else if (mMode.isSyntaxMode()) {
+            setSyntaxBookmarkIcon(menu);
+        } else {
+            throw new IllegalStateException("Invalid mode");
+        }
+        return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
     }
 
     /**
@@ -170,33 +242,11 @@ public class MainActivity
         return prefs.getBoolean(key, false);
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(KEY_TITLE, (String) mTitle);
-        outState.putString(KEY_SUBTITLE, (String) mSubtitle);
-        outState.putString(KEY_MODE, mMode.getName());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mTitle = savedInstanceState.getString(KEY_TITLE);
-        mSubtitle = savedInstanceState.getString(KEY_SUBTITLE);
-        mMode = Mode.getModeFromName(savedInstanceState.getString(KEY_MODE));
-        restoreActionBar();
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
-    }
-
     /**
      * Processes an <code>Intent</code> if it can be handled by this {@code Activity}.
      * @param intent the {@code Intent} to handle
      */
-    void handleIntent(Intent intent) {
+    private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra((SearchManager.QUERY));
             search(query);
@@ -208,6 +258,19 @@ public class MainActivity
             Mode mode = Mode.getModeFromName(modeName);
             switchToMode(mode);
         }
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        // We consider the user to have learned the drawer once he or she selects an item. This
+        // prevents the drawer from appearing repeatedly in the one-pane mode. This is just a quick
+        // workaround; we might want to implement a more sophisticated solution at some point in
+        // the future.
+        if (mNavigationDrawerFragment != null) {
+            mNavigationDrawerFragment.userLearnedDrawer();
+        }
+
+        switchToMode(Mode.getModeFromPosition(position));
     }
 
     /**
@@ -232,6 +295,55 @@ public class MainActivity
         invalidateOptionsMenu();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO: Move favorite and bookmark code to fragments?
+        // TODO: Move favorite and bookmark options to fragments?
+        FragmentManager mgr = getFragmentManager();
+        switch (item.getItemId()) {
+            case R.id.action_add_favorite:
+                LexiconDetailFragment addFavoriteFragment =
+                        (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+                addFavoriteFragment.addLexiconFavorite();
+                return true;
+            case R.id.action_remove_favorite:
+                LexiconDetailFragment removeFavoriteFragment =
+                        (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+                removeFavoriteFragment.removeLexiconFavorite();
+                return true;
+            case R.id.action_add_bookmark:
+                SyntaxDetailFragment addBookmarkFragment
+                        = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+                addBookmarkFragment.addSyntaxBookmark();
+                return true;
+            case R.id.action_remove_bookmark:
+                SyntaxDetailFragment removeBookmarkFragment
+                        = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+                removeBookmarkFragment.removeSyntaxBookmark();
+                return true;
+            case R.id.action_clear_history:
+                clearHistory();
+                return true;
+            case R.id.action_clear_favorites:
+                clearLexiconFavorites();
+                return true;
+            case R.id.action_clear_bookmarks:
+                clearSyntaxBookmarks();
+                return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.action_feedback:
+                sendFeedback();
+                return true;
+            case R.id.action_help:
+                displayHelp();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * Retrieves and displays the currently selected lexicon item's entry.
      */
@@ -239,9 +351,9 @@ public class MainActivity
         // TODO: Verify that we're in the correct mode here and in similar
         // situations through this class and throw an exception if we're not.
 
-        
+
         FragmentManager mgr = getFragmentManager();
-        AbstractLexiconListFragment fragment = 
+        AbstractLexiconListFragment fragment =
                 (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedLexiconId());
 
@@ -277,7 +389,7 @@ public class MainActivity
      */
     private void syntaxItemSelected() {
         FragmentManager mgr = getFragmentManager();
-        AbstractSyntaxListFragment fragment = 
+        AbstractSyntaxListFragment fragment =
                 (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
 
         String[] columns = new String[] {
@@ -316,7 +428,7 @@ public class MainActivity
      */
     void displayLexiconEntry(final String id, String word, String entry) {
         // If user searches from Quick Search Box, we may need to change mode.
-        if (!mMode.equals(Mode.LEXICON_BROWSE) 
+        if (!mMode.equals(Mode.LEXICON_BROWSE)
                 && !mMode.equals(Mode.LEXICON_FAVORITES)
                 && !mMode.equals(Mode.LEXICON_HISTORY)) {
             switchToLexiconBrowse();
@@ -338,7 +450,7 @@ public class MainActivity
             transaction.commitAllowingStateLoss();
         } else {
             FragmentManager mgr = getFragmentManager();
-            AbstractLexiconListFragment fragment = 
+            AbstractLexiconListFragment fragment =
                     (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
             Intent intent = new Intent(this, LexiconDetailActivity.class);
             intent.putExtra(LexiconDetailFragment.ARG_ENTRY, entry);
@@ -365,7 +477,7 @@ public class MainActivity
             transaction.commitAllowingStateLoss();
         } else {
             FragmentManager mgr = getFragmentManager();
-            AbstractSyntaxListFragment fragment = 
+            AbstractSyntaxListFragment fragment =
                     (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
             Intent intent = new Intent(this, SyntaxDetailActivity.class);
             intent.putExtra(SyntaxDetailFragment.ARG_XML, xml);
@@ -395,135 +507,23 @@ public class MainActivity
         getContentResolver().insert(LexiconHistoryProvider.CONTENT_URI, values);
     }
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-         // We consider the user to have learned the drawer once he or she selects an item. This
-         // prevents the drawer from appearing repeatedly in the one-pane mode. This is just a quick
-         // workaround; we might want to implement a more sophisticated solution at some point in
-         // the future.
-        if (mNavigationDrawerFragment != null) {
-            mNavigationDrawerFragment.userLearnedDrawer();
-        }
-
-        switchToMode(Mode.getModeFromPosition(position));
-    }
-
     /**
      * Sets the navigation bar navigation mode and title to the appropriate values.
      */
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        
-        // The action bar will be null when this is called from NavigationDrawerFragment's 
-        // constructor. We call this method again near the end of this class's constructor to 
+
+        // The action bar will be null when this is called from NavigationDrawerFragment's
+        // constructor. We call this method again near the end of this class's constructor to
         // set the action bar title.
         // TODO: Find a more elegant way to handle this.
         if (null == actionBar) {
             return;
         }
-        
+
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
         actionBar.setSubtitle(mSubtitle);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Only show items in the action bar relevant to this screen if the drawer is not showing.
-        // Otherwise, let the drawer decide what to show in the action bar.
-        if (mNavigationDrawerFragment.isDrawerOpen()) {
-            return super.onCreateOptionsMenu(menu);
-        }
-
-        // Inflate the options menu from XML. We have to handle the menu here rather than in the
-        // fragment so that we can hide them when the navigation drawer is open.
-        if (mMode.isLexiconMode()) {
-            getMenuInflater().inflate(R.menu.lexicon_menu, menu);
-            setLexiconFavoriteIcon(menu);
-
-            // Get the SearchView and set the searchable configuration.
-            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            MenuItem searchItem = menu.findItem(R.id.menu_search);
-            SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-            restoreActionBar();
-            return super.onCreateOptionsMenu(menu);
-        } else if (mMode.isSyntaxMode()) {
-            getMenuInflater().inflate(R.menu.syntax_menu, menu);
-            setSyntaxBookmarkIcon(menu);
-            restoreActionBar();
-            return super.onCreateOptionsMenu(menu);
-        } else {
-            throw new IllegalStateException("Invalid mode");
-        }
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // Only show items in the action bar relevant to this screen if the drawer is not showing.
-        // Otherwise, let the drawer decide what to show in the action bar.
-        if (mNavigationDrawerFragment.isDrawerOpen()) {
-            return super.onCreateOptionsMenu(menu);
-        }
-
-        if (mMode.isLexiconMode()) {
-            setLexiconFavoriteIcon(menu);
-        } else if (mMode.isSyntaxMode()) {
-            setSyntaxBookmarkIcon(menu);
-        } else {
-            throw new IllegalStateException("Invalid mode");
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO: Move favorite and bookmark code to fragments?
-        // TODO: Move favorite and bookmark options to fragments?
-        FragmentManager mgr = getFragmentManager();
-        switch (item.getItemId()) {
-        case R.id.action_add_favorite:
-            LexiconDetailFragment addFavoriteFragment =
-                    (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            addFavoriteFragment.addLexiconFavorite();
-            return true;
-        case R.id.action_remove_favorite:
-            LexiconDetailFragment removeFavoriteFragment =
-                    (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            removeFavoriteFragment.removeLexiconFavorite();
-            return true;
-        case R.id.action_add_bookmark:
-            SyntaxDetailFragment addBookmarkFragment
-                    = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            addBookmarkFragment.addSyntaxBookmark();
-            return true;
-        case R.id.action_remove_bookmark:
-            SyntaxDetailFragment removeBookmarkFragment
-                    = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            removeBookmarkFragment.removeSyntaxBookmark();
-            return true;
-        case R.id.action_clear_history:
-            clearHistory();
-            return true;
-        case R.id.action_clear_favorites:
-            clearLexiconFavorites();
-            return true;
-        case R.id.action_clear_bookmarks:
-            clearSyntaxBookmarks();
-            return true;
-        case R.id.action_settings:
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        case R.id.action_feedback:
-            sendFeedback();
-            return true;
-        case R.id.action_help:
-            displayHelp();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -554,7 +554,7 @@ public class MainActivity
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage(R.string.clear_lexicon_favorites_dialog_message);
-            
+
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -566,14 +566,14 @@ public class MainActivity
                     toast.show();
                 }
             });
-            
+
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                 }
             });
-            
+
             return builder.create();
         }
     }
@@ -596,12 +596,12 @@ public class MainActivity
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage(R.string.clear_syntax_bookmarks_dialog_message);
-            
+
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     MainActivity activity = (MainActivity) getActivity();
-                    
+
                     Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
                     activity.getContentResolver().delete(uri, null, null);
 
@@ -611,14 +611,14 @@ public class MainActivity
                     toast.show();
                 }
             });
-            
+
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
                 }
             });
-            
+
             return builder.create();
         }
     }
@@ -651,7 +651,7 @@ public class MainActivity
 
         // Set this item's state to activated on tablets and scroll the list to the item.
         FragmentManager mgr = getFragmentManager();
-        LexiconBrowseListFragment fragment = 
+        LexiconBrowseListFragment fragment =
                 (LexiconBrowseListFragment) mgr.findFragmentById(R.id.item_list_container);
         fragment.selectItem(Integer.parseInt(id));
     }
@@ -668,7 +668,7 @@ public class MainActivity
                 + LexiconContract.COLUMN_BETA_NO_SYMBOLS + " = ? OR "
                 + LexiconContract.COLUMN_GREEK_LOWERCASE + " = ?";
         String[] selectionArgs = new String[] {
-            query.toLowerCase(), 
+            query.toLowerCase(),
             query.toLowerCase(),
             query.toLowerCase()
         };
@@ -685,7 +685,7 @@ public class MainActivity
             String id = cursor.getString(0);
             ensureModeIsLexiconBrowse();
             FragmentManager mgr = getFragmentManager();
-            LexiconBrowseListFragment fragment = 
+            LexiconBrowseListFragment fragment =
                     (LexiconBrowseListFragment) mgr.findFragmentById(R.id.item_list_container);
             fragment.selectItem(Integer.parseInt(id));
         } else {
@@ -734,9 +734,9 @@ public class MainActivity
         default:
             throw new IllegalArgumentException("Invalid mode");
         }
-        
+
         // Make sure we're showing or hiding the left pane appropriately.
-        checkTabletDisplayMode(); 
+        checkTabletDisplayMode();
     }
 
     private void switchToLexiconBrowse() {
@@ -858,7 +858,7 @@ public class MainActivity
      */
     private void setSyntaxBookmarkIcon(Menu menu) {
         FragmentManager mgr = getFragmentManager();
-        AbstractSyntaxListFragment fragment = 
+        AbstractSyntaxListFragment fragment =
                 (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
 
         MenuItem addBookmark = menu.findItem(R.id.action_add_bookmark);
