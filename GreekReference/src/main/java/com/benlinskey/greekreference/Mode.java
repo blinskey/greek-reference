@@ -17,7 +17,7 @@
 package com.benlinskey.greekreference;
 
 /**
-* An enum type to track the various app modes accessible from the navigation drawer.
+* An enum type that defines the various app modes accessible from the navigation drawer.
 */
 public enum Mode {
     LEXICON_BROWSE(1, "lexicon_browse"),
@@ -30,7 +30,7 @@ public enum Mode {
     private final String mName;
 
     /**
-     * Enum constructor.
+     * Constructs a new enum constant.
      * @param position the navigation drawer position corresponding to this mode
      * @param name the name of this mode
      */
