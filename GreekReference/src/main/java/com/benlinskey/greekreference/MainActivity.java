@@ -22,7 +22,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,8 +44,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
-import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
@@ -85,6 +82,8 @@ public class MainActivity
     // Application state bundle keys
     private static final String KEY_TITLE = "action_bar_title";
     private static final String KEY_SUBTITLE = "action_bar_subtitle";
+
+    private final LexiconHistoryManager historyManager = new LexiconHistoryManager(this);
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -322,7 +321,7 @@ public class MainActivity
                 removeBookmarkFragment.removeSyntaxBookmark();
                 return true;
             case R.id.action_clear_history:
-                clearHistory();
+                historyManager.clear();
                 return true;
             case R.id.action_clear_favorites:
                 clearLexiconFavorites();
@@ -436,7 +435,7 @@ public class MainActivity
 
         // Add entry to history, unless word was selected from history list.
         if (!mMode.equals(Mode.LEXICON_HISTORY)) {
-            addHistory(id, word);
+            historyManager.add(id, word);
         }
 
         // Display entry.
@@ -489,25 +488,6 @@ public class MainActivity
     }
 
     /**
-     * Adds the specified word to the lexicon history list. If the word is already contained in the
-     * list, it will be moved to the top of the list.
-     * @param id the lexicon database ID of the selected word
-     * @param word the selected word
-     */
-    private void addHistory(String id, String word) {
-        // If the word is already in the list, delete it.
-        String selection = AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID + " = ?";
-        String[] selectionArgs = {id};
-        getContentResolver().delete(LexiconHistoryProvider.CONTENT_URI, selection, selectionArgs);
-
-        // Add word to top of list.
-        ContentValues values = new ContentValues();
-        values.put(AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID, id);
-        values.put(AppDataContract.LexiconHistory.COLUMN_NAME_WORD, word);
-        getContentResolver().insert(LexiconHistoryProvider.CONTENT_URI, values);
-    }
-
-    /**
      * Sets the navigation bar navigation mode and title to the appropriate values.
      */
     public void restoreActionBar() {
@@ -524,16 +504,6 @@ public class MainActivity
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
         actionBar.setSubtitle(mSubtitle);
-    }
-
-    /**
-     * Deletes all words from the lexicon history list.
-     */
-    private void clearHistory() {
-        getContentResolver().delete(AppDataContract.LexiconHistory.CONTENT_URI, null, null);
-        String msg = getString(R.string.toast_clear_history);
-        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT);
-        toast.show();
     }
 
     /**
