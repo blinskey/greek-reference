@@ -223,7 +223,7 @@ public class MainActivity
             return;
         }
         View leftPane = findViewById(R.id.item_list_container);
-        if (onePaneModeSelected() && mMode.equals(Mode.LEXICON_BROWSE)) {
+        if (isOnePaneModeSelected() && mMode.equals(Mode.LEXICON_BROWSE)) {
             leftPane.setVisibility(View.GONE);
         } else {
             leftPane.setVisibility(View.VISIBLE);
@@ -235,7 +235,7 @@ public class MainActivity
      * returns false on phones.
      * @return true if the user has selected the one-pane mode preference or false otherwise
      */
-    private boolean onePaneModeSelected() {
+    private boolean isOnePaneModeSelected() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String key = getString(R.string.pref_onePane_key);
         return prefs.getBoolean(key, false);
