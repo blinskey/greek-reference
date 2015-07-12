@@ -41,15 +41,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -888,37 +884,6 @@ public class MainActivity
         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
         startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
-    }
-
-    /**
-     * A {@link DialogFragment} containing help text.
-     */
-    public static class HelpDialogFragment extends DialogFragment {
-        // TODO: Either make these dialog fragment classes private or reuse a single one everywhere.
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.title_help);
-
-            TextView textView = new TextView(getActivity());
-            textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
-            textView.setTextColor(getResources().getColor(android.R.color.black));
-            textView.setPadding(25, 25, 25, 25);
-            textView.setText(Html.fromHtml(getString(R.string.message_help)));
-            textView.setMovementMethod(LinkMovementMethod.getInstance());
-            
-            ScrollView scrollView = new ScrollView(getActivity());
-            scrollView.addView(textView);
-            builder.setView(scrollView);
-
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            return builder.create();
-        }
     }
 
     /**
