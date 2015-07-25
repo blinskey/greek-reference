@@ -70,7 +70,8 @@ import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
  */
 public class MainActivity
         extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        implements MainView,
+                   NavigationDrawerFragment.NavigationDrawerCallbacks,
                    AbstractListFragment.Callbacks {
     
     /** Intent bundle key. */
@@ -83,7 +84,7 @@ public class MainActivity
     private static final String KEY_TITLE = "action_bar_title";
     private static final String KEY_SUBTITLE = "action_bar_subtitle";
 
-    private final LexiconHistoryManager historyManager = new LexiconHistoryManager(this);
+    private final LexiconHistoryManager mHistoryManager = new LexiconHistoryManager(this);
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -321,7 +322,7 @@ public class MainActivity
                 removeBookmarkFragment.removeSyntaxBookmark();
                 return true;
             case R.id.action_clear_history:
-                historyManager.clear();
+                mHistoryManager.clear();
                 return true;
             case R.id.action_clear_favorites:
                 clearLexiconFavorites();
@@ -435,7 +436,7 @@ public class MainActivity
 
         // Add entry to history, unless word was selected from history list.
         if (!mMode.equals(Mode.LEXICON_HISTORY)) {
-            historyManager.add(id, word);
+            mHistoryManager.add(id, word);
         }
 
         // Display entry.
