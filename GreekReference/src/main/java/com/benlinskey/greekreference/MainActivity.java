@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Benjamin Linskey
+ * Copyright 2014-2015 Benjamin Linskey
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,11 +21,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,16 +35,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.benlinskey.greekreference.data.lexicon.LexiconContract;
-import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
-import com.benlinskey.greekreference.data.syntax.SyntaxContract;
 import com.benlinskey.greekreference.dialogFragments.ClearLexiconFavoritesDialogFragment;
 import com.benlinskey.greekreference.dialogFragments.ClearSyntaxBookmarksDialogFragment;
 import com.benlinskey.greekreference.dialogFragments.HelpDialogFragment;
@@ -84,13 +78,12 @@ public class MainActivity
     private static final String KEY_TITLE = "action_bar_title";
     private static final String KEY_SUBTITLE = "action_bar_subtitle";
 
-    private final LexiconHistoryManager mHistoryManager = new LexiconHistoryManager(this);
-
+    private Presenter mPresenter;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private CharSequence mSubtitle;
     private Mode mMode;
-    
+
     /** Indicates whether we're using the tablet layout. */
     private boolean mTwoPane;
 
@@ -98,6 +91,8 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+        mPresenter = new Presenter(this, this);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
@@ -249,10 +244,10 @@ public class MainActivity
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra((SearchManager.QUERY));
-            search(query);
+            mPresenter.search(query);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri data = intent.getData();
-            getLexiconEntry(data);
+            mPresenter.getLexiconEntry(data);
         } else if (ACTION_SET_MODE.equals(intent.getAction())) {
             String modeName = intent.getStringExtra(KEY_MODE);
             Mode mode = Mode.getModeFromName(modeName);
@@ -283,11 +278,11 @@ public class MainActivity
         case LexiconBrowseListFragment.NAME:
         case LexiconFavoritesListFragment.NAME:
         case LexiconHistoryListFragment.NAME:
-            lexiconItemSelected();
+            onLexiconItemSelected();
             break;
         case SyntaxBrowseListFragment.NAME:
         case SyntaxBookmarksListFragment.NAME:
-            syntaxItemSelected();
+            onSyntaxItemSelected();
             break;
         default:
             throw new IllegalArgumentException("Invalid fragment name");
@@ -301,123 +296,79 @@ public class MainActivity
         // TODO: Move favorite and bookmark options to fragments?
         FragmentManager mgr = getFragmentManager();
         switch (item.getItemId()) {
-            case R.id.action_add_favorite:
-                LexiconDetailFragment addFavoriteFragment =
-                        (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-                addFavoriteFragment.addLexiconFavorite();
-                return true;
-            case R.id.action_remove_favorite:
-                LexiconDetailFragment removeFavoriteFragment =
-                        (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-                removeFavoriteFragment.removeLexiconFavorite();
-                return true;
-            case R.id.action_add_bookmark:
-                SyntaxDetailFragment addBookmarkFragment
-                        = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-                addBookmarkFragment.addSyntaxBookmark();
-                return true;
-            case R.id.action_remove_bookmark:
-                SyntaxDetailFragment removeBookmarkFragment
-                        = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-                removeBookmarkFragment.removeSyntaxBookmark();
-                return true;
-            case R.id.action_clear_history:
-                mHistoryManager.clear();
-                return true;
-            case R.id.action_clear_favorites:
-                clearLexiconFavorites();
-                return true;
-            case R.id.action_clear_bookmarks:
-                clearSyntaxBookmarks();
-                return true;
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.action_feedback:
-                sendFeedback();
-                return true;
-            case R.id.action_help:
-                displayHelp();
-                return true;
+        case R.id.action_add_favorite:
+            LexiconDetailFragment addFavoriteFragment =
+                    (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            addFavoriteFragment.addLexiconFavorite();
+            return true;
+        case R.id.action_remove_favorite:
+            LexiconDetailFragment removeFavoriteFragment =
+                    (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            removeFavoriteFragment.removeLexiconFavorite();
+            return true;
+        case R.id.action_add_bookmark:
+            SyntaxDetailFragment addBookmarkFragment
+                    = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            addBookmarkFragment.addSyntaxBookmark();
+            return true;
+        case R.id.action_remove_bookmark:
+            SyntaxDetailFragment removeBookmarkFragment
+                    = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+            removeBookmarkFragment.removeSyntaxBookmark();
+            return true;
+        case R.id.action_clear_history:
+            onClearLexiconHistory();
+            return true;
+        case R.id.action_clear_favorites:
+            clearLexiconFavorites();
+            return true;
+        case R.id.action_clear_bookmarks:
+            clearSyntaxBookmarks();
+            return true;
+        case R.id.action_settings:
+            mPresenter.onEditSettings();
+            return true;
+        case R.id.action_feedback:
+            mPresenter.onSendFeedback();
+            return true;
+        case R.id.action_help:
+            mPresenter.onDisplayHelp();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void onClearLexiconHistory() {
+        mPresenter.onClearLexiconHistory();
+    }
+
     /**
      * Retrieves and displays the currently selected lexicon item's entry.
      */
-    private void lexiconItemSelected() {
+    private void onLexiconItemSelected() {
         // TODO: Verify that we're in the correct mode here and in similar
         // situations through this class and throw an exception if we're not.
-
 
         FragmentManager mgr = getFragmentManager();
         AbstractLexiconListFragment fragment =
                 (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedLexiconId());
 
-        String[] columns = new String[] {
-            LexiconContract.COLUMN_ENTRY,
-            LexiconContract.COLUMN_GREEK_FULL_WORD
-        };
-        String selection = LexiconContract._ID + " = ?";
-        String[] selectionArgs = new String[] {id};
-        Uri uri = LexiconContract.CONTENT_URI;
-        Cursor cursor = getContentResolver().query(uri, columns, selection, selectionArgs, null);
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        String entry;
-        String word;
-        if (cursor.moveToFirst()) {
-            entry = cursor.getString(0);
-            word = cursor.getString(1);
-            cursor.close();
-        } else {
-            cursor.close();
-            throw new IllegalStateException("Failed to retrieve lexicon entry");
-        }
-
-        displayLexiconEntry(id, word, entry);
+        mPresenter.onLexiconItemSelected(id);
     }
 
     /**
      * Retrieves and displays the currently selected Overview of Greek Syntax
      * item's entry.
      */
-    private void syntaxItemSelected() {
+    private void onSyntaxItemSelected() {
         FragmentManager mgr = getFragmentManager();
         AbstractSyntaxListFragment fragment =
                 (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
-
-        String[] columns = new String[] {
-            SyntaxContract.COLUMN_NAME_XML,
-            SyntaxContract.COLUMN_NAME_SECTION
-        };
-        String selection = SyntaxContract._ID + " = ?";
-        String id = Integer.toString(fragment.getSelectedSyntaxId());
-        String[] selectionArgs = new String[] {id};
-        Uri uri = SyntaxContract.CONTENT_URI;
-        Cursor cursor = getContentResolver().query(uri, columns, selection, selectionArgs, null);
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        String xml;
-        String section;
-        if (cursor.moveToFirst()) {
-            xml = cursor.getString(0);
-            section = cursor.getString(1);
-            cursor.close();
-            Log.w("Syntax item selected", section + ": " + xml);
-        } else {
-            cursor.close();
-            throw new IllegalStateException("Failed to retrieve syntax section");
-        }
-
-        displaySyntaxSection(section, xml);
+        int id = fragment.getSelectedSyntaxId();
+        String idStr = Integer.toString(id);
+        mPresenter.onSyntaxItemSelected(idStr);
     }
 
     /**
@@ -426,7 +377,7 @@ public class MainActivity
      * @param word the word whose entry is selected
      * @param entry the selected entry's XML
      */
-    private void displayLexiconEntry(final String id, String word, String entry) {
+    public void displayLexiconEntry(final String id, String word, String entry) {
         // If user searches from Quick Search Box, we may need to change mode.
         if (!mMode.equals(Mode.LEXICON_BROWSE)
                 && !mMode.equals(Mode.LEXICON_FAVORITES)
@@ -436,7 +387,7 @@ public class MainActivity
 
         // Add entry to history, unless word was selected from history list.
         if (!mMode.equals(Mode.LEXICON_HISTORY)) {
-            mHistoryManager.add(id, word);
+            mPresenter.addToLexiconHistory(id, word);
         }
 
         // Display entry.
@@ -466,7 +417,7 @@ public class MainActivity
      * @param section the selected section's title
      * @param xml the selected section's XML
      */
-    private void displaySyntaxSection(String section, String xml) {
+    public void displaySyntaxSection(String section, String xml) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putString(SyntaxDetailFragment.ARG_XML, xml);
@@ -523,84 +474,19 @@ public class MainActivity
         dialog.show(getFragmentManager(), "clearBookmarks");
     }
 
-    /**
-     * Finds and selects the lexicon entry corresponding to the specified URI.
-     * @param data the URI of the lexicon entry to select
-     */
-    private void getLexiconEntry(Uri data) {
+    public void selectLexiconItem(int id) {
         ensureModeIsLexiconBrowse();
 
-        // Get data.
-        Cursor cursor = getContentResolver().query(data, null, null, null, null);
-
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        cursor.moveToFirst();
-        String id;
-        try {
-            int idIndex = cursor.getColumnIndexOrThrow(LexiconContract._ID);
-            id = cursor.getString(idIndex);
-            cursor.close();
-        } catch (IllegalArgumentException e) {
-            String className = getClass().getCanonicalName();
-            Log.e(className, "Failed to retrieve result from database", e);
-            throw e;
-        }
-
-        // Set this item's state to activated on tablets and scroll the list to the item.
         FragmentManager mgr = getFragmentManager();
         LexiconBrowseListFragment fragment =
                 (LexiconBrowseListFragment) mgr.findFragmentById(R.id.item_list_container);
-        fragment.selectItem(Integer.parseInt(id));
-    }
-
-    /**
-     * Searches the lexicon for a word and displays the result.
-     * @param query a string containing the word for which to search. This string is case
-     *     insensitive and may be written in either Greek characters or Beta code.
-     */
-    // TODO: Handle words with multiple entries.
-    private void search(String query) {
-        String[] columns = new String[] {LexiconContract._ID};
-        String selection = LexiconContract.COLUMN_BETA_SYMBOLS + " = ? OR "
-                + LexiconContract.COLUMN_BETA_NO_SYMBOLS + " = ? OR "
-                + LexiconContract.COLUMN_GREEK_LOWERCASE + " = ?";
-        String[] selectionArgs = new String[] {
-            query.toLowerCase(),
-            query.toLowerCase(),
-            query.toLowerCase()
-        };
-        String sortOrder = LexiconContract._ID + " ASC";
-        ContentResolver resolver = getContentResolver();
-        Uri uri = LexiconProvider.CONTENT_URI;
-        Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, sortOrder);
-
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        if (cursor.moveToFirst()) {
-            String id = cursor.getString(0);
-            ensureModeIsLexiconBrowse();
-            FragmentManager mgr = getFragmentManager();
-            LexiconBrowseListFragment fragment =
-                    (LexiconBrowseListFragment) mgr.findFragmentById(R.id.item_list_container);
-            fragment.selectItem(Integer.parseInt(id));
-        } else {
-            String msg = getString(R.string.toast_search_no_results);
-            Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
-            toast.show();
-        }
-
-        cursor.close();
+        fragment.selectItem(id);
     }
 
     /**
      * Switches the mode to Lexicon Browse if that is not the current mode.
      */
-    private void ensureModeIsLexiconBrowse() {
+    public void ensureModeIsLexiconBrowse() {
         if (!mMode.equals(Mode.LEXICON_BROWSE)) {
             switchToLexiconBrowse();
 
@@ -777,19 +663,9 @@ public class MainActivity
     }
 
     /**
-     * Launches an email app that the user can use to send feedback about this app.
-     */
-    private void sendFeedback() {
-        Uri uri = Uri.fromParts("mailto", getString(R.string.feedback_email), null);
-        Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
-        startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
-    }
-
-    /**
      * Displays a dialog fragment containing help text.
      */
-    private void displayHelp() {
+    public void displayHelp() {
         HelpDialogFragment dialogFragment = new HelpDialogFragment();
         dialogFragment.show(getFragmentManager(), "help");
     }
@@ -817,4 +693,10 @@ public class MainActivity
         }
         return super.onKeyUp(keyCode, event);
     }
+
+    public void displayToast(String msg, int length) {
+        Toast toast = Toast.makeText(this, msg, length);
+        toast.show();
+    }
+
 }
