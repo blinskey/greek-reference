@@ -16,15 +16,17 @@
 
 package com.benlinskey.greekreference;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,15 +37,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.benlinskey.greekreference.dialogFragments.ClearLexiconFavoritesDialogFragment;
-import com.benlinskey.greekreference.dialogFragments.ClearSyntaxBookmarksDialogFragment;
-import com.benlinskey.greekreference.dialogFragments.HelpDialogFragment;
 import com.benlinskey.greekreference.lexicon.AbstractLexiconListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconDetailActivity;
@@ -67,13 +70,7 @@ public class MainActivity
         implements MainView,
                    NavigationDrawerFragment.NavigationDrawerCallbacks,
                    AbstractListFragment.Callbacks {
-    
-    /** Intent bundle key. */
-    public static final String KEY_MODE = "mode";
-    
-    /** Custom intent action. */
-    public static final String ACTION_SET_MODE = "com.benlinskey.greekreference.SET_MODE";
-    
+
     // Application state bundle keys
     private static final String KEY_TITLE = "action_bar_title";
     private static final String KEY_SUBTITLE = "action_bar_subtitle";
@@ -93,8 +90,7 @@ public class MainActivity
         setContentView(R.layout.activity_item_list);
 
         mPresenter = new Presenter(this, this);
-
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        mPresenter.onCreate();
 
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
@@ -127,7 +123,7 @@ public class MainActivity
         restoreActionBar();
 
         checkTabletDisplayMode();
-        handleIntent(getIntent());
+        mPresenter.handleIntent(getIntent());
     }
 
     @Override
@@ -200,12 +196,13 @@ public class MainActivity
         } else {
             throw new IllegalStateException("Invalid mode");
         }
+
         return true;
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
-        handleIntent(intent);
+        mPresenter.handleIntent(intent);
     }
 
     /**
@@ -218,6 +215,7 @@ public class MainActivity
         if (!mTwoPane) {
             return;
         }
+
         View leftPane = findViewById(R.id.item_list_container);
         if (isOnePaneModeSelected() && mMode.equals(Mode.LEXICON_BROWSE)) {
             leftPane.setVisibility(View.GONE);
@@ -235,24 +233,6 @@ public class MainActivity
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String key = getString(R.string.pref_onePane_key);
         return prefs.getBoolean(key, false);
-    }
-
-    /**
-     * Processes an {@code Intent} if it can be handled by this {@code Activity}.
-     * @param intent the {@code Intent} to handle
-     */
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra((SearchManager.QUERY));
-            mPresenter.search(query);
-        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            Uri data = intent.getData();
-            mPresenter.getLexiconEntry(data);
-        } else if (ACTION_SET_MODE.equals(intent.getAction())) {
-            String modeName = intent.getStringExtra(KEY_MODE);
-            Mode mode = Mode.getModeFromName(modeName);
-            switchToMode(mode);
-        }
     }
 
     @Override
@@ -348,7 +328,7 @@ public class MainActivity
      */
     private void onLexiconItemSelected() {
         // TODO: Verify that we're in the correct mode here and in similar
-        // situations through this class and throw an exception if we're not.
+        // situations throughout this class and throw an exception if we're not.
 
         FragmentManager mgr = getFragmentManager();
         AbstractLexiconListFragment fragment =
@@ -378,6 +358,9 @@ public class MainActivity
      * @param entry the selected entry's XML
      */
     public void displayLexiconEntry(final String id, String word, String entry) {
+        // TODO: Now that QSB search has been removed from Android, we probably
+        // don't need to worry about this.
+        //
         // If user searches from Quick Search Box, we may need to change mode.
         if (!mMode.equals(Mode.LEXICON_BROWSE)
                 && !mMode.equals(Mode.LEXICON_FAVORITES)
@@ -458,19 +441,66 @@ public class MainActivity
         actionBar.setSubtitle(mSubtitle);
     }
 
-    /**
-     * Deletes all words from the lexicon favorites list.
-     */
+    /** Deletes all words from the lexicon favorites list. */
     private void clearLexiconFavorites() {
-        DialogFragment dialog = new ClearLexiconFavoritesDialogFragment();
+        DialogFragment dialog = new DialogFragment() {
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.clear_lexicon_favorites_dialog_message);
+
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mPresenter.clearLexiconFavorites();
+                    }
+                });
+
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                return builder.create();
+            }
+        };
         dialog.show(getFragmentManager(), "clearFavorites");
     }
 
-    /**
-     * Deletes all items from the syntax bookmarks list.
-     */
+    /** Deletes all items from the syntax bookmarks list. */
     private void clearSyntaxBookmarks() {
-        DialogFragment dialog = new ClearSyntaxBookmarksDialogFragment();
+        // TODO: If the user clicks "OK" in the dialog, the dialog fragment forwards the
+        // event to the presenter. Does this make sense? We have a bit of an inconsistency here in
+        // how we handle option item selection events -- some forward the event directly to the
+        // presenter and others do some UI work and forward the event to the presenter iff the user
+        // confirms the action.
+
+        DialogFragment dialog = new DialogFragment() {
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.clear_syntax_bookmarks_dialog_message);
+
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mPresenter.clearSyntaxBookmarks();
+                    }
+                });
+
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                return builder.create();
+            }
+        };
+
         dialog.show(getFragmentManager(), "clearBookmarks");
     }
 
@@ -500,7 +530,7 @@ public class MainActivity
      * Switches the mode to the specified {@link Mode}.
      * @param mode the {@code Mode} to which to switch
      */
-    private void switchToMode(Mode mode) {
+    public void switchToMode(Mode mode) {
         switch (mode) {
         case LEXICON_BROWSE:
             switchToLexiconBrowse();
@@ -518,7 +548,7 @@ public class MainActivity
             switchToSyntaxBookmarks();
             break;
         default:
-            throw new IllegalArgumentException("Invalid mode");
+            throw new IllegalArgumentException("Invalid mode: " + mode);
         }
 
         // Make sure we're showing or hiding the left pane appropriately.
@@ -666,8 +696,34 @@ public class MainActivity
      * Displays a dialog fragment containing help text.
      */
     public void displayHelp() {
-        HelpDialogFragment dialogFragment = new HelpDialogFragment();
-        dialogFragment.show(getFragmentManager(), "help");
+        DialogFragment fragment = new DialogFragment() {
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.title_help);
+
+                TextView textView = new TextView(getActivity());
+                textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
+                textView.setTextColor(getResources().getColor(android.R.color.black));
+                textView.setPadding(25, 25, 25, 25);
+                textView.setText(Html.fromHtml(getString(R.string.message_help)));
+                textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+                ScrollView scrollView = new ScrollView(getActivity());
+                scrollView.addView(textView);
+                builder.setView(scrollView);
+
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                return builder.create();
+            }
+        };
+
+        fragment.show(getFragmentManager(), "help");
     }
 
     public Mode getMode() {

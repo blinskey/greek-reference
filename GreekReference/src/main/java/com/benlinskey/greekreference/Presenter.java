@@ -16,19 +16,27 @@
 
 package com.benlinskey.greekreference;
 
+import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
 
+// TODO: We'll probably want different presenters for different modes/fragments.
+// TODO: Manage modes, action bar titles, &c. here?
 public final class Presenter {
+
+    /** Custom intent action. */
+    public static final String ACTION_SET_MODE = "com.benlinskey.greekreference.SET_MODE";
 
     private final MainView mView;
     private final Context mContext;
@@ -40,6 +48,24 @@ public final class Presenter {
         mContext = context;
         mResolver = mContext.getContentResolver();
         mLexiconHistory = new LexiconHistoryManager(mContext);
+    }
+
+    public void onCreate() {
+        PreferenceManager.setDefaultValues(mContext, R.xml.preferences, false);
+    }
+
+    public void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra((SearchManager.QUERY));
+            search(query);
+        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri data = intent.getData();
+            getLexiconEntry(data);
+        } else if (ACTION_SET_MODE.equals(intent.getAction())) {
+            String modeName = intent.getStringExtra(mView.KEY_MODE);
+            Mode mode = Mode.getModeFromName(modeName);
+            mView.switchToMode(mode);
+        }
     }
 
     /**
@@ -189,6 +215,20 @@ public final class Presenter {
 
     public void onDisplayHelp() {
         mView.displayHelp();
+    }
+
+    public void clearSyntaxBookmarks() {
+        mResolver.delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, null, null);
+
+        String msg = mContext.getString(R.string.toast_clear_syntax_bookmarks);
+        mView.displayToast(msg, Toast.LENGTH_SHORT);
+    }
+
+    public void clearLexiconFavorites() {
+        mResolver.delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
+
+        String msg = mContext.getString(R.string.toast_clear_lexicon_favorites);
+        mView.displayToast(msg, Toast.LENGTH_SHORT);
     }
 
 }

@@ -20,6 +20,9 @@ import android.app.FragmentManager;
 
 public interface MainView {
 
+    /** Intent bundle key. */
+    String KEY_MODE = "mode";
+
     void ensureModeIsLexiconBrowse();
 
     void displayToast(String msg, int length);
@@ -31,4 +34,6 @@ public interface MainView {
     void displaySyntaxSection(String section, String xml);
 
     void displayHelp();
+
+    void switchToMode(Mode mode);
 }
