@@ -67,7 +67,7 @@ import com.benlinskey.greekreference.views.detail.syntax.SyntaxDetailView;
  * an {@code AbstractListFragment}.
  */
 public class MainActivity
-        extends ContainerActivity
+        extends AbstractContainerActivity
         implements MainView,
                    LexiconDetailView,
                    SyntaxDetailView,

@@ -26,13 +26,13 @@ import android.view.MenuItem;
 
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.views.SettingsActivity;
-import com.benlinskey.greekreference.views.ContainerActivity;
+import com.benlinskey.greekreference.views.AbstractContainerActivity;
 
 /**
  * The basic activity from which all detail activities inherit. This class 
  * contains a single {@link AbstractDetailFragment} and is only used on phones.
  */
-public abstract class AbstractDetailActivity extends ContainerActivity {
+public abstract class AbstractDetailActivity extends AbstractContainerActivity {
 
     /** Stores the mode title. */
     protected CharSequence mTitle;

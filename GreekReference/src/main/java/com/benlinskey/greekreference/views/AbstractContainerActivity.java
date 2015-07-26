@@ -36,9 +36,10 @@ import android.widget.Toast;
 
 import com.benlinskey.greekreference.R;
 
-// TODO: Can we display all toasts here?
-
-public class ContainerActivity extends ActionBarActivity {
+/**
+ * Abstract class defining basic methods shared by all activities.
+ */
+public abstract class AbstractContainerActivity extends ActionBarActivity {
 
     // TODO: Should we move any of this code to the presenter and/or call this code from the
     // presenter rather than directly calling it from the activity?
@@ -108,6 +109,7 @@ public class ContainerActivity extends ActionBarActivity {
         fragment.show(getFragmentManager(), "help");
     }
 
+    /** Opens an email app that can be used to send feedback. */
     protected void sendFeedback() {
         Uri uri = Uri.fromParts("mailto", getString(R.string.feedback_email), null);
         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
