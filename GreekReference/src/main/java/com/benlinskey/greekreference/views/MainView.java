@@ -27,6 +27,7 @@ public interface MainView {
 
     void ensureModeIsLexiconBrowse();
 
+    // TODO: Can we replace this with DetailView's displayToast(String) method?
     void displayToast(String msg, int length);
 
     void selectLexiconItem(int id);
@@ -34,8 +35,6 @@ public interface MainView {
     void displayLexiconEntry(String id, String word, String entry);
 
     void displaySyntaxSection(String section, String xml);
-
-    void displayHelp();
 
     void switchToMode(Mode mode);
 }

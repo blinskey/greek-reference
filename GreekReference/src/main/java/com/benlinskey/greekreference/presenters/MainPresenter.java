@@ -206,10 +206,4 @@ public final class MainPresenter {
         mContext.startActivity(new Intent(mContext, SettingsActivity.class));
     }
 
-    public void onDisplayHelp() {
-        mView.displayHelp();
-    }
-
-
-
 }

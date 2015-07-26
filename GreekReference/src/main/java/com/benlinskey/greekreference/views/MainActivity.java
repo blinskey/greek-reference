@@ -34,39 +34,34 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.benlinskey.greekreference.AbstractDetailFragment;
 import com.benlinskey.greekreference.AbstractListFragment;
-import com.benlinskey.greekreference.presenters.LexiconPresenter;
-import com.benlinskey.greekreference.presenters.MainPresenter;
 import com.benlinskey.greekreference.Mode;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.lexicon.AbstractLexiconListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
-import com.benlinskey.greekreference.presenters.SyntaxPresenter;
-import com.benlinskey.greekreference.views.lexicon.LexiconDetailActivity;
-import com.benlinskey.greekreference.views.lexicon.LexiconDetailFragment;
 import com.benlinskey.greekreference.lexicon.LexiconFavoritesListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconHistoryListFragment;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
+import com.benlinskey.greekreference.presenters.LexiconPresenter;
+import com.benlinskey.greekreference.presenters.MainPresenter;
+import com.benlinskey.greekreference.presenters.SyntaxPresenter;
 import com.benlinskey.greekreference.syntax.AbstractSyntaxListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
+import com.benlinskey.greekreference.views.lexicon.LexiconDetailActivity;
+import com.benlinskey.greekreference.views.lexicon.LexiconDetailFragment;
+import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
 import com.benlinskey.greekreference.views.syntax.SyntaxDetailActivity;
 import com.benlinskey.greekreference.views.syntax.SyntaxDetailFragment;
-import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
 import com.benlinskey.greekreference.views.syntax.SyntaxDetailView;
 
 /**
@@ -75,7 +70,7 @@ import com.benlinskey.greekreference.views.syntax.SyntaxDetailView;
  * an {@code AbstractListFragment}.
  */
 public class MainActivity
-        extends ActionBarActivity
+        extends ContainerActivity
         implements MainView,
                    LexiconDetailView,
                    SyntaxDetailView,
@@ -354,10 +349,10 @@ public class MainActivity
             mMainPresenter.onEditSettings();
             return true;
         case R.id.action_feedback:
-            mMainPresenter.onSendFeedback();
+            sendFeedback();
             return true;
         case R.id.action_help:
-            mMainPresenter.onDisplayHelp();
+            displayHelp();
             return true;
         }
 
@@ -680,41 +675,6 @@ public class MainActivity
 
     public boolean isTwoPane() {
         return mTwoPane;
-    }
-
-    /**
-     * Displays a dialog fragment containing help text.
-     */
-    @Override
-    public void displayHelp() {
-        DialogFragment fragment = new DialogFragment() {
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(R.string.title_help);
-
-                TextView textView = new TextView(getActivity());
-                textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
-                textView.setTextColor(getResources().getColor(android.R.color.black));
-                textView.setPadding(25, 25, 25, 25);
-                textView.setText(Html.fromHtml(getString(R.string.message_help)));
-                textView.setMovementMethod(LinkMovementMethod.getInstance());
-
-                ScrollView scrollView = new ScrollView(getActivity());
-                scrollView.addView(textView);
-                builder.setView(scrollView);
-
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                return builder.create();
-            }
-        };
-
-        fragment.show(getFragmentManager(), "help");
     }
 
     public Mode getMode() {
