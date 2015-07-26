@@ -55,6 +55,7 @@ import com.benlinskey.greekreference.Mode;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.lexicon.AbstractLexiconListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
+import com.benlinskey.greekreference.presenters.SyntaxPresenter;
 import com.benlinskey.greekreference.views.lexicon.LexiconDetailActivity;
 import com.benlinskey.greekreference.views.lexicon.LexiconDetailFragment;
 import com.benlinskey.greekreference.lexicon.LexiconFavoritesListFragment;
@@ -63,11 +64,10 @@ import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
 import com.benlinskey.greekreference.syntax.AbstractSyntaxListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
-import com.benlinskey.greekreference.syntax.SyntaxDetailActivity;
-import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
+import com.benlinskey.greekreference.views.syntax.SyntaxDetailActivity;
+import com.benlinskey.greekreference.views.syntax.SyntaxDetailFragment;
 import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
-
-import java.util.AbstractList;
+import com.benlinskey.greekreference.views.syntax.SyntaxDetailView;
 
 /**
  * The app's primary activity. On tablets, this activity displays a two-pane layout containing an 
@@ -78,6 +78,7 @@ public class MainActivity
         extends ActionBarActivity
         implements MainView,
                    LexiconDetailView,
+                   SyntaxDetailView,
                    NavigationDrawerFragment.NavigationDrawerCallbacks,
                    AbstractListFragment.Callbacks {
 
@@ -87,6 +88,7 @@ public class MainActivity
 
     private MainPresenter mMainPresenter;
     private LexiconPresenter mLexiconPresenter;
+    private SyntaxPresenter mSyntaxPresenter;
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
@@ -105,6 +107,7 @@ public class MainActivity
         mMainPresenter.onCreate();
 
         mLexiconPresenter = new LexiconPresenter(this, this);
+        mSyntaxPresenter = new SyntaxPresenter(this, this);
 
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
@@ -165,7 +168,9 @@ public class MainActivity
             return super.onCreateOptionsMenu(menu);
         } else if (mMode.isSyntaxMode()) {
             getMenuInflater().inflate(R.menu.syntax_menu, menu);
-            setSyntaxBookmarkIcon(menu);
+
+            mSyntaxPresenter.onCreateOptionsMenu(menu);
+
             restoreActionBar();
             return super.onCreateOptionsMenu(menu);
         } else {
@@ -207,7 +212,7 @@ public class MainActivity
         if (mMode.isLexiconMode()) {
             mLexiconPresenter.onPrepareOptionsMenu(menu);
         } else if (mMode.isSyntaxMode()) {
-            setSyntaxBookmarkIcon(menu);
+            mSyntaxPresenter.onPrepareOptionsMenu(menu);
         } else {
             throw new IllegalStateException("Invalid mode");
         }
@@ -285,6 +290,7 @@ public class MainActivity
         invalidateOptionsMenu();
     }
 
+    @Override
     public boolean isDetailFragmentVisible() {
         return mTwoPane;
     }
@@ -293,6 +299,12 @@ public class MainActivity
     public int getSelectedLexiconId() {
         AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getListFragment();
         return fragment.getSelectedLexiconId();
+    }
+
+    @Override
+    public int getSelectedSyntaxId() {
+        AbstractSyntaxListFragment fragment = (AbstractSyntaxListFragment) getListFragment();
+        return fragment.getSelectedSyntaxId();
     }
 
     @Override
@@ -324,23 +336,19 @@ public class MainActivity
             mLexiconPresenter.onRemoveFavorite();
             return true;
         case R.id.action_add_bookmark:
-            SyntaxDetailFragment addBookmarkFragment
-                    = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            addBookmarkFragment.addSyntaxBookmark();
+            mSyntaxPresenter.onAddBookmark();
             return true;
         case R.id.action_remove_bookmark:
-            SyntaxDetailFragment removeBookmarkFragment
-                    = (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            removeBookmarkFragment.removeSyntaxBookmark();
+            mSyntaxPresenter.onRemoveBookmark();
             return true;
         case R.id.action_clear_history:
             mLexiconPresenter.onClearHistory();
             return true;
         case R.id.action_clear_favorites:
-            clearLexiconFavorites();
+            confirmClearLexiconFavorites();
             return true;
         case R.id.action_clear_bookmarks:
-            clearSyntaxBookmarks();
+            confirmClearSyntaxBookmarks();
             return true;
         case R.id.action_settings:
             mMainPresenter.onEditSettings();
@@ -477,7 +485,7 @@ public class MainActivity
     }
 
     /** Deletes all words from the lexicon favorites list. */
-    private void clearLexiconFavorites() {
+    private void confirmClearLexiconFavorites() {
         DialogFragment dialog = new DialogFragment() {
             @Override
             public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -505,13 +513,7 @@ public class MainActivity
     }
 
     /** Deletes all items from the syntax bookmarks list. */
-    private void clearSyntaxBookmarks() {
-        // TODO: If the user clicks "OK" in the dialog, the dialog fragment forwards the
-        // event to the presenter. Does this make sense? We have a bit of an inconsistency here in
-        // how we handle option item selection events -- some forward the event directly to the
-        // presenter and others do some UI work and forward the event to the presenter iff the user
-        // confirms the action.
-
+    private void confirmClearSyntaxBookmarks() {
         DialogFragment dialog = new DialogFragment() {
             @Override
             public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -521,7 +523,7 @@ public class MainActivity
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mMainPresenter.clearSyntaxBookmarks();
+                        mSyntaxPresenter.onClearBookmarks();
                     }
                 });
 
@@ -678,31 +680,6 @@ public class MainActivity
 
     public boolean isTwoPane() {
         return mTwoPane;
-    }
-
-    /**
-     * Sets the Syntax Bookmark icon to the appropriate state based on the currently selected
-     * syntax section.
-     * @param menu the {@code Menu} containing the Bookmark icon
-     */
-    private void setSyntaxBookmarkIcon(Menu menu) {
-        FragmentManager mgr = getFragmentManager();
-        AbstractSyntaxListFragment fragment =
-                (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
-
-        MenuItem addBookmark = menu.findItem(R.id.action_add_bookmark);
-        MenuItem removeBookmark = menu.findItem(R.id.action_remove_bookmark);
-
-        if (fragment.nothingIsSelected() || !mTwoPane) {
-            addBookmark.setVisible(false);
-            removeBookmark.setVisible(false);
-        } else if (fragment.selectedSectionIsBookmarked()) {
-            addBookmark.setVisible(false);
-            removeBookmark.setVisible(true);
-        } else {
-            addBookmark.setVisible(true);
-            removeBookmark.setVisible(false);
-        }
     }
 
     /**

@@ -20,11 +20,9 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -32,6 +30,8 @@ import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
 
+// TODO: Rename to LexiconDetailPresenter? MainPresenter is responsible
+// for querying Lexicon database.
 public class LexiconPresenter {
 
     private final LexiconDetailView mView;

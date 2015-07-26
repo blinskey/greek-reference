@@ -29,8 +29,8 @@ public interface MainView {
 
     void displayToast(String msg, int length);
 
-    // TODO: These should probably be moved to LexiconPresenter.
     void selectLexiconItem(int id);
+
     void displayLexiconEntry(String id, String word, String entry);
 
     void displaySyntaxSection(String section, String xml);

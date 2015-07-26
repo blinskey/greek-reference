@@ -45,7 +45,7 @@
                 android:value=".views.MainActivity" />
         </activity>
         <activity
-            android:name="com.benlinskey.greekreference.syntax.SyntaxDetailActivity"
+            android:name=".views.syntax.SyntaxDetailActivity"
             android:parentActivityName=".views.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

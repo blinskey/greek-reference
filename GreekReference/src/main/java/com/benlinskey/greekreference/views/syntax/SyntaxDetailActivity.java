@@ -14,47 +14,42 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.syntax;
+package com.benlinskey.greekreference.views.syntax;
 
-import android.app.FragmentManager;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.benlinskey.greekreference.AbstractDetailActivity;
-import com.benlinskey.greekreference.views.MainActivity;
 import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
+import com.benlinskey.greekreference.presenters.SyntaxPresenter;
+import com.benlinskey.greekreference.views.MainActivity;
 
 /**
  * A {@link com.benlinskey.greekreference.AbstractDetailActivity} used to display syntax sections.
  */
-public class SyntaxDetailActivity extends AbstractDetailActivity {
+public class SyntaxDetailActivity extends AbstractDetailActivity implements SyntaxDetailView {
 
     public static final String ARG_SYNTAX_ID = "syntax_id";
     public static final String ARG_SECTION = "section";
 
-    private static final String TAG = "SyntaxDetailActivity";
-
+    private SyntaxPresenter mPresenter;
     private CharSequence mTitle; // Used to store the last screen title.
     private int mSyntaxId;
-    private String mSection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mPresenter = new SyntaxPresenter(this, this);
+
         Intent intent = getIntent();
         mSyntaxId = intent.getIntExtra(ARG_SYNTAX_ID, -1);
-        mSection = intent.getStringExtra(ARG_SECTION);
 
         mTitle = getString(R.string.title_syntax);
 
@@ -73,76 +68,44 @@ public class SyntaxDetailActivity extends AbstractDetailActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.syntax_detail_menu, menu);
-        setSyntaxBookmarkIcon(menu);
+
+        mPresenter.onCreateOptionsMenu(menu);
+
         restoreActionBar();
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        setSyntaxBookmarkIcon(menu);
+        mPresenter.onPrepareOptionsMenu(menu);
         restoreActionBar();
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void setSyntaxBookmarkIcon(Menu menu) {
-        MenuItem addBookmark = menu.findItem(R.id.action_add_bookmark);
-        MenuItem removeBookmark = menu.findItem(R.id.action_remove_bookmark);
-
-        // Hide both icons when no word is selected or the app is in one-pane mode.
-        if (isBookmark(mSyntaxId)) {
-            addBookmark.setVisible(false);
-            removeBookmark.setVisible(true);
-        } else {
-            addBookmark.setVisible(true);
-            removeBookmark.setVisible(false);
-        }
+    @Override
+    public int getSelectedSyntaxId() {
+        return mSyntaxId;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        FragmentManager mgr = getFragmentManager();
         switch (item.getItemId()) {
         case android.R.id.home:
             NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
             return true;
         case R.id.action_add_bookmark:
-            SyntaxDetailFragment addBookmarkFragment = 
-                    (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            addBookmarkFragment.addSyntaxBookmark(mSyntaxId, mSection);
+            mPresenter.onAddBookmark();;
             return true;
         case R.id.action_remove_bookmark:
-            SyntaxDetailFragment removeBookmarkFragment = 
-                    (SyntaxDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            removeBookmarkFragment.removeSyntaxBookmark(mSyntaxId);
+            mPresenter.onRemoveBookmark();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Returns true if the word with the specified syntax ID is a member of the bookmarks list.
-     * @param syntaxId the syntax ID to check
-     * @return true if the specified word is a member of the bookmarks list, or false otherwise
-     */
-    private boolean isBookmark(int syntaxId) {
-        Log.w(TAG, "isBookmark(); id: " + syntaxId);
-        String[] columns = new String[] {AppDataContract.SyntaxBookmarks._ID};
-        String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
-        String[] selectionArgs = new String[] {Integer.toString(syntaxId)};
-        Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
-        Cursor cursor = getContentResolver().query(uri, columns, selection, selectionArgs, null);
-
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        boolean result = false;
-        if (cursor.getCount() > 0) {
-            result = true;
-        }
-        cursor.close();
-        return result;
+    @Override
+    public boolean isDetailFragmentVisible() {
+        return true;
     }
 
     @Override
@@ -152,6 +115,16 @@ public class SyntaxDetailActivity extends AbstractDetailActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
+    }
+
+    private SyntaxDetailFragment getDetailFragment() {
+        return (SyntaxDetailFragment) getFragmentManager().findFragmentById(R.id.item_detail_container);
+    }
+
+    @Override
+    public void displayToast(String msg) {
+        SyntaxDetailFragment fragment = getDetailFragment();
+        fragment.displayToast(msg);
     }
 
     // The following two methods are a workaround for a bug related to the appcompat-v7 library

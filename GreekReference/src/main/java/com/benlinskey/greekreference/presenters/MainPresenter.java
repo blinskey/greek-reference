@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.benlinskey.greekreference.Mode;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.SettingsActivity;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
@@ -211,11 +210,6 @@ public final class MainPresenter {
         mView.displayHelp();
     }
 
-    public void clearSyntaxBookmarks() {
-        mResolver.delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, null, null);
 
-        String msg = mContext.getString(R.string.toast_clear_syntax_bookmarks);
-        mView.displayToast(msg, Toast.LENGTH_SHORT);
-    }
 
 }
