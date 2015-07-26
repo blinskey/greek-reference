@@ -49,7 +49,7 @@ import com.benlinskey.greekreference.R;
 /**
  * An activity containing a {@link android.preference.PreferenceFragment}.
  */
-public class SettingsActivity extends ActionBarActivity {
+public class SettingsActivity extends AbstractContainerActivity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,73 +226,4 @@ public class SettingsActivity extends ActionBarActivity {
         }
     }
 
-    // TODO: Move the code below into a superclass so it can be shared by all the activities that
-    // use it.
-
-    /**
-     * Launches an email app that the user can use to send feedback about this app.
-     */
-    private void sendFeedback() {
-        Intent intent = new Intent(Intent.ACTION_SENDTO,
-                Uri.fromParts("mailto", getString(R.string.feedback_email), null));
-        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.feedback_subject));
-        startActivity(Intent.createChooser(intent, getString(R.string.feedback_intent_chooser)));
-    }
-
-    /**
-     * A {@link android.app.DialogFragment} containing help text.
-     */
-    public static class HelpDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.title_help);
-
-            TextView textView = new TextView(getActivity());
-            textView.setTextAppearance(getActivity(), android.R.style.TextAppearance_Medium);
-            textView.setTextColor(getResources().getColor(android.R.color.black));
-            textView.setPadding(25, 25, 25, 25);
-            textView.setText(Html.fromHtml(getString(R.string.message_help)));
-            textView.setMovementMethod(LinkMovementMethod.getInstance());
-            ScrollView scrollView = new ScrollView(getActivity());
-            scrollView.addView(textView);
-            builder.setView(scrollView);
-
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            return builder.create();
-        }
-    }
-
-    /**
-     * Displays a dialog fragment containing help text.
-     */
-    private void displayHelp() {
-        HelpDialogFragment dialogFragment = new HelpDialogFragment();
-        dialogFragment.show(getFragmentManager(), "help");
-    }
-
-    // The following two methods are a workaround for a bug related to the appcompat-v7 library
-    // on some LG devices. Thanks to Alex Lockwood for the fix: http://stackoverflow.com/questions/26833242/nullpointerexception-phonewindowonkeyuppanel1002-main
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
-        if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
-            openOptionsMenu();
-            return true;
-        }
-        return super.onKeyUp(keyCode, event);
-    }
 }
