@@ -35,36 +35,6 @@ public abstract class AbstractLexiconListFragment extends AbstractListFragment {
     protected int mSelectedLexiconId = NO_SELECTION;
 
     /**
-     * @return true if no list item is selected or false otherwise
-     */
-    public boolean nothingIsSelected() {
-        return NO_SELECTION == mSelectedLexiconId;
-    }
-
-    /**
-     * @return true if the selected word is in the favorites list or false otherwise
-     */
-    public boolean selectedWordIsFavorite() {
-        String[] columns = new String[] {AppDataContract.LexiconFavorites._ID};
-        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
-        String[] selectionArgs = new String[] {Integer.toString(mSelectedLexiconId)};
-        ContentResolver resolver = getActivity().getContentResolver();
-        Cursor cursor = resolver.query(AppDataContract.LexiconFavorites.CONTENT_URI, columns,
-                                       selection, selectionArgs, null);
-
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        boolean result = false;
-        if (cursor.getCount() > 0) {
-            result = true;
-        }
-        cursor.close();
-        return result;
-    }
-
-    /**
      * @return the lexicon database ID of the selected item
      */
     public int getSelectedLexiconId() {

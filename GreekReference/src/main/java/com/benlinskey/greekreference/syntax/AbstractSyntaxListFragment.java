@@ -36,36 +36,6 @@ public abstract class AbstractSyntaxListFragment extends AbstractListFragment {
     protected int mSelectedSyntaxId = NO_SELECTION;
 
     /**
-     * @return true if no list item is selected or false otherwise
-     */
-    public boolean nothingIsSelected() {
-        return NO_SELECTION == mSelectedSyntaxId;
-    }
-
-    /**
-     * @return true if the selected word is in the bookmarks list or false otherwise
-     */
-    public boolean selectedSectionIsBookmarked() {
-        String[] columns = new String[] {AppDataContract.SyntaxBookmarks._ID};
-        String selection = AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " = ?";
-        String[] selectionArgs = new String[] {Integer.toString(mSelectedSyntaxId)};
-        ContentResolver resolver = getActivity().getContentResolver();
-        Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
-        Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
-
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        boolean result = false;
-        if (cursor.getCount() > 0) {
-            result = true;
-        }
-        cursor.close();
-        return result;
-    }
-
-    /**
      * @return the syntax database ID of the selected item
      */
     public int getSelectedSyntaxId() { return mSelectedSyntaxId; }

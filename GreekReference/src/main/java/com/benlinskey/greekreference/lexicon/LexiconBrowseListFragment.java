@@ -55,11 +55,6 @@ public class LexiconBrowseListFragment extends AbstractLexiconListFragment
     private Callbacks mCallbacks = sDummyCallbacks;
 
     /**
-     * The current activated item position. Only used on tablets.
-     */
-    private int mActivatedPosition = ListView.INVALID_POSITION;
-
-    /**
      * A dummy implementation of the {@link Callbacks} interface that does
      * nothing. Used only when this fragment is not attached to an activity.
      */
