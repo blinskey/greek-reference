@@ -49,13 +49,14 @@ import android.widget.Toast;
 
 import com.benlinskey.greekreference.AbstractDetailFragment;
 import com.benlinskey.greekreference.AbstractListFragment;
+import com.benlinskey.greekreference.presenters.LexiconPresenter;
 import com.benlinskey.greekreference.presenters.MainPresenter;
 import com.benlinskey.greekreference.Mode;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.lexicon.AbstractLexiconListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
-import com.benlinskey.greekreference.lexicon.LexiconDetailActivity;
-import com.benlinskey.greekreference.lexicon.LexiconDetailFragment;
+import com.benlinskey.greekreference.views.lexicon.LexiconDetailActivity;
+import com.benlinskey.greekreference.views.lexicon.LexiconDetailFragment;
 import com.benlinskey.greekreference.lexicon.LexiconFavoritesListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconHistoryListFragment;
 import com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment;
@@ -64,6 +65,7 @@ import com.benlinskey.greekreference.syntax.SyntaxBookmarksListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxBrowseListFragment;
 import com.benlinskey.greekreference.syntax.SyntaxDetailActivity;
 import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
+import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
 
 /**
  * The app's primary activity. On tablets, this activity displays a two-pane layout containing an 
@@ -73,6 +75,7 @@ import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
 public class MainActivity
         extends ActionBarActivity
         implements MainView,
+        LexiconDetailView,
                    NavigationDrawerFragment.NavigationDrawerCallbacks,
                    AbstractListFragment.Callbacks {
 
@@ -81,6 +84,8 @@ public class MainActivity
     private static final String KEY_SUBTITLE = "action_bar_subtitle";
 
     private MainPresenter mMainPresenter;
+    private LexiconPresenter mLexiconPresenter;
+
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private CharSequence mSubtitle;
@@ -96,6 +101,8 @@ public class MainActivity
 
         mMainPresenter = new MainPresenter(this, this);
         mMainPresenter.onCreate();
+
+        mLexiconPresenter = new LexiconPresenter(this, this);
 
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
@@ -276,20 +283,35 @@ public class MainActivity
     }
 
     @Override
+    public int getSelectedLexiconId() {
+        FragmentManager mgr = getFragmentManager();
+        LexiconDetailFragment fragment = (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+        return fragment.getSelectedLexiconId();
+
+    }
+
+    @Override
+    public void displayToast(String msg) {
+        AbstractDetailFragment fragment = getDetailFragment();
+        fragment.displayToast(msg);
+    }
+
+    private AbstractDetailFragment getDetailFragment() {
+        FragmentManager mgr = getFragmentManager();
+        return (AbstractDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO: Move favorite and bookmark code to fragments?
         // TODO: Move favorite and bookmark options to fragments?
         FragmentManager mgr = getFragmentManager();
         switch (item.getItemId()) {
         case R.id.action_add_favorite:
-            LexiconDetailFragment addFavoriteFragment =
-                    (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            addFavoriteFragment.addLexiconFavorite();
+            mLexiconPresenter.onAddFavorite();
             return true;
         case R.id.action_remove_favorite:
-            LexiconDetailFragment removeFavoriteFragment =
-                    (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
-            removeFavoriteFragment.removeLexiconFavorite();
+            mLexiconPresenter.onRemoveFavorite();
             return true;
         case R.id.action_add_bookmark:
             SyntaxDetailFragment addBookmarkFragment

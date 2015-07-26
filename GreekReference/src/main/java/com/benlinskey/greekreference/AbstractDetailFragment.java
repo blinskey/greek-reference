@@ -65,7 +65,7 @@ public abstract class AbstractDetailFragment extends Fragment {
      * method in order to prevent creating overlapping toasts.
      * @param message the text to display in the toast
      */
-    protected void displayToast(String message) {
+    public void displayToast(String message) {
         mToast.setText(message);
         mToast.show();
     }

@@ -45,6 +45,7 @@ import android.widget.Toast;
 
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.SettingsActivity;
+import com.benlinskey.greekreference.views.lexicon.LexiconDetailFragment;
 
 /**
  * Displays the Perseus Greek Word Study Tool page in a {@code WebView}. This class adds a style

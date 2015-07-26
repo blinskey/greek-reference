@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexicon;
+package com.benlinskey.greekreference.views.lexicon;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -45,6 +45,8 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconEntry;
 import com.benlinskey.greekreference.data.lexicon.LexiconXmlParser;
+import com.benlinskey.greekreference.lexicon.AbstractLexiconListFragment;
+import com.benlinskey.greekreference.lexicon.PerseusToolActivity;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -145,20 +147,6 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
     }
 
     /**
-     * Adds the specified word to the lexicon favorites list.
-     * @param lexiconId the lexicon ID of the word to add
-     * @param word the word to add
-     */
-    protected void addLexiconFavorite(int lexiconId, String word) {
-        ContentValues values = new ContentValues();
-        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, lexiconId);
-        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, word);
-        getActivity().getContentResolver().insert(AppDataContract.LexiconFavorites.CONTENT_URI, values);
-        getActivity().invalidateOptionsMenu();
-        displayToast(getString(R.string.toast_favorite_added));
-    }
-
-    /**
      * Removes the specified word from the lexicon favorites list.
      * @param lexiconId the lexicon ID of the word to remove
      */
@@ -171,19 +159,14 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
         displayToast(getString(R.string.toast_favorite_removed));
     }
 
-    // NOTE: The following two methods should only be used in two-pane mode.
-    // TODO: Throw exception if these methods are called in one-pane mode.
-    
-    /**
-     * Adds the currently selected word to the lexicon favorites list.
-     */
-    public void addLexiconFavorite() {
+    public int getSelectedLexiconId() {
         AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.item_list_container);
-        int lexiconId = fragment.getSelectedLexiconId();
-        String word = getWordFromLexiconId(lexiconId);
-        addLexiconFavorite(lexiconId, word);
+        return fragment.getSelectedLexiconId();
     }
+
+    // NOTE: The following two methods should only be used in two-pane mode.
+    // TODO: Throw exception if these methods are called in one-pane mode.
 
     /**
      * Removes the currently selected word from the lexicon favorites list.
@@ -195,33 +178,6 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
         removeLexiconFavorite(lexiconId);
     }
 
-    /**
-     * Returns the word corresponding to the specified lexicon ID.
-     * @param id the lexicon ID for which to search
-     * @return the corresponding word
-     */
-    private String getWordFromLexiconId(int id) {
-        String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD};
-        String selection = LexiconContract._ID + " = ?";
-        String[] selectionArgs = {Integer.toString(id)};
-        ContentResolver resolver = getActivity().getContentResolver();
-        Cursor cursor = resolver.query(LexiconContract.CONTENT_URI, projection, selection,
-                                       selectionArgs, null);
-
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        String word;
-        if (cursor.moveToFirst()) {
-            word = cursor.getString(0);
-            cursor.close();
-        } else {
-            cursor.close();
-            throw new IllegalArgumentException("Invalid lexicon ID: " + id);
-        }
-        return word;
-    }
 
     /**
      * Searches for this word in the Perseus Greek Word Study Tool and displays the resulting

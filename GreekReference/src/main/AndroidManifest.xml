@@ -38,7 +38,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="com.benlinskey.greekreference.lexicon.LexiconDetailActivity"
+            android:name=".views.lexicon.LexiconDetailActivity"
             android:parentActivityName=".views.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexicon;
+package com.benlinskey.greekreference.views.lexicon;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.benlinskey.greekreference.AbstractDetailActivity;
+import com.benlinskey.greekreference.presenters.LexiconPresenter;
 import com.benlinskey.greekreference.views.MainActivity;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
@@ -34,17 +35,21 @@ import com.benlinskey.greekreference.data.appdata.AppDataContract;
 /**
  * A {@link com.benlinskey.greekreference.AbstractDetailActivity} used to display lexicon entries.
  */
-public class LexiconDetailActivity extends AbstractDetailActivity {
+public class LexiconDetailActivity extends AbstractDetailActivity implements LexiconDetailView {
     
     public static final String ARG_LEXICON_ID = "lexicon_id";
     public static final String ARG_WORD = "word";
-    
+
+    private LexiconPresenter mLexiconPresenter;
+
     private int mLexiconId;
     private String mWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mLexiconPresenter = new LexiconPresenter(this, this);
 
         Intent intent = getIntent();
         mLexiconId = intent.getIntExtra(ARG_LEXICON_ID, -1);
@@ -107,22 +112,31 @@ public class LexiconDetailActivity extends AbstractDetailActivity {
     }
 
     @Override
+    public int getSelectedLexiconId() {
+        return mLexiconId;
+    }
+
+    private LexiconDetailFragment getDetailFragment() {
+        return (LexiconDetailFragment) getFragmentManager().findFragmentById(R.id.item_detail_container);
+    }
+
+    @Override
+    public void displayToast(String msg) {
+        LexiconDetailFragment fragment = getDetailFragment();
+        fragment.displayToast(msg);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
                 return true;
             case R.id.action_add_favorite:
-                LexiconDetailFragment addFavoriteFragment 
-                        = (LexiconDetailFragment) getFragmentManager()
-                                .findFragmentById(R.id.item_detail_container);
-                addFavoriteFragment.addLexiconFavorite(mLexiconId, mWord);
+                mLexiconPresenter.onAddFavorite();
                 return true;
             case R.id.action_remove_favorite:
-                LexiconDetailFragment removeFavoriteFragment 
-                        = (LexiconDetailFragment) getFragmentManager()
-                                .findFragmentById(R.id.item_detail_container);
-                removeFavoriteFragment.removeLexiconFavorite(mLexiconId);
+                mLexiconPresenter.onRemoveFavorite();
                 return true;
         }
         return super.onOptionsItemSelected(item);
