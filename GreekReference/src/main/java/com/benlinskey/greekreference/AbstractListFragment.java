@@ -26,6 +26,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.benlinskey.greekreference.views.MainActivity;
+
 /**
  * The basic class from which every list fragment inherits. This class handles
  * basic setup and UI tasks common to all of this app's list fragments.

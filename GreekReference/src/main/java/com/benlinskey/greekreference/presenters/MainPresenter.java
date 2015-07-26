@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.presenters;
 
 import android.app.SearchManager;
 import android.content.ContentResolver;
@@ -26,14 +26,19 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.benlinskey.greekreference.LexiconHistoryManager;
+import com.benlinskey.greekreference.Mode;
+import com.benlinskey.greekreference.R;
+import com.benlinskey.greekreference.SettingsActivity;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
+import com.benlinskey.greekreference.views.MainView;
 
 // TODO: We'll probably want different presenters for different modes/fragments.
 // TODO: Manage modes, action bar titles, &c. here?
-public final class Presenter {
+public final class MainPresenter {
 
     /** Custom intent action. */
     public static final String ACTION_SET_MODE = "com.benlinskey.greekreference.SET_MODE";
@@ -43,7 +48,7 @@ public final class Presenter {
     private final ContentResolver mResolver;
     private final LexiconHistoryManager mLexiconHistory;
 
-    public Presenter(MainView view, Context context) {
+    public MainPresenter(MainView view, Context context) {
         mView = view;
         mContext = context;
         mResolver = mContext.getContentResolver();

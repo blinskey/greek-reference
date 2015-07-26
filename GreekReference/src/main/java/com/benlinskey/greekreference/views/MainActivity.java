@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -47,6 +47,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.benlinskey.greekreference.AbstractDetailFragment;
+import com.benlinskey.greekreference.AbstractListFragment;
+import com.benlinskey.greekreference.presenters.MainPresenter;
+import com.benlinskey.greekreference.Mode;
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.lexicon.AbstractLexiconListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconBrowseListFragment;
 import com.benlinskey.greekreference.lexicon.LexiconDetailActivity;
@@ -62,7 +67,7 @@ import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
 
 /**
  * The app's primary activity. On tablets, this activity displays a two-pane layout containing an 
- * {@link AbstractListFragment} and an {@link AbstractDetailFragment}. On phones, it displays only 
+ * {@link AbstractListFragment} and an {@link AbstractDetailFragment}. On phones, it displays only
  * an {@code AbstractListFragment}.
  */
 public class MainActivity
@@ -75,7 +80,7 @@ public class MainActivity
     private static final String KEY_TITLE = "action_bar_title";
     private static final String KEY_SUBTITLE = "action_bar_subtitle";
 
-    private Presenter mPresenter;
+    private MainPresenter mMainPresenter;
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private CharSequence mTitle;
     private CharSequence mSubtitle;
@@ -89,8 +94,8 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        mPresenter = new Presenter(this, this);
-        mPresenter.onCreate();
+        mMainPresenter = new MainPresenter(this, this);
+        mMainPresenter.onCreate();
 
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
@@ -123,7 +128,7 @@ public class MainActivity
         restoreActionBar();
 
         checkTabletDisplayMode();
-        mPresenter.handleIntent(getIntent());
+        mMainPresenter.handleIntent(getIntent());
     }
 
     @Override
@@ -202,7 +207,7 @@ public class MainActivity
 
     @Override
     protected void onNewIntent(Intent intent) {
-        mPresenter.handleIntent(intent);
+        mMainPresenter.handleIntent(intent);
     }
 
     /**
@@ -306,13 +311,13 @@ public class MainActivity
             clearSyntaxBookmarks();
             return true;
         case R.id.action_settings:
-            mPresenter.onEditSettings();
+            mMainPresenter.onEditSettings();
             return true;
         case R.id.action_feedback:
-            mPresenter.onSendFeedback();
+            mMainPresenter.onSendFeedback();
             return true;
         case R.id.action_help:
-            mPresenter.onDisplayHelp();
+            mMainPresenter.onDisplayHelp();
             return true;
         }
 
@@ -320,7 +325,7 @@ public class MainActivity
     }
 
     private void onClearLexiconHistory() {
-        mPresenter.onClearLexiconHistory();
+        mMainPresenter.onClearLexiconHistory();
     }
 
     /**
@@ -335,7 +340,7 @@ public class MainActivity
                 (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
         String id = Integer.toString(fragment.getSelectedLexiconId());
 
-        mPresenter.onLexiconItemSelected(id);
+        mMainPresenter.onLexiconItemSelected(id);
     }
 
     /**
@@ -348,7 +353,7 @@ public class MainActivity
                 (AbstractSyntaxListFragment) mgr.findFragmentById(R.id.item_list_container);
         int id = fragment.getSelectedSyntaxId();
         String idStr = Integer.toString(id);
-        mPresenter.onSyntaxItemSelected(idStr);
+        mMainPresenter.onSyntaxItemSelected(idStr);
     }
 
     /**
@@ -370,7 +375,7 @@ public class MainActivity
 
         // Add entry to history, unless word was selected from history list.
         if (!mMode.equals(Mode.LEXICON_HISTORY)) {
-            mPresenter.addToLexiconHistory(id, word);
+            mMainPresenter.addToLexiconHistory(id, word);
         }
 
         // Display entry.
@@ -452,7 +457,7 @@ public class MainActivity
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mPresenter.clearLexiconFavorites();
+                        mMainPresenter.clearLexiconFavorites();
                     }
                 });
 
@@ -486,7 +491,7 @@ public class MainActivity
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mPresenter.clearSyntaxBookmarks();
+                        mMainPresenter.clearSyntaxBookmarks();
                     }
                 });
 

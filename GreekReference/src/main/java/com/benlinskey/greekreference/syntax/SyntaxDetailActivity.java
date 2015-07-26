@@ -30,7 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.benlinskey.greekreference.AbstractDetailActivity;
-import com.benlinskey.greekreference.MainActivity;
+import com.benlinskey.greekreference.views.MainActivity;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 

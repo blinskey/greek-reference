@@ -16,7 +16,6 @@
 
 package com.benlinskey.greekreference.lexicon;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -28,8 +27,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.benlinskey.greekreference.AbstractDetailActivity;
+import com.benlinskey.greekreference.views.MainActivity;
 import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.MainActivity;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**

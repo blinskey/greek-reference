@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.views;
 
 import android.app.FragmentManager;
+
+import com.benlinskey.greekreference.Mode;
 
 public interface MainView {
 
