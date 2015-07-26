@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexicon;
+package com.benlinskey.greekreference.views.detail.lexicon;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.ContentResolver;
-import android.content.ContentValues;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -38,24 +36,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.benlinskey.greekreference.AbstractDetailFragment;
+import com.benlinskey.greekreference.views.detail.AbstractDetailFragment;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.GreekTextView;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
-import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconEntry;
 import com.benlinskey.greekreference.data.lexicon.LexiconXmlParser;
+import com.benlinskey.greekreference.views.list.lexicon.AbstractLexiconListFragment;
+import com.benlinskey.greekreference.views.PerseusToolActivity;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * A {@link com.benlinskey.greekreference.AbstractDetailFragment} used to display a lexicon entry.
+ * A {@link AbstractDetailFragment} used to display a lexicon entry.
  */
 public class LexiconDetailFragment extends AbstractDetailFragment {
 
     public static final String TAG = "LexiconDetailFragment";
-    public static final String PERSEUS_TOOL_EXTRA_KEY = "com.benlinskey.greekreference.lexicon.PerseusToolExtraKey";
+    public static final String PERSEUS_TOOL_EXTRA_KEY = "com.benlinskey.greekreference.views.list.lexicon.PerseusToolExtraKey";
 
     // Fragment arguments representing strings containing entry information
     public static final String ARG_ENTRY = "entry";
@@ -144,84 +142,19 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Adds the specified word to the lexicon favorites list.
-     * @param lexiconId the lexicon ID of the word to add
-     * @param word the word to add
-     */
-    protected void addLexiconFavorite(int lexiconId, String word) {
-        ContentValues values = new ContentValues();
-        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID, lexiconId);
-        values.put(AppDataContract.LexiconFavorites.COLUMN_NAME_WORD, word);
-        getActivity().getContentResolver().insert(AppDataContract.LexiconFavorites.CONTENT_URI, values);
-        getActivity().invalidateOptionsMenu();
-        displayToast(getString(R.string.toast_favorite_added));
+    private AbstractLexiconListFragment getListFragment() {
+        FragmentManager mgr = getActivity().getFragmentManager();
+        return (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
     }
 
-    /**
-     * Removes the specified word from the lexicon favorites list.
-     * @param lexiconId the lexicon ID of the word to remove
-     */
-    protected void removeLexiconFavorite(int lexiconId) {
-        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
-        String[] selectionArgs = {Integer.toString(lexiconId)};
-        getActivity().getContentResolver()
-                .delete(AppDataContract.LexiconFavorites.CONTENT_URI, selection, selectionArgs);
-        getActivity().invalidateOptionsMenu();
-        displayToast(getString(R.string.toast_favorite_removed));
+    @SuppressWarnings("unused") // Erroneous warning
+    public int getSelectedLexiconId() {
+        AbstractLexiconListFragment fragment = getListFragment();
+        return fragment.getSelectedLexiconId();
     }
 
     // NOTE: The following two methods should only be used in two-pane mode.
     // TODO: Throw exception if these methods are called in one-pane mode.
-    
-    /**
-     * Adds the currently selected word to the lexicon favorites list.
-     */
-    public void addLexiconFavorite() {
-        AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getActivity().getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-        int lexiconId = fragment.getSelectedLexiconId();
-        String word = getWordFromLexiconId(lexiconId);
-        addLexiconFavorite(lexiconId, word);
-    }
-
-    /**
-     * Removes the currently selected word from the lexicon favorites list.
-     */
-    public void removeLexiconFavorite() {
-        AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getActivity().getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-        int lexiconId = fragment.getSelectedLexiconId();
-        removeLexiconFavorite(lexiconId);
-    }
-
-    /**
-     * Returns the word corresponding to the specified lexicon ID.
-     * @param id the lexicon ID for which to search
-     * @return the corresponding word
-     */
-    private String getWordFromLexiconId(int id) {
-        String[] projection = {LexiconContract.COLUMN_GREEK_FULL_WORD};
-        String selection = LexiconContract._ID + " = ?";
-        String[] selectionArgs = {Integer.toString(id)};
-        ContentResolver resolver = getActivity().getContentResolver();
-        Cursor cursor = resolver.query(LexiconContract.CONTENT_URI, projection, selection,
-                                       selectionArgs, null);
-
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        String word;
-        if (cursor.moveToFirst()) {
-            word = cursor.getString(0);
-            cursor.close();
-        } else {
-            cursor.close();
-            throw new IllegalArgumentException("Invalid lexicon ID: " + id);
-        }
-        return word;
-    }
 
     /**
      * Searches for this word in the Perseus Greek Word Study Tool and displays the resulting

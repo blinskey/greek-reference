@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexicon;
+package com.benlinskey.greekreference.views.list.lexicon;
 
 import android.app.Activity;
 import android.app.LoaderManager;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
@@ -28,22 +27,24 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
-import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
+import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 
 /**
- * A {@link AbstractLexiconListFragment} used to display a list of all words stored in
- * the lexicon history list.
+ * A {@link AbstractLexiconListFragment} used to display a list of all words in the
+ * lexicon.
  */
-public class LexiconHistoryListFragment extends AbstractLexiconListFragment
-        implements LoaderManager.LoaderCallbacks<Cursor>{
-    public static final String NAME = "lexicon_History";
+public class LexiconBrowseListFragment extends AbstractLexiconListFragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final String[] PROJECTION = new String[] {AppDataContract.LexiconHistory._ID,
-            AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
+    public static final String NAME = "lexicon_browse";
+
+    private static final String TAG = "LexiconBrowseListFragment";
+    private static final String[] PROJECTION
+            = new String[] {LexiconContract._ID, LexiconContract.COLUMN_GREEK_FULL_WORD,
+                    LexiconContract.COLUMN_GREEK_LOWERCASE};
     private static final String SELECTION = "";
     private static final String[] SELECTION_ARGS = {};
-    private static final String ORDER_BY = AppDataContract.LexiconHistory._ID + " DESC";
+    private static final String ORDER_BY = LexiconContract.COLUMN_GREEK_LOWERCASE + " ASC";
 
     private SimpleCursorAdapter mAdapter;
 
@@ -67,7 +68,7 @@ public class LexiconHistoryListFragment extends AbstractLexiconListFragment
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public LexiconHistoryListFragment() {
+    public LexiconBrowseListFragment() {
     }
 
     @Override
@@ -75,30 +76,37 @@ public class LexiconHistoryListFragment extends AbstractLexiconListFragment
         super.onCreate(savedInstanceState);
 
         // Create and set list adapter.
-        String[] fromColumns = {AppDataContract.LexiconHistory.COLUMN_NAME_WORD};
+        // TODO: Replace this with a more efficient adapter.
+        String[] fromColumns = {LexiconContract.COLUMN_GREEK_FULL_WORD};
         int[] toViews = {android.R.id.text1};
-        mAdapter = new android.widget.SimpleCursorAdapter(getActivity(),
+        mAdapter = new SimpleCursorAdapter(getActivity(),
                 R.layout.greek_simple_list_item_activated_1, null, fromColumns, toViews, 0);
         setListAdapter(mAdapter);
-
         getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(), LexiconHistoryProvider.CONTENT_URI, PROJECTION, SELECTION,
+        return new CursorLoader(getActivity(), LexiconContract.CONTENT_URI, PROJECTION, SELECTION,
                 SELECTION_ARGS, ORDER_BY);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
-        setNoItemsView(R.string.lexicon_history_empty_view);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        getListView().setFastScrollEnabled(true);
+        getListView().setFastScrollAlwaysVisible(true);
     }
 
     @Override
@@ -126,34 +134,25 @@ public class LexiconHistoryListFragment extends AbstractLexiconListFragment
         super.onListItemClick(listView, view, position, id);
 
         Cursor cursor = (Cursor) mAdapter.getItem(position);
-        int lexiconHistoryId = cursor.getInt(0);
-
-        setSelectedLexiconItemId(lexiconHistoryId);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(NAME); // Database IDs start at 1.
+        int lexiconId = cursor.getInt(0);
+        setSelectedLexiconItemId(lexiconId);
+        mCallbacks.onItemSelected(NAME); // Positions are off by one from database ID.
     }
 
     @Override
     protected void setSelectedLexiconItemId(int id) {
-        String[] columns = new String[] {AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID};
-        String selection = AppDataContract.LexiconHistory._ID + " = ?";
-        String[] selectionArgs = new String[] {Integer.toString(id)};
-        ContentResolver resolver = getActivity().getContentResolver();
-        Cursor cursor = resolver.query(AppDataContract.LexiconHistory.CONTENT_URI, columns,
-                                       selection, selectionArgs, null);
+        mSelectedLexiconId = id;
+    }
 
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        if (cursor.moveToFirst()) {
-            mSelectedLexiconId = cursor.getInt(0);
-            cursor.close();
-        } else {
-            cursor.close();
-            throw new IllegalArgumentException("Invalid ID: " + id);
-        }
+    /**
+     * Selects the specified item.
+     * @param id the lexicon database ID of the item to select
+     */
+    public void selectItem(int id) {
+        mSelectedLexiconId = id;
+        int position = id - 1;
+        setActivatedPosition(position);
+        getListView().setSelection(position);
+        mCallbacks.onItemSelected(NAME);
     }
 }

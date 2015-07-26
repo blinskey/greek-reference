@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.syntax;
+package com.benlinskey.greekreference.views.list.syntax;
 
 import android.app.Activity;
 import android.app.LoaderManager;

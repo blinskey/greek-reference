@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.views.list;
 
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -25,6 +25,8 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.benlinskey.greekreference.views.MainActivity;
 
 /**
  * The basic class from which every list fragment inherits. This class handles
@@ -104,7 +106,7 @@ public abstract class AbstractListFragment extends ListFragment {
     }
 
     /**
-     * Set's this fragment's {@link ListView}'s activated position.
+     * Sets this fragment's {@link ListView}'s activated position.
      * @param position the position to set as activated
      */
     protected void setActivatedPosition(int position) {
