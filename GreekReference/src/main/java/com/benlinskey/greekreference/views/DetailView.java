@@ -18,7 +18,7 @@ package com.benlinskey.greekreference.views;
 
 public interface DetailView {
 
-    void displayToast(String msg);
+    void displayDetailViewToast(String msg);
 
     void invalidateOptionsMenu();
 

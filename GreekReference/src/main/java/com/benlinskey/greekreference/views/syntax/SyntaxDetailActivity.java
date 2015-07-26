@@ -122,7 +122,7 @@ public class SyntaxDetailActivity extends AbstractDetailActivity implements Synt
     }
 
     @Override
-    public void displayToast(String msg) {
+    public void displayDetailViewToast(String msg) {
         SyntaxDetailFragment fragment = getDetailFragment();
         fragment.displayToast(msg);
     }

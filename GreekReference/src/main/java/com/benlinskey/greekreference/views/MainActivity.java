@@ -303,9 +303,15 @@ public class MainActivity
     }
 
     @Override
-    public void displayToast(String msg) {
+    public void displayDetailViewToast(String msg) {
         AbstractDetailFragment fragment = getDetailFragment();
         fragment.displayToast(msg);
+    }
+
+    @Override
+    public void displayToast(String msg, int length) {
+        Toast toast = Toast.makeText(this, msg, length);
+        toast.show();
     }
 
     private AbstractListFragment getListFragment() {
@@ -699,12 +705,6 @@ public class MainActivity
             return true;
         }
         return super.onKeyUp(keyCode, event);
-    }
-
-    @Override
-    public void displayToast(String msg, int length) {
-        Toast toast = Toast.makeText(this, msg, length);
-        toast.show();
     }
 
 }

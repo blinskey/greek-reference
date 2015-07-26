@@ -113,7 +113,7 @@ public class LexiconPresenter {
         mView.invalidateOptionsMenu();
 
         String msg = mContext.getString(R.string.toast_favorite_added);
-        mView.displayToast(msg);
+        mView.displayDetailViewToast(msg);
     }
 
     public void onRemoveFavorite() {
@@ -126,14 +126,14 @@ public class LexiconPresenter {
         mView.invalidateOptionsMenu();
 
         String msg = mContext.getString(R.string.toast_favorite_removed);
-        mView.displayToast(msg);
+        mView.displayDetailViewToast(msg);
     }
 
     public void onClearHistory() {
         mResolver.delete(AppDataContract.LexiconHistory.CONTENT_URI, null, null);
 
         String msg = mContext.getString(R.string.toast_clear_history);
-        mView.displayToast(msg);
+        mView.displayDetailViewToast(msg);
     }
 
     public void onAddHistory(String id, String word) {
@@ -153,7 +153,7 @@ public class LexiconPresenter {
         mResolver.delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
 
         String msg = mContext.getString(R.string.toast_clear_lexicon_favorites);
-        mView.displayToast(msg);
+        mView.displayDetailViewToast(msg);
     }
 
     /**

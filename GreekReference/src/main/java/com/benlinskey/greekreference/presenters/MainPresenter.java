@@ -34,7 +34,6 @@ import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;
 import com.benlinskey.greekreference.views.MainView;
 
-// TODO: We'll probably want different presenters for different modes/fragments.
 // TODO: Manage modes, action bar titles, &c. here?
 public final class MainPresenter {
 

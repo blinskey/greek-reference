@@ -110,7 +110,7 @@ public class SyntaxPresenter {
         mView.invalidateOptionsMenu();
 
         String msg = mContext.getString(R.string.toast_bookmark_added);
-        mView.displayToast(msg);
+        mView.displayDetailViewToast(msg);
     }
 
     public void onRemoveBookmark() {
@@ -123,14 +123,14 @@ public class SyntaxPresenter {
         mView.invalidateOptionsMenu();
 
         String msg = mContext.getString(R.string.toast_bookmark_removed);
-        mView.displayToast(msg);
+        mView.displayDetailViewToast(msg);
     }
 
     public void onClearBookmarks() {
         mResolver.delete(AppDataContract.SyntaxBookmarks.CONTENT_URI, null, null);
 
         String msg = mContext.getString(R.string.toast_clear_syntax_bookmarks);
-        mView.displayToast(msg);
+        mView.displayDetailViewToast(msg);
     }
 
     /**

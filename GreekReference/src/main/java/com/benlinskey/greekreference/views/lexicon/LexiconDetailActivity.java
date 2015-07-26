@@ -103,7 +103,7 @@ public class LexiconDetailActivity extends AbstractDetailActivity implements Lex
     }
 
     @Override
-    public void displayToast(String msg) {
+    public void displayDetailViewToast(String msg) {
         LexiconDetailFragment fragment = getDetailFragment();
         fragment.displayToast(msg);
     }
