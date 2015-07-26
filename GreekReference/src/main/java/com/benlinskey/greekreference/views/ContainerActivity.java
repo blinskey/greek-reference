@@ -62,6 +62,7 @@ public class ContainerActivity extends ActionBarActivity {
      * method in order to prevent creating overlapping toasts.
      * @param message the text to display in the toast
      */
+    @SuppressWarnings("unused") // Erroneous warning
     public void displayToast(String message) {
         displayToast(message, DEFAULT_TOAST_DURATION);
     }

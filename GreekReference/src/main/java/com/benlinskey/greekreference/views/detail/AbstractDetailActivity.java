@@ -79,6 +79,7 @@ public abstract class AbstractDetailActivity extends ContainerActivity {
      */
     protected abstract void restoreActionBar();
 
+    @SuppressWarnings("unused") // Erroneous warning
     protected AbstractDetailFragment getDetailFragment() {
         return (AbstractDetailFragment) getFragmentManager().findFragmentById(R.id.item_detail_container);
     }
