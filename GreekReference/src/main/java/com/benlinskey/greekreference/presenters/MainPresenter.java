@@ -195,13 +195,6 @@ public final class MainPresenter {
         mView.displaySyntaxSection(section, xml);
     }
 
-    public void onSendFeedback() {
-        Uri uri = Uri.fromParts("mailto", mContext.getString(R.string.feedback_email), null);
-        Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-        intent.putExtra(Intent.EXTRA_SUBJECT, mContext.getString(R.string.feedback_subject));
-        mContext.startActivity(Intent.createChooser(intent, mContext.getString(R.string.feedback_intent_chooser)));
-    }
-
     public void onEditSettings() {
         mContext.startActivity(new Intent(mContext, SettingsActivity.class));
     }
