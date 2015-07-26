@@ -302,18 +302,6 @@ public class MainActivity
         return fragment.getSelectedSyntaxId();
     }
 
-    @Override
-    public void displayDetailViewToast(String msg) {
-        AbstractDetailFragment fragment = getDetailFragment();
-        fragment.displayToast(msg);
-    }
-
-    @Override
-    public void displayToast(String msg, int length) {
-        Toast toast = Toast.makeText(this, msg, length);
-        toast.show();
-    }
-
     private AbstractListFragment getListFragment() {
         FragmentManager mgr = getFragmentManager();
         return (AbstractListFragment) mgr.findFragmentById(R.id.item_list_container);

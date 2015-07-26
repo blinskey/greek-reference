@@ -25,8 +25,8 @@ public interface MainView {
 
     void ensureModeIsLexiconBrowse();
 
-    // TODO: Can we replace this with DetailView's displayToast(String) method?
-    void displayToast(String msg, int length);
+    // TODO: Merge this with DetailView.
+    void displayToast(String msg);
 
     void selectLexiconItem(int id);
 

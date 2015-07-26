@@ -31,7 +31,8 @@ import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
 
 // TODO: Rename to LexiconDetailPresenter? MainPresenter is responsible
-// for querying Lexicon database.
+// for querying Lexicon database and we'll need a list-view presenter
+// to deal with the favorites list.
 public class LexiconPresenter {
 
     private final LexiconDetailView mView;
@@ -113,7 +114,7 @@ public class LexiconPresenter {
         mView.invalidateOptionsMenu();
 
         String msg = mContext.getString(R.string.toast_favorite_added);
-        mView.displayDetailViewToast(msg);
+        mView.displayToast(msg);
     }
 
     public void onRemoveFavorite() {
@@ -126,14 +127,14 @@ public class LexiconPresenter {
         mView.invalidateOptionsMenu();
 
         String msg = mContext.getString(R.string.toast_favorite_removed);
-        mView.displayDetailViewToast(msg);
+        mView.displayToast(msg);
     }
 
     public void onClearHistory() {
         mResolver.delete(AppDataContract.LexiconHistory.CONTENT_URI, null, null);
 
         String msg = mContext.getString(R.string.toast_clear_history);
-        mView.displayDetailViewToast(msg);
+        mView.displayToast(msg);
     }
 
     public void onAddHistory(String id, String word) {
@@ -153,7 +154,7 @@ public class LexiconPresenter {
         mResolver.delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
 
         String msg = mContext.getString(R.string.toast_clear_lexicon_favorites);
-        mView.displayDetailViewToast(msg);
+        mView.displayToast(msg);
     }
 
     /**
@@ -183,6 +184,5 @@ public class LexiconPresenter {
         }
         return word;
     }
-
 
 }

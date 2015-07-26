@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.views;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -30,13 +31,46 @@ import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.benlinskey.greekreference.R;
+
+// TODO: Can we display all toasts here?
 
 public class ContainerActivity extends ActionBarActivity {
 
     // TODO: Should we move any of this code to the presenter and/or call this code from the
     // presenter rather than directly calling it from the activity?
+
+    private static final int DEFAULT_TOAST_DURATION = Toast.LENGTH_SHORT;
+
+    // We use a single Toast object to prevent overlapping toasts when the user
+    // repeatedly taps an icon that displays a toast.
+    protected Toast mToast;
+
+    @SuppressLint("ShowToast")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mToast = Toast.makeText(this, null, DEFAULT_TOAST_DURATION);
+    }
+
+    /**
+     * Displays a toast containing the specified text.
+     * <p>
+     * All children of this class should display toasts only by calling this
+     * method in order to prevent creating overlapping toasts.
+     * @param message the text to display in the toast
+     */
+    public void displayToast(String message) {
+        displayToast(message, DEFAULT_TOAST_DURATION);
+    }
+
+    public void displayToast(String message, int duration) {
+        mToast.setText(message);
+        mToast.setDuration(duration);
+        mToast.show();
+    }
 
     /**
      * Displays a dialog fragment containing help text.

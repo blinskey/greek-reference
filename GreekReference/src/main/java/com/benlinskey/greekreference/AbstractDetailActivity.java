@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.benlinskey.greekreference.views.ContainerActivity;
@@ -82,8 +81,4 @@ public abstract class AbstractDetailActivity extends ContainerActivity {
         return (AbstractDetailFragment) getFragmentManager().findFragmentById(R.id.item_detail_container);
     }
 
-    public void displayDetailViewToast(String msg) {
-        AbstractDetailFragment fragment = getDetailFragment();
-        fragment.displayToast(msg);
-    }
 }

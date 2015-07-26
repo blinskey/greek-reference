@@ -102,7 +102,7 @@ public final class MainPresenter {
             mView.selectLexiconItem(id);
         } else {
             String msg = mContext.getString(R.string.toast_search_no_results);
-            mView.displayToast(msg, Toast.LENGTH_LONG);
+            mView.displayToast(msg);
         }
 
         cursor.close();
