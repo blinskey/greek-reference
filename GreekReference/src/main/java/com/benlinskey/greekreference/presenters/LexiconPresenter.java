@@ -28,7 +28,7 @@ import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
 import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
-import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
+import com.benlinskey.greekreference.views.detail.lexicon.LexiconDetailView;
 
 // TODO: Rename to LexiconDetailPresenter? MainPresenter is responsible
 // for querying Lexicon database and we'll need a list-view presenter

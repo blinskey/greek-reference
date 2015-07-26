@@ -24,11 +24,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.benlinskey.greekreference.Mode;
 import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.SettingsActivity;
+import com.benlinskey.greekreference.views.SettingsActivity;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconProvider;
 import com.benlinskey.greekreference.data.syntax.SyntaxContract;

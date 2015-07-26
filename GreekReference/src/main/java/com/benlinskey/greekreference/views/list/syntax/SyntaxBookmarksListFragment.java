@@ -14,42 +14,55 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.syntax;
+package com.benlinskey.greekreference.views.list.syntax;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import com.benlinskey.greekreference.data.syntax.SyntaxContract;
+import com.benlinskey.greekreference.R;
+import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
- * A {@link AbstractSyntaxListFragment} used to display a list of all sections in the Overview of Greek
- * Syntax text.
+ * A {@link AbstractSyntaxListFragment} used to display a list of all words stored in the syntax bookmarks
+ * list.
  */
-public class SyntaxBrowseListFragment extends AbstractSyntaxListFragment
+public class SyntaxBookmarksListFragment extends AbstractSyntaxListFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final String NAME = "syntax_browse";
+    public static final String NAME = "syntax_bookmarks";
 
-    private SimpleCursorAdapter mAdapter;
     private static final String[] PROJECTION = new String[] {
-        SyntaxContract._ID,
-        SyntaxContract.COLUMN_NAME_SECTION
+        AppDataContract.SyntaxBookmarks._ID,
+        AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION,
+        AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID
     };
     private static final String SELECTION = "";
     private static final String[] SELECTION_ARGS = {};
+    private static final String SORT_ORDER = 
+            AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID + " ASC";
 
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
+
+    private SimpleCursorAdapter mAdapter;
+    
+    /** The fragment's current callback object, which is notified of list item clicks. */
+    private Callbacks mCallbacks = sDummyCallbacks;
+
+    /** The current activated item position. Only used on tablets. */
+    private int mActivatedPosition = ListView.INVALID_POSITION;
 
     /**
      * A dummy implementation of the {@link Callbacks} interface that does
@@ -59,26 +72,19 @@ public class SyntaxBrowseListFragment extends AbstractSyntaxListFragment
         @Override
         public void onItemSelected(String fragmentName) {}
     };
-    
-    /** The fragment's current callback object, which is notified of list item clicks. */
-    private Callbacks mCallbacks = sDummyCallbacks;
 
-    /** The current activated item position. Only used on tablets. */
-    private int mActivatedPosition = ListView.INVALID_POSITION;
-    
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SyntaxBrowseListFragment() {
-    }
+    public SyntaxBookmarksListFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: Create a custom adapter with support for chapter headings.
-        String[] fromColumns = {SyntaxContract.COLUMN_NAME_SECTION};
+        // TODO: Add chapter name before section name in this list?
+        String[] fromColumns = {AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_SECTION};
         int[] toViews = {android.R.id.text1};
         int layout = android.R.layout.simple_list_item_activated_1;
         mAdapter = new SimpleCursorAdapter(getActivity(), layout, null, fromColumns, toViews, 0);
@@ -88,13 +94,14 @@ public class SyntaxBrowseListFragment extends AbstractSyntaxListFragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(), SyntaxContract.CONTENT_URI, PROJECTION, SELECTION,
-                SELECTION_ARGS, null);
+        return new CursorLoader(getActivity(), AppDataContract.SyntaxBookmarks.CONTENT_URI,
+                PROJECTION, SELECTION, SELECTION_ARGS, SORT_ORDER);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.swapCursor(data);
+        setNoItemsView(R.string.syntax_bookmarks_empty_view);
     }
 
     @Override
@@ -136,7 +143,9 @@ public class SyntaxBrowseListFragment extends AbstractSyntaxListFragment
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
         super.onListItemClick(listView, view, position, id);
-        setSelectedSyntaxItemId(position);
+        Cursor cursor = (Cursor) mAdapter.getItem(position);
+        int syntaxBookmarksId = cursor.getInt(0);
+        setSelectedSyntaxItemId(syntaxBookmarksId);
         mCallbacks.onItemSelected(NAME);
     }
 
@@ -151,6 +160,23 @@ public class SyntaxBrowseListFragment extends AbstractSyntaxListFragment
 
     @Override
     protected void setSelectedSyntaxItemId(int id) {
-        mSelectedSyntaxId = id + 1;
+        String[] columns = new String[] {AppDataContract.SyntaxBookmarks.COLUMN_NAME_SYNTAX_ID};
+        String selection = AppDataContract.SyntaxBookmarks._ID + " = ?";
+        String[] selectionArgs = new String[] {Integer.toString(id)};
+        ContentResolver resolver = getActivity().getContentResolver();
+        Uri uri = AppDataContract.SyntaxBookmarks.CONTENT_URI;
+        Cursor cursor = resolver.query(uri, columns, selection, selectionArgs, null);
+
+        if (cursor == null) {
+            throw new NullPointerException("ContentResolver#query() returned null");
+        }
+
+        if (cursor.moveToFirst()) {
+            mSelectedSyntaxId = cursor.getInt(0);
+            cursor.close();
+        } else {
+            cursor.close();
+            throw new IllegalArgumentException("Invalid ID: " + id);
+        }
     }
 }

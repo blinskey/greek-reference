@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.views.detail;
 
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.View;
+
+import com.benlinskey.greekreference.R;
 
 /**
  * The basic class from which every detail fragment inherits.

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexicon;
+package com.benlinskey.greekreference.views;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -44,8 +44,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.SettingsActivity;
-import com.benlinskey.greekreference.views.lexicon.LexiconDetailFragment;
+import com.benlinskey.greekreference.views.SettingsActivity;
+import com.benlinskey.greekreference.views.detail.lexicon.LexiconDetailFragment;
 
 /**
  * Displays the Perseus Greek Word Study Tool page in a {@code WebView}. This class adds a style

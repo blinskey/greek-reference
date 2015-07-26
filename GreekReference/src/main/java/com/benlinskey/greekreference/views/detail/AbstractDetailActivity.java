@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.views.detail;
 
 import android.content.Intent;
 import android.os.Build;
@@ -24,6 +24,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.benlinskey.greekreference.R;
+import com.benlinskey.greekreference.views.SettingsActivity;
 import com.benlinskey.greekreference.views.ContainerActivity;
 
 /**

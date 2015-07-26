@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.syntax;
+package com.benlinskey.greekreference.views.list.syntax;
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.net.Uri;
-
-import com.benlinskey.greekreference.AbstractListFragment;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
+import com.benlinskey.greekreference.views.list.AbstractListFragment;
 
 /**
  * The basic class from which every syntax list fragment inherits.

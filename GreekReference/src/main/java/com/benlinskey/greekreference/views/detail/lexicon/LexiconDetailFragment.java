@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.views.lexicon;
+package com.benlinskey.greekreference.views.detail.lexicon;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -39,26 +36,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.benlinskey.greekreference.AbstractDetailFragment;
+import com.benlinskey.greekreference.views.detail.AbstractDetailFragment;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.GreekTextView;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
-import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.data.lexicon.LexiconEntry;
 import com.benlinskey.greekreference.data.lexicon.LexiconXmlParser;
-import com.benlinskey.greekreference.lexicon.AbstractLexiconListFragment;
-import com.benlinskey.greekreference.lexicon.PerseusToolActivity;
+import com.benlinskey.greekreference.views.list.lexicon.AbstractLexiconListFragment;
+import com.benlinskey.greekreference.views.PerseusToolActivity;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * A {@link com.benlinskey.greekreference.AbstractDetailFragment} used to display a lexicon entry.
+ * A {@link AbstractDetailFragment} used to display a lexicon entry.
  */
 public class LexiconDetailFragment extends AbstractDetailFragment {
 
     public static final String TAG = "LexiconDetailFragment";
-    public static final String PERSEUS_TOOL_EXTRA_KEY = "com.benlinskey.greekreference.lexicon.PerseusToolExtraKey";
+    public static final String PERSEUS_TOOL_EXTRA_KEY = "com.benlinskey.greekreference.views.list.lexicon.PerseusToolExtraKey";
 
     // Fragment arguments representing strings containing entry information
     public static final String ARG_ENTRY = "entry";

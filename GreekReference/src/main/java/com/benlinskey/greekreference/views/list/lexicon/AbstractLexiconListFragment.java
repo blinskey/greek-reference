@@ -14,13 +14,9 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.lexicon;
+package com.benlinskey.greekreference.views.list.lexicon;
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-
-import com.benlinskey.greekreference.AbstractListFragment;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
+import com.benlinskey.greekreference.views.list.AbstractListFragment;
 
 /**
  * The basic class from which every lexicon list fragment inherits.

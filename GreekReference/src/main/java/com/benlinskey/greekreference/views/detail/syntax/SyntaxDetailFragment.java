@@ -14,13 +14,8 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.views.syntax;
+package com.benlinskey.greekreference.views.detail.syntax;
 
-import android.app.FragmentManager;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
@@ -30,11 +25,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.benlinskey.greekreference.AbstractDetailFragment;
+import com.benlinskey.greekreference.views.detail.AbstractDetailFragment;
 import com.benlinskey.greekreference.GreekTextView;
 import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
-import com.benlinskey.greekreference.data.syntax.SyntaxContract;
 import com.benlinskey.greekreference.data.syntax.SyntaxSection;
 import com.benlinskey.greekreference.data.syntax.SyntaxXmlParser;
 
@@ -45,7 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * A {@link com.benlinskey.greekreference.AbstractDetailFragment} used to display a syntax section.
+ * A {@link AbstractDetailFragment} used to display a syntax section.
  */
 public class SyntaxDetailFragment extends AbstractDetailFragment {
     

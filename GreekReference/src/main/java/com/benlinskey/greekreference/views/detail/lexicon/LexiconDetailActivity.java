@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.views.lexicon;
+package com.benlinskey.greekreference.views.detail.lexicon;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,13 +23,13 @@ import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.benlinskey.greekreference.AbstractDetailActivity;
+import com.benlinskey.greekreference.views.detail.AbstractDetailActivity;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.presenters.LexiconPresenter;
 import com.benlinskey.greekreference.views.MainActivity;
 
 /**
- * A {@link com.benlinskey.greekreference.AbstractDetailActivity} used to display lexicon entries.
+ * A {@link AbstractDetailActivity} used to display lexicon entries.
  */
 public class LexiconDetailActivity extends AbstractDetailActivity implements LexiconDetailView {
     

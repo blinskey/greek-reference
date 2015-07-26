@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.views.list;
 
 import android.app.ListFragment;
 import android.os.Bundle;

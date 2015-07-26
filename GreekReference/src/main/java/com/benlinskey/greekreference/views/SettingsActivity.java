@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference;
+package com.benlinskey.greekreference.views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -43,6 +43,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.benlinskey.greekreference.R;
 
 /**
  * An activity containing a {@link android.preference.PreferenceFragment}.

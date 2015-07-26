@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package com.benlinskey.greekreference.views.lexicon;
+package com.benlinskey.greekreference.views.detail.syntax;
 
 import com.benlinskey.greekreference.views.DetailView;
 
-public interface LexiconDetailView extends DetailView {
+public interface SyntaxDetailView extends DetailView {
 
-    // TODO: We can just change this to getSelectedId(), move it to DetailView,
-    // and get rid of the mode-specific interfaces.
-    int getSelectedLexiconId();
-
+    int getSelectedSyntaxId();
 }
