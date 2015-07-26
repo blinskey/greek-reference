@@ -687,24 +687,4 @@ public class MainActivity
         return mMode;
     }
     
-    // The following two methods are a workaround for a bug related to the appcompat-v7 library
-    // on some LG devices. Thanks to Alex Lockwood for the fix: http://stackoverflow.com/questions/26833242/nullpointerexception-phonewindowonkeyuppanel1002-main
-    
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-    
-    @Override
-    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
-        if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
-            openOptionsMenu();
-            return true;
-        }
-        return super.onKeyUp(keyCode, event);
-    }
-
 }
