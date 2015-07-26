@@ -98,4 +98,8 @@ public abstract class AbstractDetailActivity extends ContainerActivity {
         }
         return super.onKeyUp(keyCode, event);
     }
+
+    protected AbstractDetailFragment getDetailFragment() {
+        return (AbstractDetailFragment) getFragmentManager().findFragmentById(R.id.item_detail_container);
+    }
 }

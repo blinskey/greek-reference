@@ -17,7 +17,6 @@
 package com.benlinskey.greekreference.views.lexicon;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -27,10 +26,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.benlinskey.greekreference.AbstractDetailActivity;
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.presenters.LexiconPresenter;
 import com.benlinskey.greekreference.views.MainActivity;
-import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.data.appdata.AppDataContract;
 
 /**
  * A {@link com.benlinskey.greekreference.AbstractDetailActivity} used to display lexicon entries.
@@ -98,13 +96,9 @@ public class LexiconDetailActivity extends AbstractDetailActivity implements Lex
         return mLexiconId;
     }
 
-    private LexiconDetailFragment getDetailFragment() {
-        return (LexiconDetailFragment) getFragmentManager().findFragmentById(R.id.item_detail_container);
-    }
-
     @Override
     public void displayDetailViewToast(String msg) {
-        LexiconDetailFragment fragment = getDetailFragment();
+        LexiconDetailFragment fragment = (LexiconDetailFragment) getDetailFragment();
         fragment.displayToast(msg);
     }
 

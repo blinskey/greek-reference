@@ -117,13 +117,9 @@ public class SyntaxDetailActivity extends AbstractDetailActivity implements Synt
         actionBar.setTitle(mTitle);
     }
 
-    private SyntaxDetailFragment getDetailFragment() {
-        return (SyntaxDetailFragment) getFragmentManager().findFragmentById(R.id.item_detail_container);
-    }
-
     @Override
     public void displayDetailViewToast(String msg) {
-        SyntaxDetailFragment fragment = getDetailFragment();
+        SyntaxDetailFragment fragment = (SyntaxDetailFragment) getDetailFragment();
         fragment.displayToast(msg);
     }
 
