@@ -20,9 +20,11 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.widget.Toast;
 
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.appdata.AppDataContract;
+import com.benlinskey.greekreference.data.appdata.LexiconHistoryProvider;
 import com.benlinskey.greekreference.data.lexicon.LexiconContract;
 import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
 
@@ -64,6 +66,26 @@ public class LexiconPresenter {
 
         String msg = mContext.getString(R.string.toast_favorite_removed);
         mView.displayToast(msg);
+    }
+
+    public void onClearHistory() {
+        mResolver.delete(AppDataContract.LexiconHistory.CONTENT_URI, null, null);
+
+        String msg = mContext.getString(R.string.toast_clear_history);
+        mView.displayToast(msg);
+    }
+
+    public void onAddHistory(String id, String word) {
+        // If the word is already in the list, delete it.
+        String selection = AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID + " = ?";
+        String[] selectionArgs = {id};
+        mResolver.delete(LexiconHistoryProvider.CONTENT_URI, selection, selectionArgs);
+
+        // Add word to top of list.
+        ContentValues values = new ContentValues();
+        values.put(AppDataContract.LexiconHistory.COLUMN_NAME_LEXICON_ID, id);
+        values.put(AppDataContract.LexiconHistory.COLUMN_NAME_WORD, word);
+        mResolver.insert(LexiconHistoryProvider.CONTENT_URI, values);
     }
 
     /**

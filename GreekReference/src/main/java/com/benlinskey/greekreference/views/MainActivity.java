@@ -324,7 +324,7 @@ public class MainActivity
             removeBookmarkFragment.removeSyntaxBookmark();
             return true;
         case R.id.action_clear_history:
-            onClearLexiconHistory();
+            mLexiconPresenter.onClearHistory();
             return true;
         case R.id.action_clear_favorites:
             clearLexiconFavorites();
@@ -344,10 +344,6 @@ public class MainActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void onClearLexiconHistory() {
-        mMainPresenter.onClearLexiconHistory();
     }
 
     /**
@@ -397,7 +393,7 @@ public class MainActivity
 
         // Add entry to history, unless word was selected from history list.
         if (!mMode.equals(Mode.LEXICON_HISTORY)) {
-            mMainPresenter.addToLexiconHistory(id, word);
+            mLexiconPresenter.onAddHistory(id, word);
         }
 
         // Display entry.

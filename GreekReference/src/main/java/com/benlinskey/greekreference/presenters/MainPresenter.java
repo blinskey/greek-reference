@@ -26,7 +26,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.benlinskey.greekreference.LexiconHistoryManager;
 import com.benlinskey.greekreference.Mode;
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.SettingsActivity;
@@ -46,13 +45,11 @@ public final class MainPresenter {
     private final MainView mView;
     private final Context mContext;
     private final ContentResolver mResolver;
-    private final LexiconHistoryManager mLexiconHistory;
 
     public MainPresenter(MainView view, Context context) {
         mView = view;
         mContext = context;
         mResolver = mContext.getContentResolver();
-        mLexiconHistory = new LexiconHistoryManager(mContext);
     }
 
     public void onCreate() {
@@ -208,14 +205,6 @@ public final class MainPresenter {
 
     public void onEditSettings() {
         mContext.startActivity(new Intent(mContext, SettingsActivity.class));
-    }
-
-    public void onClearLexiconHistory() {
-        mLexiconHistory.clear();
-    }
-
-    public void addToLexiconHistory(String id, String word) {
-        mLexiconHistory.add(id, word);
     }
 
     public void onDisplayHelp() {
