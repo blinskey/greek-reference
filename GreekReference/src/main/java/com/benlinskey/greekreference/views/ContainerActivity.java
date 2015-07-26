@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -118,6 +119,7 @@ public class ContainerActivity extends ActionBarActivity {
     // on some LG devices. Thanks to Alex Lockwood for the fix:
     // http://stackoverflow.com/questions/26833242/nullpointerexception-phonewindowonkeyuppanel1002-main
 
+    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
@@ -127,7 +129,7 @@ public class ContainerActivity extends ActionBarActivity {
     }
 
     @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
         if (KeyEvent.KEYCODE_MENU == keyCode && Build.BRAND.equalsIgnoreCase("LGE")) {
             openOptionsMenu();
             return true;
