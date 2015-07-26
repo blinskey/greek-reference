@@ -43,7 +43,6 @@ public class LexiconDetailActivity extends AbstractDetailActivity implements Lex
     private LexiconPresenter mLexiconPresenter;
 
     private int mLexiconId;
-    private String mWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,6 @@ public class LexiconDetailActivity extends AbstractDetailActivity implements Lex
 
         Intent intent = getIntent();
         mLexiconId = intent.getIntExtra(ARG_LEXICON_ID, -1);
-        mWord = intent.getStringExtra(ARG_WORD);
 
         mTitle = getString(R.string.title_lexicon);
 
@@ -80,35 +78,19 @@ public class LexiconDetailActivity extends AbstractDetailActivity implements Lex
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.lexicon_detail_activity_menu, menu);
-        setLexiconFavoriteIcon(menu);
+
+        mLexiconPresenter.onCreateOptionsMenu(menu);
+
         restoreActionBar();
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        setLexiconFavoriteIcon(menu);
+        mLexiconPresenter.onPrepareOptionsMenu(menu);
+
         restoreActionBar();
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    /**
-     * Sets the Lexicon Favorite icon to the appropriate state based on the currently selected 
-     * lexicon entry.
-     * @param menu the {@code Menu} containing the Favorite icon
-     */
-    private void setLexiconFavoriteIcon(Menu menu) {
-        MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
-        MenuItem removeFavorite = menu.findItem(R.id.action_remove_favorite);
-
-        // Hide both icons when no word is selected or the app is in one-pane mode.
-        if (isFavorite(mLexiconId)) {
-            addFavorite.setVisible(false);
-            removeFavorite.setVisible(true);
-        } else {
-            addFavorite.setVisible(true);
-            removeFavorite.setVisible(false);
-        }
     }
 
     @Override
@@ -127,6 +109,11 @@ public class LexiconDetailActivity extends AbstractDetailActivity implements Lex
     }
 
     @Override
+    public boolean isDetailFragmentVisible() {
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -140,32 +127,6 @@ public class LexiconDetailActivity extends AbstractDetailActivity implements Lex
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Returns {@code true} if the word with the specified lexicon ID is 
-     * a member of the favorites list.
-     * @param lexiconId the lexicon ID to check
-     * @return {@code true} if the specified word is a member of the
-     *     favorites list, or {@code false} otherwise
-     */
-    private boolean isFavorite(int lexiconId) {
-        String[] columns = new String[] {AppDataContract.LexiconFavorites._ID};
-        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
-        String[] selectionArgs = new String[] {Integer.toString(lexiconId)};
-        Cursor cursor = getContentResolver().query(AppDataContract.LexiconFavorites.CONTENT_URI,
-                                                   columns, selection, selectionArgs, null);
-
-        if (cursor == null) {
-            throw new NullPointerException("ContentResolver#query() returned null");
-        }
-
-        boolean result = false;
-        if (cursor.getCount() > 0) {
-            result = true;
-        }
-        cursor.close();
-        return result;
     }
 
     @Override

@@ -19,6 +19,7 @@ package com.benlinskey.greekreference.views.lexicon;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -146,38 +147,18 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Removes the specified word from the lexicon favorites list.
-     * @param lexiconId the lexicon ID of the word to remove
-     */
-    protected void removeLexiconFavorite(int lexiconId) {
-        String selection = AppDataContract.LexiconFavorites.COLUMN_NAME_LEXICON_ID + " = ?";
-        String[] selectionArgs = {Integer.toString(lexiconId)};
-        getActivity().getContentResolver()
-                .delete(AppDataContract.LexiconFavorites.CONTENT_URI, selection, selectionArgs);
-        getActivity().invalidateOptionsMenu();
-        displayToast(getString(R.string.toast_favorite_removed));
+    private AbstractLexiconListFragment getLisFragment() {
+        FragmentManager mgr = getActivity().getFragmentManager();
+        return (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
     }
 
     public int getSelectedLexiconId() {
-        AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getActivity().getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
+        AbstractLexiconListFragment fragment = getLisFragment();
         return fragment.getSelectedLexiconId();
     }
 
     // NOTE: The following two methods should only be used in two-pane mode.
     // TODO: Throw exception if these methods are called in one-pane mode.
-
-    /**
-     * Removes the currently selected word from the lexicon favorites list.
-     */
-    public void removeLexiconFavorite() {
-        AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getActivity().getFragmentManager()
-                .findFragmentById(R.id.item_list_container);
-        int lexiconId = fragment.getSelectedLexiconId();
-        removeLexiconFavorite(lexiconId);
-    }
-
 
     /**
      * Searches for this word in the Perseus Greek Word Study Tool and displays the resulting

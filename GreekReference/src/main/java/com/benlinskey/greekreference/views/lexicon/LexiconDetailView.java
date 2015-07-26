@@ -26,4 +26,6 @@ public interface LexiconDetailView {
     void invalidateOptionsMenu();
 
     void displayToast(String msg);
+
+    boolean isDetailFragmentVisible();
 }

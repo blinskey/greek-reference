@@ -218,11 +218,4 @@ public final class MainPresenter {
         mView.displayToast(msg, Toast.LENGTH_SHORT);
     }
 
-    public void clearLexiconFavorites() {
-        mResolver.delete(AppDataContract.LexiconFavorites.CONTENT_URI, null, null);
-
-        String msg = mContext.getString(R.string.toast_clear_lexicon_favorites);
-        mView.displayToast(msg, Toast.LENGTH_SHORT);
-    }
-
 }

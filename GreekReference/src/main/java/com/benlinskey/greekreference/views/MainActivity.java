@@ -67,6 +67,8 @@ import com.benlinskey.greekreference.syntax.SyntaxDetailActivity;
 import com.benlinskey.greekreference.syntax.SyntaxDetailFragment;
 import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
 
+import java.util.AbstractList;
+
 /**
  * The app's primary activity. On tablets, this activity displays a two-pane layout containing an 
  * {@link AbstractListFragment} and an {@link AbstractDetailFragment}. On phones, it displays only
@@ -75,7 +77,7 @@ import com.benlinskey.greekreference.views.lexicon.LexiconDetailView;
 public class MainActivity
         extends ActionBarActivity
         implements MainView,
-        LexiconDetailView,
+                   LexiconDetailView,
                    NavigationDrawerFragment.NavigationDrawerCallbacks,
                    AbstractListFragment.Callbacks {
 
@@ -150,7 +152,8 @@ public class MainActivity
         // fragment so that we can hide them when the navigation drawer is open.
         if (mMode.isLexiconMode()) {
             getMenuInflater().inflate(R.menu.lexicon_menu, menu);
-            setLexiconFavoriteIcon(menu);
+
+            mLexiconPresenter.onCreateOptionsMenu(menu);
 
             // Get the SearchView and set the searchable configuration.
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -202,7 +205,7 @@ public class MainActivity
         }
 
         if (mMode.isLexiconMode()) {
-            setLexiconFavoriteIcon(menu);
+            mLexiconPresenter.onPrepareOptionsMenu(menu);
         } else if (mMode.isSyntaxMode()) {
             setSyntaxBookmarkIcon(menu);
         } else {
@@ -282,18 +285,25 @@ public class MainActivity
         invalidateOptionsMenu();
     }
 
+    public boolean isDetailFragmentVisible() {
+        return mTwoPane;
+    }
+
     @Override
     public int getSelectedLexiconId() {
-        FragmentManager mgr = getFragmentManager();
-        LexiconDetailFragment fragment = (LexiconDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
+        AbstractLexiconListFragment fragment = (AbstractLexiconListFragment) getListFragment();
         return fragment.getSelectedLexiconId();
-
     }
 
     @Override
     public void displayToast(String msg) {
         AbstractDetailFragment fragment = getDetailFragment();
         fragment.displayToast(msg);
+    }
+
+    private AbstractListFragment getListFragment() {
+        FragmentManager mgr = getFragmentManager();
+        return (AbstractListFragment) mgr.findFragmentById(R.id.item_list_container);
     }
 
     private AbstractDetailFragment getDetailFragment() {
@@ -380,6 +390,7 @@ public class MainActivity
      * @param word the word whose entry is selected
      * @param entry the selected entry's XML
      */
+    @Override
     public void displayLexiconEntry(final String id, String word, String entry) {
         // TODO: Now that QSB search has been removed from Android, we probably
         // don't need to worry about this.
@@ -423,6 +434,7 @@ public class MainActivity
      * @param section the selected section's title
      * @param xml the selected section's XML
      */
+    @Override
     public void displaySyntaxSection(String section, String xml) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
@@ -475,7 +487,7 @@ public class MainActivity
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mMainPresenter.clearLexiconFavorites();
+                        mLexiconPresenter.onClearFavorites();
                     }
                 });
 
@@ -527,6 +539,7 @@ public class MainActivity
         dialog.show(getFragmentManager(), "clearBookmarks");
     }
 
+    @Override
     public void selectLexiconItem(int id) {
         ensureModeIsLexiconBrowse();
 
@@ -539,6 +552,7 @@ public class MainActivity
     /**
      * Switches the mode to Lexicon Browse if that is not the current mode.
      */
+    @Override
     public void ensureModeIsLexiconBrowse() {
         if (!mMode.equals(Mode.LEXICON_BROWSE)) {
             switchToLexiconBrowse();
@@ -553,6 +567,7 @@ public class MainActivity
      * Switches the mode to the specified {@link Mode}.
      * @param mode the {@code Mode} to which to switch
      */
+    @Override
     public void switchToMode(Mode mode) {
         switch (mode) {
         case LEXICON_BROWSE:
@@ -666,31 +681,6 @@ public class MainActivity
     }
 
     /**
-     * Sets the Lexicon Favorite icon to the appropriate state based on the currently selected
-     * lexicon entry.
-     * @param menu the {@code Menu} containing the Favorite icon
-     */
-    private void setLexiconFavoriteIcon(Menu menu) {
-        FragmentManager mgr = getFragmentManager();
-        AbstractLexiconListFragment fragment
-                = (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
-
-        MenuItem addFavorite = menu.findItem(R.id.action_add_favorite);
-        MenuItem removeFavorite = menu.findItem(R.id.action_remove_favorite);
-
-        if (fragment.nothingIsSelected() || !mTwoPane) {
-            addFavorite.setVisible(false);
-            removeFavorite.setVisible(false);
-        } else if (fragment.selectedWordIsFavorite()) {
-            addFavorite.setVisible(false);
-            removeFavorite.setVisible(true);
-        } else {
-            addFavorite.setVisible(true);
-            removeFavorite.setVisible(false);
-        }
-    }
-
-    /**
      * Sets the Syntax Bookmark icon to the appropriate state based on the currently selected
      * syntax section.
      * @param menu the {@code Menu} containing the Bookmark icon
@@ -718,6 +708,7 @@ public class MainActivity
     /**
      * Displays a dialog fragment containing help text.
      */
+    @Override
     public void displayHelp() {
         DialogFragment fragment = new DialogFragment() {
             @Override
@@ -773,6 +764,7 @@ public class MainActivity
         return super.onKeyUp(keyCode, event);
     }
 
+    @Override
     public void displayToast(String msg, int length) {
         Toast toast = Toast.makeText(this, msg, length);
         toast.show();
