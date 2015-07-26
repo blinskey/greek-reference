@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.views.detail;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -81,7 +82,8 @@ public abstract class AbstractDetailActivity extends AbstractContainerActivity {
 
     @SuppressWarnings("unused") // Erroneous warning
     protected AbstractDetailFragment getDetailFragment() {
-        return (AbstractDetailFragment) getFragmentManager().findFragmentById(R.id.item_detail_container);
+        FragmentManager mgr = getFragmentManager();
+        return (AbstractDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
     }
 
 }

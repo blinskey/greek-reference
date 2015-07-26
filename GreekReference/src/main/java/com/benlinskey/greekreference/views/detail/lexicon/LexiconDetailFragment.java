@@ -142,13 +142,14 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private AbstractLexiconListFragment getLisFragment() {
+    private AbstractLexiconListFragment getListFragment() {
         FragmentManager mgr = getActivity().getFragmentManager();
         return (AbstractLexiconListFragment) mgr.findFragmentById(R.id.item_list_container);
     }
 
+    @SuppressWarnings("unused") // Erroneous warning
     public int getSelectedLexiconId() {
-        AbstractLexiconListFragment fragment = getLisFragment();
+        AbstractLexiconListFragment fragment = getListFragment();
         return fragment.getSelectedLexiconId();
     }
 

@@ -61,7 +61,8 @@ public abstract class AbstractContainerActivity extends ActionBarActivity {
      * Displays a toast containing the specified text.
      * <p>
      * All children of this class should display toasts only by calling this
-     * method in order to prevent creating overlapping toasts.
+     * method or {@link #displayToast(String, int)} in order to prevent
+     * creating overlapping toasts.
      * @param message the text to display in the toast
      */
     @SuppressWarnings("unused") // Erroneous warning
@@ -69,15 +70,22 @@ public abstract class AbstractContainerActivity extends ActionBarActivity {
         displayToast(message, DEFAULT_TOAST_DURATION);
     }
 
+    /**
+     * Displays a toast containing the specified text.
+     * <p>
+     * All children of this class should display toasts only by calling this
+     * method or {@link #displayToast(String)} in order to prevent creating
+     * overlapping toasts.
+     * @param message the text to display in the toast
+     * @param duration a toast duration defined in {@link Toast}
+     */
     public void displayToast(String message, int duration) {
         mToast.setText(message);
         mToast.setDuration(duration);
         mToast.show();
     }
 
-    /**
-     * Displays a dialog fragment containing help text.
-     */
+    /** Displays a dialog fragment containing help text. */
     protected void displayHelp() {
         DialogFragment fragment = new DialogFragment() {
             @Override

@@ -29,7 +29,7 @@ import com.benlinskey.greekreference.presenters.LexiconPresenter;
 import com.benlinskey.greekreference.views.MainActivity;
 
 /**
- * A {@link AbstractDetailActivity} used to display lexicon entries.
+ * An {@link AbstractDetailActivity} used to display lexicon entries.
  */
 public class LexiconDetailActivity extends AbstractDetailActivity implements LexiconDetailView {
     
@@ -102,15 +102,15 @@ public class LexiconDetailActivity extends AbstractDetailActivity implements Lex
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
-                return true;
-            case R.id.action_add_favorite:
-                mLexiconPresenter.onAddFavorite();
-                return true;
-            case R.id.action_remove_favorite:
-                mLexiconPresenter.onRemoveFavorite();
-                return true;
+        case android.R.id.home:
+            NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
+            return true;
+        case R.id.action_add_favorite:
+            mLexiconPresenter.onAddFavorite();
+            return true;
+        case R.id.action_remove_favorite:
+            mLexiconPresenter.onRemoveFavorite();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

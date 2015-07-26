@@ -68,11 +68,8 @@ import com.benlinskey.greekreference.views.detail.syntax.SyntaxDetailView;
  */
 public class MainActivity
         extends AbstractContainerActivity
-        implements MainView,
-                   LexiconDetailView,
-                   SyntaxDetailView,
-                   NavigationDrawerFragment.NavigationDrawerCallbacks,
-                   AbstractListFragment.Callbacks {
+        implements MainView, LexiconDetailView, SyntaxDetailView,
+                NavigationDrawerFragment.NavigationDrawerCallbacks, AbstractListFragment.Callbacks {
 
     // Application state bundle keys
     private static final String KEY_TITLE = "action_bar_title";
@@ -304,6 +301,7 @@ public class MainActivity
         return (AbstractListFragment) mgr.findFragmentById(R.id.item_list_container);
     }
 
+    @SuppressWarnings("unused") // Erroneous warning
     private AbstractDetailFragment getDetailFragment() {
         FragmentManager mgr = getFragmentManager();
         return (AbstractDetailFragment) mgr.findFragmentById(R.id.item_detail_container);
@@ -311,9 +309,6 @@ public class MainActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO: Move favorite and bookmark code to fragments?
-        // TODO: Move favorite and bookmark options to fragments?
-        FragmentManager mgr = getFragmentManager();
         switch (item.getItemId()) {
         case R.id.action_add_favorite:
             mLexiconPresenter.onAddFavorite();
@@ -350,9 +345,7 @@ public class MainActivity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Retrieves and displays the currently selected lexicon item's entry.
-     */
+    /** Retrieves and displays the currently selected lexicon item's entry. */
     private void onLexiconItemSelected() {
         // TODO: Verify that we're in the correct mode here and in similar
         // situations throughout this class and throw an exception if we're not.
@@ -451,9 +444,7 @@ public class MainActivity
         }
     }
 
-    /**
-     * Sets the navigation bar navigation mode and title to the appropriate values.
-     */
+    /** Sets the navigation bar navigation mode and title to the appropriate values. */
     public void restoreActionBar() {
         ActionBar actionBar = getSupportActionBar();
 
