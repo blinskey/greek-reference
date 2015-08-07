@@ -45,8 +45,7 @@ android {
 
             release {
                 signingConfig signingConfigs.release
-                minifyEnabled true
-                proguardFile 'proguard.cfg'
+                minifyEnabled false
                 zipAlignEnabled true
             }
         } else {
