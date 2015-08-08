@@ -14,12 +14,13 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
 
 If you find this app useful, please consider [making a donation][GiveDirectly] to help poor households in Kenya and Uganda.
 
+Visit the [Greek Reference wiki][wiki] for frequently asked questions and the development roadmap.
+
 ## Contents
 
 - [Status](#status)
 - [Building the App](#building-the-app)
 - [Contributing](#contributing)
-- [Frequently Asked Questions](#frequently-asked-questions)
 - [Press](#press)
 - [Third-Party Resources](#third-party-resources)
 - [License](#license)
@@ -39,34 +40,6 @@ The app uses the new Gradle-based Android build system. If you'd like to assembl
 ## Contributing
 
 Pull requests are welcome and encouraged. Please read the [contributing guidelines][contributing] to get started.
-
-## Frequently Asked Questions
-
-**Can you add the full LSJ lexicon?**
-
-The app only includes texts that the Perseus Digital Library has released under open source licenses. The full LSJ isn't available under such a license, so we're limited to the Middle Liddell. You can read more about this topic on the Perseus blog's ["Notes on the status of LSJ and Lewis and Short"](http://sites.tufts.edu/perseusupdates/other-information/notes-on-the-status-of-lsj-and-lewis-and-short/) page.
-
-If you're using the app on a device connected to the Internet, you can use the View on Perseus option in the action bar menu to open the Perseus Greek Word Study Tool page for a word. The page will be displayed with properly rendered Greek characters and will contain links to the full LSJ entry.
-
-**Can you translate the app to my language?**
-
-Sorry, we're limited to texts available from the Perseus Digital Library. If you're interested in translating the app's UI text to another language, feel free to open an issue for further discussion.
-
-**What should I do if I've spotted an error in the lexicon?**
-
-Open an issue here or send an email to <greekreference@benlinskey.com>. We'll fix the text and pass the info on to Perseus.
-
-**What should I do if I encounter a bug?**
-
-If Android gives you the option to submit a crash report, please do so. You can also open an issue here or email <greekreference@benlinskey.com> with a description of the problem.
-
-**I'd like to suggest a new feature or improvement to the app.**
-
-Feel free to open an issue or send an email to <greekreference@benlinskey.com>. You can also check the [Issues](https://github.com/blinskey/greek-reference/issues) page for a list of features and bugfixes currently on our to-do list.
-
-**Can you make a Latin version of the app?**
-
-Several users have requested a Latin version. While I'm not planning to make such an app myself, I'd be happy to help anyone who wants to do so. Feel free to fork the project and to get in touch with me if you'd like to discuss the app's design.
 
 ## Press
 
@@ -127,3 +100,4 @@ This project's source code is licensed under the [Apache License, version 2.0][A
 [material-design-icons]: https://github.com/google/material-design-icons
 [ScrimInsetsFrameLayout]: https://github.com/google/iosched/blob/master/android/src/main/java/com/google/samples/apps/iosched/ui/widget/ScrimInsetsFrameLayout.java
 [google-io]: https://github.com/google/iosched
+[wiki]: https://github.com/blinskey/greek-reference/wiki
