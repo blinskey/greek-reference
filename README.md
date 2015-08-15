@@ -27,7 +27,7 @@ Visit the [Greek Reference wiki][wiki] for frequently asked questions and the de
 
 ## Status
 
-The latest release is version 1.9.1. The corresponding version of the [Greek Reference Database Creator][] is 1.2.0.
+The latest release is version 1.9.2. The corresponding version of the [Greek Reference Database Creator][] is 1.2.0.
 
 You can view a changelog for each release on the [Releases page][].
 
