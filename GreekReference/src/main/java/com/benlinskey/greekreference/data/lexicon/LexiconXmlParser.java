@@ -21,6 +21,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -52,6 +53,11 @@ public class LexiconXmlParser {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_DOCDECL, true);
             parser.setInput(in, null);
             return readXml(parser);
+        } catch (Exception e) {
+            // TODO: Fail gracefully here -- allow the user to submit a bug report.
+            // See issue #141.
+            Log.e(this.getClass().getCanonicalName(), "Parsing error", e);
+            return null;
         } finally {
             in.close();
         }
@@ -123,11 +129,17 @@ public class LexiconXmlParser {
     private void readForm(XmlPullParser parser, LexiconEntry entry) throws XmlPullParserException,
             IOException {
         while (parser.next() != XmlPullParser.END_TAG) {
-            String name = parser.getName();
-            if (name.equals("orth")) {
-                entry.setOrth(readText(parser));
+            if (parser.getEventType() == XmlPullParser.TEXT) {
+                String text = parser.getText();
+                String orth = entry.getOrth();
+                entry.setOrth(orth + text);
             } else {
-                skip(parser);
+                String name = parser.getName();
+                if (name.equals("orth")) {
+                    entry.setOrth(readText(parser));
+                } else {
+                    skip(parser);
+                }
             }
         }
     }
@@ -309,4 +321,5 @@ public class LexiconXmlParser {
 
         return result;
     }
+
 }
