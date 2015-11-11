@@ -62,18 +62,12 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
 
     private LexiconEntry mLexiconEntry = null;
     private boolean mBlank = true; // True if no entry displayed.
-    private FragmentActivity mActivity = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public LexiconDetailFragment() {}
-
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (FragmentActivity) activity;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,7 +130,7 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
      *     otherwise
      */
     private boolean perseusToolOptionDisabled() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         return prefs.getBoolean(getString(R.string.pref_perseus_tool_key), false);
     }
 
