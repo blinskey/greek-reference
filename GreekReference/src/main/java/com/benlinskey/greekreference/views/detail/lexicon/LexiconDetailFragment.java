@@ -44,7 +44,10 @@ import com.benlinskey.greekreference.views.PerseusToolActivity;
 import com.benlinskey.greekreference.views.detail.AbstractDetailFragment;
 import com.benlinskey.greekreference.views.list.lexicon.AbstractLexiconListFragment;
 
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -86,8 +89,8 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
             try {
                 mLexiconEntry = parser.parse(in);
             } catch (Exception e) {
-                Log.e(TAG, "Error parsing entry: " + e);
-                Log.e(TAG, Log.getStackTraceString(e));
+                String msg = "Failed to retrieve lexicon entry for '" + entry + "'";
+                throw new NullPointerException(msg);
             }
         }
     }
@@ -207,4 +210,5 @@ public class LexiconDetailFragment extends AbstractDetailFragment {
             return builder.create();
         }
     }
+
 }
