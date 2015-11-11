@@ -16,7 +16,6 @@
 
 package com.benlinskey.greekreference.views.detail.lexicon;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -29,7 +28,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,13 +36,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.benlinskey.greekreference.views.detail.AbstractDetailFragment;
-import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.GreekTextView;
+import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.data.lexicon.LexiconEntry;
 import com.benlinskey.greekreference.data.lexicon.LexiconXmlParser;
-import com.benlinskey.greekreference.views.list.lexicon.AbstractLexiconListFragment;
 import com.benlinskey.greekreference.views.PerseusToolActivity;
+import com.benlinskey.greekreference.views.detail.AbstractDetailFragment;
+import com.benlinskey.greekreference.views.list.lexicon.AbstractLexiconListFragment;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
