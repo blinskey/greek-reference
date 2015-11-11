@@ -1,6 +1,7 @@
 *.keystore
 release.properties
 build
+tags
 
 # Default Android Studio .gitignore files
 .gradle
