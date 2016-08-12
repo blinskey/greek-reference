@@ -16,8 +16,6 @@
 
 package com.benlinskey.greekreference.views;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -69,7 +67,9 @@ import com.benlinskey.greekreference.views.detail.syntax.SyntaxDetailView;
 public class MainActivity
         extends AbstractContainerActivity
         implements MainView, LexiconDetailView, SyntaxDetailView,
-                NavigationDrawerFragment.NavigationDrawerCallbacks, AbstractListFragment.Callbacks {
+                NavigationDrawerFragment.NavigationDrawerCallbacks, AbstractListFragment.Callbacks,
+                ConfirmClearLexiconFavoritesDialog.OnClearLexiconFavoritesDialogListener,
+                ConfirmClearSyntaxBookmarksDialogFragment.OnClearSyntaxBookmarksDialogListener {
 
     // Application state bundle keys
     private static final String KEY_TITLE = "action_bar_title";
@@ -461,60 +461,20 @@ public class MainActivity
         actionBar.setSubtitle(mSubtitle);
     }
 
+    @Override
+    public void onClearLexiconFavorites() {
+        mLexiconPresenter.onClearFavorites();
+    }
+
     /** Deletes all words from the lexicon favorites list. */
     private void confirmClearLexiconFavorites() {
-        DialogFragment dialog = new DialogFragment() {
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(R.string.clear_lexicon_favorites_dialog_message);
-
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mLexiconPresenter.onClearFavorites();
-                    }
-                });
-
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                return builder.create();
-            }
-        };
+        DialogFragment dialog = new ConfirmClearLexiconFavoritesDialog();
         dialog.show(getFragmentManager(), "clearFavorites");
     }
 
     /** Deletes all items from the syntax bookmarks list. */
     private void confirmClearSyntaxBookmarks() {
-        DialogFragment dialog = new DialogFragment() {
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage(R.string.clear_syntax_bookmarks_dialog_message);
-
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mSyntaxPresenter.onClearBookmarks();
-                    }
-                });
-
-                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                return builder.create();
-            }
-        };
-
+        DialogFragment dialog = new ConfirmClearSyntaxBookmarksDialogFragment();
         dialog.show(getFragmentManager(), "clearBookmarks");
     }
 
@@ -662,5 +622,10 @@ public class MainActivity
     public Mode getMode() {
         return mMode;
     }
-    
+
+    @Override
+    public void onClearSyntaxBookmarks() {
+        mSyntaxPresenter.onClearBookmarks();
+    }
 }
+
