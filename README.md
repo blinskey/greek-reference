@@ -1,6 +1,6 @@
 # Greek Reference: Ancient Greek Lexicon & Syntax
 
-[![Build Status](https://travis-ci.org/blinskey/greek-reference.svg?branch=dev)](https://travis-ci.org/blinskey/greek-reference)
+<!-- [![Build Status](https://travis-ci.org/blinskey/greek-reference.svg?branch=dev)](https://travis-ci.org/blinskey/greek-reference) -->
 
 This is an ancient Greek lexicon and grammar for Android incorporating open source texts from the [Perseus Digital Library][Perseus].
 
@@ -26,7 +26,7 @@ Visit the [Greek Reference wiki][wiki] for frequently asked questions and the de
 
 ## Status
 
-The latest release is version 1.9.2. The corresponding version of the [Greek Reference Database Creator][] is 1.2.0.
+The latest release is version 1.10.0. The corresponding version of the [Greek Reference Database Creator][] is 1.2.0.
 
 You can view a changelog for each release on the [Releases page][].
 
