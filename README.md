@@ -13,7 +13,7 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
 
 If you find this app useful, please consider [making a donation][GiveDirectly] to help poor households in Kenya and Uganda.
 
-Visit the [Greek Reference wiki][wiki] for frequently asked questions and the development roadmap.
+Visit the [Greek Reference wiki][wiki] for frequently asked questions.
 
 ## Contents
 
@@ -30,6 +30,8 @@ The latest release is version 1.10.0. The corresponding version of the [Greek Re
 
 You can view a changelog for each release on the [Releases page][].
 
+Greek Reference is not under active development at this time.
+
 ## Building the App
 
 The texts used in this app are contained in a pair of databases called `lexicon.db` and `syntax.db`. These are generated using a simple Java program, the [Greek Reference Database Creator][], which is included as a submodule in this repository. The database files are zipped and placed in this project's `assets` directory. They must be named `lexicon.zip` and `syntax.zip` in order to work with the [SQLiteAssetHelper][Android SQLiteAssetHelper] library used to copy them to the user's device.
@@ -38,7 +40,7 @@ The app uses the new Gradle-based Android build system. If you'd like to assembl
 
 ## Contributing
 
-Pull requests are welcome and encouraged. Please read the [contributing guidelines][contributing] to get started.
+Greek Reference is not under active development at this time. I am willing to consider pull requests but cannot guarantee a prompt response. Please review the [contributing guidelines][contributing] before sending a request..
 
 ## Press
 
