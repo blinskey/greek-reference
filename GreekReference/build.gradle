@@ -1,9 +1,10 @@
 buildscript {
     repositories {
         mavenCentral()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:8.0.0'
     }
 }
 
@@ -11,9 +12,11 @@ apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
+    google()
 }
 
 android {
+    namespace 'com.benlinskey.greekreference'
     compileSdkVersion 24
     buildToolsVersion '24.0.1'
     defaultConfig {
@@ -23,8 +26,8 @@ android {
         versionName "1.10.0"
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     signingConfigs {
         release
@@ -53,7 +56,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:24.1.1'
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+    implementation 'com.android.support:support-v4:24.1.1'
+    implementation 'com.android.support:appcompat-v7:24.1.1'
+    implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
 }
