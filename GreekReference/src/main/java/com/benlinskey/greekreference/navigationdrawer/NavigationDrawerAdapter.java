@@ -18,6 +18,7 @@ package com.benlinskey.greekreference.navigationdrawer;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,16 +85,16 @@ public class NavigationDrawerAdapter extends ArrayAdapter<AbstractNavigationDraw
             ((NavigationDrawerRow) item).setIconHighlighted(true);
             TextView textView = navDrawerRowHolder.textView;
             Resources resources = mContext.getResources();
-            int textDark = resources.getColor(R.color.primary_dark_material_dark);
-            int backgroundLight = resources.getColor(R.color.background_material_light);
+            int textDark = resources.getColor(android.R.color.primary_text_light);
+            int backgroundLight = Color.parseColor("#eeeeee");
             textView.setTextColor(textDark);
             convertView.setBackgroundColor(backgroundLight);
         } else {
             // Item is not highlighted.
             ((NavigationDrawerRow) item).setIconHighlighted(false);
             TextView textView = navDrawerRowHolder.textView;
-            int textDark = mContext.getResources().getColor(R.color.primary_dark_material_dark);
-            int backgroundWhite = mContext.getResources().getColor(R.color.background_white);
+            int textDark = mContext.getResources().getColor(android.R.color.primary_text_light);
+            int backgroundWhite = mContext.getResources().getColor(android.R.color.background_light);
             textView.setTextColor(textDark);
             convertView.setBackgroundColor(backgroundWhite);
         }
