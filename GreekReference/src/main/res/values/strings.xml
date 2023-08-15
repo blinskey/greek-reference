@@ -67,8 +67,7 @@
             the screen or tapping the application icon in the upper-left corner.
         </p>
         <p>
-            To submit a bug report, feature request, or suggestion, select the Send Feedback
-            option from the menu.
+            To submit a bug report, select the Send Feedback option from the menu.
         </p>
         ]]>
     </string>
@@ -80,12 +79,13 @@
     <string name="message_about">
 <![CDATA[
         <p>
-            Greek Reference is open source! You can find the project on GitHub at
+            This app\'s source code is available under an open source license at
             <a href="https://github.com/blinskey/greek-reference">https://github.com/blinskey/greek-reference</a>.
         </p>
         <p>
-            If you find this app useful, please consider <a href="https://givedirectly.org">making
-            a donation</a> to help poor households in Kenya and Uganda.
+            Greek Reference is charityware. If you find this app useful, please consider making
+            a donation to <a href="https://givedirectly.org">GiveDirectly</a> or a charity of your
+            choice.
         </p>
         <hr>
         <p>
