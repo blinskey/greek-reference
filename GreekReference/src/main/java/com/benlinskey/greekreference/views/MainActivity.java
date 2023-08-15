@@ -309,35 +309,35 @@ public class MainActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.action_add_favorite:
+        int id = item.getItemId();
+        if (id == R.id.action_add_favorite) {
             mLexiconPresenter.onAddFavorite();
             return true;
-        case R.id.action_remove_favorite:
+        } else if (id == R.id.action_remove_favorite) {
             mLexiconPresenter.onRemoveFavorite();
             return true;
-        case R.id.action_add_bookmark:
+        } else if (id == R.id.action_add_bookmark) {
             mSyntaxPresenter.onAddBookmark();
             return true;
-        case R.id.action_remove_bookmark:
+        } else if (id == R.id.action_remove_bookmark) {
             mSyntaxPresenter.onRemoveBookmark();
             return true;
-        case R.id.action_clear_history:
+        } else if (id == R.id.action_clear_history) {
             mLexiconPresenter.onClearHistory();
             return true;
-        case R.id.action_clear_favorites:
+        } else if (id == R.id.action_clear_favorites) {
             confirmClearLexiconFavorites();
             return true;
-        case R.id.action_clear_bookmarks:
+        } else if (id == R.id.action_clear_bookmarks) {
             confirmClearSyntaxBookmarks();
             return true;
-        case R.id.action_settings:
+        } else if (id == R.id.action_settings) {
             mMainPresenter.onEditSettings();
             return true;
-        case R.id.action_feedback:
+        } else if (id == R.id.action_feedback) {
             sendFeedback();
             return true;
-        case R.id.action_help:
+        } else if (id == R.id.action_help) {
             displayHelp();
             return true;
         }

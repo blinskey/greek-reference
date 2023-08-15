@@ -101,17 +101,18 @@ public class LexiconDetailActivity extends AbstractDetailActivity implements Lex
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
             return true;
-        case R.id.action_add_favorite:
+        } else if (id == R.id.action_add_favorite) {
             mLexiconPresenter.onAddFavorite();
             return true;
-        case R.id.action_remove_favorite:
+        } else if (id == R.id.action_remove_favorite) {
             mLexiconPresenter.onRemoveFavorite();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

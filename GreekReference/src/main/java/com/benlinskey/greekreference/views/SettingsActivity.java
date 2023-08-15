@@ -76,17 +76,17 @@ public class SettingsActivity extends AbstractContainerActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        switch (id) {
-            case R.id.action_feedback:
-                sendFeedback();
-                return true;
-            case R.id.action_help:
-                displayHelp();
-                return true;
-            case android.R.id.home:
-                finish();
-                return true;
+        if (id == R.id.action_feedback) {
+            sendFeedback();
+            return true;
+        } else if (id == R.id.action_help) {
+            displayHelp();
+            return true;
+        } else if (id == android.R.id.home) {
+            finish();
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

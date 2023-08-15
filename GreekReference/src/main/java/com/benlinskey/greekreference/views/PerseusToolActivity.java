@@ -139,20 +139,21 @@ public class PerseusToolActivity extends AbstractContainerActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                return true;
-            case R.id.action_feedback:
-                sendFeedback();
-                return true;
-            case R.id.action_help:
-                displayHelp();
-                return true;
-            case android.R.id.home:
-                finish();
-                return true;
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        } else if (id == R.id.action_feedback) {
+            sendFeedback();
+            return true;
+        } else if (id == R.id.action_help) {
+            displayHelp();
+            return true;
+        } else if (id == android.R.id.home) {
+            finish();
+            return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

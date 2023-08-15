@@ -87,17 +87,18 @@ public class SyntaxDetailActivity extends AbstractDetailActivity implements Synt
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
             return true;
-        case R.id.action_add_bookmark:
+        } else if (id == R.id.action_add_bookmark) {
             mPresenter.onAddBookmark();;
             return true;
-        case R.id.action_remove_bookmark:
+        } else if (id == R.id.action_remove_bookmark) {
             mPresenter.onRemoveBookmark();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

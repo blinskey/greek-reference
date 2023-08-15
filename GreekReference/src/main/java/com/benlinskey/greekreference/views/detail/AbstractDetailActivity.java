@@ -61,14 +61,14 @@ public abstract class AbstractDetailActivity extends AbstractContainerActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.action_settings:
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
-        case R.id.action_feedback:
+        } else if (id == R.id.action_feedback) {
             sendFeedback();
             return true;
-        case R.id.action_help:
+        } else if (id == R.id.action_help) {
             displayHelp();
             return true;
         }
