@@ -11,7 +11,7 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
   <img alt="Available at Amazon" src="readme-img/amazon-apps-store-us-black-177x60.png">
 </a>
 
-If you find this app useful, please consider [making a donation][GiveDirectly] to help poor households in Kenya and Uganda.
+Greek Reference is charityware. If you find this app useful, please consider makign a donation to [GiveDirectly][GiveDirectly] or a charity of your choice.
 
 Visit the [Greek Reference wiki][wiki] for frequently asked questions.
 
