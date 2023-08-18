@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <!-- Ensure that this app can be used on non-touchscreen Chromebooks. -->
-    <uses-feature android:name="android.hardware.touchscreen" required="false" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 
     <application
         android:allowBackup="true"
