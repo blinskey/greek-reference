@@ -53,7 +53,7 @@ import com.benlinskey.greekreference.views.detail.lexicon.LexiconDetailFragment;
  */
 public class PerseusToolActivity extends AbstractContainerActivity {
 
-    private static final String URL_START = "http://www.perseus.tufts.edu/hopper/morph?l=";
+    private static final String URL_START = "https://www.perseus.tufts.edu/hopper/morph?l=";
 
     private WebView mWebView;
 
