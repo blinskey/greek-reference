@@ -45,7 +45,6 @@ android {
             release {
                 signingConfig signingConfigs.release
                 minifyEnabled false
-                zipAlignEnabled true
             }
         } else {
             logger.warn("WARNING: No signing configuration found.")
