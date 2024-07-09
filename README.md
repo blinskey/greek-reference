@@ -26,11 +26,9 @@ Visit the [Greek Reference wiki][wiki] for frequently asked questions.
 
 ## Status
 
-The latest release is version 1.11.0. The corresponding version of the [Greek Reference Database Creator][] is 1.2.0.
+Greek Reference is not under active development at this time.
 
 You can view a changelog for each release on the [Releases page][].
-
-Greek Reference is not under active development at this time.
 
 ## Building the App
 
