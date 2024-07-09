@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.navigationdrawer;
 
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -158,7 +159,7 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout = drawerLayout;
 
         // set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
 
         ActionBar actionBar = getActionBar();
