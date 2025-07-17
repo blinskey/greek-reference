@@ -17,11 +17,11 @@ repositories {
 
 android {
     namespace 'com.benlinskey.greekreference'
-    compileSdk 34
+    compileSdk 35
     defaultConfig {
         minSdkVersion 14
         //noinspection EditedTargetSdkVersion
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode 32
         versionName "1.13.0"
     }
