@@ -1,6 +1,7 @@
 # Greek Reference: Ancient Greek Lexicon & Syntax
 
 <!-- [![Build Status](https://travis-ci.org/blinskey/greek-reference.svg?branch=dev)](https://travis-ci.org/blinskey/greek-reference) -->
+[<img src="https://shields.rbtlog.dev/simple/com.benlinskey.greekreference" alt="RB shield">](https://shields.rbtlog.dev/com.benlinskey.greekreference)
 
 This is an ancient Greek lexicon and grammar for Android incorporating open source texts from the [Perseus Digital Library][Perseus].
 
@@ -9,6 +10,9 @@ This is an ancient Greek lexicon and grammar for Android incorporating open sour
 </a>
 <a href="http://www.amazon.com/gp/product/B00HV37XXG">
   <img alt="Available at Amazon" src="readme-img/amazon-apps-store-us-black-177x60.png">
+</a>
+<a href="https://apt.izzysoft.de/packages/com.benlinskey.greekreference">
+  <img alt="Get it on IzzyOnDroid" src="readme-img/IzzyOnDroidButton.png" height="60">
 </a>
 
 Greek Reference is charityware. If you find this app useful, please consider making a donation to [GiveDirectly][GiveDirectly] or a charity of your choice.
