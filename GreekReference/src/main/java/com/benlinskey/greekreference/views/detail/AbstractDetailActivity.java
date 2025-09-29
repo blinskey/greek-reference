@@ -23,7 +23,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.view.Window;
 
 import com.benlinskey.greekreference.R;
 import com.benlinskey.greekreference.views.SettingsActivity;
@@ -41,6 +48,7 @@ public abstract class AbstractDetailActivity extends AbstractContainerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.enableEdgeToEdge(getWindow());
         setContentView(R.layout.activity_item_detail);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -53,7 +61,15 @@ public abstract class AbstractDetailActivity extends AbstractContainerActivity {
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
-        
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar, (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            mlp.topMargin = insets.top;
+            view.setLayoutParams(mlp);
+            return WindowInsetsCompat.CONSUMED;
+        });
+
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

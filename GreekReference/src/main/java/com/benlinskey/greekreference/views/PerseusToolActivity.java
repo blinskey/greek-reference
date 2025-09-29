@@ -29,11 +29,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -62,6 +68,7 @@ public class PerseusToolActivity extends AbstractContainerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_PROGRESS);
         super.onCreate(savedInstanceState);
+        WindowCompat.enableEdgeToEdge(getWindow());
         setContentView(R.layout.activity_perseus_tool);
         
         // Set the status bar background color.
@@ -72,7 +79,15 @@ public class PerseusToolActivity extends AbstractContainerActivity {
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
-        
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar, (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            mlp.topMargin = insets.top;
+            view.setLayoutParams(mlp);
+            return WindowInsetsCompat.CONSUMED;
+        });
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(getString(R.string.title_lexicon));

@@ -4,30 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
-    
-    <LinearLayout
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:fitsSystemWindows="false">
 
         <include layout="@layout/action_bar"/>
     
         <FrameLayout
             android:id="@+id/item_list_container"
             android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
+            android:layout_width="match_parent"
+            android:background="#fff" />
         
-    </LinearLayout> 
+    </com.google.android.material.appbar.AppBarLayout>
     
-    <com.benlinskey.greekreference.ScrimInsetsFrameLayout
+    <android.widget.FrameLayout
         android:id="@+id/navigation_drawer_fragment_container"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:elevation="10dp"
-        android:fitsSystemWindows="true"
         app:insetForeground="?attr/colorPrimaryDark"
         tools:ignore="UnusedAttribute">
             
@@ -37,6 +37,6 @@
             android:layout_height="match_parent"
             android:name="com.benlinskey.greekreference.navigationdrawer.NavigationDrawerFragment" />
             
-    </com.benlinskey.greekreference.ScrimInsetsFrameLayout>
+    </android.widget.FrameLayout>
         
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -26,8 +26,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.core.graphics.Insets;
 import androidx.core.view.MenuItemCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
@@ -35,6 +41,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.benlinskey.greekreference.views.detail.AbstractDetailFragment;
 import com.benlinskey.greekreference.views.list.AbstractListFragment;
@@ -89,6 +96,7 @@ public class MainActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.enableEdgeToEdge(getWindow());
         setContentView(R.layout.activity_item_list);
 
         mMainPresenter = new MainPresenter(this, this);
@@ -100,6 +108,14 @@ public class MainActivity
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar, (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            mlp.topMargin = insets.top;
+            view.setLayoutParams(mlp);
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         // Restore any saved state.
         if (null == savedInstanceState) {

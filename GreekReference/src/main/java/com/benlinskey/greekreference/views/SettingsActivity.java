@@ -28,8 +28,14 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import com.benlinskey.greekreference.R;
 
@@ -41,6 +47,7 @@ public class SettingsActivity extends AbstractContainerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.enableEdgeToEdge(getWindow());
         setContentView(R.layout.activity_settings);
         
         // Set the status bar background color.
@@ -51,6 +58,14 @@ public class SettingsActivity extends AbstractContainerActivity {
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(toolbar);
+
+        ViewCompat.setOnApplyWindowInsetsListener(toolbar, (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+            mlp.topMargin = insets.top;
+            view.setLayoutParams(mlp);
+            return WindowInsetsCompat.CONSUMED;
+        });
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
