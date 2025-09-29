@@ -48,6 +48,11 @@ Rydberg-Cox. Text provided by Perseus Digital Library, with funding from The
 Annenberg CPB/Project. Original version available for viewing and download at
 <http://www.perseus.tufts.edu/hopper/>.
 
+### License
+
+Copyright 2013-2025 Benjamin Linskey. Licensed under the Apache License,
+Version 2.0.
+
 The above texts are licensed under a [Creative Commons Attribution-ShareAlike
 3.0 United States license][CC BY-SA 3.0 US].
 
