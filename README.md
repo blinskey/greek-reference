@@ -31,7 +31,7 @@ directory along with a `release.properties` file containing your keystore
 credentials. An example file called `release.properties.sample` is included in
 the project.
 
-### Texts
+## Texts
 
 I am grateful to Jeffrey A. Rydberg-Cox for making his *Overview of Greek
 Syntax* available through Perseus under a Creative Commons license. You can
@@ -51,7 +51,7 @@ Annenberg CPB/Project. Original version available for viewing and download at
 The above texts are licensed under a [Creative Commons Attribution-ShareAlike
 3.0 United States license][CC BY-SA 3.0 US].
 
-### License
+## License
 
 Copyright 2013-2025 Benjamin Linskey. Licensed under the Apache License,
 Version 2.0.
