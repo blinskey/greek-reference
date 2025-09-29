@@ -28,6 +28,6 @@
         android:id="@+id/perseus_tool_webview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#fff"/>
+        android:background="@color/background_white"/>
 
 </com.google.android.material.appbar.AppBarLayout>

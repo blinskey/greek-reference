@@ -13,6 +13,6 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"/>
+        android:background="@color/background_white"/>
 
 </com.google.android.material.appbar.AppBarLayout>
