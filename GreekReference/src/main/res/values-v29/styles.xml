@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+                <item name="colorPrimary">@color/blue_primary</item>
+                <item name="colorAccent">@color/blue_accent_light</item>
+                <item name="android:textAppearanceMedium">@style/TextAppearanceDark</item>
+                <item name="searchViewStyle">@style/MySearchViewStyle</item>
+                <item name="android:forceDarkAllowed">true</item>
+        </style>
+</resources>
