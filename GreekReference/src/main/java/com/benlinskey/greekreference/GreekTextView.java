@@ -39,7 +39,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import androidx.core.util.LruCache;
+import androidx.collection.LruCache;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -69,8 +69,8 @@ public class GreekTextView extends TextView
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String NOTO_SERIF = "NotoSerif-Regular.ttf";
-    private static final int TEXT_COLOR = 
-            android.support.v7.appcompat.R.color.primary_text_default_material_light;
+    private static final int TEXT_COLOR =
+            androidx.appcompat.R.color.primary_text_default_material_light;
 
     /** An {@code LruCache} for previously loaded typefaces. */
     private static final LruCache<String, Typeface> sTypefaceCache = new LruCache<>(12);

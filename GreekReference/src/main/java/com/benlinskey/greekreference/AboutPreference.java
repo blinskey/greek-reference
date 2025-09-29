@@ -18,7 +18,7 @@ package com.benlinskey.greekreference;
 
 import android.content.Context;
 import android.preference.DialogPreference;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;

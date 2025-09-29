@@ -19,7 +19,7 @@ package com.benlinskey.greekreference.views.detail.lexicon;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.core.app.NavUtils;
-import android.support.v7.app.ActionBar;
+import androidx.appcompat.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
