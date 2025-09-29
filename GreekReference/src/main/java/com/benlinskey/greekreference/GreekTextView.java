@@ -39,13 +39,10 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.support.v4.util.LruCache;
+import androidx.core.util.LruCache;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
-
-import com.benlinskey.greekreference.R;
-import com.benlinskey.greekreference.TextSize;
 
 /**
  * A custom {@link TextView} that uses a font capable of displaying polytonic Greek characters.
