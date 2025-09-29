@@ -10,8 +10,9 @@ source texts from the [Perseus Digital Library][Perseus].
   <img alt="Available at Amazon" src="readme-img/amazon-apps-store-us-black-177x60.png">
 </a>
 
-Greek Reference, under its previous title, Ancient Greek Lexicon and Syntax,
-was [recommended][nytimes] by the *New York Times Sunday Book Review* in 2014.
+Greek Reference was [recommended][nytimes] by the *New York Times Sunday Book
+Review* in 2014 (referenced by its previous title, Ancient Greek Lexicon and
+Syntax).
 
 The app currently in maintenance mode. I am not adding new features, but
 I continue to maintain support for new Android releases.
