@@ -83,12 +83,6 @@
             <a href="https://github.com/blinskey/greek-reference">https://github.com/blinskey/greek-reference</a>.
         </p>
         <p>
-            Greek Reference is charityware. If you find this app useful, please consider making
-            a donation to <a href="https://givedirectly.org">GiveDirectly</a> or a charity of your
-            choice.
-        </p>
-        <hr>
-        <p>
             Thanks to the <a href="http://www.perseus.tufts.edu">Perseus Digital Library</a> and
             Jeffrey A. Rydberg-Cox for making available the texts used in this app. Visit
             Dr. Rydberg-Cox\'s web site at <a href="http://daedalus.umkc.edu">http://daedalus.umkc.edu</a>.
@@ -112,18 +106,7 @@
             for details.
         </p>
         <p>
-          The app icon was constructed in part from an icon obtained from the "Boilerplates" icon
-          set formerly available at <a href="http://www.android-icons.com">android-icons.com</a>.
-          The icon set is licensed under the <a href="http://creativecommons.org/licenses/by-sa/3.0/us/">
-          Creative Commons Attribution 3.0 Unported license</a>. The app icon also includes an icon
-          from the <a href="http://www.android-icons.com">Android Developer Icons</a> set created by
-          <a href="opoloo.com">Opoloo</a>. That icon set is licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">
-          Creative Commons Attribution-ShareAlike 4.0 International license</a>. The app icon is
-          licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-          Commons Attribution-ShareAlike 4.0 International license</a>.
-        </p>
-        <p>
-          The remaining icons used in this app are taken from the <a href="https://github.com/google/material-design-icons">
+          The icons used in this app are taken from the <a href="https://github.com/google/material-design-icons">
           Google Material Design Icons</a> set, licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">
           Creative Common Attribution 4.0 International license</a>.
         </p>
@@ -151,7 +134,7 @@
         </p>
             License for SQLiteAssetHelper, Noto Serif font, TypefaceTextView, 
             ScrimInsetsFrameLayout, simple_list_item_activated_1.xml, and  
-            abc_search_dropdown_item_icons_2line.xml.
+            abc_search_dropdown_item_icons_2line.xml:
         ]]>
     </string>
     <string name="syntax_footer">
