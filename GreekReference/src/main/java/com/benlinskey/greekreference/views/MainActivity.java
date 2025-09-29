@@ -16,6 +16,7 @@
 
 package com.benlinskey.greekreference.views;
 
+import android.graphics.Color;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -104,6 +105,8 @@ public class MainActivity
 
         mLexiconPresenter = new LexiconPresenter(this, this);
         mSyntaxPresenter = new SyntaxPresenter(this, this);
+
+        getWindow().setNavigationBarColor(Color.parseColor("#000000"));
 
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);

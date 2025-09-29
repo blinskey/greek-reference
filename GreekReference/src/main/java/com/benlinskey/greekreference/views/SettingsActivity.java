@@ -19,6 +19,7 @@ package com.benlinskey.greekreference.views;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -54,6 +55,8 @@ public class SettingsActivity extends AbstractContainerActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.blue_accent_dark));
         }
+
+        getWindow().setNavigationBarColor(Color.parseColor("#000000"));
 
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
