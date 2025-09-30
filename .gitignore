@@ -2,6 +2,7 @@
 release.properties
 build
 tags
+local
 
 # Default Android Studio .gitignore files
 .gradle
