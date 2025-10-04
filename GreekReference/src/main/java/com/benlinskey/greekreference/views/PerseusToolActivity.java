@@ -70,9 +70,10 @@ public class PerseusToolActivity extends AbstractContainerActivity {
         getWindow().requestFeature(Window.FEATURE_PROGRESS);
         super.onCreate(savedInstanceState);
         WindowCompat.enableEdgeToEdge(getWindow());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            getWindow().setNavigationBarContrastEnforced(true);
+        }
         setContentView(R.layout.activity_perseus_tool);
-        
-        getWindow().setNavigationBarColor(Color.parseColor("#000000"));
 
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);

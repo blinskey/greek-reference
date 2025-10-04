@@ -49,9 +49,10 @@ public class SettingsActivity extends AbstractContainerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowCompat.enableEdgeToEdge(getWindow());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            getWindow().setNavigationBarContrastEnforced(true);
+        }
         setContentView(R.layout.activity_settings);
-
-        getWindow().setNavigationBarColor(Color.parseColor("#000000"));
 
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);

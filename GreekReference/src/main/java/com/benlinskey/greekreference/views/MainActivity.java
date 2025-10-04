@@ -25,6 +25,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
@@ -98,6 +99,9 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowCompat.enableEdgeToEdge(getWindow());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            getWindow().setNavigationBarContrastEnforced(true);
+        }
         setContentView(R.layout.activity_item_list);
 
         mMainPresenter = new MainPresenter(this, this);
@@ -105,8 +109,6 @@ public class MainActivity
 
         mLexiconPresenter = new LexiconPresenter(this, this);
         mSyntaxPresenter = new SyntaxPresenter(this, this);
-
-        getWindow().setNavigationBarColor(Color.parseColor("#000000"));
 
         // Set the toolbar to act as the action bar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
