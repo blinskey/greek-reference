@@ -72,11 +72,6 @@ public class PerseusToolActivity extends AbstractContainerActivity {
         WindowCompat.enableEdgeToEdge(getWindow());
         setContentView(R.layout.activity_perseus_tool);
         
-        // Set the status bar background color.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.blue_accent_dark));
-        }
-
         getWindow().setNavigationBarColor(Color.parseColor("#000000"));
 
         // Set the toolbar to act as the action bar.

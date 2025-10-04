@@ -50,11 +50,6 @@ public class SettingsActivity extends AbstractContainerActivity {
         super.onCreate(savedInstanceState);
         WindowCompat.enableEdgeToEdge(getWindow());
         setContentView(R.layout.activity_settings);
-        
-        // Set the status bar background color.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.blue_accent_dark));
-        }
 
         getWindow().setNavigationBarColor(Color.parseColor("#000000"));
 
