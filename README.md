@@ -3,12 +3,9 @@
 This is an ancient Greek lexicon and grammar for Android incorporating open
 source texts from the [Perseus Digital Library][Perseus].
 
-<a href="https://play.google.com/store/apps/details?id=com.benlinskey.greekreference">
-  <img alt="Android app on Google Play" src="readme-img/en-play-badge.png" height="60">
-</a>
-<a href="http://www.amazon.com/gp/product/B00HV37XXG">
-  <img alt="Available at Amazon" src="readme-img/amazon-apps-store-us-black-177x60.png">
-</a>
+The app can be downloaded for free from the [Google Play][] and [Amazon][] app
+stores. Releases are also available in APK and AAB format on the [GitHub
+releases page][releases].
 
 Greek Reference was [recommended][nytimes] by the *New York Times Sunday Book
 Review* in 2014 (referenced by its previous title, Ancient Greek Lexicon and
@@ -62,7 +59,8 @@ Version 2.0.
 [Android SQLiteAssetHelper]: https://github.com/jgilfelt/android-sqlite-asset-helper
 [Perseus]: http://www.perseus.tufts.edu
 [Google Play]: https://play.google.com/store/apps/details?id=com.benlinskey.greekreference
-[Releases page]: https://github.com/blinskey/greek-reference/releases
+[Amazon]: https://www.amazon.com/gp/product/B00HV37XXG
+[releases]: https://github.com/blinskey/greek-reference/releases
 [Android Action Bar Icon Pack]: http://developer.android.com/design/downloads/index.html
 [CC BY-SA 3.0 US]: http://creativecommons.org/licenses/by-sa/3.0/us/
 [nytimes]: http://www.nytimes.com/2014/08/24/books/review/gateways-to-the-classical-world.html
