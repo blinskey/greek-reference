@@ -23,4 +23,5 @@
     <integer name="pref_perseus_tool">3</integer>
     <integer name="pref_one_pane">4</integer>
     <integer name="pref_about">5</integer>
+    <integer name="pref_licenses">6</integer>
 </resources>

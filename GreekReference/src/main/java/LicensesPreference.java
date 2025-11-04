@@ -23,16 +23,18 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 /**
- * A {@link android.preference.DialogPreference} containing information about this app.
+ * A {@link android.preference.DialogPreference} containing license information.
  */
-public class AboutPreference extends DialogPreference {
+public class LicensesPreference extends DialogPreference {
 
-    public AboutPreference(Context context, AttributeSet attrs) {
+    public LicensesPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setDialogLayoutResource(R.layout.about_preference_layout);
+        setDialogLayoutResource(R.layout.license_preference_layout);
         setPositiveButtonText(R.string.ok);
         setNegativeButtonText(null);
         setDialogIcon(null);
@@ -41,9 +43,19 @@ public class AboutPreference extends DialogPreference {
     @Override
     protected void onBindDialogView(@NonNull View view) {
         super.onBindDialogView(view);
-        TextView textView = (TextView) view.findViewById(R.id.aboutDialogTextView);
-        String aboutString = getContext().getString(R.string.message_about);
-        textView.setText(Html.fromHtml(aboutString));
+
+        TextView textView = (TextView) view.findViewById(R.id.licenseDialogTextView);
+        String licenseStr = getContext().getString(R.string.message_licenses);
+        textView.setText(Html.fromHtml(licenseStr));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        WebView webView = (WebView) view.findViewById(R.id.licenseDialogWebView);
+        webView.setInitialScale(1);
+        WebSettings settings = webView.getSettings();
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        String licenseString = getContext().getString(R.string.apache_license);
+        webView.loadDataWithBaseURL(null, licenseString, "text/html", "utf-8", null);
     }
 }

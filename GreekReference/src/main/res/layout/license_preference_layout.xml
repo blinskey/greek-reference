@@ -22,14 +22,18 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/aboutDialogTextView"
+            android:id="@+id/licenseDialogTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="25dp"
             style="@android:style/TextAppearance.Medium"
             android:textColor="@color/primary_text_default_material_light"/>
+        <WebView
+            android:id="@+id/licenseDialogWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </ScrollView>

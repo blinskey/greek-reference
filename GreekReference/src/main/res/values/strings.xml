@@ -72,6 +72,7 @@
         ]]>
     </string>
     <string name="title_about">About</string>
+    <string name="title_licenses">Licenses</string>
     <!--
          NOTE: I'm currently displaying the following string in a TextView, not a WebView, so some
          of these tags are ignored, and I've added a few extra <br> tags in the list at the end.
@@ -125,7 +126,69 @@
                 <li><a href="http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/">TypefaceTextView</a></li>
             </ul>
         </p>
+        ]]>
+    </string>
+    <string name="message_licenses">
+        <![CDATA[
+        <p>
+        This app includes the contents of the text "An Intermediate Greek-English Lexicon,"
+        by Henry George Liddell and Robert Scott. Text provided by Perseus Digital Library,
+        with funding from The Annenberg CPB/Project. Original version available for viewing
+        and download at http://www.perseus.tufts.edu/hopper/. The text is licensed under
+        the Creative Commons Attribution-ShareAlike 3.0 United States License
+        (https://creativecommons.org/licenses/by-sa/3.0/us/).
+        </p>
+        <p>
+        The text also includes the following terms:
+        </p>
+        <p>
+        This text may be freely distributed, subject to the following restrictions:
+        </p>
+        <ul>
+            <li>
+            <p>You credit Perseus, as follows, whenever you use the document:</p>
+            <p>"Text provided by Perseus Digital Library, with funding from The Annenberg
+            CPB/Project. Original version available for viewing and download at
+            http://www.perseus.tufts.edu/hopper/."</p>
+            </li>
+            <li>You leave this availability statement intact.</li>
+            <li>You use it for non-commercial purposes only.</li>
+            <li>You offer Perseus any modifications you make.</li>
+        </ul>
         <hr>
+        <p>
+        This app includes the contents of the text "Overview of Greek Syntax,"
+        by Jeffrey A. Rydberg-Cox. Text provided by Perseus Digital Library,
+        with funding from The Annenberg CPB/Project. Original version available for viewing
+        and download at http://www.perseus.tufts.edu/hopper/. The text is licensed under
+        the Creative Commons Attribution-ShareAlike 3.0 United States License
+        (https://creativecommons.org/licenses/by-sa/3.0/us/).
+        </p>
+        <p>
+        The text also includes the following terms:
+        </p>
+        <p>
+        This text may be freely distributed, subject to the following restrictions:
+        </p>
+        <ul>
+            <li>
+            <p>You credit Perseus, as follows, whenever you use the document:</p>
+            <p>"Text provided by Perseus Digital Library, with funding from The Annenberg
+            CPB/Project. Original version available for viewing and download at
+            http://www.perseus.tufts.edu/hopper/."</p>
+            </li>
+            <li>You leave this availability statement intact.</li>
+            <li>You use it for non-commercial purposes only.</li>
+            <li>You offer Perseus any modifications you make.</li>
+        </ul>
+        <hr>
+        <p>
+          The icons used in this app are taken from the <a href="https://github.com/google/material-design-icons">
+          Google Material Design Icons</a> set, licensed under the <a href="http://creativecommons.org/licenses/by-sa/4.0/">
+          Creative Common Attribution 4.0 International license</a>.
+        </p>
+        <hr>
+        <p>
             The following resources distributed under the Apache License, Version 2.0, are used
             in this app: the androidx appcompat, core, and drawerlayout libraries, the Material
             Components for Android library, the SQLiteAssetHelper library, source code from the
@@ -133,6 +196,7 @@
             abc_search_dropdown_item_icons_2line.xml), source code from Simple Finance Corporation
             (used in the file GreekTextView.java), and the Noto Serif font. The text of the license
             is below.
+        </p>
         ]]>
     </string>
     <string name="syntax_footer">
@@ -149,7 +213,12 @@
     <string name="apache_license" tools:ignore="TypographyOther">
         <![CDATA[
 "
-<pre style="word-wrap: break-word; white-space: pre-wrap;">
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body>
+<pre style="font-size: 20px; word-wrap: break-word; white-space: pre-wrap;">
 
                              Apache License
                        Version 2.0, January 2004
@@ -352,7 +421,8 @@ distributed under the License is distributed on an \"AS IS\" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-</pre>"
+</pre>
+</body>"
         ]]>
     </string>
     <string name="pref_textSize">Font size</string>
@@ -364,6 +434,7 @@ limitations under the License.
     <string name="pref_textSize_key">PREF_TEXT_SIZE_KEY</string>
     <string name="version">"Version "</string>
     <string name="pref_about_key">PREF_ABOUT_KEY</string>
+    <string name="pref_licenses_key">PREF_LICENSES_KEY</string>
     <string name="pref_onePane_key">PREF_ONE_PANE_KEY</string>
     <string name="pref_onePane">Hide lexicon word list</string>
     <string name="pref_onePane_summary">

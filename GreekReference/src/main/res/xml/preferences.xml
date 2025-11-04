@@ -18,4 +18,8 @@
         android:key="@string/pref_about_key"
         android:title="@string/title_about"
         android:order="@integer/pref_about"/>
+    <com.benlinskey.greekreference.LicensesPreference
+        android:key="@string/pref_licenses_key"
+        android:title="@string/title_licenses"
+        android:order="@integer/pref_licenses"/>
 </PreferenceScreen>
