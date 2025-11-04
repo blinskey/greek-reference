@@ -44,18 +44,17 @@ public class LicensesPreference extends DialogPreference {
     protected void onBindDialogView(@NonNull View view) {
         super.onBindDialogView(view);
 
-        TextView textView = (TextView) view.findViewById(R.id.licenseDialogTextView);
+        WebView infoView = (WebView) view.findViewById(R.id.licenseDialogTextView);
         String licenseStr = getContext().getString(R.string.message_licenses);
-        textView.setText(Html.fromHtml(licenseStr));
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        infoView.loadDataWithBaseURL(null, licenseStr, "text/html", "utf-8", null);
 
-        WebView webView = (WebView) view.findViewById(R.id.licenseDialogWebView);
-        webView.setInitialScale(1);
-        WebSettings settings = webView.getSettings();
+        WebView apacheView = (WebView) view.findViewById(R.id.licenseDialogWebView);
+        apacheView.setInitialScale(1);
+        WebSettings settings = apacheView.getSettings();
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
         String licenseString = getContext().getString(R.string.apache_license);
-        webView.loadDataWithBaseURL(null, licenseString, "text/html", "utf-8", null);
+        apacheView.loadDataWithBaseURL(null, licenseString, "text/html", "utf-8", null);
     }
 }
