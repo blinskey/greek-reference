@@ -58,7 +58,7 @@
 <![CDATA[
         <p>
             To search the lexicon, tap the magnifying glass icon. You can use either Greek characters or
-            <a href="http://en.wikipedia.org/wiki/Beta_code#Encoding">Beta code</a> to search.
+            <a href="https://en.wikipedia.org/wiki/Beta_code#Encoding">Beta code</a> to search.
             Diacritics are optional in both cases. For example, you can search for λόγος by typing
             \"logos.\" Search queries are not case sensitive.
         </p>
@@ -84,9 +84,9 @@
             <a href="https://github.com/blinskey/greek-reference">https://github.com/blinskey/greek-reference</a>.
         </p>
         <p>
-            I am grateful to the <a href="http://www.perseus.tufts.edu">Perseus Digital Library</a> and
+            I am grateful to the <a href="https://www.perseus.tufts.edu">Perseus Digital Library</a> and
             Jeffrey A. Rydberg-Cox for making available the texts used in this app. Visit
-            Dr. Rydberg-Cox\'s web site at <a href="http://daedalus.umkc.edu">http://daedalus.umkc.edu</a>.
+            Dr. Rydberg-Cox\'s web site at <a href="https://daedalus.umkc.edu">https://daedalus.umkc.edu</a>.
         </p>
         <p>
             Please select the Licenses settings option to view license information for the Perseus
@@ -94,7 +94,7 @@
         </p>
         <p>
           The icons used in this app are taken from the <a href="https://github.com/google/material-design-icons">
-          Google Material Design Icons</a> set, licensed under the <a href="http://creativecommons.org/licenses/by-sa/4.0/">
+          Google Material Design Icons</a> set, licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">
           Creative Common Attribution 4.0 International license</a>.
         </p>
         <hr>
@@ -104,9 +104,9 @@
             <ul>
                 <li><a href="https://github.com/google/material-design-icons">Google Material Design Icons</a></li>
                 <li><a href="https://github.com/jgilfelt/android-sqlite-asset-helper">SQLiteAssetHelper</a></li>
-                <li><a href="http://sourceforge.net/projects/epidoc/files/Transcoder/">EpiDoc TransCoder</a></li>
+                <li><a href="https://sourceforge.net/projects/epidoc/files/Transcoder/">EpiDoc TransCoder</a></li>
                 <li><a href="https://code.google.com/p/noto/">Noto Serif font</a></li>
-                <li><a href="http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/">TypefaceTextView</a></li>
+                <li><a href="https://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/">TypefaceTextView</a></li>
             </ul>
         </p>
         <p>
@@ -173,7 +173,7 @@
         <hr>
         <p>
           The icons used in this app are taken from the <a href="https://github.com/google/material-design-icons">
-          Google Material Design Icons</a> set, licensed under the <a href="http://creativecommons.org/licenses/by-sa/4.0/">
+          Google Material Design Icons</a> set, licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/">
           Creative Common Attribution 4.0 International license</a>.
         </p>
         <hr>
@@ -191,8 +191,8 @@
     <string name="syntax_footer">
 <![CDATA[
         <p>
-            <i>Text from</i> <a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.04.0052">Overview of Greek Syntax</a>
-            <i>by <a href="http://daedalus.umkc.edu">Jeffrey A. Rydberg-Cox</a>. Select the About and License settings
+            <i>Text from</i> <a href="https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.04.0052">Overview of Greek Syntax</a>
+            <i>by <a href="https://daedalus.umkc.edu">Jeffrey A. Rydberg-Cox</a>. Select the About and License settings
             options for more information.</i>
         </p>
         ]]>
