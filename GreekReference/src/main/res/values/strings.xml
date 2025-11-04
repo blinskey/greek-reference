@@ -84,28 +84,13 @@
             <a href="https://github.com/blinskey/greek-reference">https://github.com/blinskey/greek-reference</a>.
         </p>
         <p>
-            Thanks to the <a href="http://www.perseus.tufts.edu">Perseus Digital Library</a> and
+            I am grateful to the <a href="http://www.perseus.tufts.edu">Perseus Digital Library</a> and
             Jeffrey A. Rydberg-Cox for making available the texts used in this app. Visit
             Dr. Rydberg-Cox\'s web site at <a href="http://daedalus.umkc.edu">http://daedalus.umkc.edu</a>.
         </p>
         <p>
-            This app includes the text of <i>An Intermediate Greek-English Lexicon</i>, by Henry
-            George Liddell and Robert Scott. Text provided by Perseus Digital Library, with funding
-            from The Annenberg CPB/Project. Original version available for viewing and download at
-            <a href="http://www.perseus.tufts.edu/hopper/">http://www.perseus.tufts.edu/hopper/</a>.
-            The text is licensed under the Creative Commons Attribution-ShareAlike 3.0
-	    United States License (https://creativecommons.org/licenses/by-sa/3.0/us/),
-            with the additional restriction that you offer Perseus any modifications you make. 
-            The copy of the text in this app includes a number of typographical corrections.
-        </p>
-        <p>
-            The app also includes the text of <i>Overview of Greek Syntax</i>, by Jeffrey A.
-            Rydberg-Cox. Text provided by Perseus Digital Library, with funding from The Annenberg
-            CPB/Project. Original version available for viewing and download at
-            <a href="http://www.perseus.tufts.edu/hopper/">http://www.perseus.tufts.edu/hopper/</a>.
-            The text is licensed under the Creative Commons Attribution-ShareAlike 3.0
-	        United States License (https://creativecommons.org/licenses/by-sa/3.0/us/),
-            with the additional restriction that you offer Perseus any modifications you make. 
+            Please select the Licenses settings option to view license information for the Perseus
+            texts distributed with this app.
         </p>
         <p>
           The icons used in this app are taken from the <a href="https://github.com/google/material-design-icons">
@@ -115,16 +100,18 @@
         <hr>
         <p>
             The following additional open source resources were used in the development of this app.
-            Thanks to their creators for making their work available.
+            I am grateful to their creators for making their work available.
             <ul>
+                <li><a href="https://github.com/google/material-design-icons">Google Material Design Icons</a></li>
                 <li><a href="https://github.com/jgilfelt/android-sqlite-asset-helper">SQLiteAssetHelper</a></li>
-                <br>
                 <li><a href="http://sourceforge.net/projects/epidoc/files/Transcoder/">EpiDoc TransCoder</a></li>
-                <br>
                 <li><a href="https://code.google.com/p/noto/">Noto Serif font</a></li>
-                <br>
                 <li><a href="http://www.tristanwaddington.com/2012/09/android-textview-with-custom-font-support/">TypefaceTextView</a></li>
             </ul>
+        </p>
+        <p>
+            Please select the Licenses settings option to view license information for resources
+            used in this app.
         </p>
         ]]>
     </string>
@@ -205,8 +192,8 @@
 <![CDATA[
         <p>
             <i>Text from</i> <a href="http://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.04.0052">Overview of Greek Syntax</a>
-            <i>by <a href="http://daedalus.umkc.edu">Jeffrey A. Rydberg-Cox</a>. Select the About
-            option for more information.</i>
+            <i>by <a href="http://daedalus.umkc.edu">Jeffrey A. Rydberg-Cox</a>. Select the About and License settings
+            options for more information.</i>
         </p>
         ]]>
     </string>
