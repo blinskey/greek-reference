@@ -126,9 +126,13 @@
             </ul>
         </p>
         <hr>
-            License for SQLiteAssetHelper, Noto Serif font, TypefaceTextView, 
-            ScrimInsetsFrameLayout, simple_list_item_activated_1.xml, and  
-            abc_search_dropdown_item_icons_2line.xml:
+            The following resources distributed under the Apache License, Version 2.0, are used
+            in this app: the androidx appcompat, core, and drawerlayout libraries, the Material
+            Components for Android library, the SQLiteAssetHelper library, source code from the
+            Android Open Source Project (used in the files simple_list_item_activated_1.xml and
+            abc_search_dropdown_item_icons_2line.xml), source code from Simple Finance Corporation
+            (used in the file GreekTextView.java), and the Noto Serif font. The text of the license
+            is below.
         ]]>
     </string>
     <string name="syntax_footer">
