@@ -1,3 +1,18 @@
+All original source code in this project is distributed under the Apache
+License, Version 2.0. 
+
+The files GreekReference/src/main/res/layout/search_suggestion_row.xml and
+GreekReference/src/main/res/layout/greek_simple_list_item_activated_1.xml
+include code distributed by the Android Open Source Project under the Apache
+License, Version 2.0.
+
+The file GreekReference/src/main/res/layout/search_suggestion_row.xml contains
+code distributed by Simple Finance Corporation under the Apache License,
+Version 2.0.
+
+The file GreekReference/src/main/assets/fonts/NotoSerif-Regular.ttf was
+distributed by Google under the Apache License, Version 2.0.
+
 Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -200,3 +215,67 @@ Apache License
    See the License for the specific language governing permissions and
    limitations under the License.
 
+-------------------------------------------------------------------------------
+
+The file GreekReference/src/main/assets/databases/lexicon.zip is derived from
+the text "An Intermediate Greek-English Lexicon," by Henry George Liddell and
+Robert Scott. Text provided by Perseus Digital Library, with funding from The
+Annenberg CPB/Project. Original version available for viewing and download at
+http://www.perseus.tufts.edu/hopper/. 
+
+The text is licensed under the Creative Commons Attribution-ShareAlike 3.0
+United States License (https://creativecommons.org/licenses/by-sa/3.0/us/). 
+
+The text also includes the following terms, reformatted here from the original
+XML:
+
+    This text may be freely distributed, subject to the following restrictions:
+
+        You credit Perseus, as follows, whenever you use the document:
+
+            "Text provided by Perseus Digital Library, with funding from The
+            Annenberg CPB/Project. Original version available for viewing and
+            download at http://www.perseus.tufts.edu/hopper/."
+
+		You leave this availability statement intact.
+
+		You use it for non-commercial purposes only.
+
+		You offer Perseus any modifications you make.
+
+The version of the text contained in lexicon.zip includes a number of
+typographical corrections.
+
+-------------------------------------------------------------------------------
+
+The file GreekReference/src/main/assets/databases/syntax.zip is derived from
+the text of "Overview of Greek Syntax", by Jeffrey A. Rydberg-Cox. Text
+provided by Perseus Digital Library, with funding from The Annenberg
+CPB/Project. Original version available for viewing and download at
+http://www.perseus.tufts.edu/hopper/. 
+
+The text is licensed under the Creative Commons Attribution-ShareAlike 3.0
+United States License (https://creativecommons.org/licenses/by-sa/3.0/us/).
+
+The text also includes the following terms, reformatted here from the original
+XML:
+
+    This text may be freely distributed, subject to the following restrictions:
+
+        You credit Perseus, as follows, whenever you use the document:
+
+            "Text provided by Perseus Digital Library, with funding from The
+            Annenberg CPB/Project. Original version available for viewing and
+            download at http://www.perseus.tufts.edu/hopper/."
+
+		You leave this availability statement intact.
+
+		You use it for non-commercial purposes only.
+
+		You offer Perseus any modifications you make.
+
+-------------------------------------------------------------------------------
+
+The icons used in this project are from the Google Material Design Icons set,
+licensed under the Creative Commons Attribution 4.0 International License
+(https://creativecommons.org/licenses/by/4.0/).

@@ -92,22 +92,23 @@
             George Liddell and Robert Scott. Text provided by Perseus Digital Library, with funding
             from The Annenberg CPB/Project. Original version available for viewing and download at
             <a href="http://www.perseus.tufts.edu/hopper/">http://www.perseus.tufts.edu/hopper/</a>.
-            I have made a number of corrections to the original text.
+            The text is licensed under the Creative Commons Attribution-ShareAlike 3.0
+	    United States License (https://creativecommons.org/licenses/by-sa/3.0/us/),
+            with the additional restriction that you offer Perseus any modifications you make. 
+            The copy of the text in this app includes a number of typographical corrections.
         </p>
         <p>
             The app also includes the text of <i>Overview of Greek Syntax</i>, by Jeffrey A.
             Rydberg-Cox. Text provided by Perseus Digital Library, with funding from The Annenberg
             CPB/Project. Original version available for viewing and download at
             <a href="http://www.perseus.tufts.edu/hopper/">http://www.perseus.tufts.edu/hopper/</a>.
-        </p>
-        <p>
-            The above texts are licensed under a Creative Commons Attribution-ShareAlike 3.0 United
-            States License. See <a href="http://creativecommons.org/licenses/by-sa/3.0/us/">http://creativecommons.org/licenses/by-sa/3.0/us/</a>
-            for details.
+            The text is licensed under the Creative Commons Attribution-ShareAlike 3.0
+	    United States License (https://creativecommons.org/licenses/by-sa/3.0/us/),
+            with the additional restriction that you offer Perseus any modifications you make. 
         </p>
         <p>
           The icons used in this app are taken from the <a href="https://github.com/google/material-design-icons">
-          Google Material Design Icons</a> set, licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">
+          Google Material Design Icons</a> set, licensed under the <a href="http://creativecommons.org/licenses/by-sa/4.0/">
           Creative Common Attribution 4.0 International license</a>.
         </p>
         <hr>
@@ -125,13 +126,6 @@
             </ul>
         </p>
         <hr>
-        <p>
-            This app\'s icon was constructed in part from an icon obtained from the "Boilerplate"
-            icon set available at <a href="http://www.android-icons.com">www.androidicons.com</a>.
-            The icon set is licensed under the Creative Commons Attribution 3.0 Unported License.
-            See <a href="http://creativecommons.org/licenses/by/3.0/">http://creativecommons.org/licenses/by/3.0/</a>
-            for details.
-        </p>
             License for SQLiteAssetHelper, Noto Serif font, TypefaceTextView, 
             ScrimInsetsFrameLayout, simple_list_item_activated_1.xml, and  
             abc_search_dropdown_item_icons_2line.xml:
