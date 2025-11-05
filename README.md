@@ -11,8 +11,9 @@ Greek Reference was [recommended][nytimes] by the *New York Times Sunday Book
 Review* in 2014 (referenced by its previous title, Ancient Greek Lexicon and
 Syntax).
 
-The app is currently in maintenance mode. I am not adding new features, but
-I continue to maintain support for new Android releases.
+This app is no longer under development. I intend for version 1.16.0 to be the
+final release. I'm grateful to everyone who has tried the app and offered
+feedback over the years.
 
 ## Building the App
 
