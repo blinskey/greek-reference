@@ -15,6 +15,9 @@ This app is no longer under development. I intend for version 1.16.0 to be the
 final release. I'm grateful to everyone who has tried the app and offered
 feedback over the years.
 
+This repository is hosted on [git.linskey.org](https://git.linskey.org/greek-reference)
+and mirrored on [GitHub](https://github.com/blinskey/greek-reference).
+
 ## Building the App
 
 The texts used in this app are contained in a pair of databases called
